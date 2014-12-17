@@ -1,0 +1,600 @@
+@import "media-query"
+
+/******************************
+  FORM
+  *******************************/
+
+// --------------------
+//        Form
+// ---------------------
+
+.form
+  :position relative
+  :max-width 100%
+
+// --------------------
+//        Content
+// ---------------------
+
+.form > p
+  :margin 1em 0
+
+// --------------------
+//        Field
+// ---------------------
+
+.form .field
+  :clear both
+  :margin 0 0 1em
+
+.form .fields:last-child .field,
+.form :not(.fields) .field:last-child
+  :margin-bottom 0
+
+// --------------------
+//        Labels
+// ---------------------
+
+.form .field > label
+  :display block
+  :margin 0 0 0.2857rem 0
+  :color rgba(0, 0, 0, 0.8)
+  :font-size 0.9285em
+  :font-weight bold
+  :text-transform none
+
+.form .grouped.fields > label
+  :margin 0 0 0.2857rem 0
+  :color rgba(0, 0, 0, 0.8)
+  :font-size 0.9285em
+  :font-weight bold
+  :text-transform none
+
+.form .inline.fields > label
+  :display inline-block
+  :vertical-align middle
+  :margin 0 1em 0 0
+  :color rgba(0, 0, 0, 0.8)
+  :font-size 0.9285em
+  :font-weight bold
+  :text-transform none
+
+// --------------------
+//    Standard Inputs
+// ---------------------
+
+.form textarea,
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="date"],
+.form input[type="password"],
+.form input[type="number"],
+.form input[type="url"],
+.form input[type="tel"],
+.form .input
+  :width 100%
+  :vertical-align top
+
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="date"],
+.form input[type="password"],
+.form input[type="number"],
+.form input[type="url"],
+.form input[type="tel"]
+  :margin 0
+  :outline none
+  :-webkit-appearance none
+  :-webkit-tap-highlight-color rgba(255, 255, 255, 0)
+  :line-height 1.2142em
+  :padding 0.67861em 1em
+  :font-size 1em
+  :background #ffffff
+  :border 1px solid rgba(39, 41, 43, 0.15)
+  :color rgba(0, 0, 0, 0.8)
+  :border-radius 0.2857rem
+  :box-shadow 0 0 0 0 transparent inset
+  :-webkit-transition background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease
+  :transition background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease
+
+.textarea,
+.form textarea
+  :margin 0
+  :-webkit-appearance none
+  :-webkit-tap-highlight-color rgba(255, 255, 255, 0)
+  :padding 0.78571em 1em
+  :background #ffffff
+  :border 1px solid rgba(39, 41, 43, 0.15)
+  :outline none
+  :color rgba(0, 0, 0, 0.8)
+  :border-radius 0.2857rem
+  :box-shadow 0 0 0 0 transparent inset
+  :-webkit-transition background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease
+  :transition background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease
+  :font-size 1em
+  :height 12em
+  :min-height 8em
+  :max-height 24em
+  :line-height 1.2857
+  :resize vertical
+
+.form textarea,
+.form input[type="checkbox"]
+  :vertical-align top
+
+// --------------------------
+//  Input w/ attached Button
+// ---------------------------
+
+.form input.attached
+  :width auto
+
+// --------------------
+//     Basic Select
+// ---------------------
+
+.form select
+  :display block
+  :height auto
+  :width 100%
+  :background #ffffff
+  :border 1px solid rgba(39, 41, 43, 0.15)
+  :border-radius 0.2857rem
+  :box-shadow 0 0 0 0 transparent inset
+  :padding 0.62em 1em
+  :color rgba(0, 0, 0, 0.8)
+  :-webkit-transition background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease
+  :transition background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease
+
+// --------------------
+//       Dropdown
+// ---------------------
+
+.form .field > .selection.dropdown
+  :width 100%
+
+.form .field > .selection.dropdown > .dropdown.icon
+  :float right
+
+.form .inline.field > .selection.dropdown
+  :width auto
+
+.form .inline.field > .selection.dropdown > .dropdown.icon
+  :float none
+
+// --------------------
+//       Dividers
+// ---------------------
+
+.form .divider
+  :clear both
+  :margin 1em 0
+
+// --------------------
+//   Types of Messages
+// ---------------------
+
+.form .info.message,
+.form .success.message,
+.form .warning.message,
+.form .error.message
+  :display none
+
+// Assumptions
+.form .message:first-child
+  :margin-top 0
+
+// --------------------
+//   Validation Prompt
+// ---------------------
+
+.form .field .prompt.label
+  :white-space nowrap
+
+.form .inline.field .prompt
+  :margin 0 0 0 1em
+
+.form .inline.field .prompt:before
+  :margin-top -0.3em
+  :bottom auto
+  :right auto
+  :top 50%
+  :left 0
+
+// ******************************
+//            States
+// ******************************
+
+// --------------------
+//      Placeholder
+// ---------------------
+
+// browsers require these rules separate
+.form ::-webkit-input-placeholder
+  :color rgba(140, 140, 140, 0.8)
+
+.form ::-moz-placeholder
+  :color rgba(140, 140, 140, 0.8)
+
+.form :focus::-webkit-input-placeholder
+  :color rgba(89, 89, 89, 0.8)
+
+.form :focus::-moz-placeholder
+  :color rgba(89, 89, 89, 0.8)
+
+// Error Placeholder
+.form .error ::-webkit-input-placeholder
+  :color #e38585
+
+.form .error ::-moz-placeholder
+  :color #e38585
+
+.form .error :focus::-webkit-input-placeholder
+  :color #de7171
+
+.form .error :focus::-moz-placeholder
+  :color #de7171
+
+// --------------------
+//        Focus
+// ---------------------
+
+.form input[type="text"]:focus,
+.form input[type="email"]:focus,
+.form input[type="date"]:focus,
+.form input[type="password"]:focus,
+.form input[type="number"]:focus,
+.form input[type="url"]:focus,
+.form input[type="tel"]:focus
+  :color rgba(0, 0, 0, 0.85)
+  :border-color rgba(39, 41, 43, 0.3)
+  :border-radius 0 0.2857rem 0.2857rem 0
+  :background #ffffff
+  :box-shadow 1px 0 0 0 rgba(39, 41, 43, 0.3) inset
+
+.form textarea:focus
+  :color rgba(0, 0, 0, 0.85)
+  :border-color rgba(39, 41, 43, 0.3)
+  :border-radius 0 0.2857rem 0.2857rem 0
+  :background #ffffff
+  :box-shadow 1px 0 0 0 rgba(39, 41, 43, 0.3) inset
+  :-webkit-appearance none
+
+// --------------------
+//        Success
+// ---------------------
+
+// On Form
+.form.success .success.message
+  :display block
+
+// --------------------
+//        Error
+// ---------------------
+
+// On Form
+.form.warning .warning.message
+  :display block
+
+// --------------------
+//        Warning
+// ---------------------
+
+// On Form
+.form.error .error.message
+  :display block
+
+// On Field(s)
+
+.form .fields.error .field label,
+.form .field.error label,
+.form .fields.error .field .input,
+.form .field.error .input
+  :color #d95c5c
+
+.form .fields.error .field .corner.label,
+.form .field.error .corner.label
+  :border-color #d95c5c
+  :color #ffffff
+
+.form .fields.error .field textarea,
+.form .fields.error .field input[type="text"],
+.form .fields.error .field input[type="email"],
+.form .fields.error .field input[type="date"],
+.form .fields.error .field input[type="password"],
+.form .fields.error .field input[type="number"],
+.form .fields.error .field input[type="url"],
+.form .fields.error .field input[type="tel"],
+.form .field.error textarea,
+.form .field.error input[type="text"],
+.form .field.error input[type="email"],
+.form .field.error input[type="date"],
+.form .field.error input[type="password"],
+.form .field.error input[type="number"],
+.form .field.error input[type="url"],
+.form .field.error input[type="tel"]
+  :background #fff0f0
+  :border-color #dbb1b1
+  :color #d95c5c
+  :border-radius 0 0.2857rem 0.2857rem 0
+  :box-shadow 2px 0 0 0 #d95c5c inset
+
+.form .field.error textarea:focus,
+.form .field.error input[type="text"]:focus,
+.form .field.error input[type="email"]:focus,
+.form .field.error input[type="date"]:focus,
+.form .field.error input[type="password"]:focus,
+.form .field.error input[type="number"]:focus,
+.form .field.error input[type="url"]:focus,
+.form .field.error input[type="tel"]:focus
+  :background #fff0f0
+  :border-color #dbb1b1
+  :color #dc6868
+  :-webkit-appearance none
+  :box-shadow 2px 0 0 0 #dc6868 inset
+
+// ------------------
+//    Dropdown Error
+// --------------------
+
+.form .fields.error .field .dropdown,
+.form .fields.error .field .dropdown .item,
+.form .field.error .dropdown,
+.form .field.error .dropdown .text,
+.form .field.error .dropdown .item
+  :background #fff0f0
+  :color #d95c5c
+
+.form .fields.error .field .dropdown,
+.form .field.error .dropdown
+  :border-color #dbb1b1 !important
+
+.form .fields.error .field .dropdown:hover,
+.form .field.error .dropdown:hover
+  :border-color #dbb1b1 !important
+
+.form .fields.error .field .dropdown:hover .menu,
+.form .field.error .dropdown:hover .menu
+  :border-color #dbb1b1
+
+// Hover
+
+.form .fields.error .field .dropdown .menu .item:hover,
+.form .field.error .dropdown .menu .item:hover
+  :background-color #fff2f2
+
+// Active
+
+.form .fields.error .field .dropdown .menu .active.item,
+.form .field.error .dropdown .menu .active.item
+  :background-color #fdcfcf !important
+
+// --------------------
+//    Checkbox Error
+// ---------------------
+
+.form .fields.error .field .checkbox:not(.toggle):not(.slider) label,
+.form .field.error .checkbox:not(.toggle):not(.slider) label,
+.form .fields.error .field .checkbox:not(.toggle):not(.slider) .box,
+.form .field.error .checkbox:not(.toggle):not(.slider) .box
+  :color #d95c5c
+
+.form .fields.error .field .checkbox:not(.toggle):not(.slider) label:before,
+.form .field.error .checkbox:not(.toggle):not(.slider) label:before,
+.form .fields.error .field .checkbox:not(.toggle):not(.slider) .box:before,
+.form .field.error .checkbox:not(.toggle):not(.slider) .box:before
+  :background #fff0f0
+  :border-color #dbb1b1
+
+.form .fields.error .field .checkbox label:after,
+.form .field.error .checkbox label:after,
+.form .fields.error .field .checkbox .box:after,
+.form .field.error .checkbox .box:after
+  :color #d95c5c
+
+// --------------------
+//       Disabled
+// ---------------------
+
+.form .field :disabled,
+.form .field.disabled
+  :opacity 0.5
+
+.form .field.disabled label
+  :opacity 0.5
+
+.form .field.disabled :disabled
+  :opacity 1
+
+// --------------
+//    Loading
+// ---------------
+
+.loading.form
+  :position relative
+  :cursor default
+  :point-events none
+  :text-shadow none !important
+  :color transparent !important
+  :-webkit-transition all 0s linear
+  :transition all 0s linear
+  :z-index 100
+
+.loading.form:before
+  :position absolute
+  :content ''
+  :top 0
+  :left 0
+  :background rgba(255, 255, 255, 0.8)
+  :width 100%
+  :height 100%
+  :z-index 100
+
+.loading.form:after
+  :position absolute
+  :content ''
+  :top 50%
+  :left 50%
+  :margin -1.5em 0 0em -1.5em
+  :width 3em
+  :height 3em
+  :-webkit-animation form-spin 0.6s linear
+  :animation form-spin 0.6s linear
+  :-webkit-animation-iteration-count infinite
+  :animation-iteration-count infinite
+  :border-radius 500rem
+  :border 0.2em solid rgba(0, 0, 0, 0.1)
+  :border-top-color #aaaaaa
+  :box-shadow 0 0 0 1px transparent
+  :visibility visible
+  :z-index 101
+
+@-webkit-keyframes form-spin
+  from
+    :-webkit-transform rotate(0deg)
+    :transform rotate(0deg)
+  to
+    :-webkit-transform rotate(360deg)
+    :transform rotate(360deg)
+
+
+@keyframes form-spin
+  from
+    :-webkit-transform rotate(0deg)
+    :transform rotate(0deg)
+  to
+    :-webkit-transform rotate(360deg)
+    :transform rotate(360deg)
+
+
+// ******************************
+//         Element Types
+// ******************************
+
+//--------------------
+//   Required Field
+//---------------------
+
+.form .required.fields > .field > label:after,
+.form .required.field > label:after,
+.form .required.fields > .field > .checkbox:after,
+.form .required.field > .checkbox:after
+  margin: -0.2em 0 0 0.2em
+  content: '*'
+  color: #d95c5c
+
+.form .required.fields > .field > label:after,
+.form .required.field > label:after
+  display: inline-block
+  vertical-align: top
+
+.form .required.fields > .field > .checkbox:after,
+.form .required.field > .checkbox:after
+  position: absolute
+  top: 0
+  left: 100%
+
+// ******************************
+//           Variations
+// ******************************
+
+// --------------------
+//    Inverted Colors
+// ---------------------
+
+.inverted.form label,
+.form .inverted.segment label,
+.form .inverted.segment .checkbox label,
+.form .inverted.segment .checkbox .box,
+.inverted.form .checkbox label,
+.inverted.form .checkbox .box
+  :color #ffffff
+
+// --------------------
+//     Field Groups
+// ---------------------
+
+// Grouped Vertically
+.form .grouped.fields
+  :margin 0 0 1em
+
+.form .grouped.fields:last-child
+  :margin-bottom 0
+
+.form .grouped.fields > label
+  :font-size 0.9285em
+
+.form .grouped.fields .field
+  :display block
+  :float none
+  :margin 0.5em 0
+  :padding 0
+
+// --------------------
+//        Fields
+// ---------------------
+
+// Split fields
+.form .fields
+  :clear both
+
+.form .fields:after
+  :content ' '
+  :display block
+  :clear both
+  :visibility hidden
+  :line-height 0
+  :height 0
+
+.form .fields > .field
+  :clear none
+  :float left
+  :padding-left 0.5em
+  :padding-right 0.5em
+
+.form .fields > .field:first-child
+  :border-left none
+  :box-shadow none
+
+// --------------------
+//    Inline Fields
+// ---------------------
+
+.form .inline.fields
+  :margin 0 0 1em
+
+.form .inline.fields .field
+  :display inline-block
+  :float none
+  :margin 0 1em 0 0
+  :padding 0
+
+.form .inline.fields .field > label,
+.form .inline.fields .field > p,
+.form .inline.fields .field > input,
+.form .inline.field > label,
+.form .inline.field > p,
+.form .inline.field > input
+  :display inline-block
+  :width auto
+  :margin-top 0
+  :margin-bottom 0
+  :vertical-align middle
+  :font-size 0.9285em
+
+.form .inline.fields .field > input,
+.form .inline.field > input
+  :font-size 0.9285em
+
+.form .inline.fields .field > .checkbox label
+  :padding-left 1.75em
+
+// Label
+
+.form .inline.fields .field > :first-child,
+.form .inline.field > :first-child
+  :margin 0 0.2857rem 0 0
+
+.form .inline.fields .field > :only-child,
+.form .inline.field > :only-child
+  :margin 0
