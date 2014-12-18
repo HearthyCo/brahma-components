@@ -103,7 +103,8 @@ $grid-columns: 16
   @include __column-n(1)
 
 .column:only-child,
-.row > .column:only-child
+.row > .column:only-child,
+.wide
   :width 100%
 
 @include _grid-column-n('')
@@ -132,3 +133,13 @@ $grid-columns: 16
 // Desktop FullHD
 @media only #{$query-desktop-fullhd}
   @include _grid-classes('desktop-fullhd')
+
+//****************************
+//  Extras
+//****************************
+
+// Full-width image
+.img
+  :max-width 100%
+  :height auto
+  :display block
