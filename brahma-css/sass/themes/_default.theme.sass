@@ -1,0 +1,51 @@
+@import "../globals/media-query"
+
+/*
+  ****************************
+  THEME
+  ****************************/
+
+//-------------- Font sizes
+$theme-font-size: 12px
+body
+  :font-size $theme-font-size
+.xs
+  :font-size 0.5rem !important
+.s
+  :font-size 0.8rem !important
+.m
+  :font-size 1rem !important
+.l
+  :font-size 1.5rem !important
+.xl
+  :font-size 2rem !important
+
+//-------------- Container space
+$theme-container-padding: 8%
+.container
+  :padding 0 $theme-container-padding 0 $theme-container-padding
+
+@media only #{$query-mobile}
+  .container
+    :padding-left 0
+    :padding-right 0
+
+@media only #{$query-tablet}
+  .container
+    :padding-left ($theme-container-padding / 2)
+    :padding-right ($theme-container-padding / 2)
+
+@media only #{$query-desktop-ld}
+  .container
+    :padding-left ($theme-container-padding)
+    :padding-right ($theme-container-padding)
+
+@media only #{$query-desktop-hd}
+  .container
+    :padding-left ($theme-container-padding * 2)
+    :padding-right ($theme-container-padding * 2)
+
+@media only #{$query-desktop-fullhd}
+  .container
+    :padding-left ($theme-container-padding * 3)
+    :padding-right ($theme-container-padding * 3)
