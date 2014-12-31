@@ -1,3 +1,4 @@
+React = require 'react'
 
 InputForm = require "./inputForm"
 ButtonForm = require "./buttonForm"

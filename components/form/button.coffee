@@ -1,3 +1,4 @@
+React = require 'react'
 
 {div, button} = React.DOM
 

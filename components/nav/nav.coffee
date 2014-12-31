@@ -1,3 +1,4 @@
+React = require 'react'
 
 {nav} = React.DOM
 

@@ -1,3 +1,4 @@
+React = require 'react'
 
 {div, label, input} = React.DOM
 
