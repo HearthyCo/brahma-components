@@ -8,4 +8,5 @@ module.exports = ->
       options:
         pathPrefix: "./"
         omitDirs: ["dist"]
+        pathSep: "/"
   }
