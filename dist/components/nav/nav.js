@@ -10,7 +10,7 @@ module.exports = React.createClass({
     onSelect: React.PropTypes.func
   },
   render: function() {
-    return this.transferPropsTo(nav({}, [React.Children.map(this.props.children, this.renderChild)]));
+    return this.transferPropsTo(nav({}, React.Children.map(this.props.children, this.renderChild)));
   },
   renderChild: function(child, i) {
     return React.addons.cloneWithProps(child, {

@@ -9,9 +9,9 @@ module.exports = React.createClass
 
   render: ->
     # use React.Children.map because children is opaque
-    return @transferPropsTo (nav {}, [
+    return @transferPropsTo (nav {},
         React.Children.map @props.children, @renderChild
-      ])
+      )
 
   renderChild: (child, i) ->
     return React.addons.cloneWithProps child, {

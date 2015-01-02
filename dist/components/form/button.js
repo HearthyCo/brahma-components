@@ -8,10 +8,8 @@ module.exports = React.createClass({
   render: function() {
     return div({
       className: "field-set"
-    }, [
-      button({
-        type: "submit"
-      }, this.props.fieldName)
-    ]);
+    }, button({
+      type: "submit"
+    }, this.props.fieldName));
   }
 });

@@ -1,6 +1,8 @@
-var React;
+var React, a;
 
 React = require('react');
+
+a = React.DOM.a;
 
 module.exports = React.createClass({
   propTypes: {
@@ -14,6 +16,6 @@ module.exports = React.createClass({
         'active': '',
         onClick: this.props.onSelect
       }
-    }, [this.props.label]));
+    }, this.props.label));
   }
 });
