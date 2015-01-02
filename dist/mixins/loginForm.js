@@ -2,9 +2,9 @@ var ButtonForm, InputForm, React, form;
 
 React = require('react');
 
-InputForm = require("./inputForm");
+InputForm = React.createFactory(require("../components/form/input"));
 
-ButtonForm = require("./buttonForm");
+ButtonForm = React.createFactory(require("../components/form/button"));
 
 form = React.DOM.form;
 
@@ -12,16 +12,14 @@ module.exports = React.createClass({
   render: function() {
     return form({
       action: this.props.action
-    }, [
-      InputForm({
-        fieldName: "Email",
-        type: "email"
-      }), InputForm({
-        fieldName: "Password",
-        type: "password"
-      }), ButtonForm({
-        fieldName: "Login"
-      })
-    ]);
+    }, InputForm({
+      fieldName: "Email",
+      type: "email"
+    }), InputForm({
+      fieldName: "Password",
+      type: "password"
+    }), ButtonForm({
+      fieldName: "Login"
+    }));
   }
 });

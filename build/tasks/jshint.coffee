@@ -19,7 +19,7 @@ module.exports = ->
       eqnull: true
       node: true
     src:[
-      "build/**/*.js"
+      "dist/**/*.js"
       "index.js"
     ]
   }

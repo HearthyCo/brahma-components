@@ -4,15 +4,15 @@ React = require 'react'
 
 module.exports = React.createClass
   render: ->
-    return (div { className: 'field-set' }, [
-      (div { className: 'field' }, [
+    return (div { className: 'field-set' },
+      (div { className: 'field' },
         (label { className: 'label-form' }, @props.fieldName)
-      ])
-      (div { className: 'field' }, [
+      )
+      (div { className: 'field' },
         (input {
           className: 'input-form',
           placeholder: @props.fieldName
           type: @props.type
         })
-      ])
-    ])
+      )
+    )

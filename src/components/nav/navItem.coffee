@@ -1,5 +1,7 @@
 React = require 'react'
 
+{a} = React.DOM
+
 module.exports = React.createClass(
   propTypes:
     active: React.PropTypes.bool
@@ -8,7 +10,7 @@ module.exports = React.createClass(
   render: ->
     # just pass the onSelect handler in directly
     # let the parent handle it
-    @transferPropsTo (a  { className: @props.active ? 'active' : '', onClick: this.props.onSelect }, [
+    @transferPropsTo (a { className: @props.active ? 'active' : '', onClick: this.props.onSelect },
       this.props.label
-    ])
+    )
 )
