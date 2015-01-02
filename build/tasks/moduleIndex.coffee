@@ -3,5 +3,9 @@ module.exports = ->
 
   @config "moduleIndex", {
     build:
-      src: ["components", "mixins", "actions", "dispatcher", "stores"]
+      src: ["dist/"]
+      dest: "dist/"
+      options:
+        pathPrefix: "./"
+        omitDirs: ["dist"]
   }
