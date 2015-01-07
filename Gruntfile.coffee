@@ -8,6 +8,7 @@ module.exports = ->
     "clean"
     "coffeelint"
     "coffee"
+    "clean:tests"
     #"jshint"
     "moduleIndex"
   ]
