@@ -30,6 +30,7 @@ module.exports = React.createClass({
         ret[i.name] = i.value;
       }
     }
+    console.log(JSON.stringify(ret));
     return ret;
   },
   render: function() {
@@ -58,12 +59,10 @@ module.exports = React.createClass({
       type: "text"
     }), GenderForm({
       label: "Gender",
-      name: "gender",
-      type: "text"
+      name: "gender"
     }), DateForm({
       label: "Birthdate",
-      name: "birthdate",
-      type: "text"
+      name: "birthdate"
     }), ButtonForm({
       label: "Sign up"
     }), a({

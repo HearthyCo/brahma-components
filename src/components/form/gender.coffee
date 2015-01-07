@@ -17,7 +17,7 @@ module.exports = React.createClass
         className: 'field'
         , input(
           className: 'radio-form'
-          name: 'gender'
+          name: @props.name
           type: 'radio'
         )
         , label(
@@ -26,7 +26,7 @@ module.exports = React.createClass
         )
         , input(
           className: 'radio-form'
-          name: 'gender'
+          name: @props.name
           type: 'radio'
         )
         , label(

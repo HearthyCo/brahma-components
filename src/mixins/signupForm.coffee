@@ -5,7 +5,7 @@ DateForm = React.createFactory require "../components/form/date"
 GenderForm = React.createFactory require "../components/form/gender"
 ButtonForm = React.createFactory require "../components/form/button"
 
-{form, a} = React.DOM
+{ form, a } = React.DOM
 
 UserActions = require "../actions/UserActions"
 
@@ -24,6 +24,9 @@ module.exports = React.createClass
     for i in @getDOMNode().elements
       if i.name
         ret[i.name] = i.value
+
+    # AQUI
+    console.log JSON.stringify ret
     return ret
 
   render: ->
@@ -59,12 +62,10 @@ module.exports = React.createClass
       , GenderForm(
         label: "Gender"
         name: "gender"
-        type: "text"
       )
       , DateForm(
         label: "Birthdate"
         name: "birthdate"
-        type: "text"
       )
       , ButtonForm(
         label: "Sign up"
