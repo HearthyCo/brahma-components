@@ -3,10 +3,9 @@ module.exports = ->
 
   @config "moduleIndex", {
     build:
-      src: ["dist/"]
+      src: ["dist/**/*.js"]
       dest: "dist/"
       options:
         pathPrefix: "./"
         omitDirs: ["dist"]
-        pathSep: "/"
   }
