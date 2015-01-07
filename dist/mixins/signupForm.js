@@ -1,4 +1,4 @@
-var ButtonForm, InputForm, React, UserStore, a, form, _ref;
+var ButtonForm, InputForm, React, UserActions, a, form, _ref;
 
 React = require('react');
 
@@ -8,21 +8,12 @@ ButtonForm = React.createFactory(require("../components/form/button"));
 
 _ref = React.DOM, form = _ref.form, a = _ref.a;
 
-UserStore = require("../stores/UserStore");
+UserActions = require("../actions/UserActions");
 
 module.exports = React.createClass({
   handleSubmit: function(e) {
-    var user;
     e.preventDefault();
-    user = new UserStore;
-    return user.save(this.getFormValue(), {
-      success: function(e) {
-        return console.log('Register success!', e);
-      },
-      error: function(e) {
-        return console.log('Error registering!', e);
-      }
-    });
+    return UserActions.register(this.getFormValue());
   },
   handleChange: function(e) {},
   getFormValue: function() {
