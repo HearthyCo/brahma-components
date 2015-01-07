@@ -7,7 +7,7 @@
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-coffee": "^0.12.0",
     "grunt-contrib-jshint": "~0.10.0",
-    "grunt-module-index": "ignlg/grunt-module-index",
+    "grunt-module-index": "~0.1.6",
     "jshint-stylish": "^1.0.0"
   },
   "scripts": {},
