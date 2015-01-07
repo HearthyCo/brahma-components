@@ -5,5 +5,5 @@ React = require 'react'
 module.exports = React.createClass
   render: ->
     return (div { className: "field-set" },
-      (button { type: "submit"}, @props.fieldName)
+      (button { type: "submit"}, @props.label)
     )
