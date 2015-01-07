@@ -5,3 +5,7 @@ module.exports = ->
   @config "clean", [
     "dist/*"
   ]
+
+  @config "clean.tests", [
+    "dist/**/__tests__/*"
+  ]

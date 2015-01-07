@@ -17,10 +17,6 @@ module.exports = exports = {
     "AppDispatcher": require("./dispatcher/AppDispatcher")
   },
   "mixins": {
-    "__tests__": {
-      "loginForm-test": require("./mixins/__tests__/loginForm-test"),
-      "signupForm-test": require("./mixins/__tests__/signupForm-test")
-    },
     "loginForm": require("./mixins/loginForm"),
     "page": require("./mixins/page"),
     "signupForm": require("./mixins/signupForm")
