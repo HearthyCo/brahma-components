@@ -1,8 +1,12 @@
-var ButtonForm, InputForm, React, UserStore, a, form, _ref;
+var ButtonForm, DateForm, GenderForm, React, TextForm, UserStore, a, form, _ref;
 
 React = require('react');
 
-InputForm = React.createFactory(require("../components/form/input"));
+TextForm = React.createFactory(require("../components/form/text"));
+
+DateForm = React.createFactory(require("../components/form/date"));
+
+GenderForm = React.createFactory(require("../components/form/gender"));
 
 ButtonForm = React.createFactory(require("../components/form/button"));
 
@@ -42,30 +46,30 @@ module.exports = React.createClass({
       action: "signup",
       onChange: this.handleChange,
       onSubmit: this.handleSubmit
-    }, InputForm({
+    }, TextForm({
       label: "Username",
       name: "login",
       type: "text"
-    }), InputForm({
+    }), TextForm({
       label: "Email",
       name: "email",
       type: "email"
-    }), InputForm({
+    }), TextForm({
       label: "Password",
       name: "password",
       type: "password"
-    }), InputForm({
+    }), TextForm({
       label: "Password repeat",
       type: "password"
-    }), InputForm({
+    }), TextForm({
       label: "Name",
       name: "name",
       type: "text"
-    }), InputForm({
+    }), GenderForm({
       label: "Gender",
       name: "gender",
       type: "text"
-    }), InputForm({
+    }), DateForm({
       label: "Birthdate",
       name: "birthdate",
       type: "text"

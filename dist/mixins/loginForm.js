@@ -1,8 +1,8 @@
-var ButtonForm, InputForm, React, a, form, _ref;
+var ButtonForm, React, TextForm, a, form, _ref;
 
 React = require('react');
 
-InputForm = React.createFactory(require("../components/form/input"));
+TextForm = React.createFactory(require("../components/form/text"));
 
 ButtonForm = React.createFactory(require("../components/form/button"));
 
@@ -12,11 +12,11 @@ module.exports = React.createClass({
   render: function() {
     return form({
       action: this.props.action
-    }, InputForm({
+    }, TextForm({
       label: "Email",
       name: "login",
       type: "email"
-    }), InputForm({
+    }), TextForm({
       label: "Password",
       name: "password",
       type: "password"
