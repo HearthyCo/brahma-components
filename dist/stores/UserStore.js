@@ -24,6 +24,17 @@ AppDispatcher.on('all', function(eventName, payload) {
           return console.log('Error registering!', model, response);
         }
       });
+    case 'user:login':
+      user = new UserStore();
+      return user.save(payload.user, {
+        url: '/v1/user/login',
+        success: function(model, response) {
+          return console.log('Login success!', model, response);
+        },
+        error: function(model, response) {
+          return console.log('Login error!', model, response);
+        }
+      });
   }
 });
 

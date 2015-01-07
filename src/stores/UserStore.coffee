@@ -21,5 +21,15 @@ AppDispatcher.on 'all', (eventName, payload) ->
           console.log 'Error registering!', model, response
       }
 
+    when 'user:login'
+      user = new UserStore()
+      user.save payload.user, {
+        url: '/v1/user/login'
+        success: (model, response) ->
+          console.log 'Login success!', model, response
+        error: (model, response) ->
+          console.log 'Login error!', model, response
+      }
+
 
 module.exports = UserStore
