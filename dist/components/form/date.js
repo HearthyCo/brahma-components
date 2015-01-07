@@ -2,7 +2,7 @@ var React, div, label, option, select, _ref;
 
 React = require('react');
 
-select = require('./select');
+select = React.createFactory(require('./select'));
 
 _ref = React.DOM, div = _ref.div, label = _ref.label, option = _ref.option;
 

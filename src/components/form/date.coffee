@@ -1,5 +1,5 @@
 React = require 'react'
-select = require './select'
+select = React.createFactory require './select'
 { div, label, option } = React.DOM
 
 module.exports = React.createClass(

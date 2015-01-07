@@ -1,5 +1,5 @@
 React = require 'react'
-input = require './input'
+input = React.createFactory require './input'
 { div, label } = React.DOM
 
 module.exports = React.createClass

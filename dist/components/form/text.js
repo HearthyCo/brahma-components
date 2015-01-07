@@ -2,7 +2,7 @@ var React, div, input, label, _ref;
 
 React = require('react');
 
-input = require('./input');
+input = React.createFactory(require('./input'));
 
 _ref = React.DOM, div = _ref.div, label = _ref.label;
 
