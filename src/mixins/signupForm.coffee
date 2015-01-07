@@ -7,20 +7,14 @@ ButtonForm = React.createFactory require "../components/form/button"
 
 {form, a} = React.DOM
 
-UserStore = require "../stores/UserStore"
+UserActions = require "../actions/UserActions"
 
 module.exports = React.createClass
 
   handleSubmit: (e) ->
     e.preventDefault()
     #console.log @getFormValue()
-    user = new UserStore
-    user.save @getFormValue(), {
-      success: (e) ->
-        console.log 'Register success!', e
-      error: (e) ->
-        console.log 'Error registering!', e
-    }
+    UserActions.register @getFormValue()
 
   handleChange: (e) ->
     #console.log @getFormValue()

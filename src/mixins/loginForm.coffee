@@ -5,20 +5,36 @@ ButtonForm = React.createFactory require "../components/form/button"
 
 { form, a } = React.DOM
 
+UserActions = require "../actions/UserActions"
+
 module.exports = React.createClass
+
+  handleSubmit: (e) ->
+    e.preventDefault()
+    UserActions.login @getFormValue()
+
+  getFormValue: ->
+    ret = {}
+    for i in @getDOMNode().elements
+      if i.name
+        ret[i.name] = i.value
+    return ret
+
   render: ->
     form(
       action: @props.action
+      onSubmit: @handleSubmit
       , TextForm(
-        label: "Email",
+        label: "Username",
         name: "login",
-        type: "email"
+        type: "text"
       )
       , TextForm(
         label: "Password",
         name: "password",
         type: "password"
-      ), ButtonForm(
+      )
+      , ButtonForm(
         label: "Login"
       )
       , a(
