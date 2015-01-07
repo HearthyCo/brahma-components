@@ -8,4 +8,5 @@ module.exports = React.createClass
       name: @props.name
       placeholder: @props.label
       type: @props.type
+      value: @props.value
     )
