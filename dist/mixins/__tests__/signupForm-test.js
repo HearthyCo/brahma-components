@@ -1,6 +1,10 @@
 jest.dontMock('../signupForm');
 
-jest.dontMock('../../components/form/input');
+jest.dontMock('../../components/form/text');
+
+jest.dontMock('../../components/form/gender');
+
+jest.dontMock('../../components/form/date');
 
 jest.dontMock('../../components/form/button');
 
