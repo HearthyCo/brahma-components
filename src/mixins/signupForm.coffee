@@ -23,10 +23,12 @@ module.exports = React.createClass
     ret = {}
     for i in @getDOMNode().elements
       if i.name
-        ret[i.name] = i.value
+        if i.type == 'radio'
+          if i.checked
+            ret[i.name] = i.value
+        else
+          ret[i.name] = i.value
 
-    # AQUI
-    console.log JSON.stringify ret
     return ret
 
   render: ->

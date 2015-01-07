@@ -27,7 +27,13 @@ module.exports = React.createClass({
     for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
       i = _ref1[_i];
       if (i.name) {
-        ret[i.name] = i.value;
+        if (i.type === 'radio') {
+          if (i.checked) {
+            ret[i.name] = i.value;
+          }
+        } else {
+          ret[i.name] = i.value;
+        }
       }
     }
     console.log(JSON.stringify(ret));
