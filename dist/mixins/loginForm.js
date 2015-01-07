@@ -1,4 +1,4 @@
-var ButtonForm, InputForm, React, form;
+var ButtonForm, InputForm, React, a, form, _ref;
 
 React = require('react');
 
@@ -6,20 +6,24 @@ InputForm = React.createFactory(require("../components/form/input"));
 
 ButtonForm = React.createFactory(require("../components/form/button"));
 
-form = React.DOM.form;
+_ref = React.DOM, form = _ref.form, a = _ref.a;
 
 module.exports = React.createClass({
   render: function() {
     return form({
       action: this.props.action
     }, InputForm({
-      fieldName: "Email",
+      label: "Email",
+      name: "login",
       type: "email"
     }), InputForm({
-      fieldName: "Password",
+      label: "Password",
+      name: "password",
       type: "password"
     }), ButtonForm({
-      fieldName: "Login"
-    }));
+      label: "Login"
+    }), a({
+      href: "/register"
+    }, "Register"));
   }
 });

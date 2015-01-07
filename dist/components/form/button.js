@@ -10,6 +10,6 @@ module.exports = React.createClass({
       className: "field-set"
     }, button({
       type: "submit"
-    }, this.props.fieldName));
+    }, this.props.label));
   }
 });

@@ -12,11 +12,12 @@ module.exports = React.createClass({
       className: 'field'
     }, label({
       className: 'label-form'
-    }, this.props.fieldName)), div({
+    }, this.props.label)), div({
       className: 'field'
     }, input({
       className: 'input-form',
-      placeholder: this.props.fieldName,
+      name: this.props.name,
+      placeholder: this.props.label,
       type: this.props.type
     })));
   }
