@@ -1,9 +1,12 @@
 React = require 'react'
-
-{div, button} = React.DOM
+{ div, button } = React.DOM
 
 module.exports = React.createClass
   render: ->
-    return (div { className: "field-set" },
-      (button { type: "submit"}, @props.label)
+    div(
+      className: "field-set"
+      , button(
+        type: "submit"
+        , @props.label
+      )
     )
