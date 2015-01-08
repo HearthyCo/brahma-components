@@ -20,16 +20,22 @@ module.exports = React.createClass
           label: 'Hombre'
           name: @props.name
           value: 'MALE'
+          checked: @props.value is 'MALE'
+          callback: @props.callback
         )
         , radio(
           label: 'Mujer'
           name: @props.name
           value: 'FEMALE'
+          checked: @props.value is 'FEMALE'
+          callback: @props.callback
         )
         , radio(
           label: 'Otro'
           name: @props.name
           value: 'OTHER'
+          checked: @props.value is 'OTHER'
+          callback: @props.callback
         )
       )
       , div(

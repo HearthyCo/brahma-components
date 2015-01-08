@@ -24,6 +24,9 @@ module.exports = exports = {
   },
   "stores": {
     "UserStore": require("./stores/UserStore")
+  },
+  "util": {
+    "objectTools": require("./util/objectTools")
   }
 };
 //EOF

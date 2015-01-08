@@ -19,8 +19,10 @@ module.exports = React.createClass({
       className: 'field'
     }, input({
       name: this.props.name,
-      placeholder: this.props.label,
-      type: this.props.type
+      label: this.props.label,
+      type: this.props.type,
+      value: this.props.value,
+      callback: this.props.callback
     })), div({
       className: 'message'
     }, label({

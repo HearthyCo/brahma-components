@@ -1,4 +1,5 @@
 React = require 'react'
+_ = require 'underscore'
 
 TextForm = React.createFactory require '../components/form/text'
 DateForm = React.createFactory require '../components/form/date'
@@ -9,32 +10,28 @@ ButtonForm = React.createFactory require '../components/form/button'
 
 UserActions = require '../actions/UserActions'
 
+ObjectTools = require '../util/objectTools'
+
 module.exports = React.createClass
 
   handleSubmit: (e) ->
     e.preventDefault()
-    #console.log @getFormValue()
-    UserActions.register @getFormValue()
+    obj = _.extend {}, @state
+    birthdate = ("0000" + (obj.birthdate.year || "")).substr(-4) + '-'
+    birthdate += ("00" + (obj.birthdate.month || "")).substr(-2) + '-'
+    birthdate += ("00" + (obj.birthdate.day || "")).substr(-2)
+    obj.birthdate = birthdate
+    console.log obj
+    UserActions.register obj
 
-  handleChange: (e) ->
-    #console.log @getFormValue()
+  getInitialState: () ->
+    return {}
 
-  getFormValue: ->
-    ret = {}
-    bdate = {}
-
-    for i in @getDOMNode().elements
-      if i.name
-        if i.type == 'radio'
-          if i.checked
-            ret[i.name] = i.value
-        else if i.nodeName == 'SELECT'
-          bdate[i.name] = (if i.value < 10 then 0 + i.value else i.value)
-        else
-          ret[i.name] = i.value
-
-    ret['birthdate'] = bdate.year + '-' + bdate.month + '-' + bdate.day
-    return ret
+  handleChange: (key, val) ->
+    newState = _.extend {}, @state
+    ObjectTools.indexStrSet newState, key, val
+    console.log 'New state:', newState
+    @setState newState
 
   buildComp: (type, opt) ->
     switch type
@@ -43,28 +40,38 @@ module.exports = React.createClass
         label: opt.label
         name: opt.name
         type: type
+        callback: @handleChange
+        value: @state[opt.name]
 
       when 'email' then TextForm
         id: opt.name
         label: opt.label
         name: opt.name
         type: type
+        callback: @handleChange
+        value: @state[opt.name]
 
       when 'password' then TextForm
         id: opt.name
         label: opt.label
         name: opt.name
         type: type
+        callback: @handleChange
+        value: @state[opt.name]
 
       when 'gender' then GenderForm
         id: opt.name
         label: opt.label
         name: opt.name
+        callback: @handleChange
+        value: @state[opt.name]
 
       when 'date' then DateForm
         id: opt.name
         label: opt.label
         name: opt.name
+        callback: @handleChange
+        value: @state[opt.name]
 
       when 'button' then ButtonForm
         id: opt.name
@@ -75,7 +82,6 @@ module.exports = React.createClass
     # Mandatory fields: login, password, gender, name, birthdate
     form
       action: 'signup',
-      onChange: @handleChange,
       onSubmit: @handleSubmit
       , @buildComp('text', { label: 'Username', name: 'login' })
       , @buildComp('email', { label: 'Email', name: 'email' })

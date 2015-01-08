@@ -18,8 +18,10 @@ module.exports = React.createClass
         className: 'field'
         , input(
           name: @props.name
-          placeholder: @props.label
+          label: @props.label
           type: @props.type
+          value: @props.value
+          callback: @props.callback
         )
       )
       , div(

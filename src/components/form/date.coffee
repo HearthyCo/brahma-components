@@ -43,6 +43,7 @@ module.exports = React.createClass(
     div(
       id: @props.id
       className: 'field-set'
+      onChange: @handleChange
       , div(
         className: 'label'
         , label(
@@ -53,18 +54,24 @@ module.exports = React.createClass(
       , div(
         className: 'field'
         , select(
-          name: 'day'
+          name: @props.name + '.day'
           options: @days()
+          value: @props.value
+          callback: @props.callback
         )
 
         , select(
-          name: 'month'
+          name: @props.name + '.month'
           options: @months()
+          value: @props.value
+          callback: @props.callback
         )
 
         , select(
-          name: 'year'
+          name: @props.name + '.year'
           options: @years()
+          value: @props.value
+          callback: @props.callback
         )
       )
       , div(

@@ -1,6 +1,8 @@
-var ButtonForm, DateForm, GenderForm, React, TextForm, UserActions, a, form, _ref;
+var ButtonForm, DateForm, GenderForm, ObjectTools, React, TextForm, UserActions, a, form, _, _ref;
 
 React = require('react');
+
+_ = require('underscore');
 
 TextForm = React.createFactory(require('../components/form/text'));
 
@@ -14,33 +16,29 @@ _ref = React.DOM, form = _ref.form, a = _ref.a;
 
 UserActions = require('../actions/UserActions');
 
+ObjectTools = require('../util/objectTools');
+
 module.exports = React.createClass({
   handleSubmit: function(e) {
+    var birthdate, obj;
     e.preventDefault();
-    return UserActions.register(this.getFormValue());
+    obj = _.extend({}, this.state);
+    birthdate = ("0000" + (obj.birthdate.year || "")).substr(-4) + '-';
+    birthdate += ("00" + (obj.birthdate.month || "")).substr(-2) + '-';
+    birthdate += ("00" + (obj.birthdate.day || "")).substr(-2);
+    obj.birthdate = birthdate;
+    console.log(obj);
+    return UserActions.register(obj);
   },
-  handleChange: function(e) {},
-  getFormValue: function() {
-    var bdate, i, ret, _i, _len, _ref1;
-    ret = {};
-    bdate = {};
-    _ref1 = this.getDOMNode().elements;
-    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-      i = _ref1[_i];
-      if (i.name) {
-        if (i.type === 'radio') {
-          if (i.checked) {
-            ret[i.name] = i.value;
-          }
-        } else if (i.nodeName === 'SELECT') {
-          bdate[i.name] = (i.value < 10 ? 0 + i.value : i.value);
-        } else {
-          ret[i.name] = i.value;
-        }
-      }
-    }
-    ret['birthdate'] = bdate.year + '-' + bdate.month + '-' + bdate.day;
-    return ret;
+  getInitialState: function() {
+    return {};
+  },
+  handleChange: function(key, val) {
+    var newState;
+    newState = _.extend({}, this.state);
+    ObjectTools.indexStrSet(newState, key, val);
+    console.log('New state:', newState);
+    return this.setState(newState);
   },
   buildComp: function(type, opt) {
     switch (type) {
@@ -49,33 +47,43 @@ module.exports = React.createClass({
           id: opt.name,
           label: opt.label,
           name: opt.name,
-          type: type
+          type: type,
+          callback: this.handleChange,
+          value: this.state[opt.name]
         });
       case 'email':
         return TextForm({
           id: opt.name,
           label: opt.label,
           name: opt.name,
-          type: type
+          type: type,
+          callback: this.handleChange,
+          value: this.state[opt.name]
         });
       case 'password':
         return TextForm({
           id: opt.name,
           label: opt.label,
           name: opt.name,
-          type: type
+          type: type,
+          callback: this.handleChange,
+          value: this.state[opt.name]
         });
       case 'gender':
         return GenderForm({
           id: opt.name,
           label: opt.label,
-          name: opt.name
+          name: opt.name,
+          callback: this.handleChange,
+          value: this.state[opt.name]
         });
       case 'date':
         return DateForm({
           id: opt.name,
           label: opt.label,
-          name: opt.name
+          name: opt.name,
+          callback: this.handleChange,
+          value: this.state[opt.name]
         });
       case 'button':
         return ButtonForm({
@@ -87,7 +95,6 @@ module.exports = React.createClass({
   render: function() {
     return form({
       action: 'signup',
-      onChange: this.handleChange,
       onSubmit: this.handleSubmit
     }, this.buildComp('text', {
       label: 'Username',

@@ -62,7 +62,8 @@ module.exports = React.createClass({
   render: function() {
     return div({
       id: this.props.id,
-      className: 'field-set'
+      className: 'field-set',
+      onChange: this.handleChange
     }, div({
       className: 'label'
     }, label({
@@ -70,14 +71,20 @@ module.exports = React.createClass({
     }, this.props.label)), div({
       className: 'field'
     }, select({
-      name: 'day',
-      options: this.days()
+      name: this.props.name + '.day',
+      options: this.days(),
+      value: this.props.value,
+      callback: this.props.callback
     }), select({
-      name: 'month',
-      options: this.months()
+      name: this.props.name + '.month',
+      options: this.months(),
+      value: this.props.value,
+      callback: this.props.callback
     }), select({
-      name: 'year',
-      options: this.years()
+      name: this.props.name + '.year',
+      options: this.years(),
+      value: this.props.value,
+      callback: this.props.callback
     })), div({
       className: 'message'
     }, label({
