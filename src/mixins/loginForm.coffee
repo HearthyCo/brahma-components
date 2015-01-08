@@ -20,26 +20,31 @@ module.exports = React.createClass
         ret[i.name] = i.value
     return ret
 
+  buildComp: (type, opt) ->
+    switch type
+      when 'text' then TextForm
+        id: opt.name
+        label: opt.label
+        name: opt.name
+        type: type
+
+      when 'password' then TextForm
+        id: opt.name
+        label: opt.label
+        name: opt.name
+        type: type
+
+      when 'button' then ButtonForm
+        id: opt.name
+        label: opt.label
+
   render: ->
     form(
       action: @props.action
       onSubmit: @handleSubmit
-      , TextForm(
-        id: 'username'
-        label: 'Username',
-        name: 'login',
-        type: 'text'
-      )
-      , TextForm(
-        id: 'password'
-        label: 'Password',
-        name: 'password',
-        type: 'password'
-      )
-      , ButtonForm(
-        id: 'login'
-        label: 'Login'
-      )
+      , @buildComp('text', { label: 'Username', name: 'login' })
+      , @buildComp('password', { label: 'Password', name: 'password' })
+      , @buildComp('button', { label: 'Sign up', })
       , a(
         href: '/register'
         , 'Register'

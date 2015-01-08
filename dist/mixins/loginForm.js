@@ -27,23 +27,41 @@ module.exports = React.createClass({
     }
     return ret;
   },
+  buildComp: function(type, opt) {
+    switch (type) {
+      case 'text':
+        return TextForm({
+          id: opt.name,
+          label: opt.label,
+          name: opt.name,
+          type: type
+        });
+      case 'password':
+        return TextForm({
+          id: opt.name,
+          label: opt.label,
+          name: opt.name,
+          type: type
+        });
+      case 'button':
+        return ButtonForm({
+          id: opt.name,
+          label: opt.label
+        });
+    }
+  },
   render: function() {
     return form({
       action: this.props.action,
       onSubmit: this.handleSubmit
-    }, TextForm({
-      id: 'username',
+    }, this.buildComp('text', {
       label: 'Username',
-      name: 'login',
-      type: 'text'
-    }), TextForm({
-      id: 'password',
+      name: 'login'
+    }), this.buildComp('password', {
       label: 'Password',
-      name: 'password',
-      type: 'password'
-    }), ButtonForm({
-      id: 'login',
-      label: 'Login'
+      name: 'password'
+    }), this.buildComp('button', {
+      label: 'Sign up'
     }), a({
       href: '/register'
     }, 'Register'));
