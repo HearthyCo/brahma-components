@@ -1,0 +1,6 @@
+{
+    "scriptPreprocessor": "preprocessor.js",
+    "testFileExtensions": ["coffee", "js"],
+    "unmockedModulePathPatterns": ["react", "exoskeleton"],
+    "moduleFileExtensions": ["js", "json", "coffee", "litcoffee", "coffee.md"]
+}
