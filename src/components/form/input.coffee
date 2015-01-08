@@ -6,7 +6,7 @@ module.exports = React.createClass
     input(
       className: 'input-form'
       name: @props.name
-      placeholder: @props.label
+      placeholder: @props.placeholder
       type: @props.type
       value: @props.value
     )

@@ -8,9 +8,9 @@ module.exports = React.createClass({
   render: function() {
     return div({
       id: this.props.id,
-      className: "field-set"
+      className: 'field-set'
     }, button({
-      type: "submit"
+      type: 'submit'
     }, this.props.label));
   }
 });

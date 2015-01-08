@@ -2,17 +2,17 @@ var ButtonForm, DateForm, GenderForm, React, TextForm, UserActions, a, form, _re
 
 React = require('react');
 
-TextForm = React.createFactory(require("../components/form/text"));
+TextForm = React.createFactory(require('../components/form/text'));
 
-DateForm = React.createFactory(require("../components/form/date"));
+DateForm = React.createFactory(require('../components/form/date'));
 
-GenderForm = React.createFactory(require("../components/form/gender"));
+GenderForm = React.createFactory(require('../components/form/gender'));
 
-ButtonForm = React.createFactory(require("../components/form/button"));
+ButtonForm = React.createFactory(require('../components/form/button'));
 
 _ref = React.DOM, form = _ref.form, a = _ref.a;
 
-UserActions = require("../actions/UserActions");
+UserActions = require('../actions/UserActions');
 
 module.exports = React.createClass({
   handleSubmit: function(e) {
@@ -44,46 +44,46 @@ module.exports = React.createClass({
   },
   render: function() {
     return form({
-      action: "signup",
+      action: 'signup',
       onChange: this.handleChange,
       onSubmit: this.handleSubmit
     }, TextForm({
       id: 'username',
-      label: "Username",
-      name: "login",
-      type: "text"
+      label: 'Username',
+      name: 'login',
+      type: 'text'
     }), TextForm({
       id: 'email',
-      label: "Email",
-      name: "email",
-      type: "email"
+      label: 'Email',
+      name: 'email',
+      type: 'email'
     }), TextForm({
       id: 'password',
-      label: "Password",
-      name: "password",
-      type: "password"
+      label: 'Password',
+      name: 'password',
+      type: 'password'
     }), TextForm({
       id: 'password-repeat',
-      label: "Password repeat",
-      type: "password"
+      label: 'Password repeat',
+      type: 'password'
     }), TextForm({
       id: 'name',
-      label: "Name",
-      name: "name",
-      type: "text"
+      label: 'Name',
+      name: 'name',
+      type: 'text'
     }), GenderForm({
       id: 'gender',
-      label: "Gender",
-      name: "gender"
+      label: 'Gender',
+      name: 'gender'
     }), DateForm({
       id: 'birthdate',
-      label: "Birthdate",
-      name: "birthdate"
+      label: 'Birthdate',
+      name: 'birthdate'
     }), ButtonForm({
       id: 'signup',
-      label: "Sign up"
+      label: 'Sign up'
     }), a({
-      href: "/login"
-    }, "Login"));
+      href: '/login'
+    }, 'Login'));
   }
 });

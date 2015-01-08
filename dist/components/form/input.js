@@ -9,7 +9,7 @@ module.exports = React.createClass({
     return input({
       className: 'input-form',
       name: this.props.name,
-      placeholder: this.props.label,
+      placeholder: this.props.placeholder,
       type: this.props.type,
       value: this.props.value
     });

@@ -2,13 +2,13 @@ var ButtonForm, React, TextForm, UserActions, a, form, _ref;
 
 React = require('react');
 
-TextForm = React.createFactory(require("../components/form/text"));
+TextForm = React.createFactory(require('../components/form/text'));
 
-ButtonForm = React.createFactory(require("../components/form/button"));
+ButtonForm = React.createFactory(require('../components/form/button'));
 
 _ref = React.DOM, form = _ref.form, a = _ref.a;
 
-UserActions = require("../actions/UserActions");
+UserActions = require('../actions/UserActions');
 
 module.exports = React.createClass({
   handleSubmit: function(e) {
@@ -33,19 +33,19 @@ module.exports = React.createClass({
       onSubmit: this.handleSubmit
     }, TextForm({
       id: 'username',
-      label: "Username",
-      name: "login",
-      type: "text"
+      label: 'Username',
+      name: 'login',
+      type: 'text'
     }), TextForm({
       id: 'password',
-      label: "Password",
-      name: "password",
-      type: "password"
+      label: 'Password',
+      name: 'password',
+      type: 'password'
     }), ButtonForm({
       id: 'login',
-      label: "Login"
+      label: 'Login'
     }), a({
-      href: "/register"
-    }, "Register"));
+      href: '/register'
+    }, 'Register'));
   }
 });
