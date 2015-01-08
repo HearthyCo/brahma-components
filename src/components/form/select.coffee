@@ -7,13 +7,6 @@ module.exports = React.createClass
       className: "field-set"
       , div(
         className: "field"
-        , label(
-          className: "label-form"
-          , @props.label
-        )
-      )
-      , div(
-        className: "field"
         , select(
           className: "select-form"
           name: @props.name
