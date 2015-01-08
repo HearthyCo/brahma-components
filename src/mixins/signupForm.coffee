@@ -21,14 +21,19 @@ module.exports = React.createClass
 
   getFormValue: ->
     ret = {}
+    bdate = {}
+
     for i in @getDOMNode().elements
       if i.name
         if i.type == 'radio'
           if i.checked
             ret[i.name] = i.value
+        else if i.nodeName == 'SELECT'
+          bdate[i.name] = (if i.value < 10 then 0 + i.value else i.value)
         else
           ret[i.name] = i.value
 
+    ret['birthdate'] = bdate.year + '-' + bdate.month + '-' + bdate.day
     return ret
 
   render: ->

@@ -21,8 +21,9 @@ module.exports = React.createClass({
   },
   handleChange: function(e) {},
   getFormValue: function() {
-    var i, ret, _i, _len, _ref1;
+    var bdate, i, ret, _i, _len, _ref1;
     ret = {};
+    bdate = {};
     _ref1 = this.getDOMNode().elements;
     for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
       i = _ref1[_i];
@@ -31,11 +32,15 @@ module.exports = React.createClass({
           if (i.checked) {
             ret[i.name] = i.value;
           }
+        } else if (i.nodeName === 'SELECT') {
+          bdate[i.name] = (i.value < 10 ? 0 + i.value : i.value);
         } else {
           ret[i.name] = i.value;
         }
       }
     }
+    ret['birthdate'] = bdate.year + '-' + bdate.month + '-' + bdate.day;
+    console.log('RET', JSON.stringify(ret));
     return ret;
   },
   render: function() {
