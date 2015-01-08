@@ -36,7 +36,6 @@ module.exports = React.createClass({
         }
       }
     }
-    console.log(JSON.stringify(ret));
     return ret;
   },
   render: function() {
