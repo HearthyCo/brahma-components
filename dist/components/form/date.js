@@ -13,7 +13,7 @@ module.exports = React.createClass({
     days.push(option({
       key: 0,
       value: 0
-    }, ''));
+    }, 'Día'));
     for (i = _i = 1; _i <= 31; i = ++_i) {
       days.push(option({
         key: i,
@@ -29,9 +29,9 @@ module.exports = React.createClass({
     months = [];
     names = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     months.push(option({
-      key: '',
+      key: 0,
       value: 0
-    }, ''));
+    }, 'Mes'));
     for (i = _i = 1, _ref1 = names.length; 1 <= _ref1 ? _i <= _ref1 : _i >= _ref1; i = 1 <= _ref1 ? ++_i : --_i) {
       months.push(option({
         key: i,
@@ -46,9 +46,9 @@ module.exports = React.createClass({
     date = new Date();
     year = date.getFullYear();
     years.push(option({
-      key: '',
+      key: 0,
       value: 0
-    }, ''));
+    }, 'Año'));
     for (i = _i = 1900; 1900 <= year ? _i <= year : _i >= year; i = 1900 <= year ? ++_i : --_i) {
       years.push(option({
         key: i,
@@ -70,15 +70,12 @@ module.exports = React.createClass({
       className: 'field'
     }, select({
       name: 'day',
-      label: 'Día',
       options: this.days()
     }), select({
       name: 'month',
-      label: 'Mes',
       options: this.months()
     }), select({
       name: 'year',
-      label: 'Año',
       options: this.years()
     })));
   }

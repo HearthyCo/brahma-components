@@ -5,7 +5,7 @@ select = React.createFactory require './select'
 module.exports = React.createClass(
   days: ->
     days = []
-    days.push option { key: 0, value: 0 }, ''
+    days.push option { key: 0, value: 0 }, 'Día'
     days.push option { key: i, value: i }, {i} for i in [1..31]
     days
 
@@ -26,7 +26,7 @@ module.exports = React.createClass(
       'Diciembre'
     ]
 
-    months.push option {key: '', value: 0}, ''
+    months.push option {key: 0, value: 0}, 'Mes'
     months.push option {key: i, value: i}, names[i-1] for i in [1..names.length]
     months
 
@@ -35,7 +35,7 @@ module.exports = React.createClass(
     date = new Date()
     year = date.getFullYear()
 
-    years.push option { key: '', value: 0 }, ''
+    years.push option { key: 0, value: 0 }, 'Año'
     years.push option { key: i, value: i }, {i} for i in [1900..year]
     years
 
@@ -53,19 +53,16 @@ module.exports = React.createClass(
         className: 'field'
         , select(
           name: 'day'
-          label: 'Día'
           options: @days()
         )
 
         , select(
           name: 'month'
-          label: 'Mes'
           options: @months()
         )
 
         , select(
           name: 'year'
-          label: 'Año'
           options: @years()
         )
       )
