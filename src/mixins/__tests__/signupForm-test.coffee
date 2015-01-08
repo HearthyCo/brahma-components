@@ -1,7 +1,9 @@
 jest.dontMock '../signupForm'
 jest.dontMock '../../components/form/text'
 jest.dontMock '../../components/form/gender'
+jest.dontMock '../../components/form/input'
 jest.dontMock '../../components/form/date'
+jest.dontMock '../../components/form/select'
 jest.dontMock '../../components/form/button'
 
 describe 'Signup Form', ->
@@ -12,12 +14,27 @@ describe 'Signup Form', ->
 
     form = TestUtils.renderIntoDocument React.createElement LoginForm
     inputs = TestUtils.scryRenderedDOMComponentsWithTag form, 'input'
+    selects = TestUtils.scryRenderedDOMComponentsWithTag form, 'select'
     submit = TestUtils.findRenderedDOMComponentWithTag form, 'button'
 
-    # TODO: Cambiame por valores validos con los nuevos controles
+    # Set inputs
     for input in inputs
       node = input.getDOMNode()
-      node.value = node.name
+      if node.type == 'radio'
+        if node.value == 'MALE'
+          node.checked = true
+      else
+        node.value = node.name
+
+    # Set date
+    for select in selects
+      node = select.getDOMNode()
+
+      switch node.name
+        when 'day' then node.value = '6'
+        when 'month' then node.value = '8'
+        when 'year' then node.value = '1987'
+
     TestUtils.Simulate.submit submit
 
     UserActions = require '../../actions/UserActions'
@@ -27,7 +44,7 @@ describe 'Signup Form', ->
       password: 'password'
       name: 'name'
       email: 'email'
-      gender: 'gender'
-      birthdate: 'birthdate'
+      gender: 'MALE'
+      birthdate: '1987-08-06'
     })
 
