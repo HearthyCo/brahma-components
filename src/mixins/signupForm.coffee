@@ -1,13 +1,13 @@
 React = require 'react'
 
-TextForm = React.createFactory require "../components/form/text"
-DateForm = React.createFactory require "../components/form/date"
-GenderForm = React.createFactory require "../components/form/gender"
-ButtonForm = React.createFactory require "../components/form/button"
+TextForm = React.createFactory require '../components/form/text'
+DateForm = React.createFactory require '../components/form/date'
+GenderForm = React.createFactory require '../components/form/gender'
+ButtonForm = React.createFactory require '../components/form/button'
 
 { form, a } = React.DOM
 
-UserActions = require "../actions/UserActions"
+UserActions = require '../actions/UserActions'
 
 module.exports = React.createClass
 
@@ -39,45 +39,53 @@ module.exports = React.createClass
   render: ->
     # Mandatory fields: login, password, gender, name, birthdate
     form
-      action: "signup",
+      action: 'signup',
       onChange: @handleChange,
       onSubmit: @handleSubmit
       , TextForm(
-        label: "Username"
-        name: "login"
-        type: "text"
+        id: 'username'
+        label: 'Username'
+        name: 'login'
+        type: 'text'
       )
       , TextForm(
-        label: "Email"
-        name: "email"
-        type: "email"
+        id: 'email'
+        label: 'Email'
+        name: 'email'
+        type: 'email'
       )
       , TextForm(
-        label: "Password"
-        name: "password"
-        type: "password"
+        id: 'password'
+        label: 'Password'
+        name: 'password'
+        type: 'password'
       )
       , TextForm(
-        label: "Password repeat"
-        type: "password"
+        id: 'password-repeat'
+        label: 'Password repeat'
+        type: 'password'
       )
       , TextForm(
-        label: "Name"
-        name: "name"
-        type: "text"
+        id: 'name'
+        label: 'Name'
+        name: 'name'
+        type: 'text'
       )
       , GenderForm(
-        label: "Gender"
-        name: "gender"
+        id: 'gender'
+        label: 'Gender'
+        name: 'gender'
       )
       , DateForm(
-        label: "Birthdate"
-        name: "birthdate"
+        id: 'birthdate'
+        label: 'Birthdate'
+        name: 'birthdate'
       )
       , ButtonForm(
-        label: "Sign up"
+        id: 'signup'
+        label: 'Sign up'
       )
       , a(
-        href: "/login"
-        , "Login"
+        href: '/login'
+        , 'Login'
       )

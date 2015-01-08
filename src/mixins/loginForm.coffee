@@ -1,11 +1,11 @@
 React = require 'react'
 
-TextForm = React.createFactory require "../components/form/text"
-ButtonForm = React.createFactory require "../components/form/button"
+TextForm = React.createFactory require '../components/form/text'
+ButtonForm = React.createFactory require '../components/form/button'
 
 { form, a } = React.DOM
 
-UserActions = require "../actions/UserActions"
+UserActions = require '../actions/UserActions'
 
 module.exports = React.createClass
 
@@ -25,20 +25,23 @@ module.exports = React.createClass
       action: @props.action
       onSubmit: @handleSubmit
       , TextForm(
-        label: "Username",
-        name: "login",
-        type: "text"
+        id: 'username'
+        label: 'Username',
+        name: 'login',
+        type: 'text'
       )
       , TextForm(
-        label: "Password",
-        name: "password",
-        type: "password"
+        id: 'password'
+        label: 'Password',
+        name: 'password',
+        type: 'password'
       )
       , ButtonForm(
-        label: "Login"
+        id: 'login'
+        label: 'Login'
       )
       , a(
-        href: "/register"
-        , "Register"
+        href: '/register'
+        , 'Register'
       )
     )

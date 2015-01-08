@@ -32,14 +32,17 @@ module.exports = React.createClass({
       action: this.props.action,
       onSubmit: this.handleSubmit
     }, TextForm({
+      id: 'username',
       label: "Username",
       name: "login",
       type: "text"
     }), TextForm({
+      id: 'password',
       label: "Password",
       name: "password",
       type: "password"
     }), ButtonForm({
+      id: 'login',
       label: "Login"
     }), a({
       href: "/register"

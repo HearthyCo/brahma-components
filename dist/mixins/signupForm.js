@@ -40,7 +40,6 @@ module.exports = React.createClass({
       }
     }
     ret['birthdate'] = bdate.year + '-' + bdate.month + '-' + bdate.day;
-    console.log('RET', JSON.stringify(ret));
     return ret;
   },
   render: function() {
@@ -49,31 +48,39 @@ module.exports = React.createClass({
       onChange: this.handleChange,
       onSubmit: this.handleSubmit
     }, TextForm({
+      id: 'username',
       label: "Username",
       name: "login",
       type: "text"
     }), TextForm({
+      id: 'email',
       label: "Email",
       name: "email",
       type: "email"
     }), TextForm({
+      id: 'password',
       label: "Password",
       name: "password",
       type: "password"
     }), TextForm({
+      id: 'password-repeat',
       label: "Password repeat",
       type: "password"
     }), TextForm({
+      id: 'name',
       label: "Name",
       name: "name",
       type: "text"
     }), GenderForm({
+      id: 'gender',
       label: "Gender",
       name: "gender"
     }), DateForm({
+      id: 'birthdate',
       label: "Birthdate",
       name: "birthdate"
     }), ButtonForm({
+      id: 'signup',
       label: "Sign up"
     }), a({
       href: "/login"
