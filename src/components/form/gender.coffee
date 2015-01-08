@@ -1,13 +1,14 @@
 React = require 'react'
-input = React.createFactory require './input'
+radio = React.createFactory require './radio'
 { div, label } = React.DOM
 
 module.exports = React.createClass
   render: ->
     div(
+      id: @props.id
       className: 'field-set'
       , div(
-        className: 'field'
+        className: 'label'
         , label(
           className: 'label-form'
           , @props.label
@@ -15,35 +16,26 @@ module.exports = React.createClass
       )
       , div(
         className: 'field'
-        , input(
-          className: 'radio-form'
+        , radio(
+          label: 'Hombre'
           name: @props.name
           value: 'MALE'
-          type: 'radio'
         )
-        , label(
-          className: 'label-form'
-          , 'Hombre'
-        )
-        , input(
-          className: 'radio-form'
+        , radio(
+          label: 'Mujer'
           name: @props.name
           value: 'FEMALE'
-          type: 'radio'
         )
-        , label(
-          className: 'label-form'
-          , 'Mujer'
-        )
-        , input(
-          className: 'radio-form'
+        , radio(
+          label: 'Otro'
           name: @props.name
           value: 'OTHER'
-          type: 'radio'
         )
+      )
+      , div(
+        className: 'message'
         , label(
-          className: 'label-form'
-          , 'Otro'
+          className: 'message-form'
         )
       )
     )
