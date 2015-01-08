@@ -1,5 +1,6 @@
 jest.dontMock '../loginForm'
 jest.dontMock '../../components/form/input'
+jest.dontMock '../../components/form/text'
 jest.dontMock '../../components/form/button'
 
 describe 'Login Form', ->
