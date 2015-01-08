@@ -4,6 +4,8 @@ describe 'User Store', ->
 
   it 'handles user:login event by POSTing the user credentials', ->
 
+    Backbone = require 'exoskeleton'
+    Backbone.ajax = jest.genMockFunction()
     UserStore = require '../UserStore'
     AppDispatcher = require '../../dispatcher/AppDispatcher'
     handler = AppDispatcher.on.mock.calls[0][1]
@@ -16,8 +18,7 @@ describe 'User Store', ->
     }
     handler('user:login', payload)
 
-    Backbone = require 'exoskeleton'
-    data = Backbone.$.ajax.mock.calls[0][0]
+    data = Backbone.ajax.mock.calls[0][0]
     expect(data.type).toEqual('POST')
     expect(data.url).toEqual('/v1/user/login')
     datajson = JSON.parse(data.data)
@@ -26,6 +27,8 @@ describe 'User Store', ->
 
   it 'handles user:register event by POSTing the user info', ->
 
+    Backbone = require 'exoskeleton'
+    Backbone.ajax = jest.genMockFunction()
     UserStore = require '../UserStore'
     AppDispatcher = require '../../dispatcher/AppDispatcher'
     handler = AppDispatcher.on.mock.calls[0][1]
@@ -42,8 +45,7 @@ describe 'User Store', ->
     }
     handler('user:register', payload)
 
-    Backbone = require 'exoskeleton'
-    data = Backbone.$.ajax.mock.calls[0][0]
+    data = Backbone.ajax.mock.calls[0][0]
     expect(data.type).toEqual('POST')
     expect(data.url).toEqual('/v1/user')
     datajson = JSON.parse(data.data)
