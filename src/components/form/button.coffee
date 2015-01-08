@@ -4,9 +4,10 @@ React = require 'react'
 module.exports = React.createClass
   render: ->
     div(
-      className: "field-set"
+      id: @props.id
+      className: 'field-set'
       , button(
-        type: "submit"
+        type: 'submit'
         , @props.label
       )
     )
