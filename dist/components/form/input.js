@@ -1,13 +1,13 @@
-var React, div, input, label, _ref;
+var React, input;
 
 React = require('react');
 
-_ref = React.DOM, div = _ref.div, label = _ref.label, input = _ref.input;
+input = React.DOM.input;
 
 module.exports = React.createClass({
   render: function() {
     return input({
-      className: this.props.className,
+      className: 'input-form',
       name: this.props.name,
       placeholder: this.props.label,
       type: this.props.type,
