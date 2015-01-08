@@ -42,45 +42,75 @@ module.exports = React.createClass({
     ret['birthdate'] = bdate.year + '-' + bdate.month + '-' + bdate.day;
     return ret;
   },
+  buildComp: function(type, opt) {
+    switch (type) {
+      case 'text':
+        return TextForm({
+          id: opt.name,
+          label: opt.label,
+          name: opt.name,
+          type: type
+        });
+      case 'email':
+        return TextForm({
+          id: opt.name,
+          label: opt.label,
+          name: opt.name,
+          type: type
+        });
+      case 'password':
+        return TextForm({
+          id: opt.name,
+          label: opt.label,
+          name: opt.name,
+          type: type
+        });
+      case 'gender':
+        return GenderForm({
+          id: opt.name,
+          label: opt.label,
+          name: opt.name
+        });
+      case 'date':
+        return DateForm({
+          id: opt.name,
+          label: opt.label,
+          name: opt.name
+        });
+      case 'button':
+        return ButtonForm({
+          id: opt.name,
+          label: opt.label
+        });
+    }
+  },
   render: function() {
     return form({
       action: 'signup',
       onChange: this.handleChange,
       onSubmit: this.handleSubmit
-    }, TextForm({
-      id: 'username',
+    }, this.buildComp('text', {
       label: 'Username',
-      name: 'login',
-      type: 'text'
-    }), TextForm({
-      id: 'email',
+      name: 'login'
+    }), this.buildComp('email', {
       label: 'Email',
-      name: 'email',
-      type: 'email'
-    }), TextForm({
-      id: 'password',
+      name: 'email'
+    }), this.buildComp('password', {
       label: 'Password',
-      name: 'password',
-      type: 'password'
-    }), TextForm({
-      id: 'password-repeat',
-      label: 'Password repeat',
-      type: 'password'
-    }), TextForm({
-      id: 'name',
+      name: 'password'
+    }), this.buildComp('password', {
+      label: 'Repeat',
+      name: 'password-repeat'
+    }), this.buildComp('text', {
       label: 'Name',
-      name: 'name',
-      type: 'text'
-    }), GenderForm({
-      id: 'gender',
+      name: 'name'
+    }), this.buildComp('gender', {
       label: 'Gender',
       name: 'gender'
-    }), DateForm({
-      id: 'birthdate',
+    }), this.buildComp('date', {
       label: 'Birthdate',
       name: 'birthdate'
-    }), ButtonForm({
-      id: 'signup',
+    }), this.buildComp('button', {
       label: 'Sign up'
     }), a({
       href: '/login'

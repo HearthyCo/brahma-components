@@ -36,55 +36,55 @@ module.exports = React.createClass
     ret['birthdate'] = bdate.year + '-' + bdate.month + '-' + bdate.day
     return ret
 
+  buildComp: (type, opt) ->
+    switch type
+      when 'text' then TextForm
+        id: opt.name
+        label: opt.label
+        name: opt.name
+        type: type
+
+      when 'email' then TextForm
+        id: opt.name
+        label: opt.label
+        name: opt.name
+        type: type
+
+      when 'password' then TextForm
+        id: opt.name
+        label: opt.label
+        name: opt.name
+        type: type
+
+      when 'gender' then GenderForm
+        id: opt.name
+        label: opt.label
+        name: opt.name
+
+      when 'date' then DateForm
+        id: opt.name
+        label: opt.label
+        name: opt.name
+
+      when 'button' then ButtonForm
+        id: opt.name
+        label: opt.label
+
+
   render: ->
     # Mandatory fields: login, password, gender, name, birthdate
     form
       action: 'signup',
       onChange: @handleChange,
       onSubmit: @handleSubmit
-      , TextForm(
-        id: 'username'
-        label: 'Username'
-        name: 'login'
-        type: 'text'
-      )
-      , TextForm(
-        id: 'email'
-        label: 'Email'
-        name: 'email'
-        type: 'email'
-      )
-      , TextForm(
-        id: 'password'
-        label: 'Password'
-        name: 'password'
-        type: 'password'
-      )
-      , TextForm(
-        id: 'password-repeat'
-        label: 'Password repeat'
-        type: 'password'
-      )
-      , TextForm(
-        id: 'name'
-        label: 'Name'
-        name: 'name'
-        type: 'text'
-      )
-      , GenderForm(
-        id: 'gender'
-        label: 'Gender'
-        name: 'gender'
-      )
-      , DateForm(
-        id: 'birthdate'
-        label: 'Birthdate'
-        name: 'birthdate'
-      )
-      , ButtonForm(
-        id: 'signup'
-        label: 'Sign up'
-      )
+      , @buildComp('text', { label: 'Username', name: 'login' })
+      , @buildComp('email', { label: 'Email', name: 'email' })
+      , @buildComp('password', { label: 'Password', name: 'password' })
+      , @buildComp('password', { label: 'Repeat', name: 'password-repeat' })
+      , @buildComp('text', { label: 'Name', name: 'name' })
+      , @buildComp('gender', { label: 'Gender', name: 'gender' })
+      , @buildComp('date', { label: 'Birthdate', name: 'birthdate' })
+      , @buildComp('button', { label: 'Sign up', })
       , a(
         href: '/login'
         , 'Login'
