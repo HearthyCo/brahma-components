@@ -61,9 +61,10 @@ module.exports = React.createClass({
   },
   render: function() {
     return div({
+      id: this.props.id,
       className: 'field-set'
     }, div({
-      className: 'field'
+      className: 'label'
     }, label({
       className: 'label-form'
     }, this.props.label)), div({
@@ -77,6 +78,10 @@ module.exports = React.createClass({
     }), select({
       name: 'year',
       options: this.years()
+    })), div({
+      className: 'message'
+    }, label({
+      className: 'message-form'
     })));
   }
 });

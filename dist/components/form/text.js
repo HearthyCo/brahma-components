@@ -9,18 +9,22 @@ _ref = React.DOM, div = _ref.div, label = _ref.label;
 module.exports = React.createClass({
   render: function() {
     return div({
+      id: this.props.id,
       className: 'field-set'
     }, div({
-      className: 'field'
+      className: 'label'
     }, label({
       className: 'label-form'
     }, this.props.label)), div({
       className: 'field'
     }, input({
-      className: 'input-form',
       name: this.props.name,
       placeholder: this.props.label,
       type: this.props.type
+    })), div({
+      className: 'message'
+    }, label({
+      className: 'message-form'
     })));
   }
 });

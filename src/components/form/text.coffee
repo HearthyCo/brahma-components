@@ -5,9 +5,10 @@ input = React.createFactory require './input'
 module.exports = React.createClass
   render: ->
     div(
+      id: @props.id
       className: 'field-set'
       , div(
-        className: 'field'
+        className: 'label'
         , label(
           className: 'label-form'
           , @props.label
@@ -16,10 +17,15 @@ module.exports = React.createClass
       , div(
         className: 'field'
         , input(
-          className: 'input-form'
           name: @props.name
           placeholder: @props.label
           type: @props.type
+        )
+      )
+      , div(
+        className: 'message'
+        , label(
+          className: 'message-form'
         )
       )
     )

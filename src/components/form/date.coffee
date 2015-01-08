@@ -41,9 +41,10 @@ module.exports = React.createClass(
 
   render: ->
     div(
+      id: @props.id
       className: 'field-set'
       , div(
-        className: 'field'
+        className: 'label'
         , label(
           className: 'label-form'
           , @props.label
@@ -64,6 +65,12 @@ module.exports = React.createClass(
         , select(
           name: 'year'
           options: @years()
+        )
+      )
+      , div(
+        className: 'message'
+        , label(
+          className: 'message-form'
         )
       )
     ))
