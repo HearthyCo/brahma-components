@@ -18,7 +18,7 @@ module.exports = React.createClass
         , input(
           className: 'radio-form'
           name: @props.name
-          value: 'hombre'
+          value: 'MALE'
           type: 'radio'
         )
         , label(
@@ -28,12 +28,22 @@ module.exports = React.createClass
         , input(
           className: 'radio-form'
           name: @props.name
-          value: 'mujer'
+          value: 'FEMALE'
           type: 'radio'
         )
         , label(
           className: 'label-form'
           , 'Mujer'
+        )
+        , input(
+          className: 'radio-form'
+          name: @props.name
+          value: 'OTHER'
+          type: 'radio'
+        )
+        , label(
+          className: 'label-form'
+          , 'Otro'
         )
       )
     )

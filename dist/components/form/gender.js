@@ -19,17 +19,24 @@ module.exports = React.createClass({
     }, input({
       className: 'radio-form',
       name: this.props.name,
-      value: 'hombre',
+      value: 'MALE',
       type: 'radio'
     }), label({
       className: 'label-form'
     }, 'Hombre'), input({
       className: 'radio-form',
       name: this.props.name,
-      value: 'mujer',
+      value: 'FEMALE',
       type: 'radio'
     }), label({
       className: 'label-form'
-    }, 'Mujer')));
+    }, 'Mujer'), input({
+      className: 'radio-form',
+      name: this.props.name,
+      value: 'OTHER',
+      type: 'radio'
+    }), label({
+      className: 'label-form'
+    }, 'Otro')));
   }
 });
