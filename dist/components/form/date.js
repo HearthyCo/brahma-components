@@ -1,6 +1,8 @@
-var React, div, label, option, select, _ref;
+var React, div, label, option, select, _, _ref;
 
 React = require('react');
+
+_ = require('underscore');
 
 select = React.createFactory(require('./select'));
 
@@ -59,11 +61,30 @@ module.exports = React.createClass({
     }
     return years;
   },
+  valueAsObj: function() {
+    var obj, originalDate;
+    originalDate = this.props.value || '0000-00-00';
+    return obj = {
+      year: parseInt(originalDate.substr(0, 4)),
+      month: parseInt(originalDate.substr(5, 2)),
+      day: parseInt(originalDate.substr(8, 2))
+    };
+  },
+  handleChange: function(key, val) {
+    var date, obj;
+    obj = this.valueAsObj();
+    obj[key] = val;
+    date = ("0000" + obj.year).substr(-4) + '-';
+    date += ("00" + obj.month).substr(-2) + '-';
+    date += ("00" + obj.day).substr(-2);
+    return this.props.callback(this.props.name, date);
+  },
   render: function() {
+    var obj;
+    obj = this.valueAsObj();
     return div({
       id: this.props.id,
-      className: 'field-set',
-      onChange: this.handleChange
+      className: 'field-set'
     }, div({
       className: 'label'
     }, label({
@@ -71,20 +92,20 @@ module.exports = React.createClass({
     }, this.props.label)), div({
       className: 'field'
     }, select({
-      name: this.props.name + '.day',
+      name: 'day',
       options: this.days(),
-      value: this.props.value,
-      callback: this.props.callback
+      value: obj.day,
+      callback: this.handleChange
     }), select({
-      name: this.props.name + '.month',
+      name: 'month',
       options: this.months(),
-      value: this.props.value,
-      callback: this.props.callback
+      value: obj.month,
+      callback: this.handleChange
     }), select({
-      name: this.props.name + '.year',
+      name: 'year',
       options: this.years(),
-      value: this.props.value,
-      callback: this.props.callback
+      value: obj.year,
+      callback: this.handleChange
     })), div({
       className: 'message'
     }, label({

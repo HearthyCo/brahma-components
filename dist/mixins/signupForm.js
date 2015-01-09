@@ -20,14 +20,10 @@ ObjectTools = require('../util/objectTools');
 
 module.exports = React.createClass({
   handleSubmit: function(e) {
-    var birthdate, obj;
+    var obj;
     e.preventDefault();
     obj = _.extend({}, this.state);
-    birthdate = ("0000" + (obj.birthdate.year || "")).substr(-4) + '-';
-    birthdate += ("00" + (obj.birthdate.month || "")).substr(-2) + '-';
-    birthdate += ("00" + (obj.birthdate.day || "")).substr(-2);
-    obj.birthdate = birthdate;
-    console.log(obj);
+    delete obj["password-repeat"];
     return UserActions.register(obj);
   },
   getInitialState: function() {
@@ -37,7 +33,6 @@ module.exports = React.createClass({
     var newState;
     newState = _.extend({}, this.state);
     ObjectTools.indexStrSet(newState, key, val);
-    console.log('New state:', newState);
     return this.setState(newState);
   },
   buildComp: function(type, opt) {

@@ -13,5 +13,6 @@ module.exports = React.createClass
       className: 'select-form'
       name: @props.name
       onChange: @handleChange
+      value: @props.value
       , @props.options
     )

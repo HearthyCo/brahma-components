@@ -17,11 +17,8 @@ module.exports = React.createClass
   handleSubmit: (e) ->
     e.preventDefault()
     obj = _.extend {}, @state
-    birthdate = ("0000" + (obj.birthdate.year || "")).substr(-4) + '-'
-    birthdate += ("00" + (obj.birthdate.month || "")).substr(-2) + '-'
-    birthdate += ("00" + (obj.birthdate.day || "")).substr(-2)
-    obj.birthdate = birthdate
-    console.log obj
+    # Do your form post-processing here
+    delete obj["password-repeat"]
     UserActions.register obj
 
   getInitialState: () ->
@@ -30,7 +27,6 @@ module.exports = React.createClass
   handleChange: (key, val) ->
     newState = _.extend {}, @state
     ObjectTools.indexStrSet newState, key, val
-    console.log 'New state:', newState
     @setState newState
 
   buildComp: (type, opt) ->

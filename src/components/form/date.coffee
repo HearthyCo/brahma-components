@@ -1,4 +1,6 @@
 React = require 'react'
+_ = require 'underscore'
+
 select = React.createFactory require './select'
 { div, label, option } = React.DOM
 
@@ -39,11 +41,26 @@ module.exports = React.createClass(
     years.push option { key: i, value: i }, {i} for i in [1900..year]
     years
 
+  valueAsObj: ->
+    originalDate = @props.value || '0000-00-00'
+    obj =
+      year: parseInt originalDate.substr(0, 4)
+      month: parseInt originalDate.substr(5, 2)
+      day: parseInt originalDate.substr(8, 2)
+
+  handleChange: (key, val) ->
+    obj = @valueAsObj()
+    obj[key] = val
+    date = ("0000" + obj.year).substr(-4) + '-'
+    date += ("00" + obj.month).substr(-2) + '-'
+    date += ("00" + obj.day).substr(-2)
+    @props.callback @props.name, date
+
   render: ->
+    obj = @valueAsObj()
     div(
       id: @props.id
       className: 'field-set'
-      onChange: @handleChange
       , div(
         className: 'label'
         , label(
@@ -54,24 +71,24 @@ module.exports = React.createClass(
       , div(
         className: 'field'
         , select(
-          name: @props.name + '.day'
+          name: 'day'
           options: @days()
-          value: @props.value
-          callback: @props.callback
+          value: obj.day
+          callback: @handleChange
         )
 
         , select(
-          name: @props.name + '.month'
+          name: 'month'
           options: @months()
-          value: @props.value
-          callback: @props.callback
+          value: obj.month
+          callback: @handleChange
         )
 
         , select(
-          name: @props.name + '.year'
+          name: 'year'
           options: @years()
-          value: @props.value
-          callback: @props.callback
+          value: obj.year
+          callback: @handleChange
         )
       )
       , div(

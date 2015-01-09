@@ -14,7 +14,8 @@ module.exports = React.createClass({
     return select({
       className: 'select-form',
       name: this.props.name,
-      onChange: this.handleChange
+      onChange: this.handleChange,
+      value: this.props.value
     }, this.props.options);
   }
 });

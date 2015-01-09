@@ -1,6 +1,6 @@
 {
     "scriptPreprocessor": "preprocessor.js",
     "testFileExtensions": ["coffee", "js"],
-    "unmockedModulePathPatterns": ["react", "exoskeleton"],
+    "unmockedModulePathPatterns": ["react", "exoskeleton", "underscore"],
     "moduleFileExtensions": ["js", "json", "coffee", "litcoffee", "coffee.md"]
 }
