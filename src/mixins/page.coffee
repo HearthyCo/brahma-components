@@ -4,4 +4,4 @@ React = require 'react'
 
 module.exports = React.createClass
   render: ->
-    return (div { id: 'content' })
+    return (div { id: 'container' })

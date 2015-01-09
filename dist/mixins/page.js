@@ -7,7 +7,7 @@ div = React.DOM.div;
 module.exports = React.createClass({
   render: function() {
     return div({
-      id: 'content'
+      id: 'container'
     });
   }
 });
