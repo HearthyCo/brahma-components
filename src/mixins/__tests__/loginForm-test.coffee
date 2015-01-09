@@ -2,6 +2,7 @@ jest.dontMock '../loginForm'
 jest.dontMock '../../components/form/input'
 jest.dontMock '../../components/form/text'
 jest.dontMock '../../components/form/button'
+jest.dontMock '../../util/objectTools'
 
 describe 'Login Form', ->
   it 'triggers user:login event on submit', ->
@@ -14,7 +15,11 @@ describe 'Login Form', ->
     submit = TestUtils.findRenderedDOMComponentWithTag form, 'button'
 
     login = 'testUser1'
-    inputs[0].getDOMNode().value = inputs[1].getDOMNode().value = login
+    for input in inputs
+      node = input.getDOMNode()
+      node.value = login
+      TestUtils.Simulate.change input, target: node
+
     TestUtils.Simulate.submit submit
 
     UserActions = require '../../actions/UserActions'

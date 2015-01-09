@@ -1,4 +1,5 @@
 React = require 'react'
+_ = require 'underscore'
 
 TextForm = React.createFactory require '../components/form/text'
 ButtonForm = React.createFactory require '../components/form/button'
@@ -7,18 +8,23 @@ ButtonForm = React.createFactory require '../components/form/button'
 
 UserActions = require '../actions/UserActions'
 
+ObjectTools = require '../util/objectTools'
+
 module.exports = React.createClass
 
   handleSubmit: (e) ->
     e.preventDefault()
-    UserActions.login @getFormValue()
+    obj = _.extend {}, @state
+    # Do your form post-processing here
+    UserActions.login obj
 
-  getFormValue: ->
-    ret = {}
-    for i in @getDOMNode().elements
-      if i.name
-        ret[i.name] = i.value
-    return ret
+  getInitialState: () ->
+    return {}
+
+  handleChange: (key, val) ->
+    newState = _.extend {}, @state
+    ObjectTools.indexStrSet newState, key, val
+    @setState newState
 
   buildComp: (type, opt) ->
     switch type
@@ -27,12 +33,16 @@ module.exports = React.createClass
         label: opt.label
         name: opt.name
         type: type
+        callback: @handleChange
+        value: @state[opt.name]
 
       when 'password' then TextForm
         id: opt.name
         label: opt.label
         name: opt.name
         type: type
+        callback: @handleChange
+        value: @state[opt.name]
 
       when 'button' then ButtonForm
         id: opt.name

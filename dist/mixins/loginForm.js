@@ -1,6 +1,8 @@
-var ButtonForm, React, TextForm, UserActions, a, form, _ref;
+var ButtonForm, ObjectTools, React, TextForm, UserActions, a, form, _, _ref;
 
 React = require('react');
+
+_ = require('underscore');
 
 TextForm = React.createFactory(require('../components/form/text'));
 
@@ -10,22 +12,23 @@ _ref = React.DOM, form = _ref.form, a = _ref.a;
 
 UserActions = require('../actions/UserActions');
 
+ObjectTools = require('../util/objectTools');
+
 module.exports = React.createClass({
   handleSubmit: function(e) {
+    var obj;
     e.preventDefault();
-    return UserActions.login(this.getFormValue());
+    obj = _.extend({}, this.state);
+    return UserActions.login(obj);
   },
-  getFormValue: function() {
-    var i, ret, _i, _len, _ref1;
-    ret = {};
-    _ref1 = this.getDOMNode().elements;
-    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-      i = _ref1[_i];
-      if (i.name) {
-        ret[i.name] = i.value;
-      }
-    }
-    return ret;
+  getInitialState: function() {
+    return {};
+  },
+  handleChange: function(key, val) {
+    var newState;
+    newState = _.extend({}, this.state);
+    ObjectTools.indexStrSet(newState, key, val);
+    return this.setState(newState);
   },
   buildComp: function(type, opt) {
     switch (type) {
@@ -34,14 +37,18 @@ module.exports = React.createClass({
           id: opt.name,
           label: opt.label,
           name: opt.name,
-          type: type
+          type: type,
+          callback: this.handleChange,
+          value: this.state[opt.name]
         });
       case 'password':
         return TextForm({
           id: opt.name,
           label: opt.label,
           name: opt.name,
-          type: type
+          type: type,
+          callback: this.handleChange,
+          value: this.state[opt.name]
         });
       case 'button':
         return ButtonForm({
