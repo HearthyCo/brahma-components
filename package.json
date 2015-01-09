@@ -16,5 +16,8 @@
     "react": "^0.12.2",
     "underscore": "^1.7.0"
   },
-  "grunt-module-indexain": "dist/index.js"
+  "grunt-module-indexain": "dist/index.js",
+  "dependencies": {
+    "react-intl": "^1.0.2"
+  }
 }
