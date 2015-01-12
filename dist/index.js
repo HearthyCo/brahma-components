@@ -15,6 +15,8 @@ module.exports = exports = {
     "user": {
       "loginForm": require("./components/user/loginForm"),
       "signupForm": require("./components/user/signupForm")
+    "intl": {
+      "localeSelect": require("./components/intl/localeSelect")
     }
   },
   "dispatcher": {
