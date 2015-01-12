@@ -1,8 +1,8 @@
-var ButtonForm, DateForm, GenderForm, React, ReactIntlMixin, TextForm, UserActions, a, form, _ref;
+var ButtonForm, DateForm, GenderForm, ObjectTools, React, ReactIntl, TextForm, UserActions, a, form, _, _ref;
 
 React = require('react');
 
-ReactIntlMixin = require('react-intl');
+ReactIntl = require('react-intl');
 
 _ = require('underscore');
 
@@ -21,14 +21,14 @@ UserActions = require('../actions/UserActions');
 ObjectTools = require('../util/objectTools');
 
 module.exports = React.createClass({
-  mixins: [ReactIntlMixin],
+  mixins: [ReactIntl],
   handleSubmit: function(e) {
     var birthdate, obj;
     e.preventDefault();
     obj = _.extend({}, this.state);
-    birthdate = ("0000" + (obj.birthdate.year || "")).substr(-4) + '-';
-    birthdate += ("00" + (obj.birthdate.month || "")).substr(-2) + '-';
-    birthdate += ("00" + (obj.birthdate.day || "")).substr(-2);
+    birthdate = ('0000' + (obj.birthdate.year || '')).substr(-4) + '-';
+    birthdate += ('00' + (obj.birthdate.month || '')).substr(-2) + '-';
+    birthdate += ('00' + (obj.birthdate.day || '')).substr(-2);
     obj.birthdate = birthdate;
     console.log(obj);
     return UserActions.register(obj);

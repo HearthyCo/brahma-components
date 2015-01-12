@@ -1,5 +1,5 @@
 React = require 'react'
-ReactIntlMixin = require 'react-intl'
+ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
 TextForm = React.createFactory require '../components/form/text'
@@ -15,14 +15,14 @@ ObjectTools = require '../util/objectTools'
 
 module.exports = React.createClass
 
-  mixins: [ ReactIntlMixin ]
+  mixins: [ ReactIntl ]
 
   handleSubmit: (e) ->
     e.preventDefault()
     obj = _.extend {}, @state
-    birthdate = ("0000" + (obj.birthdate.year || "")).substr(-4) + '-'
-    birthdate += ("00" + (obj.birthdate.month || "")).substr(-2) + '-'
-    birthdate += ("00" + (obj.birthdate.day || "")).substr(-2)
+    birthdate = ('0000' + (obj.birthdate.year || '')).substr(-4) + '-'
+    birthdate += ('00' + (obj.birthdate.month || '')).substr(-2) + '-'
+    birthdate += ('00' + (obj.birthdate.day || '')).substr(-2)
     obj.birthdate = birthdate
     console.log obj
     UserActions.register obj
@@ -92,7 +92,7 @@ module.exports = React.createClass
     birthdate = @getIntlMessage('birthdate')
     signup = @getIntlMessage('signup')
 
-    # Mandatory fields: login, password, gender, name, birthdate
+    #Mandatory fields: login, password, gender, name, birthdate
     form
       action: 'signup',
       onSubmit: @handleSubmit
