@@ -1,5 +1,5 @@
 React = require 'react'
-ReactIntlMixin = require 'react-intl'
+ReactIntl = require 'react-intl'
 
 TextForm = React.createFactory require '../components/form/text'
 ButtonForm = React.createFactory require '../components/form/button'
@@ -10,7 +10,7 @@ UserActions = require '../actions/UserActions'
 
 module.exports = React.createClass
 
-  mixins: [ ReactIntlMixin ]
+  mixins: [ ReactIntl ]
 
   handleSubmit: (e) ->
     e.preventDefault()

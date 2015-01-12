@@ -1,8 +1,8 @@
-var ButtonForm, React, ReactIntlMixin, TextForm, UserActions, a, form, _ref;
+var ButtonForm, React, ReactIntl, TextForm, UserActions, a, form, _ref;
 
 React = require('react');
 
-ReactIntlMixin = require('react-intl');
+ReactIntl = require('react-intl');
 
 TextForm = React.createFactory(require('../components/form/text'));
 
@@ -13,7 +13,7 @@ _ref = React.DOM, form = _ref.form, a = _ref.a;
 UserActions = require('../actions/UserActions');
 
 module.exports = React.createClass({
-  mixins: [ReactIntlMixin],
+  mixins: [ReactIntl],
   handleSubmit: function(e) {
     e.preventDefault();
     return UserActions.login(this.getFormValue());
