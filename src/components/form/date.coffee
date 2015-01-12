@@ -1,8 +1,7 @@
 React = require 'react'
 _ = require 'underscore'
 
-select = React.createFactory require './select'
-{ div, label, option } = React.DOM
+{ div, label, option, select } = React.DOM
 
 module.exports = React.createClass(
   days: ->
@@ -42,19 +41,31 @@ module.exports = React.createClass(
     years
 
   valueAsObj: ->
-    originalDate = @props.value || '0000-00-00'
+    originalDate = if @props.valueLink then @props.valueLink.value
+    originalDate = originalDate || '0000-00-00'
     obj =
       year: parseInt originalDate.substr(0, 4)
       month: parseInt originalDate.substr(5, 2)
       day: parseInt originalDate.substr(8, 2)
 
-  handleChange: (key, val) ->
+  handleChange: (key, e) ->
+    val = e.target.value
     obj = @valueAsObj()
     obj[key] = val
     date = ("0000" + obj.year).substr(-4) + '-'
     date += ("00" + obj.month).substr(-2) + '-'
     date += ("00" + obj.day).substr(-2)
-    @props.callback @props.name, date
+    if @props.valueLink
+      @props.valueLink.requestChange date
+
+  mkSelect: (name, options, value) ->
+    select(
+      className: 'select-form'
+      name: name
+      value: value
+      onChange: @handleChange.bind(@, name)
+      , options
+    )
 
   render: ->
     obj = @valueAsObj()
@@ -70,26 +81,9 @@ module.exports = React.createClass(
       )
       , div(
         className: 'field'
-        , select(
-          name: 'day'
-          options: @days()
-          value: obj.day
-          callback: @handleChange
-        )
-
-        , select(
-          name: 'month'
-          options: @months()
-          value: obj.month
-          callback: @handleChange
-        )
-
-        , select(
-          name: 'year'
-          options: @years()
-          value: obj.year
-          callback: @handleChange
-        )
+        , @mkSelect('day', @days(), obj.day)
+        , @mkSelect('month', @months(), obj.month)
+        , @mkSelect('year', @years(), obj.year)
       )
       , div(
         className: 'message'

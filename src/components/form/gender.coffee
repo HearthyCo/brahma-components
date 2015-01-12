@@ -1,8 +1,26 @@
 React = require 'react'
-radio = React.createFactory require './radio'
-{ div, label } = React.DOM
+{ div, label, input } = React.DOM
 
 module.exports = React.createClass
+
+  handleChange: (value, e) ->
+    if @props.valueLink and e.target.checked
+      @props.valueLink.requestChange value
+
+
+  mkRadio: (label, value) ->
+    actualValue = if @props.valueLink then @props.valueLink.value
+    input(
+      className: 'radio-form'
+      type: 'radio'
+      label: label
+      name: @props.name
+      value: value
+      checked: actualValue is value
+      onChange: @handleChange.bind(@, value)
+      , label
+    )
+
   render: ->
     div(
       id: @props.id
@@ -16,27 +34,9 @@ module.exports = React.createClass
       )
       , div(
         className: 'field'
-        , radio(
-          label: 'Hombre'
-          name: @props.name
-          value: 'MALE'
-          checked: @props.value is 'MALE'
-          callback: @props.callback
-        )
-        , radio(
-          label: 'Mujer'
-          name: @props.name
-          value: 'FEMALE'
-          checked: @props.value is 'FEMALE'
-          callback: @props.callback
-        )
-        , radio(
-          label: 'Otro'
-          name: @props.name
-          value: 'OTHER'
-          checked: @props.value is 'OTHER'
-          callback: @props.callback
-        )
+        , @mkRadio('Hombre', 'MALE')
+        , @mkRadio('Mujer', 'FEMALE')
+        , @mkRadio('Otro', 'OTHER')
       )
       , div(
         className: 'message'

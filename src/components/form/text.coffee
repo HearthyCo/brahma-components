@@ -1,6 +1,7 @@
 React = require 'react'
-input = React.createFactory require './input'
-{ div, label } = React.DOM
+_ = require 'underscore'
+
+{ div, label, input } = React.DOM
 
 module.exports = React.createClass
   render: ->
@@ -16,13 +17,7 @@ module.exports = React.createClass
       )
       , div(
         className: 'field'
-        , input(
-          name: @props.name
-          label: @props.label
-          type: @props.type
-          value: @props.value
-          callback: @props.callback
-        )
+        , input _.omit @props, 'id'
       )
       , div(
         className: 'message'

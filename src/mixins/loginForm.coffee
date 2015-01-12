@@ -1,16 +1,17 @@
-React = require 'react'
+React = require 'react/addons'
 _ = require 'underscore'
 
 TextForm = React.createFactory require '../components/form/text'
-ButtonForm = React.createFactory require '../components/form/button'
 
-{ form, a } = React.DOM
+{ form, a, button } = React.DOM
 
 UserActions = require '../actions/UserActions'
 
 ObjectTools = require '../util/objectTools'
 
 module.exports = React.createClass
+
+  mixins: [React.addons.LinkedStateMixin]
 
   handleSubmit: (e) ->
     e.preventDefault()
@@ -21,32 +22,20 @@ module.exports = React.createClass
   getInitialState: () ->
     return {}
 
-  handleChange: (key, val) ->
-    newState = _.extend {}, @state
-    ObjectTools.indexStrSet newState, key, val
-    @setState newState
-
   buildComp: (type, opt) ->
+    obj =
+      id: opt.name
+      label: opt.label
+      name: opt.name
+      type: type
+      valueLink: @linkState opt.name
+
     switch type
-      when 'text' then TextForm
+      when 'text' then TextForm obj
+      when 'password' then TextForm obj
+      when 'button' then button
         id: opt.name
-        label: opt.label
-        name: opt.name
-        type: type
-        callback: @handleChange
-        value: @state[opt.name]
-
-      when 'password' then TextForm
-        id: opt.name
-        label: opt.label
-        name: opt.name
-        type: type
-        callback: @handleChange
-        value: @state[opt.name]
-
-      when 'button' then ButtonForm
-        id: opt.name
-        label: opt.label
+        , opt.label
 
   render: ->
     form(

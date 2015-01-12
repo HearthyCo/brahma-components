@@ -8,9 +8,6 @@ module.exports = exports = {
       "button": require("./components/form/button"),
       "date": require("./components/form/date"),
       "gender": require("./components/form/gender"),
-      "input": require("./components/form/input"),
-      "radio": require("./components/form/radio"),
-      "select": require("./components/form/select"),
       "text": require("./components/form/text")
     }
   },

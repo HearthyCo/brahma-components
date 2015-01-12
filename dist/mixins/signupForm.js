@@ -1,6 +1,6 @@
-var ButtonForm, DateForm, GenderForm, ObjectTools, React, TextForm, UserActions, a, form, _, _ref;
+var DateForm, GenderForm, ObjectTools, React, TextForm, UserActions, a, button, form, _, _ref;
 
-React = require('react');
+React = require('react/addons');
 
 _ = require('underscore');
 
@@ -10,15 +10,14 @@ DateForm = React.createFactory(require('../components/form/date'));
 
 GenderForm = React.createFactory(require('../components/form/gender'));
 
-ButtonForm = React.createFactory(require('../components/form/button'));
-
-_ref = React.DOM, form = _ref.form, a = _ref.a;
+_ref = React.DOM, form = _ref.form, a = _ref.a, button = _ref.button;
 
 UserActions = require('../actions/UserActions');
 
 ObjectTools = require('../util/objectTools');
 
 module.exports = React.createClass({
+  mixins: [React.addons.LinkedStateMixin],
   handleSubmit: function(e) {
     var obj;
     e.preventDefault();
@@ -29,62 +28,30 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {};
   },
-  handleChange: function(key, val) {
-    var newState;
-    newState = _.extend({}, this.state);
-    ObjectTools.indexStrSet(newState, key, val);
-    return this.setState(newState);
-  },
   buildComp: function(type, opt) {
+    var obj;
+    obj = {
+      id: opt.name,
+      label: opt.label,
+      name: opt.name,
+      type: type,
+      valueLink: this.linkState(opt.name)
+    };
     switch (type) {
       case 'text':
-        return TextForm({
-          id: opt.name,
-          label: opt.label,
-          name: opt.name,
-          type: type,
-          callback: this.handleChange,
-          value: this.state[opt.name]
-        });
+        return TextForm(obj);
       case 'email':
-        return TextForm({
-          id: opt.name,
-          label: opt.label,
-          name: opt.name,
-          type: type,
-          callback: this.handleChange,
-          value: this.state[opt.name]
-        });
+        return TextForm(obj);
       case 'password':
-        return TextForm({
-          id: opt.name,
-          label: opt.label,
-          name: opt.name,
-          type: type,
-          callback: this.handleChange,
-          value: this.state[opt.name]
-        });
+        return TextForm(obj);
       case 'gender':
-        return GenderForm({
-          id: opt.name,
-          label: opt.label,
-          name: opt.name,
-          callback: this.handleChange,
-          value: this.state[opt.name]
-        });
+        return GenderForm(obj);
       case 'date':
-        return DateForm({
-          id: opt.name,
-          label: opt.label,
-          name: opt.name,
-          callback: this.handleChange,
-          value: this.state[opt.name]
-        });
+        return DateForm(obj);
       case 'button':
-        return ButtonForm({
-          id: opt.name,
-          label: opt.label
-        });
+        return button({
+          id: opt.name
+        }, opt.label);
     }
   },
   render: function() {

@@ -4,9 +4,7 @@ React = require('react');
 
 _ = require('underscore');
 
-select = React.createFactory(require('./select'));
-
-_ref = React.DOM, div = _ref.div, label = _ref.label, option = _ref.option;
+_ref = React.DOM, div = _ref.div, label = _ref.label, option = _ref.option, select = _ref.select;
 
 module.exports = React.createClass({
   days: function() {
@@ -63,21 +61,33 @@ module.exports = React.createClass({
   },
   valueAsObj: function() {
     var obj, originalDate;
-    originalDate = this.props.value || '0000-00-00';
+    originalDate = this.props.valueLink ? this.props.valueLink.value : void 0;
+    originalDate = originalDate || '0000-00-00';
     return obj = {
       year: parseInt(originalDate.substr(0, 4)),
       month: parseInt(originalDate.substr(5, 2)),
       day: parseInt(originalDate.substr(8, 2))
     };
   },
-  handleChange: function(key, val) {
-    var date, obj;
+  handleChange: function(key, e) {
+    var date, obj, val;
+    val = e.target.value;
     obj = this.valueAsObj();
     obj[key] = val;
     date = ("0000" + obj.year).substr(-4) + '-';
     date += ("00" + obj.month).substr(-2) + '-';
     date += ("00" + obj.day).substr(-2);
-    return this.props.callback(this.props.name, date);
+    if (this.props.valueLink) {
+      return this.props.valueLink.requestChange(date);
+    }
+  },
+  mkSelect: function(name, options, value) {
+    return select({
+      className: 'select-form',
+      name: name,
+      value: value,
+      onChange: this.handleChange.bind(this, name)
+    }, options);
   },
   render: function() {
     var obj;
@@ -91,22 +101,7 @@ module.exports = React.createClass({
       className: 'label-form'
     }, this.props.label)), div({
       className: 'field'
-    }, select({
-      name: 'day',
-      options: this.days(),
-      value: obj.day,
-      callback: this.handleChange
-    }), select({
-      name: 'month',
-      options: this.months(),
-      value: obj.month,
-      callback: this.handleChange
-    }), select({
-      name: 'year',
-      options: this.years(),
-      value: obj.year,
-      callback: this.handleChange
-    })), div({
+    }, this.mkSelect('day', this.days(), obj.day), this.mkSelect('month', this.months(), obj.month), this.mkSelect('year', this.years(), obj.year)), div({
       className: 'message'
     }, label({
       className: 'message-form'

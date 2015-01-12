@@ -1,10 +1,10 @@
-var React, div, input, label, _ref;
+var React, div, input, label, _, _ref;
 
 React = require('react');
 
-input = React.createFactory(require('./input'));
+_ = require('underscore');
 
-_ref = React.DOM, div = _ref.div, label = _ref.label;
+_ref = React.DOM, div = _ref.div, label = _ref.label, input = _ref.input;
 
 module.exports = React.createClass({
   render: function() {
@@ -17,13 +17,7 @@ module.exports = React.createClass({
       className: 'label-form'
     }, this.props.label)), div({
       className: 'field'
-    }, input({
-      name: this.props.name,
-      label: this.props.label,
-      type: this.props.type,
-      value: this.props.value,
-      callback: this.props.callback
-    })), div({
+    }, input(_.omit(this.props, 'id'))), div({
       className: 'message'
     }, label({
       className: 'message-form'
