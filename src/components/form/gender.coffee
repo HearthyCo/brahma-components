@@ -36,6 +36,7 @@ module.exports = React.createClass
         )
         , radio(
           label: @getIntlMessage('other')
+          name: @props.name
           value: 'OTHER'
           checked: @props.value is 'OTHER'
           callback: @props.callback
