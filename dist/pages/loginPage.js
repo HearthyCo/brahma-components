@@ -13,8 +13,8 @@ module.exports = React.createClass({
     return div({
       className: 'loginPage'
     }, LoginForm(), a({
-      href: "/alex",
-      className: "linkAlex"
-    }, "Álex ", span({}, "Ubago")));
+      href: '/alex',
+      className: 'linkAlex'
+    }, 'Álex ', span({}, 'Ubago')));
   }
 });

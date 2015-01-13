@@ -46,18 +46,14 @@ module.exports = React.createClass
 
   render: ->
     # Mandatory fields: login, password, gender, name, birthdate
-    form
-      action: 'signup',
-      onSubmit: @handleSubmit
-      , @buildComp('text', { label: 'Username', name: 'login' })
-      , @buildComp('email', { label: 'Email', name: 'email' })
-      , @buildComp('password', { label: 'Password', name: 'password' })
-      , @buildComp('password', { label: 'Repeat', name: 'password-repeat' })
-      , @buildComp('text', { label: 'Name', name: 'name' })
-      , @buildComp('gender', { label: 'Gender', name: 'gender' })
-      , @buildComp('date', { label: 'Birthdate', name: 'birthdate' })
-      , @buildComp('button', { label: 'Sign up', })
-      , a(
-        href: '/login'
-        , 'Login'
-      )
+    form action: 'signup', onSubmit: @handleSubmit, className: 'comp-signupForm',
+      @buildComp 'text', { label: 'Username', name: 'login' }
+      @buildComp 'email', { label: 'Email', name: 'email' }
+      @buildComp 'password', { label: 'Password', name: 'password' }
+      @buildComp 'password', { label: 'Repeat', name: 'password-repeat' }
+      @buildComp 'text', { label: 'Name', name: 'name' }
+      @buildComp 'gender', { label: 'Gender', name: 'gender' }
+      @buildComp 'date', { label: 'Birthdate', name: 'birthdate' }
+      @buildComp 'button', { label: 'Sign up', }
+      a href: '/login',
+        'Login'

@@ -1,13 +1,13 @@
-jest.dontMock '../signupForm'
-jest.dontMock '../../components/form/text'
-jest.dontMock '../../components/form/gender'
-jest.dontMock '../../components/form/date'
+jest.dontMock '../user/signupForm'
+jest.dontMock '../common/form/text'
+jest.dontMock '../common/form/gender'
+jest.dontMock '../common/form/date'
 jest.dontMock '../../util/objectTools'
 
 describe 'Signup Form', ->
   it 'triggers user:register event on submit', ->
     React = require 'react/addons'
-    LoginForm = require '../signupForm'
+    LoginForm = require '../user/signupForm'
     TestUtils = React.addons.TestUtils
 
     form = TestUtils.renderIntoDocument React.createElement LoginForm

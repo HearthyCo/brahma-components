@@ -10,7 +10,7 @@ module.exports = React.createClass({
   render: function() {
     return div({
       id: this.props.id,
-      className: 'field-set'
+      className: 'field-set comp-text'
     }, div({
       className: 'label'
     }, label({

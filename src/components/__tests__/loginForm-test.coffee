@@ -1,11 +1,11 @@
-jest.dontMock '../loginForm'
-jest.dontMock '../../components/form/text'
+jest.dontMock '../user/loginForm'
+jest.dontMock '../common/form/text'
 jest.dontMock '../../util/objectTools'
 
 describe 'Login Form', ->
   it 'triggers user:login event on submit', ->
     React = require 'react/addons'
-    LoginForm = require '../loginForm'
+    LoginForm = require '../user/loginForm'
     TestUtils = React.addons.TestUtils
 
     form = TestUtils.renderIntoDocument React.createElement LoginForm

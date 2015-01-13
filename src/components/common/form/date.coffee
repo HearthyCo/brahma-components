@@ -69,7 +69,7 @@ module.exports = React.createClass
 
   render: ->
     obj = @valueAsObj()
-    div id: @props.id, className: 'field-set field-date',
+    div id: @props.id, className: 'field-set comp-date',
       div className: 'label',
         label className: 'label-form',
           @props.label

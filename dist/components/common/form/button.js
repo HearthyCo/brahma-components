@@ -8,7 +8,7 @@ module.exports = React.createClass({
   render: function() {
     return div({
       id: this.props.id,
-      className: 'field-set'
+      className: 'field-set comp-button'
     }, button({
       type: 'submit'
     }, this.props.label));

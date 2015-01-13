@@ -38,14 +38,9 @@ module.exports = React.createClass
         , opt.label
 
   render: ->
-    form(
-      action: @props.action
-      onSubmit: @handleSubmit
-      , @buildComp('text', { label: 'Username', name: 'login' })
-      , @buildComp('password', { label: 'Password', name: 'password' })
-      , @buildComp('button', { label: 'Sign up', })
-      , a(
-        href: '/register'
-        , 'Register'
-      )
-    )
+    form action: @props.action, onSubmit: @handleSubmit, className: 'comp-loginForm',
+      @buildComp 'text', { label: 'Username', name: 'login' }
+      @buildComp 'password', { label: 'Password', name: 'password' }
+      @buildComp 'button', { label: 'Sign up', }
+      a href: '/register',
+        'Register'

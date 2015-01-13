@@ -5,7 +5,7 @@ module.exports = React.createClass
   render: ->
     div(
       id: @props.id
-      className: 'field-set'
+      className: 'field-set comp-button'
       , button(
         type: 'submit'
         , @props.label

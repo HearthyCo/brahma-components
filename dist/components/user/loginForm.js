@@ -46,7 +46,8 @@ module.exports = React.createClass({
   render: function() {
     return form({
       action: this.props.action,
-      onSubmit: this.handleSubmit
+      onSubmit: this.handleSubmit,
+      className: 'comp-loginForm'
     }, this.buildComp('text', {
       label: 'Username',
       name: 'login'

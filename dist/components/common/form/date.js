@@ -94,7 +94,7 @@ module.exports = React.createClass({
     obj = this.valueAsObj();
     return div({
       id: this.props.id,
-      className: 'field-set field-date'
+      className: 'field-set comp-date'
     }, div({
       className: 'label'
     }, label({

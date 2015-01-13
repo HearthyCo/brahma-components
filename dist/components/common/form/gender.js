@@ -10,23 +10,24 @@ module.exports = React.createClass({
       return this.props.valueLink.requestChange(value);
     }
   },
-  mkRadio: function(label, value) {
+  mkRadio: function(labelValue, value) {
     var actualValue;
     actualValue = this.props.valueLink ? this.props.valueLink.value : void 0;
-    return input({
+    return div({
+      className: 'field-radio gender-' + value.toLowerCase()
+    }, label({}, input({
       className: 'radio-form',
       type: 'radio',
-      label: label,
       name: this.props.name,
       value: value,
       checked: actualValue === value,
       onChange: this.handleChange.bind(this, value)
-    }, label);
+    }, labelValue)));
   },
   render: function() {
     return div({
       id: this.props.id,
-      className: 'field-set'
+      className: 'field-set comp-gender'
     }, div({
       className: 'label'
     }, label({
