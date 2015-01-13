@@ -15,11 +15,11 @@ module.exports = React.createClass(
     React.createElement 'select',
       className: 'locale-select'
       value: @props.value
-      onChange: @handleChange
-      , @props.availableLocales.map((locale) ->
+      onChange: @handleChange,
+      @props.availableLocales.map((locale) ->
         React.createElement 'option',
           key: locale
-          value: locale
-          , locale
+          value: locale,
+          locale
       )
 )

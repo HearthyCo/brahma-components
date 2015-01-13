@@ -2,8 +2,10 @@ React = require 'react'
 ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
-LocaleSelect = React.createFactory require '../components/intl/localeSelect'
 IntlActions = require '../actions/IntlActions'
+LocaleSelect = React.createFactory(
+  require '../components/common/intl/localeSelect'
+)
 
 { section, div } = React.DOM
 
@@ -41,3 +43,4 @@ module.exports = React.createClass
         , React.createElement @props.element,
           messages: @state.messages[@state.locale]
       )
+    )

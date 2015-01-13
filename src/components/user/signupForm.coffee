@@ -1,4 +1,5 @@
 React = require 'react/addons'
+ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
 TextForm = React.createFactory require '../common/form/text'
@@ -13,7 +14,7 @@ ObjectTools = require '../../util/objectTools'
 
 module.exports = React.createClass
 
-  mixins: [React.addons.LinkedStateMixin]
+  mixins: [React.addons.LinkedStateMixin, ReactIntl]
 
   handleSubmit: (e) ->
     e.preventDefault()
@@ -45,6 +46,15 @@ module.exports = React.createClass
 
 
   render: ->
+    username = @getIntlMessage('username')
+    email = @getIntlMessage('email')
+    password = @getIntlMessage('password')
+    repeat = @getIntlMessage('repeat')
+    name = @getIntlMessage('name')
+    gender = @getIntlMessage('gender')
+    birthdate = @getIntlMessage('birthdate')
+    signup = @getIntlMessage('signup')
+
     # Mandatory fields: login, password, gender, name, birthdate
     form action: 'signup', onSubmit: @handleSubmit, className: 'comp-signupForm',
       @buildComp 'text', { label: 'Username', name: 'login' }

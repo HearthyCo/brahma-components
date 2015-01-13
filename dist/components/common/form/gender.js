@@ -1,10 +1,13 @@
-var React, div, input, label, _ref;
+var React, ReactIntl, div, input, label, _ref;
 
 React = require('react');
+
+ReactIntl = require('react-intl');
 
 _ref = React.DOM, div = _ref.div, label = _ref.label, input = _ref.input;
 
 module.exports = React.createClass({
+  mixins: [ReactIntl],
   handleChange: function(value, e) {
     if (this.props.valueLink && e.target.checked) {
       return this.props.valueLink.requestChange(value);
@@ -34,7 +37,7 @@ module.exports = React.createClass({
       className: 'label-form'
     }, this.props.label)), div({
       className: 'field'
-    }, this.mkRadio('Hombre', 'MALE'), this.mkRadio('Mujer', 'FEMALE'), this.mkRadio('Otro', 'OTHER')), div({
+    }, this.mkRadio(this.getIntlMessage('male'), 'MALE'), this.mkRadio(this.getIntlMessage('female'), 'FEMALE'), this.mkRadio(this.getIntlMessage('other'), 'OTHER')), div({
       className: 'message'
     }, label({
       className: 'message-form'

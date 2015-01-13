@@ -11,13 +11,14 @@ module.exports = exports = {
         "date": require("./components/common/form/date"),
         "gender": require("./components/common/form/gender"),
         "text": require("./components/common/form/text")
+      },
+      "intl": {
+        "localeSelect": require("./components/common/intl/localeSelect")
       }
     },
     "user": {
       "loginForm": require("./components/user/loginForm"),
       "signupForm": require("./components/user/signupForm")
-    "intl": {
-      "localeSelect": require("./components/intl/localeSelect")
     }
   },
   "dispatcher": {

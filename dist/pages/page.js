@@ -6,9 +6,9 @@ ReactIntl = require('react-intl');
 
 _ = require('underscore');
 
-LocaleSelect = React.createFactory(require('../components/intl/localeSelect'));
-
 IntlActions = require('../actions/IntlActions');
+
+LocaleSelect = React.createFactory(require('../components/common/intl/localeSelect'));
 
 _ref = React.DOM, section = _ref.section, div = _ref.div;
 

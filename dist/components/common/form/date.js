@@ -1,16 +1,15 @@
-
-var React, ReactIntlMixin, div, label, option, select, _ref;
+var React, ReactIntl, div, label, option, select, _, _ref;
 
 React = require('react');
 
-ReactIntlMixin = require('react-intl');
+ReactIntl = require('react-intl');
 
 _ = require('underscore');
 
 _ref = React.DOM, div = _ref.div, label = _ref.label, option = _ref.option, select = _ref.select;
 
 module.exports = React.createClass({
-  mixins: [ReactIntlMixin],
+  mixins: [ReactIntl],
   days: function() {
     var days, i, _i;
     days = [];
@@ -31,7 +30,7 @@ module.exports = React.createClass({
   months: function() {
     var i, months, names, _i, _ref1;
     months = [];
-    names = [this.getIntlMessage('january'), this.getIntlMessage('february'), this.getIntlMessage('march'), this.getIntlMessage('april'), this.getIntlMessage('may'), this.getIntlMessage('june'), this.getIntlMessage('july'), this.getIntlMessage('august'), this.getIntlMessage('september'), this.getIntlMessage('october'), this.getIntlMessage('november'), this.getIntlMessage('december')];
+    names = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     months.push(option({
       key: 0,
       value: 0

@@ -10,9 +10,13 @@ _ref = React.DOM, div = _ref.div, span = _ref.span, a = _ref.a;
 
 module.exports = React.createClass({
   render: function() {
-    return div({}, SignupForm(), a({
-      href: "/alex",
-      className: "linkAlex"
-    }, "Álex ", span({}, "Ubago")));
+    return div({
+      className: 'signupPage'
+    }, SignupForm({
+      messages: this.props.messages
+    }), a({
+      href: '/alex',
+      className: 'linkAlex'
+    }, 'Álex ', span({}, 'Ubago')));
   }
 });
