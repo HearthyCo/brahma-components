@@ -1,6 +1,8 @@
-var ObjectTools, React, TextForm, UserActions, a, button, form, _, _ref;
+var ObjectTools, React, ReactIntl, TextForm, UserActions, a, button, form, _, _ref;
 
 React = require('react/addons');
+
+ReactIntl = require('react-intl');
 
 _ = require('underscore');
 
@@ -13,7 +15,7 @@ UserActions = require('../../actions/UserActions');
 ObjectTools = require('../../util/objectTools');
 
 module.exports = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [React.addons.LinkedStateMixin, ReactIntl],
   handleSubmit: function(e) {
     var obj;
     e.preventDefault();
@@ -44,18 +46,22 @@ module.exports = React.createClass({
     }
   },
   render: function() {
+    var login, password, username;
+    username = this.getIntlMessage('username');
+    password = this.getIntlMessage('password');
+    login = this.getIntlMessage('login');
     return form({
       action: this.props.action,
       onSubmit: this.handleSubmit,
       className: 'comp-loginForm'
     }, this.buildComp('text', {
-      label: 'Username',
+      label: username,
       name: 'login'
     }), this.buildComp('password', {
-      label: 'Password',
+      label: password,
       name: 'password'
     }), this.buildComp('button', {
-      label: 'Sign up'
+      label: login
     }), a({
       href: '/register'
     }, 'Register'));

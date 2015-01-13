@@ -8,7 +8,7 @@ LoginForm = React.createFactory require '../components/user/loginForm'
 module.exports = React.createClass
   render: ->
     div className: 'loginPage',
-      LoginForm()
+      LoginForm({ messages: @props.messages })
       a href: '/alex', className: 'linkAlex',
         'Álex '
         span {},

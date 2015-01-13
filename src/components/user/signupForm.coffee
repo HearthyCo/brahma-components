@@ -1,4 +1,5 @@
 React = require 'react/addons'
+ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
 TextForm = React.createFactory require '../common/form/text'
@@ -13,7 +14,7 @@ ObjectTools = require '../../util/objectTools'
 
 module.exports = React.createClass
 
-  mixins: [React.addons.LinkedStateMixin]
+  mixins: [React.addons.LinkedStateMixin, ReactIntl]
 
   handleSubmit: (e) ->
     e.preventDefault()
@@ -45,15 +46,24 @@ module.exports = React.createClass
 
 
   render: ->
+    username = @getIntlMessage('username')
+    email = @getIntlMessage('email')
+    password = @getIntlMessage('password')
+    repeat = @getIntlMessage('repeat')
+    name = @getIntlMessage('name')
+    gender = @getIntlMessage('gender')
+    birthdate = @getIntlMessage('birthdate')
+    signup = @getIntlMessage('signup')
+
     # Mandatory fields: login, password, gender, name, birthdate
     form action: 'signup', onSubmit: @handleSubmit, className: 'comp-signupForm',
-      @buildComp 'text', { label: 'Username', name: 'login' }
-      @buildComp 'email', { label: 'Email', name: 'email' }
-      @buildComp 'password', { label: 'Password', name: 'password' }
-      @buildComp 'password', { label: 'Repeat', name: 'password-repeat' }
-      @buildComp 'text', { label: 'Name', name: 'name' }
-      @buildComp 'gender', { label: 'Gender', name: 'gender' }
-      @buildComp 'date', { label: 'Birthdate', name: 'birthdate' }
-      @buildComp 'button', { label: 'Sign up', }
+      @buildComp 'text', { label: username, name: 'login' }
+      @buildComp 'email', { label: email, name: 'email' }
+      @buildComp 'password', { label: password, name: 'password' }
+      @buildComp 'password', { label: repeat, name: 'password-repeat' }
+      @buildComp 'text', { label: name, name: 'name' }
+      @buildComp 'gender', { label: gender, name: 'gender' }
+      @buildComp 'date', { label: birthdate, name: 'birthdate' }
+      @buildComp 'button', { label: signup, }
       a href: '/login',
         'Login'

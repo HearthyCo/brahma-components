@@ -1,19 +1,22 @@
-var React, div, label, option, select, _, _ref;
+var React, ReactIntl, div, label, option, select, _, _ref;
 
 React = require('react');
+
+ReactIntl = require('react-intl');
 
 _ = require('underscore');
 
 _ref = React.DOM, div = _ref.div, label = _ref.label, option = _ref.option, select = _ref.select;
 
 module.exports = React.createClass({
+  mixins: [ReactIntl],
   days: function() {
     var days, i, _i;
     days = [];
     days.push(option({
       key: 0,
       value: 0
-    }, 'Día'));
+    }, this.getIntlMessage('day')));
     for (i = _i = 1; _i <= 31; i = ++_i) {
       days.push(option({
         key: i,
@@ -31,7 +34,7 @@ module.exports = React.createClass({
     months.push(option({
       key: 0,
       value: 0
-    }, 'Mes'));
+    }, this.getIntlMessage('month')));
     for (i = _i = 1, _ref1 = names.length; 1 <= _ref1 ? _i <= _ref1 : _i >= _ref1; i = 1 <= _ref1 ? ++_i : --_i) {
       months.push(option({
         key: i,
@@ -48,7 +51,7 @@ module.exports = React.createClass({
     years.push(option({
       key: 0,
       value: 0
-    }, 'Año'));
+    }, this.getIntlMessage('year')));
     for (i = _i = 1900; 1900 <= year ? _i <= year : _i >= year; i = 1900 <= year ? ++_i : --_i) {
       years.push(option({
         key: i,

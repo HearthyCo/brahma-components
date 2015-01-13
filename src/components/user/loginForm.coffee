@@ -1,4 +1,5 @@
 React = require 'react/addons'
+ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
 TextForm = React.createFactory require '../common/form/text'
@@ -11,7 +12,7 @@ ObjectTools = require '../../util/objectTools'
 
 module.exports = React.createClass
 
-  mixins: [React.addons.LinkedStateMixin]
+  mixins: [React.addons.LinkedStateMixin, ReactIntl]
 
   handleSubmit: (e) ->
     e.preventDefault()
@@ -38,9 +39,13 @@ module.exports = React.createClass
         , opt.label
 
   render: ->
+    username = @getIntlMessage('username')
+    password = @getIntlMessage('password')
+    login = @getIntlMessage('login')
+
     form action: @props.action, onSubmit: @handleSubmit, className: 'comp-loginForm',
-      @buildComp 'text', { label: 'Username', name: 'login' }
-      @buildComp 'password', { label: 'Password', name: 'password' }
-      @buildComp 'button', { label: 'Sign up', }
+      @buildComp 'text', { label: username, name: 'login' }
+      @buildComp 'password', { label: password, name: 'password' }
+      @buildComp 'button', { label: login, }
       a href: '/register',
         'Register'
