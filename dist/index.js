@@ -4,20 +4,26 @@ module.exports = exports = {
     "UserActions": require("./actions/UserActions")
   },
   "components": {
-    "form": {
-      "button": require("./components/form/button"),
-      "date": require("./components/form/date"),
-      "gender": require("./components/form/gender"),
-      "text": require("./components/form/text")
+    "common": {
+      "form": {
+        "button": require("./components/common/form/button"),
+        "date": require("./components/common/form/date"),
+        "gender": require("./components/common/form/gender"),
+        "text": require("./components/common/form/text")
+      }
+    },
+    "user": {
+      "loginForm": require("./components/user/loginForm"),
+      "signupForm": require("./components/user/signupForm")
     }
   },
   "dispatcher": {
     "AppDispatcher": require("./dispatcher/AppDispatcher")
   },
-  "mixins": {
-    "loginForm": require("./mixins/loginForm"),
-    "page": require("./mixins/page"),
-    "signupForm": require("./mixins/signupForm")
+  "pages": {
+    "loginPage": require("./pages/loginPage"),
+    "page": require("./pages/page"),
+    "signupPage": require("./pages/signupPage")
   },
   "stores": {
     "UserStore": require("./stores/UserStore")
