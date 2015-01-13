@@ -57,7 +57,7 @@ module.exports = React.createClass({
     }
   },
   render: function() {
-    var birthdate, email, gender, name, password, repeat, signup, username;
+    var birthdate, email, gender, login, name, password, repeat, signup, username;
     username = this.getIntlMessage('username');
     email = this.getIntlMessage('email');
     password = this.getIntlMessage('password');
@@ -66,6 +66,7 @@ module.exports = React.createClass({
     gender = this.getIntlMessage('gender');
     birthdate = this.getIntlMessage('birthdate');
     signup = this.getIntlMessage('signup');
+    login = this.getIntlMessage('login');
     return form({
       action: 'signup',
       onSubmit: this.handleSubmit,
@@ -95,6 +96,6 @@ module.exports = React.createClass({
       label: signup
     }), a({
       href: '/login'
-    }, 'Login'));
+    }, login));
   }
 });

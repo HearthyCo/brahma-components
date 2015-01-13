@@ -54,6 +54,7 @@ module.exports = React.createClass
     gender = @getIntlMessage('gender')
     birthdate = @getIntlMessage('birthdate')
     signup = @getIntlMessage('signup')
+    login = @getIntlMessage('login')
 
     # Mandatory fields: login, password, gender, name, birthdate
     form action: 'signup', onSubmit: @handleSubmit, className: 'comp-signupForm',
@@ -66,4 +67,4 @@ module.exports = React.createClass
       @buildComp 'date', { label: birthdate, name: 'birthdate' }
       @buildComp 'button', { label: signup, }
       a href: '/login',
-        'Login'
+        login

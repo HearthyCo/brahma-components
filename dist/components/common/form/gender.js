@@ -15,6 +15,7 @@ module.exports = React.createClass({
   },
   mkRadio: function(labelValue, value) {
     var actualValue;
+    console.log('LABELVALUE', labelValue, value);
     actualValue = this.props.valueLink ? this.props.valueLink.value : void 0;
     return div({
       className: 'field-radio gender-' + value.toLowerCase()
@@ -25,9 +26,13 @@ module.exports = React.createClass({
       value: value,
       checked: actualValue === value,
       onChange: this.handleChange.bind(this, value)
-    }, labelValue)));
+    }), labelValue));
   },
   render: function() {
+    var female, male, other;
+    male = this.getIntlMessage('male');
+    female = this.getIntlMessage('female');
+    other = this.getIntlMessage('other');
     return div({
       id: this.props.id,
       className: 'field-set comp-gender'
@@ -37,7 +42,7 @@ module.exports = React.createClass({
       className: 'label-form'
     }, this.props.label)), div({
       className: 'field'
-    }, this.mkRadio(this.getIntlMessage('male'), 'MALE'), this.mkRadio(this.getIntlMessage('female'), 'FEMALE'), this.mkRadio(this.getIntlMessage('other'), 'OTHER')), div({
+    }, this.mkRadio(male, 'MALE'), this.mkRadio(female, 'FEMALE'), this.mkRadio(other, 'OTHER')), div({
       className: 'message'
     }, label({
       className: 'message-form'

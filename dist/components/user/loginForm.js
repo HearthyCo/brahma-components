@@ -46,10 +46,11 @@ module.exports = React.createClass({
     }
   },
   render: function() {
-    var login, password, username;
+    var login, password, signup, username;
     username = this.getIntlMessage('username');
     password = this.getIntlMessage('password');
     login = this.getIntlMessage('login');
+    signup = this.getIntlMessage('signup');
     return form({
       action: this.props.action,
       onSubmit: this.handleSubmit,
@@ -64,6 +65,6 @@ module.exports = React.createClass({
       label: login
     }), a({
       href: '/register'
-    }, 'Register'));
+    }, signup));
   }
 });

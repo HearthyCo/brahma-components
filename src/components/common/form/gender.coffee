@@ -17,17 +17,21 @@ module.exports = React.createClass
         input
           className: 'radio-form', type: 'radio'
           name: @props.name, value: value, checked: (actualValue is value)
-          onChange: @handleChange.bind(@, value),
-          labelValue
+          onChange: @handleChange.bind(@, value)
+        labelValue
 
   render: ->
+    male = @getIntlMessage('male')
+    female = @getIntlMessage('female')
+    other = @getIntlMessage('other')
+
     div id: @props.id, className: 'field-set comp-gender',
       div className: 'label',
         label className: 'label-form',
           @props.label
       div className: 'field',
-        @mkRadio @getIntlMessage('male'), 'MALE'
-        @mkRadio @getIntlMessage('female'), 'FEMALE'
-        @mkRadio @getIntlMessage('other'), 'OTHER'
+        @mkRadio male, 'MALE'
+        @mkRadio female, 'FEMALE'
+        @mkRadio other, 'OTHER'
       div className: 'message',
         label className: 'message-form'

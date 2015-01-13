@@ -42,10 +42,11 @@ module.exports = React.createClass
     username = @getIntlMessage('username')
     password = @getIntlMessage('password')
     login = @getIntlMessage('login')
+    signup = @getIntlMessage('signup')
 
     form action: @props.action, onSubmit: @handleSubmit, className: 'comp-loginForm',
       @buildComp 'text', { label: username, name: 'login' }
       @buildComp 'password', { label: password, name: 'password' }
       @buildComp 'button', { label: login, }
       a href: '/register',
-        'Register'
+        signup
