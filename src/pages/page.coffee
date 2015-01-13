@@ -1,7 +1,9 @@
 React = require 'react'
 ReactIntl = require 'react-intl'
+_ = require 'underscore'
 
 LocaleSelect = React.createFactory require '../components/intl/localeSelect'
+IntlActions = require '../actions/IntlActions'
 
 { section, div } = React.DOM
 
@@ -10,10 +12,19 @@ module.exports = React.createClass
   mixins: [ReactIntl]
 
   getInitialState: ->
-    { locale: @props.intl.locale }
+    locale: @props.intl.locale
+    messages: @props.intl.messages
+
+  translate: (locale, messages) ->
+    @setState { locale: locale, messages: _.extend(@state.messages, messages) }
 
   updateLocale: (newLocale) ->
-    @setState { locale: newLocale }
+    # if the language does not yet exists then download it
+    unless @state.messages[newLocale]
+      IntlActions.translate newLocale, @translate
+    else
+      # if language already exists loaded it
+      @translate newLocale
 
   render: ->
     section(
@@ -28,6 +39,5 @@ module.exports = React.createClass
       , div(
         id: 'content'
         , React.createElement @props.element,
-          messages: @props.intl.messages[@state.locale]
+          messages: @state.messages[@state.locale]
       )
-    )
