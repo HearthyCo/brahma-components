@@ -7,5 +7,5 @@ LoginForm = React.createFactory require '../components/user/loginForm'
 
 module.exports = React.createClass
   render: ->
-    div className: 'loginPage',
+    div className: 'page-loginPage',
       LoginForm {}

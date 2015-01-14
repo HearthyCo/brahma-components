@@ -11,7 +11,7 @@ _ref = React.DOM, div = _ref.div, span = _ref.span, a = _ref.a;
 module.exports = React.createClass({
   render: function() {
     return div({
-      className: 'signupPage'
+      className: 'page-signupPage'
     }, SignupForm({}));
   }
 });

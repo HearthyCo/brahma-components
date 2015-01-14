@@ -7,5 +7,5 @@ SignupForm = React.createFactory require '../components/user/signupForm'
 
 module.exports = React.createClass
   render: ->
-    div className: 'signupPage',
+    div className: 'page-signupPage',
       SignupForm {}
