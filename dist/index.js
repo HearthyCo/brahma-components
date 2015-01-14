@@ -12,9 +12,11 @@ module.exports = exports = {
         "gender": require("./components/common/form/gender"),
         "text": require("./components/common/form/text")
       },
+      "iconbadge": require("./components/common/iconbadge"),
       "intl": {
         "localeSelect": require("./components/common/intl/localeSelect")
-      }
+      },
+      "mainlistEntry": require("./components/common/mainlistEntry")
     },
     "user": {
       "loginForm": require("./components/user/loginForm"),
