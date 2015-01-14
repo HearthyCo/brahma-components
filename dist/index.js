@@ -6,6 +6,7 @@ module.exports = exports = {
   },
   "components": {
     "common": {
+      "bottomBar": require("./components/common/bottomBar"),
       "form": {
         "button": require("./components/common/form/button"),
         "date": require("./components/common/form/date"),
@@ -14,7 +15,8 @@ module.exports = exports = {
       },
       "intl": {
         "localeSelect": require("./components/common/intl/localeSelect")
-      }
+      },
+      "topBar": require("./components/common/topBar")
     },
     "user": {
       "loginForm": require("./components/user/loginForm"),

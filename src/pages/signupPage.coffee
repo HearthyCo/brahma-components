@@ -8,8 +8,4 @@ SignupForm = React.createFactory require '../components/user/signupForm'
 module.exports = React.createClass
   render: ->
     div className: 'signupPage',
-      SignupForm({ messages: @props.messages })
-      a href: '/alex', className: 'linkAlex',
-        'Álex '
-        span {},
-          'Ubago'
+      SignupForm {}

@@ -1,4 +1,4 @@
-var IntlActions, LocaleSelect, React, ReactIntl, div, section, _, _ref;
+var IntlActions, React, ReactIntl, bottomBar, div, section, topBar, _, _ref;
 
 React = require('react');
 
@@ -8,16 +8,28 @@ _ = require('underscore');
 
 IntlActions = require('../actions/IntlActions');
 
-LocaleSelect = React.createFactory(require('../components/common/intl/localeSelect'));
+topBar = React.createFactory(require('../components/common/topBar'));
+
+bottomBar = React.createFactory(require('../components/common/bottomBar'));
 
 _ref = React.DOM, section = _ref.section, div = _ref.div;
 
 module.exports = React.createClass({
   mixins: [ReactIntl],
+  childContextTypes: {
+    locale: React.PropTypes.string.isRequired,
+    messages: React.PropTypes.object.isRequired
+  },
   getInitialState: function() {
     return {
       locale: this.props.intl.locale,
       messages: this.props.intl.messages
+    };
+  },
+  getChildContext: function() {
+    return {
+      locale: this.state.locale,
+      messages: this.state.messages[this.state.locale]
     };
   },
   translate: function(locale, messages) {
@@ -34,18 +46,21 @@ module.exports = React.createClass({
     }
   },
   render: function() {
-    return section({
-      id: 'page'
-    }, div({
-      id: 'locale-select'
-    }, LocaleSelect({
-      availableLocales: this.props.intl.availableLocales,
+    var bottomBarProps, localeLink;
+    localeLink = {
       value: this.state.locale,
-      onChange: this.updateLocale
-    })), div({
+      requestChange: this.updateLocale
+    };
+    bottomBarProps = {
+      availableLocales: this.props.intl.availableLocales,
+      locale: localeLink
+    };
+    return div({
+      className: 'comp-page'
+    }, topBar({}), section({
+      className: 'main-section'
+    }, div({
       id: 'content'
-    }, React.createElement(this.props.element, {
-      messages: this.state.messages[this.state.locale]
-    })));
+    }, React.createElement(this.props.element))), bottomBar(bottomBarProps));
   }
 });

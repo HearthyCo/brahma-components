@@ -7,8 +7,7 @@ conf =
 getSourceUrl = (language) ->
   conf.dir + language + conf.ext
 
-IntlActions = {
-
+IntlActions =
   translate: (language, callback) ->
     Backbone.ajax
       dataType: 'jsonp'
@@ -17,10 +16,8 @@ IntlActions = {
       success: (response) ->
         messages = {}
         messages[language] = response
-
         callback language, messages
       error: () ->
         console.log 'ERROR'
-}
 
 module.exports = IntlActions
