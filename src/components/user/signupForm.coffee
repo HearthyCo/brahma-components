@@ -56,8 +56,10 @@ module.exports = React.createClass
     signup = @getIntlMessage('signup')
     login = @getIntlMessage('login')
 
+    cmpLoginF = 'comp-signupForm'
+
     # Mandatory fields: login, password, gender, name, birthdate
-    form action: 'signup', onSubmit: @handleSubmit, className: 'comp-signupForm',
+    form action: 'signup', onSubmit: @handleSubmit, className: cmpLoginF,
       @buildComp 'text', { label: username, name: 'login' }
       @buildComp 'email', { label: email, name: 'email' }
       @buildComp 'password', { label: password, name: 'password' }

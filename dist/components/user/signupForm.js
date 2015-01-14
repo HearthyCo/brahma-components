@@ -57,7 +57,7 @@ module.exports = React.createClass({
     }
   },
   render: function() {
-    var birthdate, email, gender, login, name, password, repeat, signup, username;
+    var birthdate, cmpLoginF, email, gender, login, name, password, repeat, signup, username;
     username = this.getIntlMessage('username');
     email = this.getIntlMessage('email');
     password = this.getIntlMessage('password');
@@ -67,10 +67,11 @@ module.exports = React.createClass({
     birthdate = this.getIntlMessage('birthdate');
     signup = this.getIntlMessage('signup');
     login = this.getIntlMessage('login');
+    cmpLoginF = 'comp-signupForm';
     return form({
       action: 'signup',
       onSubmit: this.handleSubmit,
-      className: 'comp-signupForm'
+      className: cmpLoginF
     }, this.buildComp('text', {
       label: username,
       name: 'login'

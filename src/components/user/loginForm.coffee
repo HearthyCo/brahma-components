@@ -44,7 +44,9 @@ module.exports = React.createClass
     login = @getIntlMessage('login')
     signup = @getIntlMessage('signup')
 
-    form action: @props.action, onSubmit: @handleSubmit, className: 'comp-loginForm',
+    cmpLoginF = 'comp-loginForm'
+
+    form action: @props.action, onSubmit: @handleSubmit, className: cmpLoginF,
       @buildComp 'text', { label: username, name: 'login' }
       @buildComp 'password', { label: password, name: 'password' }
       @buildComp 'button', { label: login, }

@@ -46,15 +46,16 @@ module.exports = React.createClass({
     }
   },
   render: function() {
-    var login, password, signup, username;
+    var cmpLoginF, login, password, signup, username;
     username = this.getIntlMessage('username');
     password = this.getIntlMessage('password');
     login = this.getIntlMessage('login');
     signup = this.getIntlMessage('signup');
+    cmpLoginF = 'comp-loginForm';
     return form({
       action: this.props.action,
       onSubmit: this.handleSubmit,
-      className: 'comp-loginForm'
+      className: cmpLoginF
     }, this.buildComp('text', {
       label: username,
       name: 'login'
