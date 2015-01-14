@@ -15,7 +15,6 @@ module.exports = React.createClass({
   },
   mkRadio: function(labelValue, value) {
     var actualValue;
-    console.log('LABELVALUE', labelValue, value);
     actualValue = this.props.valueLink ? this.props.valueLink.value : void 0;
     return div({
       className: 'field-radio gender-' + value.toLowerCase()
