@@ -4,11 +4,17 @@ jest.dontMock '../../util/objectTools'
 
 describe 'Login Form', ->
   it 'triggers user:login event on submit', ->
+    # Traslate set for test
+    Intl = require 'intl'
+    messages = require '../../../../brahma-client/app/intl/es-ES.json'
+
     React = require 'react/addons'
     LoginForm = require '../user/loginForm'
     TestUtils = React.addons.TestUtils
 
-    form = TestUtils.renderIntoDocument React.createElement LoginForm
+
+    form = TestUtils.renderIntoDocument React.createElement LoginForm,
+      { messages: messages }
     inputs = TestUtils.scryRenderedDOMComponentsWithTag form, 'input'
     submit = TestUtils.findRenderedDOMComponentWithTag form, 'button'
 
@@ -25,4 +31,30 @@ describe 'Login Form', ->
       login: login
       password: login
     })
+
+  it 'change language on select other language', ->
+    # Traslate set for test
+    Intl = require 'intl'
+    messages = require '../../../../brahma-client/app/intl/en-US.json'
+
+    React = require 'react/addons'
+    LoginForm = require '../user/loginForm'
+    TestUtils = React.addons.TestUtils
+
+
+    form = TestUtils.renderIntoDocument React.createElement LoginForm,
+      { messages: messages }
+
+    labels = TestUtils.scryRenderedDOMComponentsWithClass form, 'label-form'
+
+    labelsUpdated = []
+    for label in labels
+      labelsUpdated.push label.getDOMNode().innerHTML
+
+    labelsTranslated = [
+      messages.username,
+      messages.password
+    ]
+
+    expect(labelsTranslated).toEqual(labelsUpdated)
 

@@ -18,6 +18,7 @@
   },
   "grunt-module-indexain": "dist/index.js",
   "dependencies": {
+    "intl": "^0.1.4",
     "react-intl": "^1.0.2"
   }
 }
