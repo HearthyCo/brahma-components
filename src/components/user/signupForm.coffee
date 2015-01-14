@@ -6,7 +6,7 @@ TextForm = React.createFactory require '../common/form/text'
 DateForm = React.createFactory require '../common/form/date'
 GenderForm = React.createFactory require '../common/form/gender'
 
-{ form, a, button } = React.DOM
+{ div, form, a, button } = React.DOM
 
 UserActions = require '../../actions/UserActions'
 
@@ -68,5 +68,6 @@ module.exports = React.createClass
       @buildComp 'gender', { label: gender, name: 'gender' }
       @buildComp 'date', { label: birthdate, name: 'birthdate' }
       @buildComp 'button', { label: signup, }
-      a href: '/login',
-        login
+      div {},
+        a href: '/login',
+          login

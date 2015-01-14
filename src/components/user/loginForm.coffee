@@ -4,7 +4,7 @@ _ = require 'underscore'
 
 TextForm = React.createFactory require '../common/form/text'
 
-{ form, a, button } = React.DOM
+{ div, form, a, button } = React.DOM
 
 UserActions = require '../../actions/UserActions'
 
@@ -50,5 +50,6 @@ module.exports = React.createClass
       @buildComp 'text', { label: username, name: 'login' }
       @buildComp 'password', { label: password, name: 'password' }
       @buildComp 'button', { label: login, }
-      a href: '/register',
-        signup
+      div {},
+        a href: '/register',
+          signup
