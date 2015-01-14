@@ -1,16 +1,18 @@
 Backbone = require 'exoskeleton'
 
-languages = {
-  'es-ES': '/locales/es-ES.json'
-  'en-US': '/locales/en-US.json'
-}
+conf =
+  ext: '.json'
+  dir: '/locales/'
+
+getSourceUrl = (language) ->
+  conf.dir + language + conf.ext
 
 IntlActions = {
 
   translate: (language, callback) ->
     Backbone.ajax
       dataType: 'jsonp'
-      url: languages[language]
+      url: getSourceUrl language
       cache: true
       success: (response) ->
         messages = {}

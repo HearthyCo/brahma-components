@@ -1,17 +1,21 @@
-var Backbone, IntlActions, languages;
+var Backbone, IntlActions, conf, getSourceUrl;
 
 Backbone = require('exoskeleton');
 
-languages = {
-  'es-ES': '/locales/es-ES.json',
-  'en-US': '/locales/en-US.json'
+conf = {
+  ext: '.json',
+  dir: '/locales/'
+};
+
+getSourceUrl = function(language) {
+  return conf.dir + language + conf.ext;
 };
 
 IntlActions = {
   translate: function(language, callback) {
     return Backbone.ajax({
       dataType: 'jsonp',
-      url: languages[language],
+      url: getSourceUrl(language),
       cache: true,
       success: function(response) {
         var messages;
