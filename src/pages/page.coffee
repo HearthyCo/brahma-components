@@ -2,7 +2,7 @@ React = require 'react'
 ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
-IntlActions = require '../actions/IntlActions'
+IntlStore = require '../stores/IntlStore'
 
 topBar = React.createFactory require '../components/common/topBar'
 bottomBar = React.createFactory require '../components/common/bottomBar'
@@ -14,37 +14,32 @@ module.exports = React.createClass
   mixins: [ReactIntl]
 
   childContextTypes:
+    availableLocales: React.PropTypes.array.isRequired
     locale: React.PropTypes.string.isRequired
     messages: React.PropTypes.object.isRequired
 
   getInitialState: ->
-    locale: @props.intl.locale
-    messages: @props.intl.messages
+    locale: IntlStore.locale
+    messages: IntlStore.messages
 
   getChildContext: ->
+    availableLocales: IntlStore.availableLocales
     locale: @state.locale
     messages: @state.messages[@state.locale]
 
-  translate: (locale, messages) ->
-    @setState { locale: locale, messages: _.extend(@state.messages, messages) }
+  componentDidMount: ->
+    IntlStore.addChangeListener @updateLocale
 
-  updateLocale: (newLocale) ->
-    # if the language does not yet exists then download it
-    unless @state.messages[newLocale]
-      IntlActions.translate newLocale, @translate
-    else
-      # if language already exists loaded it
-      @translate newLocale
+  componentWillUnmount: ->
+    TodoStore.removeChangeListener @updateLocale
+
+  updateLocale: () ->
+    @setState { locale: IntlStore.locale, messages: IntlStore.messages }
 
   render: ->
-    # no need for ReactLink
-    localeLink =
-      value: @state.locale
-      requestChange: @updateLocale
-
     bottomBarProps =
-      availableLocales: @props.intl.availableLocales
-      locale: localeLink
+      availableLocales: IntlStore.availableLocales
+      locale: @state.locale
 
     div className: 'comp-page',
       topBar {}

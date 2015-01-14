@@ -1,4 +1,4 @@
-var IntlActions, React, ReactIntl, bottomBar, div, section, topBar, _, _ref;
+var IntlStore, React, ReactIntl, bottomBar, div, section, topBar, _, _ref;
 
 React = require('react');
 
@@ -6,7 +6,7 @@ ReactIntl = require('react-intl');
 
 _ = require('underscore');
 
-IntlActions = require('../actions/IntlActions');
+IntlStore = require('../stores/IntlStore');
 
 topBar = React.createFactory(require('../components/common/topBar'));
 
@@ -17,43 +17,40 @@ _ref = React.DOM, section = _ref.section, div = _ref.div;
 module.exports = React.createClass({
   mixins: [ReactIntl],
   childContextTypes: {
+    availableLocales: React.PropTypes.array.isRequired,
     locale: React.PropTypes.string.isRequired,
     messages: React.PropTypes.object.isRequired
   },
   getInitialState: function() {
     return {
-      locale: this.props.intl.locale,
-      messages: this.props.intl.messages
+      locale: IntlStore.locale,
+      messages: IntlStore.messages
     };
   },
   getChildContext: function() {
     return {
+      availableLocales: IntlStore.availableLocales,
       locale: this.state.locale,
       messages: this.state.messages[this.state.locale]
     };
   },
-  translate: function(locale, messages) {
+  componentDidMount: function() {
+    return IntlStore.addChangeListener(this.updateLocale);
+  },
+  componentWillUnmount: function() {
+    return TodoStore.removeChangeListener(this.updateLocale);
+  },
+  updateLocale: function() {
     return this.setState({
-      locale: locale,
-      messages: _.extend(this.state.messages, messages)
+      locale: IntlStore.locale,
+      messages: IntlStore.messages
     });
   },
-  updateLocale: function(newLocale) {
-    if (!this.state.messages[newLocale]) {
-      return IntlActions.translate(newLocale, this.translate);
-    } else {
-      return this.translate(newLocale);
-    }
-  },
   render: function() {
-    var bottomBarProps, localeLink;
-    localeLink = {
-      value: this.state.locale,
-      requestChange: this.updateLocale
-    };
+    var bottomBarProps;
     bottomBarProps = {
-      availableLocales: this.props.intl.availableLocales,
-      locale: localeLink
+      availableLocales: IntlStore.availableLocales,
+      locale: this.state.locale
     };
     return div({
       className: 'comp-page'

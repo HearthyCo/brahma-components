@@ -34,6 +34,7 @@ module.exports = exports = {
     "signupPage": require("./pages/signupPage")
   },
   "stores": {
+    "IntlStore": require("./stores/IntlStore"),
     "UserStore": require("./stores/UserStore")
   },
   "util": {

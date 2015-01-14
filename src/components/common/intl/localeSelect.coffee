@@ -1,26 +1,24 @@
 React = require 'react'
 Backbone = require 'exoskeleton'
 
+IntlActions = require '../../../actions/IntlActions'
+
 module.exports = React.createClass
 
-  propTypes:
+  contextTypes:
     availableLocales: React.PropTypes.array.isRequired
-    value: React.PropTypes.string
-    onChange: React.PropTypes.func.isRequired
-
-  childContextTypes:
     locale: React.PropTypes.string.isRequired
     messages: React.PropTypes.object.isRequired
 
   handleChange: (ev) ->
-    @props.onChange ev.target.value
+    IntlActions.requestChange ev.target.value
 
   render: ->
     React.createElement 'select',
       className: 'comp-localeSelect'
-      value: @props.value
+      value: @context.locale
       onChange: @handleChange,
-      @props.availableLocales.map (locale) ->
+      @context.availableLocales.map (locale) ->
         React.createElement 'option',
           key: locale, value: locale,
           locale

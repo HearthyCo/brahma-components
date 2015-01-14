@@ -1,28 +1,26 @@
-var Backbone, React;
+var Backbone, IntlActions, React;
 
 React = require('react');
 
 Backbone = require('exoskeleton');
 
+IntlActions = require('../../../actions/IntlActions');
+
 module.exports = React.createClass({
-  propTypes: {
+  contextTypes: {
     availableLocales: React.PropTypes.array.isRequired,
-    value: React.PropTypes.string,
-    onChange: React.PropTypes.func.isRequired
-  },
-  childContextTypes: {
     locale: React.PropTypes.string.isRequired,
     messages: React.PropTypes.object.isRequired
   },
   handleChange: function(ev) {
-    return this.props.onChange(ev.target.value);
+    return IntlActions.requestChange(ev.target.value);
   },
   render: function() {
     return React.createElement('select', {
       className: 'comp-localeSelect',
-      value: this.props.value,
+      value: this.context.locale,
       onChange: this.handleChange
-    }, this.props.availableLocales.map(function(locale) {
+    }, this.context.availableLocales.map(function(locale) {
       return React.createElement('option', {
         key: locale,
         value: locale

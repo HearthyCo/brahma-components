@@ -20,10 +20,6 @@ module.exports = React.createClass({
       className: 'right-box'
     }, div({
       id: 'locale-select'
-    }, LocaleSelect({
-      availableLocales: this.props.availableLocales,
-      value: this.props.locale.value,
-      onChange: this.props.locale.requestChange
-    }))));
+    }, LocaleSelect({}))));
   }
 });

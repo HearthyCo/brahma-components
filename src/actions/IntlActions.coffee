@@ -1,23 +1,12 @@
-Backbone = require 'exoskeleton'
+AppDispatcher = require '../dispatcher/AppDispatcher'
 
-conf =
-  ext: '.json'
-  dir: '/locales/'
+IntlActions = {
 
-getSourceUrl = (language) ->
-  conf.dir + language + conf.ext
+  requestChange: (locale) ->
+    AppDispatcher.trigger 'intl:requestChange', {
+      locale: locale
+    }
 
-IntlActions =
-  translate: (language, callback) ->
-    Backbone.ajax
-      dataType: 'jsonp'
-      url: getSourceUrl language
-      cache: true
-      success: (response) ->
-        messages = {}
-        messages[language] = response
-        callback language, messages
-      error: () ->
-        console.log 'ERROR'
+}
 
 module.exports = IntlActions
