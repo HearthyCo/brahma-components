@@ -32,7 +32,7 @@ module.exports = React.createClass
     IntlStore.addChangeListener @updateLocale
 
   componentWillUnmount: ->
-    TodoStore.removeChangeListener @updateLocale
+    IntlStore.removeChangeListener @updateLocale
 
   updateLocale: () ->
     @setState { locale: IntlStore.locale, messages: IntlStore.messages }
