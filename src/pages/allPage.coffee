@@ -5,6 +5,7 @@ _ = require 'underscore'
 SignupForm = React.createFactory require '../components/user/signupForm'
 LoginForm = React.createFactory require '../components/user/loginForm'
 MainlistEntry = React.createFactory require '../components/common/mainlistEntry'
+SessionList = React.createFactory require '../components/common/sessionList'
 
 { div, span, a } = React.DOM
 
@@ -14,14 +15,23 @@ module.exports = React.createClass
 
   render: ->
     example = @getIntlMessage('example')
+    icon = 'https://cdn0.iconfinder.com/data/icons/typicons-2/24/tick-256.png'
+    sessions = [
+      {id: 33, title: 'Pediatría', startDate: new Date()},
+      {id: 22, title: 'Cardiología', startDate: new Date('2014-12-31 23:59')}
+    ]
+    url = '/sessions/programmed'
 
     div className: 'page-allPage',
       div className: 'entry',
-        div className: 'title', "SignupForm"
+        div className: 'title', 'SignupForm'
         SignupForm {}
       div className: 'entry',
-        div className: 'title', "LoginForm"
+        div className: 'title', 'LoginForm'
         LoginForm {}
       div className: 'entry',
-        div className: 'title', "MainlistEntry"
-        MainlistEntry label: example, value: 33, icon: "https://cdn0.iconfinder.com/data/icons/typicons-2/24/tick-256.png"
+        div className: 'title', 'MainlistEntry'
+        MainlistEntry label: example, value: 33, icon: icon,
+          SessionList title: example, url: url, sessions: sessions
+          SessionList title: example, url: url, sessions: sessions
+          SessionList title: example, url: url, sessions: sessions
