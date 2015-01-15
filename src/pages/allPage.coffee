@@ -18,7 +18,7 @@ module.exports = React.createClass
     icon = 'https://cdn0.iconfinder.com/data/icons/typicons-2/24/tick-256.png'
     sessions = [
       {id: 33, title: 'Pediatría', startDate: new Date()},
-      {id: 22, title: 'Cardiología', startDate: new Date()}
+      {id: 22, title: 'Cardiología', startDate: new Date('2014-12-31 23:59')}
     ]
     url = '/sessions/programmed'
 

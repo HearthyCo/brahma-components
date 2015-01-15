@@ -22,5 +22,6 @@ module.exports = React.createClass
         img className: 'clock', src: clock
         span className: 'time',
           @formatTime @props.session.startDate, 'time'
+        span className: 'session-title', @props.session.title
       a className: 'session-link', href: '/session/' + @props.session.id,
         @getIntlMessage('access')
