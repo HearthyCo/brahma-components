@@ -17,6 +17,16 @@ IntlStore =
   locale: 'es-ES'
   messages:
     'es-ES': require '../../../brahma-client/app/intl/es-ES.json'
+  formats:
+    date:
+      dateonly:
+        day: "2-digit"
+        month: "2-digit"
+        year: "2-digit"
+    time:
+      time:
+        hour: "2-digit"
+        minute: "2-digit"
 
 _.extend IntlStore, Backbone.Events
 

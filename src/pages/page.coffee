@@ -26,6 +26,7 @@ module.exports = React.createClass
     availableLocales: IntlStore.availableLocales
     locale: @state.locale
     messages: @state.messages[@state.locale]
+    formats: IntlStore.formats
 
   componentDidMount: ->
     IntlStore.addChangeListener @updateLocale
