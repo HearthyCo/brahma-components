@@ -2,6 +2,10 @@ React = require 'react/addons'
 ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
+HomeStore = require '../stores/HomeStore'
+
+HomeActions = require '../actions/HomeActions'
+
 MainlistEntry = React.createFactory require '../components/common/mainlistEntry'
 SessionList = React.createFactory require '../components/common/sessionList'
 IconButton = React.createFactory require '../components/common/iconbutton'
@@ -15,30 +19,30 @@ module.exports = React.createClass
   mixins: [ReactIntl]
 
   getInitialState: ->
-    sessions:
-      programmed: [
-        {id: 1, title: 'Lorem', startDate: new Date()}
-        {id: 2, title: 'Ipsum', startDate: new Date()}
-      ]
-      underway: [
-        {id: 3, title: 'Dolor', startDate: new Date()}
-        {id: 4, title: 'Sit', startDate: new Date()}
-      ]
-      closed: [
-        {id: 5, title: 'Amet', startDate: new Date()}
-        {id: 6, title: 'Completar', startDate: new Date()}
-      ]
+    data: HomeStore.data
+
+  componentDidMount: ->
+    HomeStore.addChangeListener @updateState
+    HomeActions.refresh()
+
+  componentWillUnmount: ->
+    HomeStore.removeChangeListener @updateState
+
+  updateState: () ->
+    @setState { data: HomeStore.data }
 
   render: ->
     sessions = []
-    for key, entries of @state.sessions
+    newSessions = 0
+    for key, entries of @state.data.sessions
       opts =
         title: @getIntlMessage(key)
         key: key
         url: '/sessions/' + key
         sessions: entries
+      newSessions += entries.map((s) -> if s.isNew then 1 else 0).reduce((a,b)->a+b)
       sessions.push SessionList opts
 
     div className: 'page-home',
-      MainlistEntry label: @getIntlMessage('sessions'), value: 2, icon: icon,
+      MainlistEntry label: @getIntlMessage('sessions'), value: newSessions, icon: icon,
         sessions
