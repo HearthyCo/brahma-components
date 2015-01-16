@@ -4,7 +4,7 @@ module.exports = ->
   @loadTasks "build/tasks"
 
   # When running the default Grunt command, just lint the code.
-  @registerTask "default", [
+  @registerTask "build", [
     "clean"
     "coffeelint"
     "coffee"
@@ -12,3 +12,5 @@ module.exports = ->
     #"jshint"
     "moduleIndex"
   ]
+  @registerTask "development", ["build"]
+  @registerTask "default", ["development"]

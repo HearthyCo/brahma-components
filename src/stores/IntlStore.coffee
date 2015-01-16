@@ -15,8 +15,7 @@ getSourceUrl = (language) ->
 IntlStore =
   availableLocales: [ 'en-US', 'es-ES' ]
   locale: 'es-ES'
-  messages:
-    'es-ES': require '../../../brahma-client/app/intl/es-ES.json'
+  messages: {}
   formats:
     date:
       dateonly:
@@ -30,6 +29,8 @@ IntlStore =
 
 _.extend IntlStore, Backbone.Events
 
+IntlStore.setMessages = (messages) ->
+  IntlStore.messages = messages
 
 IntlStore.addChangeListener = (callback) ->
   IntlStore.on 'change', callback
