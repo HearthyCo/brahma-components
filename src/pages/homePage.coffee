@@ -7,7 +7,7 @@ HomeStore = require '../stores/HomeStore'
 HomeActions = require '../actions/HomeActions'
 
 MainlistEntry = React.createFactory require '../components/common/mainlistEntry'
-SessionList = React.createFactory require '../components/common/sessionList'
+SessionList = React.createFactory require '../components/session/sessionList'
 IconButton = React.createFactory require '../components/common/iconbutton'
 
 { div } = React.DOM

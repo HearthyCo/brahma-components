@@ -46,5 +46,5 @@ module.exports = React.createClass
       topBar {}
       section className: 'main-section',
         div id: 'content',
-          React.createElement @props.element
+          React.createElement @props.element, _.omit(@props, 'element')
       bottomBar bottomBarProps

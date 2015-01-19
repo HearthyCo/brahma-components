@@ -5,8 +5,9 @@ _ = require 'underscore'
 SignupForm = React.createFactory require '../components/user/signupForm'
 LoginForm = React.createFactory require '../components/user/loginForm'
 MainlistEntry = React.createFactory require '../components/common/mainlistEntry'
-SessionList = React.createFactory require '../components/common/sessionList'
+SessionList = React.createFactory require '../components/session/sessionList'
 IconButton = React.createFactory require '../components/common/iconbutton'
+TimelineEntry = React.createFactory require '../components/session/timelineEntry'
 
 { div, span, a } = React.DOM
 
@@ -40,3 +41,7 @@ module.exports = React.createClass
       div className: 'entry',
         div className: 'title', 'IconButton'
         IconButton label: example, icon: iconPlus, url: url
+      div className: 'entry',
+        div className: 'title', 'TimelineEntry'
+        TimelineEntry session: sessions[0]
+        TimelineEntry session: sessions[1]
