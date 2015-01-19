@@ -14,14 +14,15 @@ module.exports = React.createClass
   render: ->
     url = '/session/' + @props.session.get('id')
     div id: @props.id, className: 'comp-timelineentry',
-      div className: 'session-head',
-        span className: 'date',
-          @formatDate @props.session.get('startDate'), 'datetime'
-        span className: 'separator', ' - '
-        span className: 'session-title', @props.session.get('title')
-      div className: 'session-body',
-        @getIntlMessage('professional')
-        # TODO: Nombre y apellidos
-      div className: 'session-foot',
-        a className: 'session-link', href: url,
-          @getIntlMessage('view-session')
+      div className: 'session-wrapper',
+        div className: 'session-head',
+          span className: 'date',
+            @formatDate @props.session.get('startDate'), 'datetime'
+          span className: 'separator', ' - '
+          span className: 'session-title', @props.session.get('title')
+        div className: 'session-body',
+          @getIntlMessage('professional')
+          # TODO: Nombre y apellidos
+        div className: 'session-foot',
+          a className: 'session-link', href: url,
+            @getIntlMessage('view-session')
