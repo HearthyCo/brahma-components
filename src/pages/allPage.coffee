@@ -2,12 +2,13 @@ React = require 'react/addons'
 ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
-SignupForm = React.createFactory require '../components/user/signupForm'
-LoginForm = React.createFactory require '../components/user/loginForm'
-MainlistEntry = React.createFactory require '../components/common/mainlistEntry'
-SessionList = React.createFactory require '../components/session/sessionList'
-IconButton = React.createFactory require '../components/common/iconbutton'
-TimelineEntry = React.createFactory require '../components/session/timelineEntry'
+rcf = React.createFactory
+SignupForm = rcf require '../components/user/signupForm'
+LoginForm = rcf require '../components/user/loginForm'
+MainlistEntry = rcf require '../components/common/mainlistEntry'
+SessionList = rcf require '../components/session/sessionList'
+IconButton = rcf require '../components/common/iconbutton'
+TimelineEntry = rcf require '../components/session/timelineEntry'
 
 { div, span, a } = React.DOM
 

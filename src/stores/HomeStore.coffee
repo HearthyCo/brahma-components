@@ -14,11 +14,11 @@ HomeState =
       ]
       underway: [
         {id: 3, title: 'Flesh', startDate: new Date(1421414564000), isNew: true}
-        {id: 4, title: 'Horse', startDate: new Date(1421413764000), isNew: false}
+        {id: 4, title: 'Home', startDate: new Date(1421413764000), isNew: false}
       ]
       closed: [
-        {id: 5, title: 'Nephew', startDate: new Date(1419034861000), isNew: true}
-        {id: 6, title: 'Repair', startDate: new Date(1417162438000), isNew: true}
+        {id: 5, title: 'Neat', startDate: new Date(1419034861000), isNew: true}
+        {id: 6, title: 'Reap', startDate: new Date(1417162438000), isNew: true}
       ]
   # TODO: Add other sections...
 

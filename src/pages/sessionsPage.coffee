@@ -6,7 +6,9 @@ SessionsStore = require '../stores/SessionsStore'
 
 #SessionsActions = require '../actions/SessionsActions'
 
-TimelineEntry = React.createFactory require '../components/session/timelineEntry'
+TimelineEntry = React.createFactory(
+  require '../components/session/timelineEntry'
+)
 
 { div } = React.DOM
 
@@ -28,7 +30,6 @@ module.exports = React.createClass
     @setState { sessions: SessionsStore[@props.state] }
 
   render: ->
-    #sessionsLabel = @getIntlMessage('sessions')
     sessions = @state.sessions.map (session) ->
       TimelineEntry key: session.id, session: session
 
