@@ -4,7 +4,7 @@ _ = require 'underscore'
 
 SessionsStore = require '../stores/SessionsStore'
 
-#SessionsActions = require '../actions/SessionsActions'
+SessionsActions = require '../actions/SessionsActions'
 
 TimelineEntry = React.createFactory(
   require '../components/session/timelineEntry'
@@ -21,7 +21,7 @@ module.exports = React.createClass
 
   componentDidMount: ->
     SessionsStore.addChangeListener @updateState
-    #SessionsActions.refresh @props.state
+    SessionsActions.refresh @props.state
 
   componentWillUnmount: ->
     SessionsStore.removeChangeListener @updateState

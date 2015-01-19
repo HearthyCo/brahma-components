@@ -6,10 +6,10 @@ SessionStore = Backbone.Model.extend({
 })
 
 
-AppDispatcher.on 'all', (eventName, payload) ->
-  switch eventName
-    when 'session:refresh'
-      1 # TODO
+#AppDispatcher.on 'all', (eventName, payload) ->
+#  switch eventName
+#    when 'session:refresh'
+#      TODO
 
 
 module.exports = SessionStore

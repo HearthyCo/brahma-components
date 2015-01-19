@@ -9,7 +9,7 @@ conf =
 
 Sessions = Backbone.Collection.extend
   model: Session
-  url: -> endpoint + '/' + @kind
+  url: -> conf.endpoint + '/' + @kind
   parse: (o) -> o.sessions
   initialize: (models, kind) ->
     @kind = kind
@@ -31,6 +31,15 @@ SessionsStore.removeChangeListener = (callback) ->
 AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
     when 'sessions:refresh'
-      1 # TODO
+      target = payload.section
+      SessionsStore[target].fetch(
+        success: (sessions) ->
+          msg = 'Downloaded new sessions[' + target + '] info:'
+          console.log msg, sessions
+          SessionsStore.trigger 'change'
+        error: (xhr, status) ->
+          msg = 'Error loading sessions[' + target + '] info:'
+          console.log msg, status, xhr
+      )
 
 module.exports = SessionsStore
