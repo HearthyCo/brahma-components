@@ -32,17 +32,18 @@ module.exports = React.createClass
     @setState { data: HomeStore.data }
 
   render: ->
+    sessionsLabel = @getIntlMessage('sessions')
     sessions = []
     newSessions = 0
     for key, entries of @state.data.sessions
+      entries.map (s) -> if s.isNew then newSessions++
       opts =
         title: @getIntlMessage(key)
         key: key
         url: '/sessions/' + key
         sessions: entries
-      newSessions += entries.map((s) -> if s.isNew then 1 else 0).reduce((a,b)->a+b)
       sessions.push SessionList opts
 
     div className: 'page-home',
-      MainlistEntry label: @getIntlMessage('sessions'), value: newSessions, icon: icon,
+      MainlistEntry label: sessionsLabel, value: newSessions, icon: icon,
         sessions
