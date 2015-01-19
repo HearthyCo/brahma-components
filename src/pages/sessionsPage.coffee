@@ -26,6 +26,10 @@ module.exports = React.createClass
   componentWillUnmount: ->
     SessionsStore.removeChangeListener @updateState
 
+  componentWillReceiveProps: (next) ->
+    if @props.state isnt next.state
+      SessionsActions.refresh next.state
+
   updateState: () ->
     @setState { sessions: SessionsStore[@props.state] }
 

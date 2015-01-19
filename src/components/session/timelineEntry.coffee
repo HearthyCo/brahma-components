@@ -12,15 +12,16 @@ module.exports = React.createClass
     session: React.PropTypes.object.isRequired
 
   render: ->
+    url = '/session/' + @props.session.get('id')
     div id: @props.id, className: 'comp-timelineentry',
       div className: 'session-head',
         span className: 'date',
-          @formatDate @props.session.startDate, 'datetime'
+          @formatDate @props.session.get('startDate'), 'datetime'
         span className: 'separator', ' - '
-        span className: 'session-title', @props.session.title
+        span className: 'session-title', @props.session.get('title')
       div className: 'session-body',
         @getIntlMessage('professional')
         # TODO: Nombre y apellidos
       div className: 'session-foot',
-        a className: 'session-link', href: '/session/' + @props.session.id,
+        a className: 'session-link', href: url,
           @getIntlMessage('view-session')

@@ -10,6 +10,10 @@ SessionList = rcf require '../components/session/sessionList'
 IconButton = rcf require '../components/common/iconbutton'
 TimelineEntry = rcf require '../components/session/timelineEntry'
 
+SessionStore = require '../stores/SessionStore'
+s1 = new SessionStore {id: 33, title: 'Pediatría', startDate: new Date()}
+s2 = new SessionStore {id: 22, title: 'Cardiología', startDate: new Date()}
+
 { div, span, a } = React.DOM
 
 module.exports = React.createClass
@@ -20,10 +24,7 @@ module.exports = React.createClass
     example = @getIntlMessage('example')
     icon = 'https://cdn0.iconfinder.com/data/icons/typicons-2/24/tick-256.png'
     iconPlus = 'http://www.icone-png.com/png/30/29952.png'
-    sessions = [
-      {id: 33, title: 'Pediatría', startDate: new Date()},
-      {id: 22, title: 'Cardiología', startDate: new Date(1420066740000)}
-    ]
+    sessions = [s1, s2]
     url = '/sessions/programmed'
 
     div className: 'page-allPage',

@@ -32,6 +32,9 @@ AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
     when 'sessions:refresh'
       target = payload.section
+      if not SessionsStore[target]
+        console.log 'Unknown section sessions[' + target + ']'
+        return
       SessionsStore[target].fetch(
         success: (sessions) ->
           msg = 'Downloaded new sessions[' + target + '] info:'
