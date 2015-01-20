@@ -2,8 +2,10 @@ Backbone = require 'exoskeleton'
 _ = require 'underscore'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 
+SessionStore = require '../stores/SessionStore'
+
 conf =
-  endpoint: '/v1/home'
+  endpoint: '/v1/user/home'
 
 HomeState =
   data:
@@ -21,6 +23,12 @@ HomeState.addChangeListener = (callback) ->
 HomeState.removeChangeListener = (callback) ->
   HomeState.off 'change', callback
 
+responseToModels = (response) ->
+  for own state, sessions of response.sessions
+    response.sessions[state] = sessions.map (k) ->
+      new SessionStore k
+  response
+
 
 AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
@@ -30,7 +38,7 @@ AppDispatcher.on 'all', (eventName, payload) ->
         url: conf.endpoint
         success: (response) ->
           console.log 'Downloaded new home info:', response
-          HomeState.data = response
+          HomeState.data = responseToModels response
           HomeState.trigger 'change'
         error: (xhr, status) ->
           console.log 'Error loading home info:', status, xhr

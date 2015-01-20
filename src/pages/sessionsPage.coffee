@@ -16,6 +16,9 @@ module.exports = React.createClass
 
   mixins: [ReactIntl]
 
+  propTypes:
+    state: React.PropTypes.string.isRequired
+
   getInitialState: ->
     sessions: SessionsStore[@props.state]
 
