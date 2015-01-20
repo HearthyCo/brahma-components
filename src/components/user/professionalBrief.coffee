@@ -18,7 +18,7 @@ module.exports = React.createClass
       .filter (v) -> v
       .join ' '
 
-    div id: @props.id, className: 'comp-professionalbrief',
+    div id: @props.id, className: 'comp-professionalbrief wrapper',
       img className: 'avatar', src: @props.user.get('avatar')
       div className: 'brief-info',
         p {},

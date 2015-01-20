@@ -16,7 +16,7 @@ s1 = new SessionStore {id: 33, title: 'Pediatría', startDate: new Date()}
 s2 = new SessionStore {id: 22, title: 'Cardiología', startDate: new Date()}
 UserStore = require '../stores/UserStore'
 u1 = new UserStore {
-  id: 44, name: 'Carlos', surname1: 'Gómez', service: 'Optometría',
+  id: 44, name: 'Sverianiano', surname1: 'Fernandez', service: 'Otorrino',
   avatar: 'http://comps.canstockphoto.com/can-stock-photo_csp6253298.jpg'
 }
 

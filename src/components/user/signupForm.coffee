@@ -56,7 +56,7 @@ module.exports = React.createClass
     signup = @getIntlMessage('signup')
     login = @getIntlMessage('login')
 
-    cmpLoginF = 'comp-signupForm'
+    cmpLoginF = 'comp-signupForm wrapper'
 
     # Mandatory fields: login, password, gender, name, birthdate
     form action: 'signup', onSubmit: @handleSubmit, className: cmpLoginF,

@@ -7,7 +7,7 @@ LocaleSelect = React.createFactory require './intl/localeSelect'
 
 module.exports = React.createClass
   render: ->
-    footer className: 'comp-bottomBar',
+    footer className: 'comp-bottomBar wrapper',
       div className: 'left-box',
       div className: 'center-box',
       div className: 'right-box',

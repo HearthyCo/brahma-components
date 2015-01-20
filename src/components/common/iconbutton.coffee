@@ -11,7 +11,7 @@ module.exports = React.createClass
     url: React.PropTypes.string
 
   render: ->
-    a id: @props.id, className: 'comp-iconbutton', href: @props.url,
+    a id: @props.id, className: 'comp-iconbutton wrapper', href: @props.url,
       span className: 'icon icon-' + @props.icon
       span className: 'button-label',
         @props.label
