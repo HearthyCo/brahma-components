@@ -1,6 +1,6 @@
 React = require 'react'
 
-{ a, img, span } = React.DOM
+{ a, img, span, div } = React.DOM
 
 module.exports = React.createClass
 
@@ -12,6 +12,6 @@ module.exports = React.createClass
 
   render: ->
     a id: @props.id, className: 'comp-iconbutton', href: @props.url,
-      img className: 'icon', src: @props.icon
+      span className: 'icon icon-' + @props.icon
       span className: 'button-label',
         @props.label

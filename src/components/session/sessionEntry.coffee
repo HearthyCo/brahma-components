@@ -20,7 +20,7 @@ module.exports = React.createClass
         span className: 'date',
           @formatDate @props.session.get('startDate'), 'dateonly'
         span className: 'time',
-          img className: 'clock', src: clock
+          span className: 'icon icon-clock'
           @formatTime @props.session.get('startDate'), 'time'
         span className: 'session-title', @props.session.get('title')
       a className: 'session-link', href: '/session/' + @props.session.get('id'),

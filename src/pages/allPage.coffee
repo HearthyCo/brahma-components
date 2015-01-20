@@ -22,8 +22,8 @@ module.exports = React.createClass
 
   render: ->
     example = @getIntlMessage('example')
-    icon = 'https://cdn0.iconfinder.com/data/icons/typicons-2/24/tick-256.png'
-    iconPlus = 'http://www.icone-png.com/png/30/29952.png'
+    icon = 'language'
+    iconPlus = 'error'
     sessions = [s1, s2]
     url = '/sessions/programmed'
 

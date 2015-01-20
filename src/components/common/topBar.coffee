@@ -1,7 +1,7 @@
 React = require 'react/addons'
 _ = require 'underscore'
 
-{ header, div, a } = React.DOM
+{ header, div, a, span } = React.DOM
 
 module.exports = React.createClass
   render: ->
@@ -9,10 +9,10 @@ module.exports = React.createClass
       div className: 'topBar-wrapper',
         div className: 'left-box',
           div className: 'menuBar',
-            a className: 'menu-icon', href: '#',
-              "| | |"
+            a href: '#',
+              span className: 'icon icon-menu'
         div className: 'center-box',
           div className: 'logoBar',
-            "Brahma"
+            span: 'Brahma',
         div className: 'right-box',
           div className: 'iconBar',

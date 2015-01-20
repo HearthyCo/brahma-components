@@ -12,7 +12,7 @@ IconButton = React.createFactory require '../components/common/iconbutton'
 
 { div } = React.DOM
 
-icon = 'https://cdn0.iconfinder.com/data/icons/feather/96/clock-128.png'
+icon = 'clock'
 
 module.exports = React.createClass
 

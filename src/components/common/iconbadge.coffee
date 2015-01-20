@@ -16,4 +16,4 @@ module.exports = React.createClass
     div id: @props.id, className: 'comp-iconbadge',
       if @props.value then span className: 'badge',
         @props.value
-      img className: 'icon', src: @props.icon
+      div className: 'icon icon-' + @props.icon
