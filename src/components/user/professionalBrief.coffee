@@ -14,16 +14,16 @@ module.exports = React.createClass
   render: ->
     _this = @
     fullname = ['name', 'surname1', 'surname2']
-      .map (f) -> _this.props.user.get(f)
+      .map (f) -> _this.props.user[f]
       .filter (v) -> v
       .join ' '
 
     div id: @props.id, className: 'comp-professionalbrief wrapper',
-      img className: 'avatar', src: @props.user.get('avatar')
+      img className: 'avatar', src: @props.user.avatar
       div className: 'brief-info',
         p {},
           span className: 'brief-key', @getIntlMessage('professional'), ': '
           span className: 'brief-value', fullname
         p {},
           span className: 'brief-key', @getIntlMessage('field'), ': '
-          span className: 'brief-value', @props.user.get('service')
+          span className: 'brief-value', @props.user.service

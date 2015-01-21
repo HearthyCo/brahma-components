@@ -20,7 +20,7 @@ module.exports = React.createClass
     state: React.PropTypes.string.isRequired
 
   getInitialState: ->
-    sessions: SessionsStore[@props.state]
+    sessions: SessionsStore[@props.state].getAll()
 
   componentDidMount: ->
     SessionsStore.addChangeListener @updateState
@@ -34,7 +34,7 @@ module.exports = React.createClass
       SessionsActions.refresh next.state
 
   updateState: () ->
-    @setState { sessions: SessionsStore[@props.state] }
+    @setState { sessions: SessionsStore[@props.state].getAll() }
 
   render: ->
     sessions = @state.sessions.map (session) ->
