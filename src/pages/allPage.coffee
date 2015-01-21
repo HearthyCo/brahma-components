@@ -11,11 +11,10 @@ IconButton = rcf require '../components/common/iconbutton'
 TimelineEntry = rcf require '../components/session/timelineEntry'
 ProfessionalBrief = rcf require '../components/user/professionalBrief'
 
-SessionStore = require '../stores/SessionStore'
-s1 = new SessionStore {id: 33, title: 'Pediatría', startDate: new Date()}
-s2 = new SessionStore {id: 22, title: 'Cardiología', startDate: new Date()}
-UserStore = require '../stores/UserStore'
-u1 = new UserStore {
+s1 = {id: 33, title: 'Pediatría', startDate: new Date()}
+s2 = {id: 22, title: 'Cardiología', startDate: new Date()}
+sessions = [s1, s2]
+u1 = {
   id: 44, name: 'Sverianiano', surname1: 'Fernandez', service: 'Otorrino',
   avatar: 'http://comps.canstockphoto.com/can-stock-photo_csp6253298.jpg'
 }
@@ -30,7 +29,6 @@ module.exports = React.createClass
     example = @getIntlMessage('example')
     icon = 'language'
     iconPlus = 'error'
-    sessions = [s1, s2]
     url = '/sessions/programmed'
 
     div className: 'page-allPage',

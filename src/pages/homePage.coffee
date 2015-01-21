@@ -19,7 +19,7 @@ module.exports = React.createClass
   mixins: [ReactIntl]
 
   getInitialState: ->
-    data: HomeStore.data
+    data: HomeStore.getAll()
 
   componentDidMount: ->
     HomeStore.addChangeListener @updateState
@@ -29,7 +29,7 @@ module.exports = React.createClass
     HomeStore.removeChangeListener @updateState
 
   updateState: () ->
-    @setState { data: HomeStore.data }
+    @setState { data: HomeStore.getAll() }
 
   render: ->
     sessionsLabel = @getIntlMessage('sessions')

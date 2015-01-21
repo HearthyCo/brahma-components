@@ -2,22 +2,21 @@ Backbone = require 'exoskeleton'
 _ = require 'underscore'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 
-Session = require './SessionStore'
+SessionStore = require './SessionStore'
+
 
 conf =
   endpoint: '/v1/user/sessions'
 
-Sessions = Backbone.Collection.extend
-  model: Session
-  url: -> conf.endpoint + '/' + @kind
-  parse: (o) -> o.sessions
-  initialize: (models, kind) ->
-    @kind = kind
-
 SessionsStore =
-  programmed: new Sessions [], 'programmed'
-  underway: new Sessions [], 'underway'
-  closed: new Sessions [], 'closed'
+  programmed: Object.create SessionStore
+  underway: Object.create SessionStore
+  closed: Object.create SessionStore
+
+SessionsStore.programmed.url = conf.endpoint + '/programmed'
+SessionsStore.underway.url = conf.endpoint + '/underway'
+SessionsStore.closed.url = conf.endpoint + '/closed'
+
 
 _.extend SessionsStore, Backbone.Events
 
@@ -36,9 +35,10 @@ AppDispatcher.on 'all', (eventName, payload) ->
         console.log 'Unknown section sessions[' + target + ']'
         return
       SessionsStore[target].fetch(
+        reset: true
         success: (sessions) ->
           msg = 'Downloaded new sessions[' + target + '] info:'
-          console.log msg, sessions
+          console.log msg, sessions.toJSON()
           SessionsStore.trigger 'change'
         error: (xhr, status) ->
           msg = 'Error loading sessions[' + target + '] info:'

@@ -18,10 +18,10 @@ module.exports = React.createClass
     div id: @props.id, className: 'comp-sessionentry',
       div className: 'session-label',
         span className: 'date',
-          @formatDate @props.session.get('startDate'), 'dateonly'
+          @formatDate @props.session.startDate, 'dateonly'
         span className: 'time',
           span className: 'icon icon-clock'
-          @formatTime @props.session.get('startDate'), 'time'
-        span className: 'session-title', @props.session.get('title')
-      a className: 'session-link', href: '/session/' + @props.session.get('id'),
+          @formatTime @props.session.startDate, 'time'
+        span className: 'session-title', @props.session.title
+      a className: 'session-link', href: '/session/' + @props.session.id,
         @getIntlMessage('access')
