@@ -50,5 +50,5 @@ module.exports = React.createClass
     div className: 'page-session',
       profs
       # TODO: Show elements specific to session state
-      IconButton icon: 'clock', label: attach, url: '/'
-      IconButton icon: 'home', label: treatm, url: '/'
+      IconButton icon: 'done', label: attach, url: '/'
+      IconButton icon: 'done-all', label: treatm, url: '/'
