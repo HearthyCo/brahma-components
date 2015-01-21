@@ -11,6 +11,7 @@ SessionActions = require '../actions/SessionActions'
 ProfessionalBrief = React.createFactory(
   require '../components/user/professionalBrief'
 )
+IconButton = React.createFactory require '../components/common/iconbutton'
 
 { div } = React.DOM
 
@@ -43,6 +44,11 @@ module.exports = React.createClass
     if @state.session and @state.session.professionals
       profs = @state.session.professionals.map (user) ->
         ProfessionalBrief user: user, key: user.id
+    attach = @getIntlMessage 'check-attachments'
+    treatm = @getIntlMessage 'check-treatment'
 
     div className: 'page-session',
       profs
+      # TODO: Show elements specific to session state
+      IconButton icon: 'clock', label: attach, url: '/'
+      IconButton icon: 'home', label: treatm, url: '/'
