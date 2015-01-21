@@ -44,7 +44,7 @@ module.exports = React.createClass
     login = @getIntlMessage('login')
     signup = @getIntlMessage('signup')
 
-    cmpLoginF = 'comp-loginForm wrapper'
+    cmpLoginF = 'comp-loginForm wrapper text'
 
     form action: @props.action, onSubmit: @handleSubmit, className: cmpLoginF,
       @buildComp 'text', { label: username, name: 'login' }

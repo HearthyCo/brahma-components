@@ -33,24 +33,24 @@ module.exports = React.createClass
 
     div className: 'page-allPage',
       div className: 'entry',
-        div className: 'title', 'SignupForm'
+        div className: 'robocop', 'SignupForm'
         SignupForm {}
       div className: 'entry',
-        div className: 'title', 'LoginForm'
+        div className: 'robocop', 'LoginForm'
         LoginForm {}
       div className: 'entry',
-        div className: 'title', 'MainlistEntry'
+        div className: 'robocop', 'MainlistEntry'
         MainlistEntry label: example, value: 33, icon: icon,
           SessionList title: example, url: url, sessions: sessions
           SessionList title: example, url: url, sessions: sessions
           SessionList title: example, url: url, sessions: sessions
       div className: 'entry',
-        div className: 'title', 'IconButton'
+        div className: 'robocop', 'IconButton'
         IconButton label: example, icon: iconPlus, url: url
       div className: 'entry',
-        div className: 'title', 'TimelineEntry'
+        div className: 'robocop', 'TimelineEntry'
         TimelineEntry session: s1
         TimelineEntry session: s2
       div className: 'entry',
-        div className: 'title', 'ProfessionalBrief'
+        div className: 'robocop', 'ProfessionalBrief'
         ProfessionalBrief user: u1
