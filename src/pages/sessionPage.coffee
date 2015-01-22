@@ -12,6 +12,7 @@ ProfessionalBrief = React.createFactory(
   require '../components/user/professionalBrief'
 )
 IconButton = React.createFactory require '../components/common/iconbutton'
+Datetime = React.createFactory require '../components/common/datetime'
 
 { div, p } = React.DOM
 
@@ -42,10 +43,11 @@ module.exports = React.createClass
   render: ->
     profs = []
     if @state.session and @state.session.users.professionals
-      sessionDate = @formatDate @state.session.startDate, 'datetime'
+      sessionDate = p {},
+        Datetime value: @state.session.startDate
+
       profs = @state.session.users.professionals.map (user) ->
-        ProfessionalBrief user: user, key: user.id,
-          p {}, sessionDate
+        ProfessionalBrief user: user, key: user.id, sessionDate
     attach = @getIntlMessage 'check-attachments'
     treatm = @getIntlMessage 'check-treatment'
 

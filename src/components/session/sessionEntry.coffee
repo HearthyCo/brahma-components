@@ -3,6 +3,8 @@ ReactIntl = require 'react-intl'
 
 { div, img, span, a } = React.DOM
 
+Datetime = React.createFactory require '../common/datetime'
+
 clock = 'https://cdn0.iconfinder.com/data/icons/feather/96/clock-32.png'
 
 module.exports = React.createClass
@@ -17,11 +19,7 @@ module.exports = React.createClass
   render: ->
     div id: @props.id, className: 'comp-sessionentry',
       div className: 'session-label',
-        span className: 'date',
-          @formatDate @props.session.startDate, 'dateonly'
-        span className: 'time',
-          span className: 'icon icon-clock'
-          @formatTime @props.session.startDate, 'time'
+        Datetime value: @props.session.startDate
         span className: 'session-title', @props.session.title
       a className: 'session-link', href: '/session/' + @props.session.id,
         @getIntlMessage('access')

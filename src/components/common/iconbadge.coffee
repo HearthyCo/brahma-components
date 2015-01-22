@@ -1,6 +1,6 @@
 React = require 'react'
 
-{ div, img, span } = React.DOM
+{ div, span } = React.DOM
 
 module.exports = React.createClass
 
