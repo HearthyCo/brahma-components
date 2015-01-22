@@ -6,8 +6,6 @@ SessionItem = Backbone.Model.extend
   urlRoot: '/v1/session'
   parse: (o, opts) ->
     if opts.collection then return o # No double parse
-    o.session.me = o.me
-    o.session.professionals = o.professionals
     o.session
 
 
