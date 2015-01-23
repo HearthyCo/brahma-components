@@ -19,19 +19,23 @@ IntlStore =
   formats:
     date:
       dateonly:
-        day: "2-digit"
-        month: "2-digit"
-        year: "2-digit"
+        day: '2-digit'
+        month: '2-digit'
+        year: '2-digit'
       datetime:
-        day: "2-digit"
-        month: "2-digit"
-        year: "2-digit"
-        hour: "2-digit"
-        minute: "2-digit"
+        day: '2-digit'
+        month: '2-digit'
+        year: '2-digit'
+        hour: '2-digit'
+        minute: '2-digit'
     time:
       time:
-        hour: "2-digit"
-        minute: "2-digit"
+        hour: '2-digit'
+        minute: '2-digit'
+    number:
+      credits:
+        style: 'currency',
+        currency: 'EUR'
 
 _.extend IntlStore, Backbone.Events
 
