@@ -10,6 +10,7 @@ SessionList = rcf require '../components/session/sessionList'
 IconButton = rcf require '../components/common/iconbutton'
 TimelineEntry = rcf require '../components/session/timelineEntry'
 ProfessionalBrief = rcf require '../components/user/professionalBrief'
+TopUp = rcf require '../components/transaction/topup'
 
 s1 = {id: 33, title: 'Pediatría', startDate: new Date()}
 s2 = {id: 22, title: 'Cardiología', startDate: new Date()}
@@ -22,6 +23,8 @@ u1 = {
 { div, span, a } = React.DOM
 
 module.exports = React.createClass
+
+  displayName: 'allPage'
 
   mixins: [ReactIntl]
 
@@ -54,3 +57,6 @@ module.exports = React.createClass
       div className: 'entry',
         div className: 'robocop', 'ProfessionalBrief'
         ProfessionalBrief user: u1
+      div className: 'entry',
+        div className: 'robocop', 'TopUp'
+        TopUp {}

@@ -11,6 +11,8 @@ bottomBar = React.createFactory require '../components/common/bottomBar'
 
 module.exports = React.createClass
 
+  displayName: 'page'
+
   mixins: [ReactIntl]
 
   childContextTypes:
@@ -42,7 +44,11 @@ module.exports = React.createClass
       availableLocales: IntlStore.availableLocales
       locale: @state.locale
 
-    div className: 'comp-page',
+    classes = 'comp-page'
+    if @props.element.displayName
+      classes += ' ' + @props.element.displayName
+
+    div className: classes,
       topBar {}
       section className: 'main-section',
         div id: 'content',

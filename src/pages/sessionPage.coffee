@@ -18,6 +18,8 @@ Datetime = React.createFactory require '../components/common/datetime'
 
 module.exports = React.createClass
 
+  displayName: 'sessionPage'
+
   mixins: [ReactIntl]
 
   propTypes:
