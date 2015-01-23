@@ -24,6 +24,8 @@ u1 = {
 
 module.exports = React.createClass
 
+  displayName: 'allPage'
+
   mixins: [ReactIntl]
 
   render: ->

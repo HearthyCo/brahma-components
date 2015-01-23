@@ -14,6 +14,8 @@ IconButton = React.createFactory require '../components/common/iconbutton'
 
 module.exports = React.createClass
 
+  displayName: 'homePage'
+
   mixins: [ReactIntl]
 
   getInitialState: ->
