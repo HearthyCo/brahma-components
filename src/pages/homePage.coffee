@@ -12,8 +12,6 @@ IconButton = React.createFactory require '../components/common/iconbutton'
 
 { div } = React.DOM
 
-icon = 'clock'
-
 module.exports = React.createClass
 
   mixins: [ReactIntl]
@@ -44,6 +42,14 @@ module.exports = React.createClass
         sessions: entries
       sessions.push SessionList opts
 
+    balanceOpts =
+      label: @getIntlMessage('balance')
+      value: 0
+      icon: 'clock'
+      extra: '123.50€' # DEBUG - Change me!
+      target: '/balance'
+
     div className: 'page-home',
-      MainlistEntry label: sessionsLabel, value: newSessions, icon: icon,
+      MainlistEntry label: sessionsLabel, value: newSessions, icon: 'clock',
         sessions
+      MainlistEntry balanceOpts

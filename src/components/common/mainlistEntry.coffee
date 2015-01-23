@@ -1,4 +1,5 @@
 React = require 'react'
+simulate = require '../../util/simulateTools'
 
 { div, span } = React.DOM
 
@@ -11,12 +12,17 @@ module.exports = React.createClass
     label: React.PropTypes.string.isRequired
     icon: React.PropTypes.string.isRequired
     value: React.PropTypes.number
+    extra: React.PropTypes.node
+    target: React.PropTypes.string
 
   getInitialState: () ->
     return {isExpanded: false}
 
   toggleDisplay: ->
-    @setState isExpanded: not @state.isExpanded
+    if @props.target
+      simulate.linkClick @props.target
+    else
+      @setState isExpanded: not @state.isExpanded
 
   render: ->
     contentClasses = 'entry-content'
@@ -27,6 +33,7 @@ module.exports = React.createClass
       div className: 'entry-button', onClick: @toggleDisplay,
         span className: 'label',
           @props.label
+        @props.extra
         IconBadge icon: @props.icon, value: @props.value
       div className: contentClasses,
         @props.children
