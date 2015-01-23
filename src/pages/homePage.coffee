@@ -45,11 +45,19 @@ module.exports = React.createClass
     balanceOpts =
       label: @getIntlMessage('balance')
       value: 0
-      icon: 'clock'
+      icon: 'payment'
       extra: '123.50€' # DEBUG - Change me!
       target: '/balance'
+      id: 'balance'
+
+    newSession =
+      label: @getIntlMessage('new-session')
+      icon: 'close'
+      url: '/session-new'
 
     div className: 'page-home',
       MainlistEntry label: sessionsLabel, value: newSessions, icon: 'clock',
         sessions
       MainlistEntry balanceOpts
+      div className: 'new-session',
+        IconButton newSession
