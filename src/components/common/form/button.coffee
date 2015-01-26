@@ -2,6 +2,9 @@ React = require 'react'
 { div, button } = React.DOM
 
 module.exports = React.createClass
+
+  displayName: 'button'
+
   render: ->
     div(
       id: @props.id

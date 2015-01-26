@@ -4,6 +4,9 @@ _ = require 'underscore'
 { header, div, a, span } = React.DOM
 
 module.exports = React.createClass
+
+  displayName: 'topBar'
+
   render: ->
     header className: 'comp-topBar',
       div className: 'topBar-wrapper',

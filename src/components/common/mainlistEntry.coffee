@@ -6,6 +6,8 @@ IconBadge = React.createFactory require './iconbadge'
 
 module.exports = React.createClass
 
+  displayName: 'mainlistentry'
+
   propTypes:
     id: React.PropTypes.string
     label: React.PropTypes.string.isRequired

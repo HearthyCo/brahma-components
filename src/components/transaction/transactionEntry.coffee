@@ -5,6 +5,8 @@ ReactIntl = require 'react-intl'
 
 module.exports = React.createClass
 
+  displayName: 'transactionentry'
+
   mixins: [ReactIntl]
 
   propTypes:

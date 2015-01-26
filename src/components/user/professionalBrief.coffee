@@ -5,6 +5,8 @@ ReactIntl = require 'react-intl'
 
 module.exports = React.createClass
 
+  displayName: 'professionalbrief'
+
   mixins: [ReactIntl]
 
   propTypes:

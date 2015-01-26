@@ -7,6 +7,8 @@ Datetime = React.createFactory require '../common/datetime'
 
 module.exports = React.createClass
 
+  displayName: 'sessionentry'
+
   mixins: [ReactIntl]
 
   propTypes:

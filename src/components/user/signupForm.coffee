@@ -14,6 +14,8 @@ ObjectTools = require '../../util/objectTools'
 
 module.exports = React.createClass
 
+  displayName: 'signupForm'
+
   mixins: [React.addons.LinkedStateMixin, ReactIntl]
 
   handleSubmit: (e) ->
