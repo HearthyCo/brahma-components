@@ -18,7 +18,7 @@ module.exports = React.createClass
     user: React.PropTypes.object
 
   render: ->
-    amount = @props.amount or 12900 # or @context.user.credits
+    amount = @props.amount or if @context.user then @context.user.balance else 0
 
     div id: @props.id, className: 'comp-balancewidget',
       div className: 'icon icon-clock'

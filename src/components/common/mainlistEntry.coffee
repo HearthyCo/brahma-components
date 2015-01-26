@@ -1,5 +1,4 @@
 React = require 'react'
-simulate = require '../../util/simulateTools'
 
 { div, span } = React.DOM
 
@@ -20,7 +19,7 @@ module.exports = React.createClass
 
   toggleDisplay: ->
     if @props.target
-      simulate.linkClick @props.target
+      window.routerNavigate @props.target
     else
       @setState isExpanded: not @state.isExpanded
 

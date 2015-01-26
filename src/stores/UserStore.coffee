@@ -1,12 +1,15 @@
 Backbone = require 'exoskeleton'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 
+UserActions = require '../actions/UserActions'
 
 # Mandatory fields: login, password, gender, name, birthdate
 UserItem = Backbone.Model.extend
   urlRoot: '/v1/user'
   defaults:
     type: 'CLIENT'
+  parse: (o) ->
+    o.user
 
 
 UserCollection = Backbone.Collection.extend
@@ -34,19 +37,21 @@ UserStore.getAll = ->
 AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
     when 'user:register'
-      user = new UserItem()
-      user.save payload.user, {
+      UserStore.create payload.user, {
         success: (model, response) ->
+          UserStore.currentUid = model.get('id')
+          UserStore.trigger 'change'
           console.log 'Register success!', model.toJSON(), response
         error: (model, response) ->
           console.log 'Error registering!', model.toJSON(), response
       }
 
     when 'user:login'
-      user = new UserItem()
-      user.save payload.user, {
+      UserStore.create payload.user, {
         url: '/v1/user/login'
         success: (model, response) ->
+          UserStore.currentUid = model.get('id')
+          UserStore.trigger 'change'
           console.log 'Login success!', model.toJSON(), response
         error: (model, response) ->
           console.log 'Login error!', model.toJSON(), response

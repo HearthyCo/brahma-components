@@ -3,6 +3,7 @@ ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
 IntlStore = require '../stores/IntlStore'
+UserStore = require '../stores/UserStore'
 
 topBar = React.createFactory require '../components/common/topBar'
 bottomBar = React.createFactory require '../components/common/bottomBar'
@@ -19,6 +20,8 @@ module.exports = React.createClass
     availableLocales: React.PropTypes.array.isRequired
     locale: React.PropTypes.string.isRequired
     messages: React.PropTypes.object.isRequired
+    formats: React.PropTypes.object.isRequired
+    user: React.PropTypes.object
 
   getInitialState: ->
     locale: IntlStore.locale
@@ -29,15 +32,28 @@ module.exports = React.createClass
     locale: @state.locale
     messages: @state.messages[@state.locale]
     formats: IntlStore.formats
+    user: @state.user
 
   componentDidMount: ->
     IntlStore.addChangeListener @updateLocale
+    UserStore.addChangeListener @updateUser
 
   componentWillUnmount: ->
     IntlStore.removeChangeListener @updateLocale
+    UserStore.removeChangeListener @updateUser
 
   updateLocale: () ->
-    @setState { locale: IntlStore.locale, messages: IntlStore.messages }
+    @setState locale: IntlStore.locale, messages: IntlStore.messages
+
+  updateUser: () ->
+    isLogin = not @state.user and UserStore.currentUid
+    isLogout = @state.user and not UserStore.currentUid
+    @setState user: UserStore.get(UserStore.currentUid)
+    # Auto-navigation triggered?
+    if isLogin
+      window.routerNavigate '/home'
+    else if isLogout
+      window.routerNavigate '/'
 
   render: ->
     bottomBarProps =
