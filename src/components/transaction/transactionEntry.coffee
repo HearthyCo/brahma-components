@@ -24,8 +24,12 @@ module.exports = React.createClass
     div id: @props.id, className: 'comp-transactionentry amount-' + extraClass,
       div className: 'transaction-label',
         div className: 'session-date',
-          @formatDate @props.transaction.timestamp, 'datetime'
+          span className: 'date',
+            @formatDate @props.transaction.timestamp, 'dateonly'
+          span className: 'time',
+            @formatTime @props.transaction.timestamp, 'time'
         div className: 'session-title', @props.transaction.title
+        div className: 'session-profesional',
       div className: 'transaction-value',
         span className: 'sign', sign
         span className: 'amount', amount

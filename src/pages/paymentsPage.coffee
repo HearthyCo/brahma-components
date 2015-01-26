@@ -32,7 +32,7 @@ module.exports = React.createClass
     @setState transactions: TransactionStore.getAll()
 
   render: ->
-    div className: 'page-topupPage',
+    div className: 'page-paymentsPage',
       BalanceWidget {}
       a className: 'button', href: '/top-up', @getIntlMessage('top-up')
       div className: 'label', @getIntlMessage('payment-history')
