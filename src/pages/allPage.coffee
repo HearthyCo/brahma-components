@@ -11,6 +11,8 @@ IconButton = rcf require '../components/common/iconbutton'
 TimelineEntry = rcf require '../components/session/timelineEntry'
 ProfessionalBrief = rcf require '../components/user/professionalBrief'
 TopUp = rcf require '../components/transaction/topup'
+BalanceWidget = rcf require '../components/common/balanceWidget'
+TransactionEntry = rcf require '../components/transaction/transactionEntry'
 
 s1 = {id: 33, title: 'Pediatría', startDate: new Date()}
 s2 = {id: 22, title: 'Cardiología', startDate: new Date()}
@@ -18,6 +20,10 @@ sessions = [s1, s2]
 u1 = {
   id: 44, name: 'Sverianiano', surname1: 'Fernandez', service: 'Otorrino',
   avatar: 'http://comps.canstockphoto.com/can-stock-photo_csp6253298.jpg'
+}
+t1 = {
+  id: 91300, amount: -1000, timestamp: 1418626800000,
+  reason: "Reserva de sesión", title: "testSession1"
 }
 
 { div, span, a } = React.DOM
@@ -60,3 +66,9 @@ module.exports = React.createClass
       div className: 'entry',
         div className: 'robocop', 'TopUp'
         TopUp {}
+      div className: 'entry',
+        div className: 'robocop', 'BalanceWidget'
+        BalanceWidget amount: 12300
+      div className: 'entry',
+        div className: 'robocop', 'TransactionEntry'
+        TransactionEntry transaction: t1

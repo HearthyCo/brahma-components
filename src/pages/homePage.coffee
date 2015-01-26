@@ -49,7 +49,7 @@ module.exports = React.createClass
       value: 0
       icon: 'payment'
       extra: '123.50€' # DEBUG - Change me!
-      target: '/balance'
+      target: '/top-up'
       id: 'balance'
 
     newSession =

@@ -5,8 +5,6 @@ ReactIntl = require 'react-intl'
 
 Datetime = React.createFactory require '../common/datetime'
 
-clock = 'https://cdn0.iconfinder.com/data/icons/feather/96/clock-32.png'
-
 module.exports = React.createClass
 
   mixins: [ReactIntl]
