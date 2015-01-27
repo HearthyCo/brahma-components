@@ -6,6 +6,8 @@ _ = require 'underscore'
 
 module.exports = React.createClass
 
+  displayName: 'date'
+
   mixins: [ReactIntl]
 
   days: ->

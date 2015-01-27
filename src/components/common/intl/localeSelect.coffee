@@ -5,6 +5,8 @@ IntlActions = require '../../../actions/IntlActions'
 
 module.exports = React.createClass
 
+  displayName: 'localeSelect'
+
   contextTypes:
     availableLocales: React.PropTypes.array.isRequired
     locale: React.PropTypes.string.isRequired

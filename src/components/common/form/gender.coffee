@@ -4,6 +4,8 @@ ReactIntl = require 'react-intl'
 
 module.exports = React.createClass
 
+  displayName: 'gender'
+
   mixins: [ReactIntl]
 
   handleChange: (value, e) ->

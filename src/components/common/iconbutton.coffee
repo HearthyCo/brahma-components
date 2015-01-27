@@ -4,6 +4,8 @@ React = require 'react'
 
 module.exports = React.createClass
 
+  displayName: 'iconbutton'
+
   propTypes:
     id: React.PropTypes.string
     icon: React.PropTypes.string.isRequired

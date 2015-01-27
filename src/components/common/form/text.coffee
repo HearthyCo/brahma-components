@@ -4,6 +4,9 @@ _ = require 'underscore'
 { div, label, input } = React.DOM
 
 module.exports = React.createClass
+
+  displayName: 'text'
+
   render: ->
     div(
       id: @props.id

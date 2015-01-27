@@ -12,6 +12,8 @@ ObjectTools = require '../../util/objectTools'
 
 module.exports = React.createClass
 
+  displayName: 'loginForm'
+
   mixins: [React.addons.LinkedStateMixin, ReactIntl]
 
   handleSubmit: (e) ->

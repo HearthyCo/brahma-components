@@ -7,6 +7,8 @@ SessionEntry = React.createFactory require './sessionEntry'
 
 module.exports = React.createClass
 
+  displayName: 'sessionlist'
+
   mixins: [ReactIntl]
 
   propTypes:

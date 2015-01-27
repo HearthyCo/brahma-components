@@ -4,6 +4,8 @@ React = require 'react'
 
 module.exports = React.createClass
 
+  displayName: 'iconBadge'
+
   propTypes:
     id: React.PropTypes.string
     value: React.PropTypes.number
