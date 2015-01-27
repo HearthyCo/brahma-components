@@ -5,7 +5,7 @@ AppDispatcher = require '../dispatcher/AppDispatcher'
 TransactionItem = Backbone.Model.extend {}
 
 TransactionCollection = Backbone.Collection.extend
-  url: '/v1/user/balance'
+  url: window.apiServer + '/v1/user/balance'
   model: TransactionItem
   parse: (o) ->
     o.balance.transactions

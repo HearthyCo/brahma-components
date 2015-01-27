@@ -5,7 +5,7 @@ UserActions = require '../actions/UserActions'
 
 # Mandatory fields: login, password, gender, name, birthdate
 UserItem = Backbone.Model.extend
-  urlRoot: '/v1/user'
+  urlRoot: window.apiServer + '/v1/user'
   defaults:
     type: 'CLIENT'
   parse: (o) ->
@@ -48,7 +48,7 @@ AppDispatcher.on 'all', (eventName, payload) ->
 
     when 'user:login'
       UserStore.create payload.user, {
-        url: '/v1/user/login'
+        url: window.apiServer + '/v1/user/login'
         success: (model, response) ->
           UserStore.currentUid = model.get('id')
           UserStore.trigger 'change'

@@ -6,7 +6,7 @@ SessionStore = require '../stores/SessionStore'
 
 
 conf =
-  endpoint: '/v1/user/home'
+  endpoint: window.apiServer + '/v1/user/home'
 
 HomeState =
   data:

@@ -6,7 +6,7 @@ SessionStore = require './SessionStore'
 
 
 conf =
-  endpoint: '/v1/user/sessions'
+  endpoint: window.apiServer + '/v1/user/sessions'
 
 SessionsStore =
   programmed: Object.create SessionStore
