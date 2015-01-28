@@ -3,7 +3,7 @@ ReactIntl = require 'react-intl'
 
 { a, img, span, div } = React.DOM
 
-CircleRating = require '../common/circleRating'
+CircleRating = React.createFactory require '../common/circleRating'
 
 module.exports = React.createClass
 
