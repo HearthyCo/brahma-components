@@ -13,6 +13,7 @@ ProfessionalBrief = rcf require '../components/user/professionalBrief'
 TopUp = rcf require '../components/transaction/topup'
 BalanceWidget = rcf require '../components/common/balanceWidget'
 TransactionEntry = rcf require '../components/transaction/transactionEntry'
+AllergyEntry = rcf require '../components/history/allergyEntry'
 
 s1 = {id: 33, title: 'Pediatría', startDate: new Date()}
 s2 = {id: 22, title: 'Cardiología', startDate: new Date()}
@@ -25,6 +26,8 @@ t1 = {
   id: 91300, amount: -1000, timestamp: 1418626800000,
   reason: "Reserva de sesión", title: "testSession1"
 }
+a1 = id: 55, title: 'Gramíneas', meta: rating: 4
+a2 = id: 66, title: 'Trigo', meta: rating: 2
 
 { div, span, a } = React.DOM
 
@@ -72,3 +75,7 @@ module.exports = React.createClass
       div className: 'entry',
         div className: 'robocop', 'TransactionEntry'
         TransactionEntry transaction: t1
+      div className: 'entry',
+        div className: 'robocop', 'AllergyEntry'
+        AllergyEntry allergy: a1
+        AllergyEntry allergy: a2
