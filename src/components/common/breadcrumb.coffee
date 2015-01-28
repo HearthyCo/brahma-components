@@ -16,7 +16,7 @@ module.exports = React.createClass
       crumbs.unshift home
 
       div id: @props.id, className: 'comp-breadcrumb',
-        crumbs.map (crumb) ->
-          div className: crumb.className,
+        crumbs.map (crumb, i) ->
+          div key: i, className: crumb.className,
             a href: crumb.link,
               crumb.label
