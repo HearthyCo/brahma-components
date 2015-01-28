@@ -5,6 +5,7 @@ _ = require 'underscore'
 rcf = React.createFactory
 SignupForm = rcf require '../components/user/signupForm'
 LoginForm = rcf require '../components/user/loginForm'
+BreadCrumb = rcf require '../components/common/breadcrumb'
 MainlistEntry = rcf require '../components/common/mainlistEntry'
 SessionList = rcf require '../components/session/sessionList'
 IconButton = rcf require '../components/common/iconbutton'
@@ -26,6 +27,10 @@ t1 = {
   id: 91300, amount: -1000, timestamp: 1418626800000,
   reason: "Reserva de sesión", title: "testSession1"
 }
+list = [
+  { label: 'Consultas', link: '/sessions', className: 'crumb icon icon-clock' },
+  { label: s1.title, link: '/sessions/' + s1.id, className: 'crumb icon-clock' }
+]
 a1 = id: 55, title: 'Gramíneas', meta: rating: 4
 a2 = id: 66, title: 'Trigo', meta: rating: 2
 
@@ -50,6 +55,9 @@ module.exports = React.createClass
       div className: 'entry',
         div className: 'robocop', 'LoginForm'
         LoginForm {}
+      div className: 'entry',
+        div className: 'robocop', 'BreadCrumb'
+        BreadCrumb list: list
       div className: 'entry',
         div className: 'robocop', 'MainlistEntry'
         MainlistEntry label: example, value: 33, icon: icon,
