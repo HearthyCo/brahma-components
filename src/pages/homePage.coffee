@@ -21,6 +21,9 @@ module.exports = React.createClass
   getInitialState: ->
     data: HomeStore.getAll()
 
+  contextTypes:
+    user: React.PropTypes.object
+
   componentDidMount: ->
     HomeStore.addChangeListener @updateState
     HomeActions.refresh()
@@ -44,11 +47,13 @@ module.exports = React.createClass
         sessions: entries
       sessions.push SessionList opts
 
+    ctxUser = @context.user
+    balance = @state.data.balance || if ctxUser then ctxUser.balance else 0
     balanceOpts =
       label: @getIntlMessage('balance')
       value: 0
       icon: 'payment'
-      extra: '123.50€' # DEBUG - Change me!
+      extra: @formatNumber(balance / 100, 'credits')
       target: '/top-up'
       id: 'balance'
 
