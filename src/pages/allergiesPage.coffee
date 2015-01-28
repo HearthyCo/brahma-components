@@ -2,9 +2,9 @@ React = require 'react/addons'
 ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
-#AllergyStore = require '../stores/AllergiesStore'
+AllergyStore = require '../stores/AllergyStore'
 
-#AllergyActions = require '../actions/AllergiesActions'
+AllergyActions = require '../actions/AllergyActions'
 
 AllergyEntry = React.createFactory(
   require '../components/history/allergyEntry'
@@ -19,23 +19,14 @@ module.exports = React.createClass
   mixins: [ReactIntl]
 
   getInitialState: ->
-    # TODO: Change to use store:
-    #allergies: AllergyStore.getAll()
-    allergies: [
-      {id: 1, title: 'Polen', meta: rating: 5}
-      {id: 2, title: 'Gramíneas', meta: rating: 3}
-      {id: 3, title: 'Ácaros', meta: rating: 2}
-      {id: 4, title: 'Plátano', meta: rating: 3}
-      {id: 5, title: 'Anisakis', meta: rating: 5}
-      {id: 6, title: 'Trigo', meta: rating: 3}
-    ]
+    allergies: AllergyStore.getAll()
 
   componentDidMount: ->
-    #AllergyStore.addChangeListener @updateState
-    #AllergyActions.refresh()
+    AllergyStore.addChangeListener @updateState
+    AllergyActions.refresh()
 
   componentWillUnmount: ->
-    #AllergyStore.removeChangeListener @updateState
+    AllergyStore.removeChangeListener @updateState
 
   updateState: () ->
     @setState { allergies: AllergyStore.getAll() }

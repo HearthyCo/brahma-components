@@ -2,9 +2,9 @@ React = require 'react/addons'
 ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
-#AllergyStore = require '../stores/AllergiesStore'
+AllergyStore = require '../stores/AllergyStore'
 
-#AllergyActions = require '../actions/AllergiesActions'
+AllergyActions = require '../actions/AllergyActions'
 
 { div, h1, span } = React.DOM
 
@@ -20,20 +20,23 @@ module.exports = React.createClass
     id: React.PropTypes.string.isRequired
 
   getInitialState: ->
-    # TODO: Change to use store:
-    #allergy: AllergyStore.get @props.id
-    allergy: {id: 1, title: 'Polen', description: 'Síntoma...', meta: rating: 5}
+    allergy: AllergyStore.get @props.id
 
   componentDidMount: ->
-    #AllergyStore.addChangeListener @updateState
+    AllergyStore.addChangeListener @updateState
 
   componentWillUnmount: ->
-    #AllergyStore.removeChangeListener @updateState
+    AllergyStore.removeChangeListener @updateState
+
+  componentWillReceiveProps: (next) ->
+    if @props.id isnt next.id
+      @setState { allergy: AllergyStore.get next.id }
 
   updateState: () ->
     @setState { allergy: AllergyStore.get @props.id }
 
   render: ->
+    if not @state.allergy then return div {} # No "property of undefined" errors
     rating = @state.allergy.meta.rating
     div className: 'page-allergy',
       h1 {},
