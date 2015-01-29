@@ -5,6 +5,7 @@ _ = require 'underscore'
 IntlStore = require '../stores/IntlStore'
 UserStore = require '../stores/UserStore'
 
+breadcrumb = React.createFactory require '../components/common/breadcrumb'
 topBar = React.createFactory require '../components/common/topBar'
 bottomBar = React.createFactory require '../components/common/bottomBar'
 
@@ -60,12 +61,15 @@ module.exports = React.createClass
       availableLocales: IntlStore.availableLocales
       locale: @state.locale
 
+    console.log "BREADCRUMBS ", @props.breadcrumb
+
     classes = 'comp-page'
     if @props.element.displayName
       classes += ' ' + @props.element.displayName
 
     div className: classes,
       topBar {}
+      breadcrumb @props.breadcrumb if @props.breadcrumb.list.length > 0
       section className: 'main-section',
         div id: 'content',
           React.createElement @props.element, _.omit(@props, 'element')
