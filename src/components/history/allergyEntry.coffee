@@ -18,8 +18,9 @@ module.exports = React.createClass
   render: ->
     rating = @props.allergy.meta.rating
     textRating = @getIntlMessage 'rating-' + rating
+    url = '/allergy/' + @props.allergy.id
 
-    div id: @props.id, className: 'comp-allergyentry',
+    a id: @props.id, className: 'comp-allergyentry', href: url,
       div className: 'label',
         @props.allergy.title
       div className: 'value',
