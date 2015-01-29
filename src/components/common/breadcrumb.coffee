@@ -12,11 +12,12 @@ module.exports = React.createClass
   render: ->
     if(@props.list.length > 0)
       crumbs = @props.list
-      home = { label: 'Home', link: '/', className: 'crumb icon icon-home' }
+      home = { label: 'Home', link: '/', className: 'home' }
       crumbs.unshift home
 
       div id: @props.id, className: 'comp-breadcrumb',
         crumbs.map (crumb, i) ->
-          div key: i, className: crumb.className,
-            a href: crumb.link,
+          a href: crumb.link, key: i, className: 'crumb',
+            span className: 'icon icon-' + crumb.className
+            span className: 'label',
               crumb.label
