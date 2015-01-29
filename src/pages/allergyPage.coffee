@@ -40,10 +40,10 @@ module.exports = React.createClass
     rating = @state.allergy.meta.rating
     div className: 'page-allergy',
       h1 {},
-        span className: 'generalTitle', @getIntlMessage('allergy')
+        span className: 'generalTitle', @getIntlMessage('allergy') + ': '
         span className: 'specificTitle', @state.allergy.title
       div className: 'severity',
-        span className: 'label', @getIntlMessage('severity')
+        span className: 'label', @getIntlMessage('severity') + ': '
         CircleRating value: rating
         span className: 'ratingText', @getIntlMessage('rating-' + rating)
       div className: 'symptoms',
