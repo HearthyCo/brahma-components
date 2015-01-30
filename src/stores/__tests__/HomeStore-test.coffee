@@ -1,5 +1,6 @@
 jest.dontMock '../HomeStore'
 jest.dontMock '../SessionStore'
+window.apiServer = ''
 
 describe 'Home Store', ->
 

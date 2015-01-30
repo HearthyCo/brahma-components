@@ -9,6 +9,7 @@ HomeActions = require '../actions/HomeActions'
 MainlistEntry = React.createFactory require '../components/common/mainlistEntry'
 SessionList = React.createFactory require '../components/session/sessionList'
 IconButton = React.createFactory require '../components/common/iconbutton'
+HistoryBrief = React.createFactory require '../components/history/historyBrief'
 
 { div } = React.DOM
 
@@ -47,6 +48,16 @@ module.exports = React.createClass
         sessions: entries
       sessions.push SessionList opts
 
+    historyLabel = @getIntlMessage('history')
+    # vvv TEST CONTENT BELOW vvv
+    histories = HistoryBrief history:
+      allergies: [
+        {id: 1, title: 'Trigo', description: 'Ronchas a mansalva'}
+        {id: 2, title: 'Pescado', description: 'Muerte cerebroide'}
+      ]
+    newHistories = 2
+    # ^^^ /TEST ^^^
+
     ctxUser = @context.user
     balance = @state.data.balance || if ctxUser then ctxUser.balance else 0
     balanceOpts =
@@ -65,6 +76,8 @@ module.exports = React.createClass
     div className: 'page-home',
       MainlistEntry label: sessionsLabel, value: newSessions, icon: 'clock',
         sessions
+      MainlistEntry label: historyLabel, value: newHistories, icon: 'clock',
+        histories
       MainlistEntry balanceOpts
       div className: 'new-session',
         IconButton newSession

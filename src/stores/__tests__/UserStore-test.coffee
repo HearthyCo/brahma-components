@@ -1,4 +1,5 @@
 jest.dontMock '../UserStore'
+window.apiServer = ''
 
 describe 'User Store', ->
 
