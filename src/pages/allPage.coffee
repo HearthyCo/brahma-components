@@ -28,7 +28,8 @@ t1 = {
   reason: "Reserva de sesión", title: "testSession1"
 }
 list = [
-  { label: 'Consultas', link: '/sessions', className: 'clock' },
+  { label: 'Home', link: '/', className: 'home' },
+  { label: 'Sessions', link: '/sessions', className: 'clock' },
   { label: s1.title, link: '/sessions/' + s1.id, className: 'clock' }
 ]
 a1 = id: 55, title: 'Gramíneas', meta: rating: 4

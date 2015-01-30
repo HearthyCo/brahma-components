@@ -1,29 +1,47 @@
-exports = {
 
-  urlBuilder: (args...) ->
-    url = "/" unless args
-    url += "/" + arg for arg in args
-    url
+urlBuilder = (args...) ->
+  url = ""
+  url = "/" unless args
+  url += "/" + arg for arg in args
+  url
 
-  crumbBuilder: (label, link, cls) ->
-    { label: label, link: link, class: cls }
+crumbBuilder = (label, link, cls) ->
+  { label: label, link: link, className: cls }
 
-  breadcrumBuilder: (list) ->
-    list.unshift @crumbBuilder 'Home', @urlBuilder(), 'crumb icon icon-home'
-    { list: list }
+breadcrumBuilder = (object) ->
+  object.list.unshift crumbBuilder 'Home', urlBuilder(), 'home'
+  object
+
+module.exports = {
+
+  alergies: (key) -> (args) ->
+    store = require '../stores/AllergyStore'
+    crumbs = []
+
+    crumbs.push crumbBuilder @getIntlMessage('allergies'), urlBuilder('allergies'), 'clock'
+
+    if key? && args?
+      alergy = store.get args[key]
+
+      title = if alergy? then alergy.title else @getIntlMessage.call context: @state, 'alergy'
+
+      crumbs.push crumbBuilder title, urlBuilder('allergy', args[key]), 'clock'
+
+    breadcrumBuilder { stores: [ store ], list: crumbs }
 
   sessions: (key) -> (args) ->
-    sessions = []
-    sessions.push @crumbBuilder 'Consultas',
-      @urlBuilder('sessions'), 'crumb icon icon-clock'
+    store = require '../stores/SessionsStore'
+    crumbs = []
 
-    if key?
-      sessions.push @crumbBuilder args[key],
-        @urlBuilder('sessions', args[key]), 'crumb icon icon-clock'
+    session = { state: args[key] }
+    if key == "id"
+      store = require '../stores/SessionStore'
+      session = store.get args[key]
 
-    console.log "SESSIONS ", JSON.stringify sessions
+      title = if session? then session.title else @getIntlMessage 'session'
+      crumbs.push crumbBuilder session.title, urlBuilder('sessions', args[key]), 'clock'
 
-    @breadcrumBuilder sessions
+    crumbs.unshift crumbBuilder @getIntlMessage('sessions'), urlBuilder('sessions', session.state), 'clock'
+
+    breadcrumBuilder { stores: [ store ], list: crumbs }
 }
-
-module.exports = exports

@@ -26,25 +26,52 @@ module.exports = React.createClass
 
   getInitialState: ->
     locale: IntlStore.locale
-    messages: IntlStore.messages
+    messages: IntlStore.messages[IntlStore.locale]
+    subscriptions: []
 
   getChildContext: ->
     availableLocales: IntlStore.availableLocales
     locale: @state.locale
-    messages: @state.messages[@state.locale]
+    messages: @state.messages
     formats: IntlStore.formats
     user: @state.user
 
   componentDidMount: ->
+    @updateBreadcrumb @props
     IntlStore.addChangeListener @updateLocale
     UserStore.addChangeListener @updateUser
+
+  componentWillReceiveProps: (next) ->
+    @updateBreadcrumb next
 
   componentWillUnmount: ->
     IntlStore.removeChangeListener @updateLocale
     UserStore.removeChangeListener @updateUser
+    for subscription in subscriptions
+      subscription.store.removeChangeListener subscription.handler
 
   updateLocale: () ->
     @setState locale: IntlStore.locale, messages: IntlStore.messages
+
+  updateBreadcrumb: (props) ->
+    subscriptions = @state.subscriptions
+    for subscription in subscriptions
+      subscription.store.removeChangeListener subscription.handler
+
+    subscriptions = []
+
+    if @state.breadcrumb? && @state.breadcrumb.stores?
+      for store in @state.breadcrumb.stores
+        o = {}
+        o.store = store
+        o.handler = -> @updateBreadcrumb props
+        o.store.addChangeListener o.handler
+        subscriptions.push o
+
+    o2 = subscriptions: subscriptions
+    o2.breadcrumb = if props.breadcrumb? then props.breadcrumb.call @, props else { store: [], list: [] }
+
+    @setState o2
 
   updateUser: () ->
     isLogin = not @state.user and UserStore.currentUid
@@ -61,7 +88,8 @@ module.exports = React.createClass
       availableLocales: IntlStore.availableLocales
       locale: @state.locale
 
-    console.log "BREADCRUMBS ", @props.breadcrumb
+    bc = @state.breadcrumb
+    console.log "BC", bc
 
     classes = 'comp-page'
     if @props.element.displayName
@@ -69,8 +97,8 @@ module.exports = React.createClass
 
     div className: classes,
       topBar {}
-      breadcrumb @props.breadcrumb if @props.breadcrumb.list.length > 0
       section className: 'main-section',
+        breadcrumb bc if (bc? && bc.list.length > 0)
         div id: 'content',
           React.createElement @props.element, _.omit(@props, 'element')
       bottomBar bottomBarProps
