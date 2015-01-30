@@ -6,7 +6,7 @@ describe 'Login Form', ->
   it 'triggers user:login event on submit', ->
     # Traslate set for test
     Intl = require 'intl'
-    messages = require '../../../../brahma-client/app/intl/es-ES.json'
+    messages = require '../../../../hearthy-client/app/intl/es-ES.json'
 
     React = require 'react/addons'
     LoginForm = require '../user/loginForm'
@@ -35,7 +35,7 @@ describe 'Login Form', ->
   it 'change language on select other language', ->
     # Traslate set for test
     Intl = require 'intl'
-    messages = require '../../../../brahma-client/app/intl/en-US.json'
+    messages = require '../../../../hearthy-client/app/intl/en-US.json'
 
     React = require 'react/addons'
     LoginForm = require '../user/loginForm'
