@@ -1,10 +1,11 @@
-React = require 'react'
+React = require 'react/addons'
 ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
 IntlStore = require '../stores/IntlStore'
 UserStore = require '../stores/UserStore'
 
+breadcrumb = React.createFactory require '../components/common/breadcrumb'
 topBar = React.createFactory require '../components/common/topBar'
 bottomBar = React.createFactory require '../components/common/bottomBar'
 
@@ -25,12 +26,12 @@ module.exports = React.createClass
 
   getInitialState: ->
     locale: IntlStore.locale
-    messages: IntlStore.messages
+    messages: IntlStore.messages[IntlStore.locale]
 
   getChildContext: ->
     availableLocales: IntlStore.availableLocales
     locale: @state.locale
-    messages: @state.messages[@state.locale]
+    messages: @state.messages
     formats: IntlStore.formats
     user: @state.user
 
@@ -67,6 +68,7 @@ module.exports = React.createClass
     div className: classes,
       topBar {}
       section className: 'main-section',
+        breadcrumb breadcrumb: @props.breadcrumb, values: @props.values
         div id: 'content',
-          React.createElement @props.element, _.omit(@props, 'element')
+          React.createElement @props.element, _.omit(@props.values, 'element')
       bottomBar bottomBarProps

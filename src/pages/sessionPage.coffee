@@ -50,6 +50,7 @@ module.exports = React.createClass
 
       profs = @state.session.users.professionals.map (user) ->
         ProfessionalBrief user: user, key: user.id, sessionDate
+
     attach = @getIntlMessage 'check-attachments'
     treatm = @getIntlMessage 'check-treatment'
 
