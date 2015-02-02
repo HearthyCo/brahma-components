@@ -36,7 +36,6 @@ module.exports = React.createClass
     @setState { data: HomeStore.getAll() }
 
   render: ->
-    sessionsLabel = @getIntlMessage('sessions')
     sessions = []
     newSessions = 0
     for key, entries of @state.data.sessions
@@ -48,7 +47,12 @@ module.exports = React.createClass
         sessions: entries
       sessions.push SessionList opts
 
-    historyLabel = @getIntlMessage('history')
+    sessionsOpts =
+      label: @getIntlMessage('sessions')
+      value: newSessions
+      icon: 'clock'
+      id: 'sessions'
+
     # vvv TEST CONTENT BELOW vvv
     histories = HistoryBrief history:
       allergies: [
@@ -57,6 +61,11 @@ module.exports = React.createClass
       ]
     newHistories = 2
     # ^^^ /TEST ^^^
+    historyOpts =
+      label: @getIntlMessage('history')
+      value: newHistories
+      icon: 'poll'
+      id: 'history'
 
     ctxUser = @context.user
     balance = @state.data.balance || if ctxUser then ctxUser.balance else 0
@@ -74,9 +83,9 @@ module.exports = React.createClass
       url: '/session-new'
 
     div className: 'page-home',
-      MainlistEntry label: sessionsLabel, value: newSessions, icon: 'clock',
+      MainlistEntry sessionsOpts,
         sessions
-      MainlistEntry label: historyLabel, value: newHistories, icon: 'clock',
+      MainlistEntry historyOpts,
         histories
       MainlistEntry balanceOpts
       div className: 'new-session',
