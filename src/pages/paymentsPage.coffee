@@ -15,6 +15,7 @@ TransactionEntry = rcf require '../components/transaction/transactionEntry'
 module.exports = React.createClass
 
   displayName: 'paymentsPage'
+  statics: sectionName: 'balanceSection'
 
   mixins: [ReactIntl]
 

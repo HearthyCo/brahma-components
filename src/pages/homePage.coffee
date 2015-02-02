@@ -16,6 +16,7 @@ HistoryBrief = React.createFactory require '../components/history/historyBrief'
 module.exports = React.createClass
 
   displayName: 'homePage'
+  statics: sectionName: 'homeSection'
 
   mixins: [ReactIntl]
 

@@ -15,6 +15,7 @@ TimelineEntry = React.createFactory(
 module.exports = React.createClass
 
   displayName: 'sessionsPage'
+  statics: sectionName: 'sessionSection'
 
   mixins: [ReactIntl]
 

@@ -11,6 +11,7 @@ BalanceWidget = React.createFactory require '../components/common/balanceWidget'
 module.exports = React.createClass
 
   displayName: 'topupPage'
+  statics: sectionName: 'balanceSection'
 
   mixins: [ReactIntl]
 
@@ -20,4 +21,4 @@ module.exports = React.createClass
     div className: 'page-topupPage',
       BalanceWidget {}
       TopUp {}
-      IconButton icon: 'list', label: viewHistory, url: '/payments'
+      IconButton icon: 'list', label: viewHistory, url: '/top-up/payments'

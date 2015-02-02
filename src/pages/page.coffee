@@ -61,14 +61,21 @@ module.exports = React.createClass
       availableLocales: IntlStore.availableLocales
       locale: @state.locale
 
+    element = React.createElement @props.element,
+      _.omit(@props.values, 'element')
+
+    console.log element
+    console.log @props.element
     classes = 'comp-page'
-    if @props.element.displayName
-      classes += ' ' + @props.element.displayName
+    if element.type.displayName
+      classes += ' ' + element.type.displayName
+    if element.type.sectionName
+      classes += ' ' + element.type.sectionName
 
     div className: classes,
       topBar {}
       section className: 'main-section',
         breadcrumb breadcrumb: @props.breadcrumb, values: @props.values
         div id: 'content',
-          React.createElement @props.element, _.omit(@props.values, 'element')
+          element
       bottomBar bottomBarProps

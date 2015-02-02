@@ -11,7 +11,7 @@ module.exports = React.createClass
 
   propTypes:
     values: React.PropTypes.object.isRequired
-    breadcrumb: React.PropTypes.func.isRequired
+    breadcrumb: React.PropTypes.func
 
   getInitialState: ->
     subscriptions: { listeners: [] }
@@ -52,7 +52,7 @@ module.exports = React.createClass
 
   render: ->
     breadcrumb = @state.subscriptions.breadcrumb
-    return false unless breadcrumb
+    return false unless breadcrumb and breadcrumb.list.length
 
     div className: 'comp-breadcrumb',
       breadcrumb.list.map (crumb, i) ->

@@ -8,6 +8,7 @@ LoginForm = React.createFactory require '../components/user/loginForm'
 module.exports = React.createClass
 
   displayName: 'loginPage'
+  statics: sectionName: 'externalSection'
 
   render: ->
     div className: 'page-loginPage',
