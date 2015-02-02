@@ -1,4 +1,5 @@
 jest.dontMock '../TransactionStore'
+window.apiServer = ''
 
 describe 'Transaction Store', ->
 

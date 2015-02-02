@@ -5,7 +5,7 @@ ReactIntl = require 'react-intl'
 
 module.exports = React.createClass
 
-  displayName: 'professionalbrief'
+  displayName: 'professionalBrief'
 
   mixins: [ReactIntl]
 
@@ -14,6 +14,7 @@ module.exports = React.createClass
     user: React.PropTypes.object.isRequired
 
   render: ->
+    @props.user.avatar = @props.user.avatar || '/res/images/default-avatar.png'
     _this = @
     fullname = ['name', 'surname1', 'surname2']
       .map (f) -> _this.props.user[f]

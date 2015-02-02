@@ -1,4 +1,5 @@
 jest.dontMock '../SessionStore'
+window.apiServer = ''
 
 describe 'Session Store', ->
 

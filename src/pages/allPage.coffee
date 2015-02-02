@@ -15,14 +15,12 @@ TopUp = rcf require '../components/transaction/topup'
 BalanceWidget = rcf require '../components/common/balanceWidget'
 TransactionEntry = rcf require '../components/transaction/transactionEntry'
 AllergyEntry = rcf require '../components/history/allergyEntry'
+HistoryBrief = rcf require '../components/history/historyBrief'
 
 s1 = {id: 33, title: 'Pediatría', startDate: new Date()}
 s2 = {id: 22, title: 'Cardiología', startDate: new Date()}
 sessions = [s1, s2]
-u1 = {
-  id: 44, name: 'Sverianiano', surname1: 'Fernandez', service: 'Otorrino',
-  avatar: 'http://comps.canstockphoto.com/can-stock-photo_csp6253298.jpg'
-}
+u1 = {id: 44, name: 'Sverianiano', surname1: 'Fernandez', service: 'Otorrino'}
 t1 = {
   id: 91300, amount: -1000, timestamp: 1418626800000,
   reason: "Reserva de sesión", title: "testSession1"
@@ -32,8 +30,9 @@ list = [
   { label: 'Sessions', link: '/sessions', className: 'clock' },
   { label: s1.title, link: '/sessions/' + s1.id, className: 'clock' }
 ]
-a1 = id: 55, title: 'Gramíneas', meta: rating: 4
-a2 = id: 66, title: 'Trigo', meta: rating: 2
+a1 = id: 55, title: 'Gramíneas', description: 'Se pone mu malo', meta: rating: 4
+a2 = id: 66, title: 'Trigo', description: 'Ai que se nos vai!', meta: rating: 2
+h = { allergies: [a1, a2]}
 
 { div, span, a } = React.DOM
 
@@ -88,3 +87,6 @@ module.exports = React.createClass
         div className: 'robocop', 'AllergyEntry'
         AllergyEntry allergy: a1
         AllergyEntry allergy: a2
+      div className: 'entry',
+        div className: 'robocop', 'HistoryBrief'
+        HistoryBrief history: h, profile: u1

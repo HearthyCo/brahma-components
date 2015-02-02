@@ -9,6 +9,7 @@ HomeActions = require '../actions/HomeActions'
 MainlistEntry = React.createFactory require '../components/common/mainlistEntry'
 SessionList = React.createFactory require '../components/session/sessionList'
 IconButton = React.createFactory require '../components/common/iconbutton'
+HistoryBrief = React.createFactory require '../components/history/historyBrief'
 
 { div } = React.DOM
 
@@ -35,7 +36,6 @@ module.exports = React.createClass
     @setState { data: HomeStore.getAll() }
 
   render: ->
-    sessionsLabel = @getIntlMessage('sessions')
     sessions = []
     newSessions = 0
     for key, entries of @state.data.sessions
@@ -46,6 +46,26 @@ module.exports = React.createClass
         url: '/sessions/' + key
         sessions: entries
       sessions.push SessionList opts
+
+    sessionsOpts =
+      label: @getIntlMessage('sessions')
+      value: newSessions
+      icon: 'clock'
+      id: 'sessions'
+
+    # vvv TEST CONTENT BELOW vvv
+    histories = HistoryBrief history:
+      allergies: [
+        {id: 1, title: 'Trigo', description: 'Ronchas a mansalva'}
+        {id: 2, title: 'Pescado', description: 'Muerte cerebroide'}
+      ]
+    newHistories = 2
+    # ^^^ /TEST ^^^
+    historyOpts =
+      label: @getIntlMessage('history')
+      value: newHistories
+      icon: 'poll'
+      id: 'history'
 
     ctxUser = @context.user
     balance = @state.data.balance || if ctxUser then ctxUser.balance else 0
@@ -63,8 +83,10 @@ module.exports = React.createClass
       url: '/session-new'
 
     div className: 'page-home',
-      MainlistEntry label: sessionsLabel, value: newSessions, icon: 'clock',
+      MainlistEntry sessionsOpts,
         sessions
+      MainlistEntry historyOpts,
+        histories
       MainlistEntry balanceOpts
       div className: 'new-session',
         IconButton newSession
