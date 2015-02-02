@@ -42,6 +42,7 @@ AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
     when 'allergy:refresh'
       AllergyStore.fetch
+        reset: true
         success: (allergies) ->
           msg = 'Downloaded allergies:'
           console.log msg, allergies.getAll()
