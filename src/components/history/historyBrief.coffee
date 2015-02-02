@@ -35,7 +35,7 @@ module.exports = React.createClass
       div key: key, className: 'section',
         div className: 'section-title', title
         entries.map (e) ->
-          a key: e.id, className: 'entry', href: '/histories/' + e.id,
+          a key: e.id, className: 'history-entry', href: '/histories/' + e.id,
             div className: 'title', e.title
             div className: 'description', e.description
 
