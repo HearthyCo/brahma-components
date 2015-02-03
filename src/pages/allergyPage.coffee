@@ -12,7 +12,7 @@ CircleRating = React.createFactory require '../components/common/circleRating'
 
 module.exports = React.createClass
 
-  displayName: 'allergiesPage'
+  displayName: 'allergyPage'
   statics: sectionName: 'historySection'
 
   mixins: [ReactIntl]
