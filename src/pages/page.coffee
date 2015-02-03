@@ -66,8 +66,6 @@ module.exports = React.createClass
     element = React.createElement @props.element,
       _.omit(@props.values, 'element')
 
-    console.log element
-    console.log @props.element
     classes = 'comp-page'
     if element.type.displayName
       classes += ' ' + element.type.displayName

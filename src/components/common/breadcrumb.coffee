@@ -31,7 +31,7 @@ module.exports = React.createClass
     for subscription in subscriptions
       subscription.store.removeChangeListener subscription.handler
 
-    subscriptions.listeners = []
+    subscriptions = []
     breadcrumb = @state.subscriptions.breadcrumb
 
     if breadcrumb? && breadcrumb.stores?
@@ -40,7 +40,7 @@ module.exports = React.createClass
         objectSubscription.store = store
         objectSubscription.handler = -> @updateBreadcrumb props.values
         objectSubscription.store.addChangeListener objectSubscription.handler
-        subscriptions.listeners.push objectSubscription
+        subscriptions.push objectSubscription
 
     objectState = listeners: subscriptions
     if props.breadcrumb?
