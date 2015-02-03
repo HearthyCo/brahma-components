@@ -19,85 +19,136 @@ urlBuilder = (args...) ->
 crumbBuilder = (label, link, cls) ->
   { label: label, link: link, className: cls }
 
-###
-  This functions appends on first position Home node of breadcrumb
-  @param  {object} object Object with stores and list
-  @return {object} object Object modified with home in first position
-###
-breadcrumBuilder = (object) ->
-  object.list.unshift crumbBuilder 'home', urlBuilder(), 'home'
-  object
+module.exports =
 
-module.exports = {
   ###
-    This function buid a breadcrumb for alergies routes (alergies an allergy)
+    This function buid a breadcrumb for allergies routes (allergies an allergy)
     @param  {string}    key   Name of key for get value in args
     @return {function}        Function which is called with args
   ###
-  alergies: (key) -> (args) ->
+  allergies: -> ->
+    crumbs = -> ->
+      arr = []
+      arr.push
+        label: @getIntlMessage('allergies')
+        link: urlBuilder('allergies')
+        className: 'clock'
+      arr
+
+    stores: [ ], list: crumbs()
+
+  ###
+    This function buid a breadcrumb for allergies routes (allergies an allergy)
+    @param  {string}    key   Name of key for get value in args
+    @return {function}        Function which is called with args
+  ###
+  allergy: -> (args) ->
     store = require '../stores/AllergyStore'
-    crumbs = []
 
-    crumbs.push crumbBuilder @getIntlMessage('allergies'),
-      urlBuilder('allergies'), 'clock'
+    crumbs = (store, id) -> ->
+      arr = []
+      allergy = store.get id
 
-    if key? && args?
-      alergy = store.get args[key]
+      title = if allergy? then allergy.title else @getIntlMessage 'allergy'
 
-      title = if alergy? then alergy.title else @getIntlMessage 'allergy'
+      arr.push
+        label: @getIntlMessage('allergies')
+        link: urlBuilder('allergies')
+        className: 'clock'
+      arr.push
+        label: title
+        link: urlBuilder('allergies', id)
+        className: 'clock'
+      arr
 
-      crumbs.push crumbBuilder title, urlBuilder('allergy', args[key]), 'clock'
-
-    breadcrumBuilder { stores: [ store ], list: crumbs }
+    stores: [ store ], list: crumbs store, args['id']
 
   ###
     This function buid a breadcrumb for sessions routes (sessions an session)
     @param  {string}    key   Name of key for get value in args
     @return {function}        Function which is called with args
   ###
-  sessions: (key) -> (args) ->
-    store = require '../stores/SessionsStore'
-    crumbs = []
+  sessions: -> (args) ->
+    crumbs = (state) -> ->
+      arr = []
+      arr.push
+        label: @getIntlMessage('sessions')
+        link: urlBuilder('sessions', state)
+        className: 'clock'
+      arr
 
+    stores: [ ], list: crumbs args['state']
+
+  ###
+    This function buid a breadcrumb for sessions routes (sessions an session)
+    @param  {string}    key   Name of key for get value in args
+    @return {function}        Function which is called with args
+  ###
+  session: -> (args) ->
     # Default assign state for key = "state", if key equals "id" get state
     # of session returned from store and set state with session state
-    state = args[key]
-    if key == "id"
-      store = require '../stores/SessionStore'
-      session = store.get args[key]
+    store = require '../stores/SessionStore'
+
+    crumbs = (store, id) -> ->
+      arr = []
+      session = store.get id
 
       if session?
         title = session.title
-        state = session.state
+        state = session.state.toLowerCase()
       else
         title = @getIntlMessage 'session'
         # If store gets null,
         # return programmed session while not have route for all sessions
         state = "programmed"
 
-      crumbs.push crumbBuilder title, urlBuilder('sessions', args[key]), 'clock'
+      # Put session node first in array once we have a session state
+      arr.push
+        label: @getIntlMessage('sessions')
+        link: urlBuilder('sessions', state)
+        className: 'clock'
+      arr.push
+        label: title
+        link: urlBuilder('sessions', id)
+        className: 'clock'
+      arr
 
-    # Put session node first in array once we have a session state
-    crumbs.unshift crumbBuilder @getIntlMessage('sessions'),
-      urlBuilder('sessions', state), 'clock'
-
-    breadcrumBuilder { stores: [ store ], list: crumbs }
+    stores: [ store ], list: crumbs store, args['id']
 
   ###
     This function buid a breadcrumb for top-up routes
     @param  {string}    key   Name of key for get value in args
     @return {function}        Function which is called with args
   ###
-  topup: (key) -> (args) ->
-    store = require '../stores/TransactionStore'
-    crumbs = []
+  topup: -> ->
+    crumbs = -> ->
+      arr = []
 
-    crumbs.push crumbBuilder @getIntlMessage('top-up'),
-      urlBuilder('top-up'), 'clock'
+      arr.push
+        label: crumbBuilder @getIntlMessage('top-up')
+        link: urlBuilder('top-up')
+        className: 'clock'
+      arr
 
-    if key? && key == "payments"
-      crumbs.push crumbBuilder @getIntlMessage('payment-history'),
-        urlBuilder('top-up', 'payments'), 'clock'
+    stores: [ ], list: crumbs()
 
-    breadcrumBuilder { stores: [ store ], list: crumbs }
-}
+  ###
+    This function buid a breadcrumb for payment routes
+    @param  {string}    key   Name of key for get value in args
+    @return {function}        Function which is called with args
+  ###
+  payments: -> ->
+    crumbs = -> ->
+      arr = []
+
+      arr.push
+        label: @getIntlMessage('top-up')
+        link: urlBuilder('top-up')
+        className: 'clock'
+      arr.push
+        label: @getIntlMessage('payment-history')
+        link: urlBuilder('top-up', 'payments')
+        className: 'clock'
+      arr
+
+    stores: [ ], list: crumbs()
