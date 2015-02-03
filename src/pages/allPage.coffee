@@ -39,6 +39,7 @@ h = { allergies: [a1, a2]}
 module.exports = React.createClass
 
   displayName: 'allPage'
+  statics: sectionName: 'develSection'
 
   mixins: [ReactIntl]
 

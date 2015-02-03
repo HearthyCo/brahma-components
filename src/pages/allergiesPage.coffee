@@ -15,6 +15,7 @@ AllergyEntry = React.createFactory(
 module.exports = React.createClass
 
   displayName: 'allergiesPage'
+  statics: sectionName: 'historySection'
 
   mixins: [ReactIntl]
 
