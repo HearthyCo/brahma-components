@@ -44,7 +44,9 @@ module.exports = React.createClass
     UserStore.removeChangeListener @updateUser
 
   updateLocale: () ->
-    @setState locale: IntlStore.locale, messages: IntlStore.messages
+    @setState
+      locale: IntlStore.locale
+      messages: IntlStore.messages[IntlStore.locale]
 
   updateUser: () ->
     isLogin = not @state.user and UserStore.currentUid
