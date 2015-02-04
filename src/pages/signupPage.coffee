@@ -8,7 +8,9 @@ SignupForm = React.createFactory require '../components/user/signupForm'
 module.exports = React.createClass
 
   displayName: 'signupPage'
-  statics: sectionName: 'externalSection'
+  statics:
+    sectionName: 'externalSection'
+    isPublic: true
 
   render: ->
     div className: 'page-signupPage',

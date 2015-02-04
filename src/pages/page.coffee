@@ -4,6 +4,8 @@ _ = require 'underscore'
 
 IntlStore = require '../stores/IntlStore'
 UserStore = require '../stores/UserStore'
+UserActions = require '../actions/UserActions'
+loginPage = require '../pages/loginPage'
 
 breadcrumb = React.createFactory require '../components/common/breadcrumb'
 topBar = React.createFactory require '../components/common/topBar'
@@ -36,6 +38,7 @@ module.exports = React.createClass
     user: @state.user
 
   componentDidMount: ->
+    @updateUser()
     IntlStore.addChangeListener @updateLocale
     UserStore.addChangeListener @updateUser
 
@@ -63,7 +66,13 @@ module.exports = React.createClass
       availableLocales: IntlStore.availableLocales
       locale: @state.locale
 
-    element = React.createElement @props.element,
+    # Does it need login?
+    if not @props.element.isPublic and not UserStore.currentUid
+      elementFactory = loginPage
+    else
+      elementFactory = @props.element
+
+    element = React.createElement elementFactory,
       _.omit(@props.values, 'element')
 
     classes = 'comp-page'

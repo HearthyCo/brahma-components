@@ -3,18 +3,23 @@ AppDispatcher = require '../dispatcher/AppDispatcher'
 
 UserActions = require '../actions/UserActions'
 
+LOG = 'UserStore > '
+
 # Mandatory fields: login, password, gender, name, birthdate
 UserItem = Backbone.Model.extend
   urlRoot: window.apiServer + '/v1/user'
   defaults:
     type: 'CLIENT'
-  parse: (o) ->
+  parse: (o, opts) ->
+    if opts.collection then return o # No double parse
     o.user
 
 
 UserCollection = Backbone.Collection.extend
   model: UserItem
-
+  url: window.apiServer + '/v1/user'
+  parse: (o) ->
+    o.user
 
 UserStore = new UserCollection
 
@@ -39,23 +44,36 @@ AppDispatcher.on 'all', (eventName, payload) ->
     when 'user:register'
       UserStore.create payload.user, {
         success: (model, response) ->
+          console.log LOG + 'Register success', model.toJSON(), response
           UserStore.currentUid = model.get('id')
           UserStore.trigger 'change'
-          console.log 'Register success!', model.toJSON(), response
         error: (model, response) ->
-          console.log 'Error registering!', model.toJSON(), response
+          console.error LOG + 'Register error', model.toJSON(), response
       }
 
     when 'user:login'
       UserStore.create payload.user, {
         url: window.apiServer + '/v1/user/login'
         success: (model, response) ->
+          console.log LOG + 'Login success', model.toJSON(), response
           UserStore.currentUid = model.get('id')
           UserStore.trigger 'change'
-          console.log 'Login success!', model.toJSON(), response
         error: (model, response) ->
-          console.log 'Login error!', model.toJSON(), response
+          console.error LOG + 'Login error', model.toJSON(), response
       }
 
+    when 'user:logout'
+      UserStore.currentUid = null
+      UserStore.trigger 'change'
+
+    when 'user:getMe'
+      UserStore.fetch
+        success: (models, response) ->
+          console.log LOG + 'User info success', models, response
+          UserStore.currentUid = response.user[0].id
+          console.log LOG + 'User currentUid', UserStore.currentUid, UserStore.get(UserStore.currentUid)
+          UserStore.trigger 'change'
+        error: (model, response) ->
+          console.error LOG + 'User info error', models.toJSON(), response
 
 module.exports = UserStore
