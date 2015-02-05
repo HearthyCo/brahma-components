@@ -6,16 +6,17 @@ SessionStore = require './SessionStore'
 
 
 conf =
-  endpoint: window.apiServer + '/v1/user/sessions'
+  endpoint: '/v1/user/sessions'
 
 SessionsStore =
   programmed: Object.create SessionStore
   underway: Object.create SessionStore
   closed: Object.create SessionStore
 
-SessionsStore.programmed.url = conf.endpoint + '/programmed'
-SessionsStore.underway.url = conf.endpoint + '/underway'
-SessionsStore.closed.url = conf.endpoint + '/closed'
+getApiFor = (tag) -> -> window.apiServer + conf.endpoint + tag
+SessionsStore.programmed.url = getApiFor '/programmed'
+SessionsStore.underway.url = getApiFor '/underway'
+SessionsStore.closed.url = getApiFor '/closed'
 
 
 _.extend SessionsStore, Backbone.Events

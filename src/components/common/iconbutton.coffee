@@ -11,9 +11,16 @@ module.exports = React.createClass
     icon: React.PropTypes.string.isRequired
     label: React.PropTypes.string.isRequired
     url: React.PropTypes.string
+    onClick: React.PropTypes.func
 
   render: ->
-    a id: @props.id, className: 'comp-iconbutton', href: @props.url,
+    opts =
+      id: @props.id
+      className: 'comp-iconbutton'
+      href: @props.url
+      onClick: @props.onClick,
+
+    a opts,
       span className: 'icon icon-' + @props.icon
       span className: 'button-label',
         @props.label

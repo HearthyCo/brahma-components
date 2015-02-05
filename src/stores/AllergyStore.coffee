@@ -5,7 +5,7 @@ AppDispatcher = require '../dispatcher/AppDispatcher'
 AllergyItem = Backbone.Model.extend {}
 
 AllergyCollection = Backbone.Collection.extend
-  url: window.apiServer + '/v1/user/history/allergies'
+  url: -> window.apiServer + '/v1/user/history/allergies'
   model: AllergyItem
   parse: (o) ->
     o.history

@@ -6,7 +6,7 @@ SessionStore = require '../stores/SessionStore'
 TransactionStore = require '../stores/TransactionStore'
 
 conf =
-  endpoint: window.apiServer + '/v1/user/home'
+  endpoint: '/v1/user/home'
 
 HomeState =
   data: {}
@@ -39,7 +39,7 @@ AppDispatcher.on 'all', (eventName, payload) ->
     when 'home:refresh'
       Backbone.ajax
         dataType: 'jsonp'
-        url: conf.endpoint
+        url: window.apiServer + conf.endpoint
         success: (response) ->
           console.log 'Downloaded new home info:', response
           parseResponse response

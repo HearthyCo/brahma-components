@@ -3,7 +3,7 @@ AppDispatcher = require '../dispatcher/AppDispatcher'
 
 
 SessionItem = Backbone.Model.extend
-  urlRoot: window.apiServer + '/v1/session'
+  urlRoot: -> window.apiServer + '/v1/session'
   parse: (o, opts) ->
     if opts.collection then return o # No double parse
     o.session
