@@ -51,7 +51,7 @@ module.exports = React.createClass
     sessionsOpts =
       label: @getIntlMessage('sessions')
       value: newSessions
-      icon: 'clock'
+      icon: 'reloj'
       id: 'sessions'
 
     # vvv TEST CONTENT BELOW vvv
@@ -65,7 +65,7 @@ module.exports = React.createClass
     historyOpts =
       label: @getIntlMessage('history')
       value: newHistories
-      icon: 'poll'
+      icon: 'historial'
       id: 'history'
 
     ctxUser = @context.user
@@ -73,14 +73,14 @@ module.exports = React.createClass
     balanceOpts =
       label: @getIntlMessage('balance')
       value: 0
-      icon: 'payment'
+      icon: 'cerdito'
       extra: @formatNumber(balance / 100, 'credits')
       target: '/top-up'
       id: 'balance'
 
     newSession =
       label: @getIntlMessage('new-session')
-      icon: 'close'
+      icon: 'cross'
       url: '/session-new'
 
     div className: 'page-home',

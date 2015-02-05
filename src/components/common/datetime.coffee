@@ -18,5 +18,5 @@ module.exports = React.createClass
       span className: 'date',
         @formatDate @props.value, 'dateonly'
       span className: 'time',
-        span className: 'icon icon-clock'
+        span className: 'icon icon-reloj'
         @formatTime @props.value, 'time'

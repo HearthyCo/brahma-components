@@ -47,8 +47,8 @@ module.exports = React.createClass
 
   render: ->
     example = @getIntlMessage('example')
-    icon = 'language'
-    iconPlus = 'error'
+    icon = 'rueda'
+    iconPlus = 'chat'
     url = '/sessions/programmed'
 
     div className: 'page-allPage',
