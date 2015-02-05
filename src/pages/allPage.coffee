@@ -2,6 +2,9 @@ React = require 'react/addons'
 ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
+ModalActions = require '../actions/ModalActions'
+UserActions = require '../actions/UserActions'
+
 rcf = React.createFactory
 SignupForm = rcf require '../components/user/signupForm'
 LoginForm = rcf require '../components/user/loginForm'
@@ -51,7 +54,18 @@ module.exports = React.createClass
     iconPlus = 'error'
     url = '/sessions/programmed'
 
+    modalContent = ProfessionalBrief user: u1
+    showModal = -> ModalActions.show content: modalContent
+
+    logout = -> UserActions.logout()
+
     div className: 'page-allPage',
+      div className: 'entry',
+        div className: 'robocop', 'Modal'
+        div onClick: showModal, 'Show modal'
+      div className: 'entry',
+        div className: 'robocop', 'Logout'
+        div onClick: logout, 'Logout'
       div className: 'entry',
         div className: 'robocop', 'SignupForm'
         SignupForm {}
