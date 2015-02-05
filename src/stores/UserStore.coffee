@@ -79,7 +79,7 @@ AppDispatcher.on 'all', (eventName, payload) ->
           console.log LOG + 'User info success', models.toJSON(), response
           UserStore.currentUid = response.user[0].id
           UserStore.trigger 'change'
-        error: (model, response) ->
+        error: (models, response) ->
           console.error LOG + 'User info error', models.toJSON(), response
 
 module.exports = UserStore
