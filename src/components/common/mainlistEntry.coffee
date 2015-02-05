@@ -19,6 +19,10 @@ module.exports = React.createClass
   getInitialState: () ->
     return {isExpanded: false}
 
+  ###
+    If @props.target is defined then navigate to it. Otherwise
+    just toggle the element content visibility.
+  ###
   toggleDisplay: ->
     if @props.target
       window.routerNavigate @props.target

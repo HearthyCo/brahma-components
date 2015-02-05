@@ -3,19 +3,20 @@ _ = require 'underscore'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 
 SessionStore = require '../stores/SessionStore'
-
+TransactionStore = require '../stores/TransactionStore'
 
 conf =
   endpoint: window.apiServer + '/v1/user/home'
 
 HomeState =
-  data:
-    sessions:
-      programmed: Object.create(SessionStore)
-      underway: Object.create(SessionStore)
-      closed: Object.create(SessionStore)
-  # TODO: Add other sections...
-
+  data: {}
+#    sessions:
+#      programmed: Object.create(SessionStore)
+#      underway: Object.create(SessionStore)
+#      closed: Object.create(SessionStore)
+#    amount: 0
+#    transactions: Object.create(TransactionStore)
+#  # TODO: Add other sections...
 
 _.extend HomeState, Backbone.Events
 
@@ -26,16 +27,12 @@ HomeState.removeChangeListener = (callback) ->
   HomeState.off 'change', callback
 
 HomeState.getAll = ->
-  sessions:
-    programmed: HomeState.data.sessions.programmed.getAll()
-    underway: HomeState.data.sessions.underway.getAll()
-    closed: HomeState.data.sessions.closed.getAll()
-
+  JSON.parse JSON.stringify HomeState.data
 
 parseResponse = (response) ->
-  for state of HomeState.data.sessions
-    HomeState.data.sessions[state].reset(response.sessions[state])
-
+#  for state of HomeState.data.sessions
+#    HomeState.data.sessions[state].reset(response.sessions[state])
+  HomeState.data = response
 
 AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName

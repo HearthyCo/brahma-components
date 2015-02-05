@@ -24,5 +24,5 @@ module.exports = React.createClass
       div className: 'sessions',
         @props.sessions.map (session) ->
           SessionEntry key: session.id, session: session
-      a className: 'sessions-more', href: @props.url,
+      a className: 'view-more sessions-view-more', href: @props.url,
         @getIntlMessage('view-more')

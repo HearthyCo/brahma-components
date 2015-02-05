@@ -44,5 +44,5 @@ module.exports = React.createClass
       div className: 'activity',
         @getIntlMessage 'recent-activity'
       entries
-      a className: 'histories-more', href: '/allergies',
+      a className: 'view-more histories-view-more', href: '/allergies',
         @getIntlMessage('view-more')
