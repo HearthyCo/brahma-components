@@ -12,6 +12,7 @@ TransactionEntry = React.createFactory require '../components/transaction/transa
 SessionList = React.createFactory require '../components/session/sessionList'
 IconButton = React.createFactory require '../components/common/iconbutton'
 HistoryBrief = React.createFactory require '../components/history/historyBrief'
+BalanceWidget = React.createFactory require '../components/common/balanceWidget'
 
 { div, a } = React.DOM
 
@@ -81,6 +82,7 @@ module.exports = React.createClass
       transactions = @state.data.balance.transactions.map (transaction) ->
         TransactionEntry key: transaction.id, transaction: transaction
 
+      transactions.unshift BalanceWidget amount: balance
       transactions.push a key: 'view-more', className: 'view-more transactions-view-more', href: '/top-up/payments',
         @getIntlMessage('view-more')
 
@@ -88,7 +90,6 @@ module.exports = React.createClass
       label: @getIntlMessage('balance')
       value: 0
       icon: 'cerdito'
-      extra: @formatNumber(balance / 100, 'credits')
       #target: '/top-up'
       id: 'balance'
 
