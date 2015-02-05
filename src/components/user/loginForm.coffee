@@ -2,7 +2,7 @@ React = require 'react/addons'
 ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
-TextForm = React.createFactory require '../common/form/text'
+IconTextForm = React.createFactory require '../common/form/iconText'
 
 { div, form, a, button, span } = React.DOM
 
@@ -29,20 +29,21 @@ module.exports = React.createClass
     obj =
       id: opt.name
       label: opt.label
+      icon: opt.icon
       name: opt.name
       type: type
       placeholder: opt.placeholder
       valueLink: @linkState opt.name
 
     switch type
-      when 'text' then TextForm obj
-      when 'password' then TextForm obj
+      when 'email' then IconTextForm obj
+      when 'password' then IconTextForm obj
       when 'button' then button
         id: opt.name
         , opt.label
 
   render: ->
-    username = @getIntlMessage('username')
+    email = @getIntlMessage('email')
     password = @getIntlMessage('password')
     login = @getIntlMessage('login')
     signup = @getIntlMessage('signup')
@@ -50,17 +51,19 @@ module.exports = React.createClass
     cmpLoginF = 'comp-loginForm'
 
     loginUser=
-      label: username
-      name: 'login'
-      placeholder: username
+      label: email
+      name: 'email'
+      placeholder: email
+      icon: 'email'
 
     loginPass=
        label: password
        name: 'password'
        placeholder: password
+       icon: 'lock'
 
     form action: @props.action, onSubmit: @handleSubmit, className: cmpLoginF,
-      @buildComp 'text', loginUser
+      @buildComp 'email', loginUser
       @buildComp 'password', loginPass
       div className: 'forgotten-pass',
         a href: '/register',
