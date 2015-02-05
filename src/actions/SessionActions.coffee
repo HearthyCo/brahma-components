@@ -1,12 +1,10 @@
 AppDispatcher = require '../dispatcher/AppDispatcher'
 
-SessionActions = {
+SessionActions =
 
   refresh: (target) ->
-    AppDispatcher.trigger 'session:refresh', {
+    AppDispatcher.trigger 'session:refresh',
       id: target
-    }
 
-}
 
 module.exports = SessionActions

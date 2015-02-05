@@ -21,4 +21,4 @@ module.exports = React.createClass
     div className: 'page-topupPage',
       BalanceWidget {}
       TopUp {}
-      IconButton icon: 'list', label: viewHistory, url: '/top-up/payments'
+      IconButton icon: 'coin', label: viewHistory, url: '/top-up/payments'

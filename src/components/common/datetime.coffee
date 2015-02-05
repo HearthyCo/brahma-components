@@ -11,12 +11,12 @@ module.exports = React.createClass
 
   propTypes:
     id: React.PropTypes.string
-    value: React.PropTypes.object.isRequired
+    value: React.PropTypes.number.isRequired
 
   render: ->
     span id: @props.id, className: 'comp-datetime',
       span className: 'date',
         @formatDate @props.value, 'dateonly'
       span className: 'time',
-        span className: 'icon icon-clock'
+        span className: 'icon icon-reloj'
         @formatTime @props.value, 'time'

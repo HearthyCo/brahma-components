@@ -2,6 +2,9 @@ React = require 'react/addons'
 ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
+ModalActions = require '../actions/ModalActions'
+UserActions = require '../actions/UserActions'
+
 rcf = React.createFactory
 SignupForm = rcf require '../components/user/signupForm'
 LoginForm = rcf require '../components/user/loginForm'
@@ -17,19 +20,16 @@ TransactionEntry = rcf require '../components/transaction/transactionEntry'
 AllergyEntry = rcf require '../components/history/allergyEntry'
 HistoryBrief = rcf require '../components/history/historyBrief'
 
-s1 = {id: 33, title: 'Pediatría', startDate: new Date()}
-s2 = {id: 22, title: 'Cardiología', startDate: new Date()}
+Breadcrumber = require '../util/breadcrumber'
+
+s1 = {id: 33, title: 'Pediatría', startDate: 1418626800000}
+s2 = {id: 22, title: 'Cardiología', startDate: 1418626800000}
 sessions = [s1, s2]
 u1 = {id: 44, name: 'Sverianiano', surname1: 'Fernandez', service: 'Otorrino'}
 t1 = {
   id: 91300, amount: -1000, timestamp: 1418626800000,
   reason: "Reserva de sesión", title: "testSession1"
 }
-list = [
-  { label: 'Home', link: '/', className: 'home' },
-  { label: 'Sessions', link: '/sessions', className: 'clock' },
-  { label: s1.title, link: '/sessions/' + s1.id, className: 'clock' }
-]
 a1 = id: 55, title: 'Gramíneas', description: 'Se pone mu malo', meta: rating: 4
 a2 = id: 66, title: 'Trigo', description: 'Ai que se nos vai!', meta: rating: 2
 h = { allergies: [a1, a2]}
@@ -47,11 +47,22 @@ module.exports = React.createClass
 
   render: ->
     example = @getIntlMessage('example')
-    icon = 'language'
-    iconPlus = 'error'
+    icon = 'rueda'
+    iconPlus = 'chat'
     url = '/sessions/programmed'
 
+    modalContent = ProfessionalBrief user: u1
+    showModal = -> ModalActions.show content: modalContent
+
+    logout = -> UserActions.logout()
+
     div className: 'page-allPage',
+      div className: 'entry',
+        div className: 'robocop', 'Modal'
+        div onClick: showModal, 'Show modal'
+      div className: 'entry',
+        div className: 'robocop', 'Logout'
+        div onClick: logout, 'Logout'
       div className: 'entry',
         div className: 'robocop', 'SignupForm'
         SignupForm {}
@@ -60,7 +71,7 @@ module.exports = React.createClass
         LoginForm {}
       div className: 'entry',
         div className: 'robocop', 'BreadCrumb'
-        BreadCrumb list: list
+        BreadCrumb breadcrumb: Breadcrumber.payments(), values: {}
       div className: 'entry',
         div className: 'robocop', 'MainlistEntry'
         MainlistEntry label: example, value: 33, icon: icon,

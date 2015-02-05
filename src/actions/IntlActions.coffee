@@ -1,12 +1,10 @@
 AppDispatcher = require '../dispatcher/AppDispatcher'
 
-IntlActions = {
+IntlActions =
 
   requestChange: (locale) ->
-    AppDispatcher.trigger 'intl:requestChange', {
+    AppDispatcher.trigger 'intl:requestChange',
       locale: locale
-    }
 
-}
 
 module.exports = IntlActions

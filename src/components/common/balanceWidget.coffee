@@ -21,6 +21,6 @@ module.exports = React.createClass
     amount = @props.amount or if @context.user then @context.user.balance else 0
 
     div id: @props.id, className: 'comp-balancewidget',
-      div className: 'icon icon-payment'
+      div className: 'icon icon-cerdito'
       div className: 'label', @getIntlMessage('actual-balance')
       div className: 'amount', @formatNumber(amount / 100, 'credits')

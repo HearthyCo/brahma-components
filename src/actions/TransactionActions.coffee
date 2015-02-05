@@ -1,10 +1,9 @@
 AppDispatcher = require '../dispatcher/AppDispatcher'
 
-TransactionActions = {
+TransactionActions =
 
   refresh: ->
     AppDispatcher.trigger 'transaction:refresh', {}
 
-}
 
 module.exports = TransactionActions

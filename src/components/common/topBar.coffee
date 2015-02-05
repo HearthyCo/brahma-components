@@ -13,7 +13,7 @@ module.exports = React.createClass
         div className: 'left-box',
           div className: 'menuBar',
             a href: '#',
-              span className: 'icon icon-menu'
+              span className: 'icon icon-left'
         div className: 'center-box',
           div className: 'logoBar'
         div className: 'right-box',

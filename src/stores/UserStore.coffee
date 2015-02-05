@@ -63,17 +63,23 @@ AppDispatcher.on 'all', (eventName, payload) ->
       }
 
     when 'user:logout'
-      UserStore.currentUid = null
-      UserStore.trigger 'change'
+      Backbone.ajax
+        url: window.apiServer + '/v1/user/logout'
+        type: 'POST',
+        success: (response) ->
+          console.log 'Logout success', response
+          UserStore.currentUid = null
+          UserStore.trigger 'change'
+        error: (xhr, status) ->
+          console.error LOG + 'Logout error', status, xhr
 
     when 'user:getMe'
       UserStore.fetch
         success: (models, response) ->
-          console.log LOG + 'User info success', models, response
+          console.log LOG + 'User info success', models.toJSON(), response
           UserStore.currentUid = response.user[0].id
-          console.log LOG + 'User currentUid', UserStore.currentUid, UserStore.get(UserStore.currentUid)
           UserStore.trigger 'change'
-        error: (model, response) ->
+        error: (models, response) ->
           console.error LOG + 'User info error', models.toJSON(), response
 
 module.exports = UserStore
