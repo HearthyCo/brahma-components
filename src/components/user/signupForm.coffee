@@ -79,6 +79,6 @@ module.exports = React.createClass
       @buildComp 'password', signupPass
       @buildComp 'button', { label: signup, }
       div className: 'start-session',
-        span: 'I have account'
+        span {}, @getIntlMessage('i-have-account')
         a href: '/login',
           login
