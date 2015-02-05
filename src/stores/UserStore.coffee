@@ -7,7 +7,7 @@ LOG = 'UserStore > '
 
 # Mandatory fields: login, password, gender, name, birthdate
 UserItem = Backbone.Model.extend
-  urlRoot: window.apiServer + '/v1/user'
+  urlRoot: -> window.apiServer + '/v1/user'
   defaults:
     type: 'CLIENT'
   parse: (o, opts) ->
@@ -17,7 +17,7 @@ UserItem = Backbone.Model.extend
 
 UserCollection = Backbone.Collection.extend
   model: UserItem
-  url: window.apiServer + '/v1/user'
+  url: -> window.apiServer + '/v1/user'
   parse: (o) ->
     o.user
 

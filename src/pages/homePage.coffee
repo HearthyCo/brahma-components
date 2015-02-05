@@ -5,6 +5,7 @@ _ = require 'underscore'
 HomeStore = require '../stores/HomeStore'
 
 HomeActions = require '../actions/HomeActions'
+UserActions = require '../actions/UserActions'
 
 MainlistEntry = React.createFactory require '../components/common/mainlistEntry'
 SessionList = React.createFactory require '../components/session/sessionList'
@@ -78,6 +79,17 @@ module.exports = React.createClass
       target: '/top-up'
       id: 'balance'
 
+    configOpts =
+      label: @getIntlMessage('config')
+      value: 0
+      icon: 'payment'
+      id: 'config'
+
+    logout =
+      label: @getIntlMessage('logout')
+      icon: 'close'
+      onClick: UserActions.logout
+
     newSession =
       label: @getIntlMessage('new-session')
       icon: 'cross'
@@ -89,5 +101,7 @@ module.exports = React.createClass
       MainlistEntry historyOpts,
         histories
       MainlistEntry balanceOpts
+      MainlistEntry configOpts,
+        IconButton logout
       div className: 'new-session',
         IconButton newSession
