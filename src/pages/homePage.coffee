@@ -93,11 +93,11 @@ module.exports = React.createClass
       #target: '/top-up'
       id: 'balance'
 
-    #--------------- New Session
+    #--------------- Config
     configOpts =
       label: @getIntlMessage('config')
       value: 0
-      icon: 'payment'
+      icon: 'rueda'
       id: 'config'
 
     logout =
@@ -105,6 +105,7 @@ module.exports = React.createClass
       icon: 'close'
       onClick: UserActions.logout
 
+    #--------------- New Session
     newSession =
       label: @getIntlMessage('new-session')
       icon: 'cross'

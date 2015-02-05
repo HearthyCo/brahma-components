@@ -64,7 +64,7 @@ module.exports = React.createClass
     list.unshift
       label: 'home'
       link: '/home'
-      className: 'home'
+      className: 'casita'
 
     div className: 'comp-breadcrumb',
       list.map (crumb, i) ->
