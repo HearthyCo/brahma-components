@@ -6,7 +6,7 @@ TextForm = React.createFactory require '../common/form/text'
 DateForm = React.createFactory require '../common/form/date'
 GenderForm = React.createFactory require '../common/form/gender'
 
-{ div, form, a, button } = React.DOM
+{ div, form, a, button, span } = React.DOM
 
 UserActions = require '../../actions/UserActions'
 
@@ -34,6 +34,7 @@ module.exports = React.createClass
       label: opt.label
       name: opt.name
       type: type
+      placeholder: opt.placeholder
       valueLink: @linkState opt.name
 
     switch type
@@ -58,18 +59,26 @@ module.exports = React.createClass
     signup = @getIntlMessage('signup')
     login = @getIntlMessage('login')
 
-    cmpLoginF = 'comp-signupForm wrapper text'
+    cmpLoginF = 'comp-signupForm'
+
+    signupUser=
+      label: username
+      name: 'login'
+      placeholder: username
+
+    signupPass=
+       label: password
+       name: 'password'
+       placeholder: password
+
 
     # Mandatory fields: login, password, gender, name, birthdate
     form action: 'signup', onSubmit: @handleSubmit, className: cmpLoginF,
-      @buildComp 'text', { label: username, name: 'login' }
-      @buildComp 'email', { label: email, name: 'email' }
-      @buildComp 'password', { label: password, name: 'password' }
-      @buildComp 'password', { label: repeat, name: 'password-repeat' }
-      @buildComp 'text', { label: name, name: 'name' }
-      @buildComp 'gender', { label: gender, name: 'gender' }
-      @buildComp 'date', { label: birthdate, name: 'birthdate' }
+      # @buildComp 'email', { label: email, name: 'email' }
+      @buildComp 'text', signupUser
+      @buildComp 'password', signupPass
       @buildComp 'button', { label: signup, }
-      div {},
+      div className: 'start-session',
+        span: 'I have account'
         a href: '/login',
           login
