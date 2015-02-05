@@ -5,9 +5,12 @@ _ = require 'underscore'
 IntlStore = require '../stores/IntlStore'
 UserStore = require '../stores/UserStore'
 UserActions = require '../actions/UserActions'
+ModalStore = require '../stores/ModalStore'
+ModalActions = require '../actions/ModalActions'
 loginPage = require '../pages/loginPage'
 
 breadcrumb = React.createFactory require '../components/common/breadcrumb'
+modal = React.createFactory require '../components/common/modal'
 topBar = React.createFactory require '../components/common/topBar'
 bottomBar = React.createFactory require '../components/common/bottomBar'
 
@@ -41,17 +44,19 @@ module.exports = React.createClass
     @updateUser()
     IntlStore.addChangeListener @updateLocale
     UserStore.addChangeListener @updateUser
+    ModalStore.addChangeListener @updateModal
 
   componentWillUnmount: ->
     IntlStore.removeChangeListener @updateLocale
     UserStore.removeChangeListener @updateUser
+    ModalStore.removeChangeListener @updateModal
 
-  updateLocale: () ->
+  updateLocale: ->
     @setState
       locale: IntlStore.locale
       messages: IntlStore.messages[IntlStore.locale]
 
-  updateUser: () ->
+  updateUser: ->
     isLogin = not @state.user and UserStore.currentUid
     isLogout = @state.user and not UserStore.currentUid
     @setState user: UserStore.get(UserStore.currentUid)
@@ -60,6 +65,10 @@ module.exports = React.createClass
       window.routerNavigate '/home'
     else if isLogout
       window.routerNavigate '/'
+
+  updateModal: ->
+    @setState modal: ModalStore.getModal()
+
 
   render: ->
     bottomBarProps =
@@ -72,6 +81,13 @@ module.exports = React.createClass
     else
       elementFactory = @props.element
 
+    # Should we show a modal on top?
+    currentModal = false
+    if @state.modal and @state.modal.visible
+      currentModal = modal
+        content: @state.modal.content
+        onClose: ModalActions.hide
+
     element = React.createElement elementFactory,
       _.omit(@props.values, 'element')
 
@@ -82,6 +98,7 @@ module.exports = React.createClass
       classes += ' ' + element.type.sectionName
 
     div className: classes,
+      currentModal
       topBar {}
       section className: 'main-section',
         breadcrumb breadcrumb: @props.breadcrumb, values: @props.values

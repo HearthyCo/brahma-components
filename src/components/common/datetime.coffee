@@ -11,7 +11,7 @@ module.exports = React.createClass
 
   propTypes:
     id: React.PropTypes.string
-    value: React.PropTypes.object.isRequired
+    value: React.PropTypes.number.isRequired
 
   render: ->
     span id: @props.id, className: 'comp-datetime',
