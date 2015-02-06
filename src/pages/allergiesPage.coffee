@@ -2,35 +2,34 @@ React = require 'react/addons'
 ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
-AllergyStore = require '../stores/AllergyStore'
+HistoryStore = require '../stores/HistoryStore'
 
-AllergyActions = require '../actions/AllergyActions'
+HistoryActions = require '../actions/HistoryActions'
 
-AllergyEntry = React.createFactory(
-  require '../components/history/allergyEntry'
-)
+AllergyEntry = React.createFactory require '../components/history/allergyEntry'
 
 { div, h1 } = React.DOM
 
 module.exports = React.createClass
 
   displayName: 'allergiesPage'
-  statics: sectionName: 'historySection'
+  statics:
+    sectionName: 'historySection'
 
   mixins: [ReactIntl]
 
   getInitialState: ->
-    allergies: AllergyStore.getAll()
+    allergies: HistoryStore.getSection 'allergies'
 
   componentDidMount: ->
-    AllergyStore.addChangeListener @updateState
-    AllergyActions.refresh()
+    HistoryStore.addChangeListener @updateState
+    HistoryActions.refresh 'allergies'
 
   componentWillUnmount: ->
-    AllergyStore.removeChangeListener @updateState
+    HistoryStore.removeChangeListener @updateState
 
   updateState: () ->
-    @setState { allergies: AllergyStore.getAll() }
+    @setState allergies: HistoryStore.getSection 'allergies'
 
   render: ->
     allergies = @state.allergies.map (allergy) ->

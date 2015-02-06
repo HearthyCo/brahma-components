@@ -3,6 +3,7 @@ AppDispatcher = require '../dispatcher/AppDispatcher'
 UserActions =
 
   login: (user) ->
+    user.login = user.login || user.email
     AppDispatcher.trigger 'user:login',
       user: user
 

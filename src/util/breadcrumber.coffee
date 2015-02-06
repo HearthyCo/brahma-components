@@ -43,7 +43,7 @@ module.exports =
     @return {function}        Function which is called with args
   ###
   allergy: -> (args) ->
-    store = require '../stores/AllergyStore'
+    store = require '../stores/HistoryStore'
 
     crumbs = (store, id) -> ->
       arr = []

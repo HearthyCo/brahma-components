@@ -2,9 +2,9 @@ React = require 'react/addons'
 ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
-AllergyStore = require '../stores/AllergyStore'
+HistoryStore = require '../stores/HistoryStore'
 
-AllergyActions = require '../actions/AllergyActions'
+HistoryActions = require '../actions/HistoryActions'
 
 { div, h1, span } = React.DOM
 
@@ -21,20 +21,20 @@ module.exports = React.createClass
     id: React.PropTypes.string.isRequired
 
   getInitialState: ->
-    allergy: AllergyStore.get @props.id
+    allergy: HistoryStore.get @props.id
 
   componentDidMount: ->
-    AllergyStore.addChangeListener @updateState
+    HistoryStore.addChangeListener @updateState
 
   componentWillUnmount: ->
-    AllergyStore.removeChangeListener @updateState
+    HistoryStore.removeChangeListener @updateState
 
   componentWillReceiveProps: (next) ->
     if @props.id isnt next.id
-      @setState { allergy: AllergyStore.get next.id }
+      @setState { allergy: HistoryStore.get next.id }
 
   updateState: () ->
-    @setState { allergy: AllergyStore.get @props.id }
+    @setState { allergy: HistoryStore.get @props.id }
 
   render: ->
     if not @state.allergy then return div {} # No "property of undefined" errors
