@@ -19,6 +19,7 @@ module.exports = React.createClass
 
   render: ->
     div id: @props.id, className: 'comp-modal',
-      div className: 'modal-close', onClick: @onClose
+      div className: 'modal-close', onClick: @onClose,
+        span className: 'icon icon-cross'
       div className: 'modal-content',
         @props.content
