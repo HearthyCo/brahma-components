@@ -81,7 +81,8 @@ module.exports = React.createClass
     transactions = []
     if @state.data.balance
       balance = @state.data.balance.amount
-      transactions = @state.data.balance.transactions.map (transaction) ->
+      transactions = @state.data.balance.transactions
+      .slice(0,2).map (transaction) ->
         TransactionEntry key: transaction.id, transaction: transaction
 
       transactions.unshift div className: 'label payment-history-home',
