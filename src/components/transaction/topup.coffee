@@ -27,6 +27,25 @@ module.exports = React.createClass
     ->
       setAmount amount
 
+  goPay: (amount) ->
+    Backbone = require 'exoskeleton'
+    Backbone.ajax
+      url: window.apiServer + '/v1/transaction'
+      contentType: "application/json; charset=utf-8"
+      type: 'POST'
+      dataType: 'jsonp'
+      data: amount: @state.amount
+      success: (result) ->
+        try
+          url = result.transaction.meta.paypal.links[1].href
+          console.log 'Redirecting to paypal at:', url
+          window.location url
+        catch e
+          console.error 'Can\'t redirect to paypal:', e, result
+      error: (xhr, status) ->
+        console.error 'Can\t redirect to paypal:', status, xhr
+
+
   render: ->
     _this = @
 
@@ -45,5 +64,5 @@ module.exports = React.createClass
         div className: 'label',
           @formatMessage @getIntlMessage('top-up-confirm'),
             amount: @state.amount / 100
-        div className: 'button',
+        div className: 'button', onClick: @goPay,
           @getIntlMessage 'top-up'
