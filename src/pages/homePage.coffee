@@ -84,18 +84,19 @@ module.exports = React.createClass
       transactions = @state.data.balance.transactions.map (transaction) ->
         TransactionEntry key: transaction.id, transaction: transaction
 
+      transactions.unshift div className: 'label payment-history-home',
+        @getIntlMessage 'payment-history'
       transactions.unshift BalanceWidget amount: balance
-      transactions.push a {
-          key: 'view-more'
-          className: 'view-more transactions-view-more'
-          href: '/top-up/payments'
-        }
-        @getIntlMessage('view-more')
-      div className: 'button',
-          @getIntlMessage 'top-up'
+      transactions.push a
+        key: 'view-more'
+        className: 'view-more transactions-view-more'
+        href: '/top-up/payments',
+        @getIntlMessage 'view-more'
+      transactions.push a className: 'button', href: '/top-up',
+        @getIntlMessage 'top-up'
 
     balanceOpts =
-      label: @getIntlMessage('balance')
+      label: @getIntlMessage 'balance'
       value: 0
       icon: 'cerdito'
       #target: '/top-up'
@@ -103,19 +104,19 @@ module.exports = React.createClass
 
     #--------------- Config
     configOpts =
-      label: @getIntlMessage('config')
+      label: @getIntlMessage 'config'
       value: 0
       icon: 'rueda'
       id: 'config'
 
     logout =
-      label: @getIntlMessage('logout')
+      label: @getIntlMessage 'logout'
       icon: 'close'
       onClick: UserActions.logout
 
     #--------------- New Session
     newSession =
-      label: @getIntlMessage('new-session')
+      label: @getIntlMessage 'new-session'
       icon: 'cross'
       url: '/session-new'
 

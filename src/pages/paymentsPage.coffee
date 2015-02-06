@@ -35,8 +35,8 @@ module.exports = React.createClass
   render: ->
     div className: 'page-paymentsPage',
       BalanceWidget {}
-      a className: 'button', href: '/top-up', @getIntlMessage('top-up')
-      div className: 'label', @getIntlMessage('payment-history')
+      a className: 'button', href: '/top-up', @getIntlMessage 'top-up'
+      div className: 'label', @getIntlMessage 'payment-history'
       div className: 'transactions',
         @state.transactions.map (transaction) ->
           TransactionEntry key: transaction.id, transaction: transaction
