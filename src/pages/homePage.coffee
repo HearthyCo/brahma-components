@@ -8,7 +8,9 @@ HomeActions = require '../actions/HomeActions'
 UserActions = require '../actions/UserActions'
 
 MainlistEntry = React.createFactory require '../components/common/mainlistEntry'
-TransactionEntry = React.createFactory require '../components/transaction/transactionEntry'
+TransactionEntry = React.createFactory(
+  require '../components/transaction/transactionEntry'
+)
 SessionList = React.createFactory require '../components/session/sessionList'
 IconButton = React.createFactory require '../components/common/iconbutton'
 HistoryBrief = React.createFactory require '../components/history/historyBrief'
@@ -83,7 +85,11 @@ module.exports = React.createClass
         TransactionEntry key: transaction.id, transaction: transaction
 
       transactions.unshift BalanceWidget amount: balance
-      transactions.push a key: 'view-more', className: 'view-more transactions-view-more', href: '/top-up/payments',
+      transactions.push a {
+          key: 'view-more'
+          className: 'view-more transactions-view-more'
+          href: '/top-up/payments'
+        }
         @getIntlMessage('view-more')
       div className: 'button',
           @getIntlMessage 'top-up'
