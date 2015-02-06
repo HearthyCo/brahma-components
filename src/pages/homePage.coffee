@@ -85,6 +85,8 @@ module.exports = React.createClass
       transactions.unshift BalanceWidget amount: balance
       transactions.push a key: 'view-more', className: 'view-more transactions-view-more', href: '/top-up/payments',
         @getIntlMessage('view-more')
+      div className: 'button',
+          @getIntlMessage 'top-up'
 
     balanceOpts =
       label: @getIntlMessage('balance')
