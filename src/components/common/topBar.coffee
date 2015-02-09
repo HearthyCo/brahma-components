@@ -15,6 +15,7 @@ module.exports = React.createClass
             a href: '#',
               span className: 'icon icon-left'
         div className: 'center-box',
-          div className: 'logoBar'
+          a href: '/',
+            div className: 'logoBar'
         div className: 'right-box',
-          div className: 'iconBar',
+          div className: 'iconBar'
