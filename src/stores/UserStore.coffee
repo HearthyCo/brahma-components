@@ -82,4 +82,7 @@ AppDispatcher.on 'all', (eventName, payload) ->
         error: (models, response) ->
           console.error LOG + 'User info error', models.toJSON(), response
 
+    when 'transaction:executePaypalSuccess'
+      UserStore._get(UserStore.currentUid).set 'balance', payload.balance
+
 module.exports = UserStore

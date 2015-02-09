@@ -1,5 +1,6 @@
 React = require 'react'
 ReactIntl = require 'react-intl'
+TransactionActions = require '../../actions/TransactionActions'
 
 { div, a } = React.DOM
 
@@ -29,6 +30,7 @@ module.exports = React.createClass
 
   render: ->
     _this = @
+    createPaypal = -> TransactionActions.createPaypal _this.state.amount
 
     div id: @props.id, className: 'comp-topup',
       div className: 'topup-quantitypick',
@@ -45,5 +47,5 @@ module.exports = React.createClass
         div className: 'label',
           @formatMessage @getIntlMessage('top-up-confirm'),
             amount: @state.amount / 100
-        div className: 'button',
+        div className: 'button', onClick: createPaypal,
           @getIntlMessage 'top-up'
