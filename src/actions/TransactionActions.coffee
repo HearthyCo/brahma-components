@@ -15,7 +15,7 @@ TransactionActions =
       data: JSON.stringify amount: amount
       success: (result) ->
         try
-          url = result.transaction.meta.paypal.links[1].href
+          url = result.redirect
           console.log 'Redirecting to paypal at:', url
           window.location.replace url
         catch e
