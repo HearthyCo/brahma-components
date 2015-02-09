@@ -1,5 +1,6 @@
 React = require 'react'
 ReactIntl = require 'react-intl'
+TransactionActions = require '../../actions/TransactionActions'
 
 { div, a } = React.DOM
 
@@ -27,27 +28,9 @@ module.exports = React.createClass
     ->
       setAmount amount
 
-  goPay: (amount) ->
-    Backbone = require 'exoskeleton'
-    Backbone.ajax
-      url: window.apiServer + '/v1/transaction'
-      contentType: "application/json; charset=utf-8"
-      type: 'POST'
-      dataType: 'jsonp'
-      data: amount: @state.amount
-      success: (result) ->
-        try
-          url = result.transaction.meta.paypal.links[1].href
-          console.log 'Redirecting to paypal at:', url
-          window.location url
-        catch e
-          console.error 'Can\'t redirect to paypal:', e, result
-      error: (xhr, status) ->
-        console.error 'Can\t redirect to paypal:', status, xhr
-
-
   render: ->
     _this = @
+    createPaypal = -> TransactionActions.createPaypal _this.state.amount
 
     div id: @props.id, className: 'comp-topup',
       div className: 'topup-quantitypick',
@@ -64,5 +47,5 @@ module.exports = React.createClass
         div className: 'label',
           @formatMessage @getIntlMessage('top-up-confirm'),
             amount: @state.amount / 100
-        div className: 'button', onClick: @goPay,
+        div className: 'button', onClick: createPaypal,
           @getIntlMessage 'top-up'

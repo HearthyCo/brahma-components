@@ -1,5 +1,6 @@
 Backbone = require 'exoskeleton'
 AppDispatcher = require '../dispatcher/AppDispatcher'
+ModalActions = require '../actions/ModalActions'
 
 
 TransactionItem = Backbone.Model.extend {}
@@ -41,6 +42,5 @@ AppDispatcher.on 'all', (eventName, payload) ->
         error: (xhr, status) ->
           msg = 'Error updating transactions:'
           console.log msg, status, xhr
-
 
 module.exports = TransactionStore

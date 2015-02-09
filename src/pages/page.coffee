@@ -8,6 +8,7 @@ UserActions = require '../actions/UserActions'
 ModalStore = require '../stores/ModalStore'
 ModalActions = require '../actions/ModalActions'
 loginPage = require '../pages/loginPage'
+signupPage = require '../pages/signupPage'
 
 breadcrumb = React.createFactory require '../components/common/breadcrumb'
 modal = React.createFactory require '../components/common/modal'
@@ -62,7 +63,8 @@ module.exports = React.createClass
     @setState user: UserStore.get(UserStore.currentUid)
     # Auto-navigation triggered?
     if isLogin
-      window.routerNavigate '/home'
+      if @props.element is loginPage or @props.element is signupPage
+        window.routerNavigate '/home'
     else if isLogout
       window.routerNavigate '/'
 
