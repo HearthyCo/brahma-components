@@ -57,7 +57,7 @@ module.exports = React.createClass
     sessionsOpts =
       label: @getIntlMessage('sessions')
       value: newSessions
-      icon: 'reloj'
+      icon: 'clock'
       id: 'sessions'
 
     #--------------- History
@@ -72,7 +72,7 @@ module.exports = React.createClass
     historyOpts =
       label: @getIntlMessage('history')
       value: newHistories
-      icon: 'historial'
+      icon: 'history'
       id: 'history'
 
     #--------------- Balance
@@ -98,7 +98,7 @@ module.exports = React.createClass
     balanceOpts =
       label: @getIntlMessage 'balance'
       value: 0
-      icon: 'cerdito'
+      icon: 'pig'
       #target: '/top-up'
       id: 'balance'
 
@@ -106,7 +106,7 @@ module.exports = React.createClass
     configOpts =
       label: @getIntlMessage 'config'
       value: 0
-      icon: 'rueda'
+      icon: 'gear'
       id: 'config'
 
     logout =
@@ -117,7 +117,7 @@ module.exports = React.createClass
     #--------------- New Session
     newSession =
       label: @getIntlMessage 'new-session'
-      icon: 'cross'
+      icon: 'plus-2'
       url: '/session-new'
 
     div className: 'page-home',

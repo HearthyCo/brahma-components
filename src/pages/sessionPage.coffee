@@ -59,4 +59,4 @@ module.exports = React.createClass
       profs
       # TODO: Show elements specific to session state
       IconButton icon: 'clip', label: attach, url: '/'
-      IconButton icon: 'pasti', label: treatm, url: '/'
+      IconButton icon: 'pill', label: treatm, url: '/'

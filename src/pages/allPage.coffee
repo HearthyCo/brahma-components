@@ -47,7 +47,7 @@ module.exports = React.createClass
 
   render: ->
     example = @getIntlMessage('example')
-    icon = 'rueda'
+    icon = 'polaroid'
     iconPlus = 'chat'
     url = '/sessions/programmed'
 
