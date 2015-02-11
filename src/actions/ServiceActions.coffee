@@ -1,9 +1,9 @@
 AppDispatcher = require '../dispatcher/AppDispatcher'
 
-SessionActions =
+ServiceActions =
 
   refresh: (target) ->
-    AppDispatcher.trigger 'session:refresh',
+    AppDispatcher.trigger 'service:refresh',
       id: target
 
-module.exports = SessionActions
+module.exports = ServiceActions
