@@ -10,9 +10,7 @@ module.exports = React.createClass
   render: ->
     div id: @props.id, className: 'field-set comp-text',
       label className: 'label',
-          span className: 'icon icon-' + @props.icon
-
-      div className: 'field',
-        input _.omit @props, 'id', 'icon'
+        span className: 'icon icon-' + @props.icon
+      input _.extend _.omit(@props, 'id', 'icon'), className: 'field'
       div className: 'message',
         label className: 'message-form'
