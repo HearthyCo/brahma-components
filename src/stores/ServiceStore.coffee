@@ -1,12 +1,13 @@
 Backbone = require 'exoskeleton'
 AppDispatcher = require '../dispatcher/AppDispatcher'
-ModalActions = require '../actions/ModalActions'
 
+conf =
+  endpoint: '/v1/services'
 
 ServiceItem = Backbone.Model.extend {}
 
 ServiceCollection = Backbone.Collection.extend
-  url: -> window.apiServer + '/v1/services'
+  url: -> window.apiServer + conf.endpoint
   model: ServiceItem
   parse: (o) ->
     o.services
@@ -30,10 +31,9 @@ ServiceStore.getAll = ->
 
 AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
-    when 'services:refresh'
-      if not ServiceStore.get payload.id
-        ServiceStore.add { id: payload.id }
+    when 'service:refresh'
       ServiceStore.fetch
+        url: window.apiServer + conf.endpoint + '?id=' + payload.id
         reset: true
         success: (services) ->
           msg = 'Updated services list:'

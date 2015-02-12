@@ -1,9 +1,10 @@
 AppDispatcher = require '../dispatcher/AppDispatcher'
 
-ServiceActions =
+fieldId = 90200
 
-  refresh: (target) ->
+ServiceActions =
+  refresh: ->
     AppDispatcher.trigger 'service:refresh',
-      id: target
+      id: fieldId
 
 module.exports = ServiceActions

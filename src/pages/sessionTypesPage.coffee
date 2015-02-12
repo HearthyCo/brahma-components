@@ -6,9 +6,9 @@ ServiceStore = require '../stores/ServiceStore'
 
 ServiceActions = require '../actions/ServiceActions'
 
-ServiceEntry = React.createFactory require '../components/session/serviceEntry'
+SubListEntry = React.createFactory require '../components/common/sublistEntry'
 
-{ div, h1 } = React.DOM
+{ div, h1, span } = React.DOM
 
 module.exports = React.createClass
 
@@ -19,22 +19,38 @@ module.exports = React.createClass
   mixins: [ReactIntl]
 
   getInitialState: ->
-    services: ServiceStore.get
+    services: ServiceStore.getAll()
 
   componentDidMount: ->
     ServiceStore.addChangeListener @updateServices
-    SessionActions.refresh()
+    ServiceActions.refresh()
 
   componentWillUnmount: ->
     ServiceStore.removeChangeListener @updateServices
 
   updateServices: () ->
-    @setState services: ServiceStore.get
+    @setState services: ServiceStore.getAll()
 
   render: ->
-    services = @state.services.map (service) ->
-      console.log "SERVICE ", service
-      # ServiceEntry key: service.id, service: service
+    _this = @
+    createPaypal = -> TransactionActions.createPaypal _this.state.amount
 
-    # div className: 'page-sessionTypes',
-    #   services
+    services = @state.services.map (field) ->
+      for services of field
+        field[services].map (service) ->
+          serviceOpt =
+            key: service.id
+            id: service.id
+            label: service.name
+            sublabel: 'Tiempo de espera'
+
+          SubListEntry serviceOpt,
+            div className: 'title',
+              'Esta operacion tiene un cargo de 3 leuros que se te descontaran'
+            div className: 'button', onClick: createPaypal,
+              _this.getIntlMessage 'continue'
+
+    div className: 'page-sessionTypes',
+      div className: 'availableProfessionals',
+        'Actualmente hay 5 medicos disponibles'
+      services
