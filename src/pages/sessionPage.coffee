@@ -14,7 +14,7 @@ ProfessionalBrief = React.createFactory(
 IconButton = React.createFactory require '../components/common/iconbutton'
 Datetime = React.createFactory require '../components/common/datetime'
 
-{ div, p } = React.DOM
+{ div, p, h2 } = React.DOM
 
 module.exports = React.createClass
 
@@ -58,5 +58,22 @@ module.exports = React.createClass
     div className: 'page-session',
       profs
       # TODO: Show elements specific to session state
+      div className: 'session-report',
+        h2 className: 'wrapper',
+          div className: 'icon icon-search'
+          @getIntlMessage 'report'
+        p className: 'wrapper',
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do'
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do'
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do'
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do'
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do'
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do'
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do'
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do'
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do'
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do'
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do'
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do'
       IconButton icon: 'clip', label: attach, url: '/'
-      IconButton icon: 'pasti', label: treatm, url: '/'
+      IconButton icon: 'pill', label: treatm, url: '/'

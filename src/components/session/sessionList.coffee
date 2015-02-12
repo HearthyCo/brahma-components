@@ -25,4 +25,5 @@ module.exports = React.createClass
         @props.sessions.map (session) ->
           SessionEntry key: session.id, session: session
       a className: 'view-more sessions-view-more', href: @props.url,
+        span className: 'icon icon-advice'
         @getIntlMessage('view-more')

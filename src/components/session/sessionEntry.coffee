@@ -18,8 +18,9 @@ module.exports = React.createClass
 
   render: ->
     div id: @props.id, className: 'comp-sessionentry',
-      div className: 'session-label',
-        Datetime value: @props.session.startDate
-        span className: 'session-title', @props.session.title
       a className: 'session-link', href: '/session/' + @props.session.id,
-        @getIntlMessage('access')
+        div className: 'session-label',
+          Datetime value: @props.session.startDate
+          span className: 'session-title', @props.session.title
+        div className: 'session-notify',
+          span className: 'icon icon-advice'
