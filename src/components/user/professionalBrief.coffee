@@ -27,7 +27,7 @@ module.exports = React.createClass
         p {},
           span className: 'brief-key', @getIntlMessage('professional'), ': '
           span className: 'brief-value', fullname
+        @props.children
         p {},
           span className: 'brief-key', @getIntlMessage('field'), ': '
           span className: 'brief-value', @props.user.service
-        @props.children
