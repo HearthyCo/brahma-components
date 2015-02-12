@@ -118,7 +118,7 @@ module.exports = React.createClass
     newSession =
       label: @getIntlMessage 'new-session'
       icon: 'cross'
-      url: '/session-new'
+      url: '/session/new'
 
     div className: 'page-home',
       MainlistEntry sessionsOpts,
