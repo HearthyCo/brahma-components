@@ -8,7 +8,7 @@ ServiceActions = require '../actions/ServiceActions'
 
 SubListEntry = React.createFactory require '../components/common/sublistEntry'
 
-{ div, h1, span } = React.DOM
+{ div, h1, span, strong } = React.DOM
 
 module.exports = React.createClass
 
@@ -46,11 +46,22 @@ module.exports = React.createClass
 
           SubListEntry serviceOpt,
             div className: 'title',
-              'Esta operacion tiene un cargo de 3 leuros que se te descontaran'
+              span {},
+                'Esta operacion tiene un cargo de'
+              strong {},
+                '3€'
+              span {},
+                'que se te descontaran'
+
             div className: 'button', onClick: createPaypal,
               _this.getIntlMessage 'continue'
 
     div className: 'page-sessionTypes',
       div className: 'availableProfessionals',
-        'Actualmente hay 5 medicos disponibles'
+        span {},
+          'Actualmente hay'
+        span className: 'professional-number',
+          '0'
+        span {},
+          'medicos disponibles'
       services

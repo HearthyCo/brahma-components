@@ -1,6 +1,6 @@
 React = require 'react'
 
-{ div, span } = React.DOM
+{ div, span, h2, p } = React.DOM
 
 module.exports = React.createClass
 
@@ -12,22 +12,25 @@ module.exports = React.createClass
     sublabel: React.PropTypes.string.isRequired
 
   getInitialState: () ->
-    isExpanded: false
+    {}
 
   toggleDisplay: ->
     @setState isExpanded: not @state.isExpanded
 
   render: ->
-    contentClasses = 'entry-content'
+    contentClasses = 'comp-sublistentry'
     if @state.isExpanded
       contentClasses += ' is-expanded'
+    else if @state.isExpanded is false
+      contentClasses += ' is-collapsed'
 
-    div id: @props.id, className: 'comp-sublistentry',
+    div id: @props.id, className: contentClasses,
       div className: 'entry-button', onClick: @toggleDisplay,
-        span className: 'label',
-          @props.label
-        span className: 'label',
-          @props.sublabel
-        span className: 'icon icon-left'
-      div className: contentClasses,
+        div className: 'label',
+          h2 {},
+            @props.label
+          p {},
+            @props.sublabel
+        span className: 'icon icon-right'
+      div className: 'entry-content',
         @props.children
