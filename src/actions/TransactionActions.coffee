@@ -8,7 +8,7 @@ TransactionActions =
 
   createPaypal: (amount) ->
     Backbone.ajax
-      url: window.apiServer + '/v1/transaction'
+      url: window.apiServer + '/transaction'
       contentType: "application/json; charset=utf-8"
       type: 'POST'
       dataType: 'jsonp'
@@ -25,7 +25,7 @@ TransactionActions =
 
   executePaypal: (paypalParams) ->
     Backbone.ajax
-      url: window.apiServer + '/v1/transaction/execute'
+      url: window.apiServer + '/transaction/execute'
       contentType: "application/json; charset=utf-8"
       type: 'POST'
       dataType: 'jsonp'

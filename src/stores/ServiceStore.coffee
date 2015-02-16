@@ -2,7 +2,7 @@ Backbone = require 'exoskeleton'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 
 conf =
-  endpoint: '/v1/services'
+  endpoint: '/services'
 
 ServiceItem = Backbone.Model.extend {}
 
