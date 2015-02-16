@@ -7,7 +7,7 @@ LOG = 'UserStore > '
 
 # Mandatory fields: login, password, gender, name, birthdate
 UserItem = Backbone.Model.extend
-  urlRoot: -> window.apiServer + '/v1/user'
+  urlRoot: -> window.apiServer
   defaults:
     type: 'CLIENT'
   parse: (o, opts) ->
@@ -17,7 +17,7 @@ UserItem = Backbone.Model.extend
 
 UserCollection = Backbone.Collection.extend
   model: UserItem
-  url: -> window.apiServer + '/v1/user'
+  url: -> window.apiServer + '/me'
   parse: (o) ->
     o.user
 
@@ -53,7 +53,7 @@ AppDispatcher.on 'all', (eventName, payload) ->
 
     when 'user:login'
       UserStore.create payload.user, {
-        url: window.apiServer + '/v1/user/login'
+        url: window.apiServer + '/login'
         success: (model, response) ->
           console.log LOG + 'Login success', model.toJSON(), response
           UserStore.currentUid = model.get('id')
@@ -64,7 +64,7 @@ AppDispatcher.on 'all', (eventName, payload) ->
 
     when 'user:logout'
       Backbone.ajax
-        url: window.apiServer + '/v1/user/logout'
+        url: window.apiServer + '/logout'
         type: 'POST',
         success: (response) ->
           console.log 'Logout success', response

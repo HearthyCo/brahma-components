@@ -6,7 +6,7 @@ SessionStore = require '../stores/SessionStore'
 TransactionStore = require '../stores/TransactionStore'
 
 conf =
-  endpoint: '/v1/user/home'
+  endpoint: '/me/home'
 
 HomeState =
   data: {}

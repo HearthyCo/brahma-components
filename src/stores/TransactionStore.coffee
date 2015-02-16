@@ -6,10 +6,10 @@ ModalActions = require '../actions/ModalActions'
 TransactionItem = Backbone.Model.extend {}
 
 TransactionCollection = Backbone.Collection.extend
-  url: -> window.apiServer + '/v1/user/balance'
+  url: -> window.apiServer + '/me/balance'
   model: TransactionItem
   parse: (o) ->
-    o.balance.transactions
+    o.transactions
 
 
 TransactionStore = new TransactionCollection

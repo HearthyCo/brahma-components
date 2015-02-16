@@ -2,7 +2,7 @@ Backbone = require 'exoskeleton'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 
 conf =
-  endpoint: '/v1/user/history'
+  endpoint: '/me/history'
 
 HistoryItem = Backbone.Model.extend {}
 
