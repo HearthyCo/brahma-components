@@ -17,7 +17,7 @@ module.exports = React.createClass
     target: React.PropTypes.string
 
   getInitialState: () ->
-    return {isExpanded: false}
+    {}
 
   ###
     If @props.target is defined then navigate to it. Otherwise
@@ -30,15 +30,18 @@ module.exports = React.createClass
       @setState isExpanded: not @state.isExpanded
 
   render: ->
-    contentClasses = 'entry-content'
+    contentClasses = 'comp-mainlistentry'
     if @state.isExpanded
       contentClasses += ' is-expanded'
 
-    div id: @props.id, className: 'comp-mainlistentry',
+    else if @state.isExpanded is false
+      contentClasses += ' is-collapsed'
+
+    div id: @props.id, className: contentClasses,
       div className: 'entry-button', onClick: @toggleDisplay,
         span className: 'label',
           @props.label
         @props.extra
         IconBadge icon: @props.icon, value: @props.value
-      div className: contentClasses,
+      div className: 'entry-content',
         @props.children
