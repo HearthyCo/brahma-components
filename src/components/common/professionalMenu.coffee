@@ -56,3 +56,5 @@ module.exports = React.createClass
             li onClick: @handleLogout, @getIntlMessage('logout')
         if @context.user
           UserBrief user: @context.user
+      div className: 'middle-area'
+      div className: 'bottom-area'
