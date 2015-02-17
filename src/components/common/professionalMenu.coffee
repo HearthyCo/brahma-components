@@ -2,7 +2,7 @@ React = require 'react/addons'
 ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
-{ div, ul, li, span } = React.DOM
+{ div, ul, li, span, a } = React.DOM
 UserBrief = React.createFactory require '../user/userBrief'
 SessionTypeTab = React.createFactory require '../session/sessionTypeTab'
 
@@ -65,6 +65,9 @@ module.exports = React.createClass
             li onClick: @handleLogout, @getIntlMessage('logout')
         if @context.user
           UserBrief user: @context.user
+        div className: 'top-area',
+          span className: 'indicator on',
+            @getIntlMessage('active')
       div className: 'middle-area',
         Object.keys(sessTypes[0]).map (field) ->
           ret = sessTypes[0][field].map (st) ->
@@ -81,5 +84,21 @@ module.exports = React.createClass
             SessionTypeTab key: st.id, sessionType: st, sessions: sessions
           ret.key = field
           ret
-      div className: 'bottom-area'
+      div className: 'bottom-area',
+        div className: 'title',
+          @getIntlMessage('next-event')
+        div className: 'date',
+          span className: 'day',
+            '03'
+          span className: 'month',
+            'diciembre'
+        div className: 'schedule',
+          span className: 'icon icon-clock'
+          span className: 'time',
+            '12:03'
+          span {},
+            'Videoconsulta'
+        a href: '#' , className: 'button-pro',
+          'Ver'
+
 
