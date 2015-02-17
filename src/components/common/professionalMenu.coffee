@@ -81,3 +81,5 @@ module.exports = React.createClass
             SessionTypeTab key: st.id, sessionType: st, sessions: sessions
           ret.key = field
           ret
+      div className: 'bottom-area'
+
