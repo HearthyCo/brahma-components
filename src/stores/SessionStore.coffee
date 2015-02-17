@@ -8,12 +8,10 @@ SessionItem = Backbone.Model.extend
     if opts.collection then return o # No double parse
     o.session
 
-
 SessionCollection = Backbone.Collection.extend
   model: SessionItem
   parse: (o) ->
     o.sessions
-
 
 SessionStore = new SessionCollection
 
