@@ -31,6 +31,6 @@ module.exports = React.createClass
             timerclasses += 'good'
           else
             timerclasses += 'bad'
-          li {},
+          li key: s.id,
             span className: 'session-title', s.title
             span className: timerclasses, '04:03' # Fake
