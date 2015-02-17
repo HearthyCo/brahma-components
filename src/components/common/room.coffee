@@ -4,14 +4,23 @@ _ = require 'underscore'
 
 { div, form, input, button, p } = React.DOM
 
+RoomMessage = React.createFactory require './roomMessage'
+
 module.exports = React.createClass
 
   displayName: 'room'
 
   mixins: [ReactIntl]
 
+  contextTypes:
+    user: React.PropTypes.object
+
   getInitialState: ->
-    messages: [ p {}, "Hola mundo!" ]
+    msg =
+      timestamp: new Date()
+      text: 'Welcome to Hearthy chat!'
+      author: @context.user
+    messages: [ msg ]
 
   componentWillUpdate: ->
     node = @refs.log.getDOMNode()
@@ -29,13 +38,17 @@ module.exports = React.createClass
     msgbox.value = ''
     # TODO: Really send it
     messages = @state.messages
-    messages.push p {}, newMessage
+    messages.push
+      timestamp: new Date()
+      text: newMessage
+      author: @context.user
     @setState messages
 
   render: ->
     div className: 'comp-room',
       div className: 'room-backlog', ref: 'log',
-        @state.messages
+        @state.messages.map (m) ->
+          RoomMessage message: m
       form className: 'room-footer', onSubmit: @handleMessage,
         input
           className: 'room-input'

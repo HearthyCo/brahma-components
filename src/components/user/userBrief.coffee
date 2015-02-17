@@ -11,7 +11,7 @@ module.exports = React.createClass
     user: React.PropTypes.object.isRequired
 
   render: ->
-    @props.user.avatar = @props.user.avatar || '/res/images/default-avatar.png'
+    avatar = @props.user.avatar || '/res/images/default-avatar.png'
     _this = @
     fullname = ['name', 'surname1', 'surname2']
       .map (f) -> _this.props.user[f]
@@ -19,5 +19,5 @@ module.exports = React.createClass
       .join ' '
 
     div id: @props.id, className: 'comp-userbrief',
-      img className: 'avatar', src: @props.user.avatar
+      img className: 'avatar', src: avatar
       div className: 'name', fullname
