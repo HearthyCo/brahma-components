@@ -4,8 +4,11 @@ _ = require 'underscore'
 
 { div, ul, li, span } = React.DOM
 UserBrief = React.createFactory require '../user/userBrief'
+SessionTypeTab = React.createFactory require '../session/sessionTypeTab'
 
+ServiceActions = require '../../actions/ServiceActions'
 UserActions = require '../../actions/UserActions'
+ServiceStore = require '../../stores/ServiceStore'
 
 module.exports = React.createClass
 
@@ -18,6 +21,9 @@ module.exports = React.createClass
 
   getInitialState: ->
     userMenuExpanded: false
+
+  componentWillMount: ->
+    ServiceActions.refresh()
 
   componentDidMount: ->
     document.addEventListener 'click', @handleDocumentClick
@@ -46,6 +52,9 @@ module.exports = React.createClass
     if @state.userMenuExpanded
       umClasses += ' is-expanded'
 
+    sessTypes = ServiceStore.getAll()
+    sessTypes.push {} # TODO: Fix this sucker!
+
     div id: 'menu',
       div className: 'top-area',
         div className: 'logo'
@@ -56,3 +65,19 @@ module.exports = React.createClass
             li onClick: @handleLogout, @getIntlMessage('logout')
         if @context.user
           UserBrief user: @context.user
+      div className: 'middle-area',
+        Object.keys(sessTypes[0]).map (field) ->
+          ret = sessTypes[0][field].map (st) ->
+            sessions = [
+              {
+                "id": 90700,
+                "title": "testSession1",
+              },
+              {
+                "id": 90704,
+                "title": "testSession5",
+              }
+            ] # TODO: Remove sample data ^^^
+            SessionTypeTab key: st.id, sessionType: st, sessions: sessions
+          ret.key = field
+          ret
