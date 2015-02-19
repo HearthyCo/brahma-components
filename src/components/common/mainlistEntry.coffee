@@ -25,7 +25,7 @@ module.exports = React.createClass
   ###
   toggleDisplay: ->
     if @props.target
-      window.routerNavigate @props.target
+      PageActions.navigate @props.target
     else
       @setState isExpanded: not @state.isExpanded
 

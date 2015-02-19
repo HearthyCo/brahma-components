@@ -93,9 +93,20 @@ module.exports =
       arr = []
       session = store.get id
 
+      sessionStates = {
+        programmed: "programmed"
+        underway: "underway"
+        requested: "underway"
+        closed: "closed"
+        finished: "closed"
+      }
+
       if session?
         title = session.title
-        state = session.state.toLowerCase()
+        if session.state?
+          state = sessionStates[session.state.toLowerCase()]
+        else
+          state = "programmed"
       else
         title = @getIntlMessage 'session'
         # If store gets null,

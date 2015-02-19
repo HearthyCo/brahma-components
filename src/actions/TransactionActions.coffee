@@ -6,13 +6,18 @@ TransactionActions =
   refresh: ->
     AppDispatcher.trigger 'transaction:refresh', {}
 
-  createPaypal: (amount) ->
+  createPaypal: (amount, redirectUrls) ->
+    data = {}
+    data.amount = amount
+    if redirectUrls?
+      data.redirectUrls = redirectUrls
+
     Backbone.ajax
       url: window.apiServer + '/transaction'
       contentType: "application/json; charset=utf-8"
       type: 'POST'
       dataType: 'jsonp'
-      data: JSON.stringify amount: amount
+      data: JSON.stringify data
       success: (result) ->
         try
           url = result.redirect
@@ -31,6 +36,7 @@ TransactionActions =
       dataType: 'jsonp'
       data: JSON.stringify paypalParams
       success: (result) ->
+        result.serviceId = paypalParams.serviceId
         AppDispatcher.trigger 'transaction:executePaypalSuccess', result
       error: (xhr, status) ->
         AppDispatcher.trigger 'transaction:executePaypalError', {}

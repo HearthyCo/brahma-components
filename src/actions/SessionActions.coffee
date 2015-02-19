@@ -1,19 +1,33 @@
 AppDispatcher = require '../dispatcher/AppDispatcher'
 Backbone = require 'exoskeleton'
+PageActions = require './PageActions'
 
 SessionActions =
 
-  create: (service, state, startDate) ->
-    console.log "ARGS ", service, state, startDate
+  create: (service) ->
     Backbone.ajax
-      url: window.apiServer + '/session'
+      url: window.apiServer + '/session/create'
       contentType: "application/json; charset=utf-8"
       type: 'POST'
       dataType: 'jsonp'
-      data: JSON.stringify service: service, state: state, startDate: startDate
+      data: JSON.stringify service: service
       success: (result) ->
-        console.log "RESUL", result
-        AppDispatcher.trigger 'session:create', result
+        PageActions.navigate '/session/' + result.session.id
+      error: (xhr, status) ->
+        # TODO
+        # Si en el proceso de pago el medico deja de estar disponible,
+        # aqui es donde hay que redireccionar a programar la session
+        console.error 'Can\t create session', status, xhr
+
+  book: (service, startDate) ->
+    Backbone.ajax
+      url: window.apiServer + '/session/book'
+      contentType: "application/json; charset=utf-8"
+      type: 'POST'
+      dataType: 'jsonp'
+      data: JSON.stringify service: service, startDate: startDate
+      success: (result) ->
+        PageActions.navigate '/session/' + result.session.id
       error: (xhr, status) ->
         console.error 'Can\t create session', status, xhr
 

@@ -30,7 +30,6 @@ SessionStore.get = (key) ->
 SessionStore.getAll = ->
   @map (o) -> o.toJSON()
 
-
 AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
     when 'session:refresh'

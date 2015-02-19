@@ -13,6 +13,8 @@ module.exports = React.createClass
   propTypes:
     id: React.PropTypes.string
     quantities: React.PropTypes.array
+    action: React.PropTypes.string
+    serviceId: React.PropTypes.number
 
   getDefaultProps: ->
     quantities: [1000, 2000, 3000, 4000, 5000, 6000]
@@ -30,7 +32,15 @@ module.exports = React.createClass
 
   render: ->
     _this = @
-    createPaypal = -> TransactionActions.createPaypal _this.state.amount
+    serviceId = @props.serviceId
+    if serviceId
+      redirectUrls = {}
+      redirectUrls.cancel = '/#transaction/url/cancel'
+      redirectUrls.success = '/#transaction/success/session?serviceId=' + serviceId
+
+      createPaypal = -> TransactionActions.createPaypal _this.state.amount, redirectUrls
+    else
+      createPaypal = -> TransactionActions.createPaypal _this.state.amount
 
     div id: @props.id, className: 'comp-topup',
       div className: 'topup-quantitypick',

@@ -5,18 +5,18 @@ Backbone = require 'exoskeleton'
 block = false
 
 PageActions =
-  navigate = (route, opts) ->
-    if block return
+  navigate: (route, opts) ->
+    return if block
 
-    block = opts
-    router.navigate route, trigger: true
+    block = if opts? then opts else {}
+    window.router.navigate route, trigger: true
 
-  change = (page, opts) ->
+  change: (page, opts) ->
     t = block || {}
     block = false
     _.extend t, opts
 
-    AppDispatcher.trigger 'page:navigate',
+    AppDispatcher.trigger 'page:change',
       page: page, opts: t
 
 module.exports = PageActions
