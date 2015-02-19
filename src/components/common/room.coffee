@@ -46,6 +46,9 @@ module.exports = React.createClass
 
   render: ->
     div className: 'comp-room',
+      div className: 'session-title',
+        div className: 'session-client on',
+          'A. Acuña García'
       div className: 'room-backlog', ref: 'log',
         @state.messages.map (m) ->
           RoomMessage message: m
@@ -55,3 +58,6 @@ module.exports = React.createClass
           placeholder: @getIntlMessage('type-here')
           ref: 'msgbox'
         button className: 'room-send', @getIntlMessage('send')
+      div className: 'end-session',
+        button {},
+          'Finalizar consulta'
