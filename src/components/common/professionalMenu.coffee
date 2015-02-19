@@ -100,5 +100,3 @@ module.exports = React.createClass
             'Videoconsulta'
         a href: '#' , className: 'button-pro',
           'Ver'
-
-
