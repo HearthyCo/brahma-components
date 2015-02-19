@@ -79,6 +79,10 @@ module.exports = React.createClass
               {
                 "id": 90704,
                 "title": "testSession5",
+              },
+              {
+                "id": 90708,
+                "title": "testSession2",
               }
             ] # TODO: Remove sample data ^^^
             SessionTypeTab key: st.id, sessionType: st, sessions: sessions
