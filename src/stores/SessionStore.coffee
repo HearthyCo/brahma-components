@@ -8,12 +8,10 @@ SessionItem = Backbone.Model.extend
     if opts.collection then return o # No double parse
     o.session
 
-
 SessionCollection = Backbone.Collection.extend
   model: SessionItem
   parse: (o) ->
     o.sessions
-
 
 SessionStore = new SessionCollection
 
@@ -31,7 +29,6 @@ SessionStore.get = (key) ->
   r
 SessionStore.getAll = ->
   @map (o) -> o.toJSON()
-
 
 AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
