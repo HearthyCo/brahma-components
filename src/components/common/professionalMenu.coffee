@@ -21,14 +21,17 @@ module.exports = React.createClass
 
   getInitialState: ->
     userMenuExpanded: false
+    services: []
 
   componentWillMount: ->
     ServiceActions.refresh()
 
   componentDidMount: ->
+    ServiceStore.addChangeListener @updateServices
     document.addEventListener 'click', @handleDocumentClick
 
   componentWillUnmount: ->
+    ServiceStore.removeChangeListener @updateServices
     document.removeEventListener 'click', @handleDocumentClick
 
   handleDocumentClick: ->
@@ -47,12 +50,16 @@ module.exports = React.createClass
     console.log 'Nothing handled'
     @handleDocumentClick()
 
+  updateServices: ->
+    @setState services: ServiceStore.getAll()
+
+
   render: ->
     umClasses = 'userMenu'
     if @state.userMenuExpanded
       umClasses += ' is-expanded'
 
-    sessTypes = ServiceStore.getAll()
+    sessTypes = @state.services
     sessTypes.push {} # TODO: Fix this sucker!
 
     div id: 'menu',
