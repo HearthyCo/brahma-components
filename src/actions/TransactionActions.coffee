@@ -1,10 +1,11 @@
 AppDispatcher = require '../dispatcher/AppDispatcher'
+Utils = require '../util/actionsUtils'
 Backbone = require 'exoskeleton'
 
 TransactionActions =
 
   refresh: ->
-    AppDispatcher.trigger 'transaction:refresh', {}
+    Utils.mkApiGetter '/me/transactions', 'transactions:', 'UserTransactions'
 
   createPaypal: (amount, redirectUrls) ->
     data = {}

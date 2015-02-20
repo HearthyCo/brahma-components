@@ -23,7 +23,7 @@ Stores =
       'home:successHome': (o) -> o.home.transactions
 
   Transactions: Utils.mkListStore EntityStores.Transaction,
-    'transactions:gotUserTransactions': (o) -> o.transactions
+    'transactions:successUserTransactions': (o) -> o.userTransactions
 
 Stores.Home.getAll = ->
   sessions:
