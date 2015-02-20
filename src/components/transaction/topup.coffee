@@ -32,13 +32,14 @@ module.exports = React.createClass
 
   render: ->
     _this = @
-    serviceId = @props.serviceId
-    if serviceId
+    srvId = @props.serviceId
+    if srvcId
       redirectUrls = {}
       redirectUrls.cancel = '/#transaction/url/cancel'
-      redirectUrls.success = '/#transaction/success/session?serviceId=' + serviceId
+      redirectUrls.success = '/#transaction/success/session?serviceId=' + srvId
 
-      createPaypal = -> TransactionActions.createPaypal _this.state.amount, redirectUrls
+      createPaypal = -> TransactionActions.createPaypal _this.state.amount,
+        redirectUrls
     else
       createPaypal = -> TransactionActions.createPaypal _this.state.amount
 

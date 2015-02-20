@@ -31,7 +31,7 @@ module.exports = React.createClass
   componentWillUnmount: ->
     document.removeEventListener 'click', @handleDocumentClick
 
-  handleDocumentClick: ->
+  handleDocumentClick: (e) ->
     @setState userMenuExpanded: false
     e.nativeEvent.stopImmediatePropagation()
 
