@@ -17,6 +17,7 @@ module.exports = React.createClass
     sessions: React.PropTypes.array.isRequired
 
   render: ->
+    _this = @
     div id: @props.id, className: 'comp-sessionTypeTab',
       h2 {}, @props.sessionType.name
       div className: 'sessiontype-queue',
@@ -29,8 +30,15 @@ module.exports = React.createClass
           timerclasses = 'session-timer '
           if s.id is 90704 # Fake
             timerclasses += 'good'
-          else
+            value = '04:03'
+          else if s.id is 90700 # Fake
             timerclasses += 'bad'
-          li key: s.id,
+            value = '04:03'
+          else
+            timerclasses += 'notifications' # Fake
+            value = '4'
+          if s.id is 90704 and _this.props.sessionType.id is 90300
+            rowclasses = 'current'
+          li key: s.id, className: rowclasses,
             span className: 'session-title', s.title
-            span className: timerclasses, '04:03' # Fake
+            span className: timerclasses, value
