@@ -5,11 +5,11 @@ Stores =
 
   SessionsByState:
     Programmed: Utils.mkListStore EntityStores.Session,
-      'sessions:gotSessionsByState': (o) -> o.programmedSessions
+      'sessions:successProgrammedSessions': (o) -> o.userSessions
     Underway: Utils.mkListStore EntityStores.Session,
-      'sessions:gotSessionsByState': (o) -> o.underwaySessions
+      'sessions:successUnderwaySessions': (o) -> o.userSessions
     Closed: Utils.mkListStore EntityStores.Session,
-      'sessions:gotSessionsByState': (o) -> o.closedSessions
+      'sessions:successClosedSessions': (o) -> o.userSessions
 
   Home:
     Sessions:

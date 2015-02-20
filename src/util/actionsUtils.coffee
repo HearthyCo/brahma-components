@@ -17,7 +17,7 @@ module.exports =
         console.error 'API GET Error:', url, status, xhr
         AppDispatcher.trigger evtPrefix + 'error' + evtSuffix, {}
 
-  mkApiPoster: (endpoint, payload, successEvent, errorEvent) ->
+  mkApiPoster: (endpoint, payload, evtPrefix, evtSuffix) ->
     url = window.apiServer + endpoint
     AppDispatcher.trigger evtPrefix + 'request' + evtSuffix, payload
     Backbone.ajax

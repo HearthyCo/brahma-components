@@ -1,4 +1,5 @@
 AppDispatcher = require '../dispatcher/AppDispatcher'
+Utils = require '../util/actionsUtils'
 Backbone = require 'exoskeleton'
 PageActions = require './PageActions'
 
@@ -32,7 +33,6 @@ SessionActions =
         console.error 'Can\t create session', status, xhr
 
   refresh: (target) ->
-    AppDispatcher.trigger 'session:refresh',
-      id: target
+    Utils.mkApiGetter '/session/' + target, 'session:', 'Session'
 
 module.exports = SessionActions
