@@ -1,22 +1,20 @@
 AppDispatcher = require '../dispatcher/AppDispatcher'
+Utils = require '../util/actionsUtils'
 
 UserActions =
 
   login: (user) ->
-    user.login = user.login || user.email
-    AppDispatcher.trigger 'user:login',
-      user: user
+    Utils.mkApiPoster '/login', user, 'user:', 'Login'
 
   logout: ->
-    AppDispatcher.trigger 'user:logout'
+    Utils.mkApiPoster '/logout', {}, 'user:', 'Logout'
 
   register: (user) ->
     user.login = user.login || user.email
-    AppDispatcher.trigger 'user:register',
-      user: user
+    Utils.mkApiPoster '', user, 'user:', 'Signup'
 
   getMe: ->
-    AppDispatcher.trigger 'user:getMe'
+    Utils.mkApiGetter '/me', 'user:', 'Me'
 
 
 module.exports = UserActions
