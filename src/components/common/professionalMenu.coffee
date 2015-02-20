@@ -34,7 +34,7 @@ module.exports = React.createClass
     ServiceStore.removeChangeListener @updateServices
     document.removeEventListener 'click', @handleDocumentClick
 
-  handleDocumentClick: ->
+  handleDocumentClick: (e) ->
     @setState userMenuExpanded: false
     e.nativeEvent.stopImmediatePropagation()
 
