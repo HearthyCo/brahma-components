@@ -25,6 +25,10 @@ Stores =
   Transactions: Utils.mkListStore EntityStores.Transaction,
     'transactions:successUserTransactions': (o) -> o.userTransactions
 
+  History:
+    Allergies: Utils.mkListStore EntityStores.HistoryEntry,
+      'history:successAllergies': (o) -> o.allergies
+
 Stores.Home.getAll = ->
   sessions:
     programmed: Stores.Home.Sessions.Programmed.getObjects()

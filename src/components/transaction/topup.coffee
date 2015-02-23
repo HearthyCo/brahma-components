@@ -33,7 +33,7 @@ module.exports = React.createClass
   render: ->
     _this = @
     srvId = @props.serviceId
-    if srvcId
+    if srvId
       redirectUrls = {}
       redirectUrls.cancel = '/#transaction/url/cancel'
       redirectUrls.success = '/#transaction/success/session?serviceId=' + srvId
