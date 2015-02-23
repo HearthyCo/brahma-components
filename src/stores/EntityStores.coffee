@@ -10,4 +10,5 @@ module.exports =
   Transaction: Utils.mkEntityStore 'transactions'
   ServiceType: Utils.mkEntityStore 'servicetypes'
   Session: Utils.mkEntityStore 'sessions'
+  SessionUser: Utils.mkEntityStore 'sessionusers'
   HistoryEntry: Utils.mkEntityStore 'historyentries'

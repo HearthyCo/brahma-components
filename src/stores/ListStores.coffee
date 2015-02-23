@@ -29,23 +29,16 @@ Stores =
     Allergies: Utils.mkListStore EntityStores.HistoryEntry,
       'history:successAllergies': (o) -> o.allergies
 
-Stores.Home.getAll = ->
-  sessions:
-    programmed: Stores.Home.Sessions.Programmed.getObjects()
-    underway: Stores.Home.Sessions.Underway.getObjects()
-    closed: Stores.Home.Sessions.Closed.getObjects()
-  transactions: Stores.Home.Transactions.getObjects()
+  Session:
+    Participants: Utils.mkSubListStore EntityStores.SessionUser,
+      'session:successSession': (o) -> o.participants
+
+Stores.Home.getAll = -> Utils.treeEval Stores.Home, 'getObjects', []
 
 Stores.Home.addChangeListener = (cb) ->
-  Stores.Home.Sessions.Programmed.addChangeListener cb
-  Stores.Home.Sessions.Underway.addChangeListener cb
-  Stores.Home.Sessions.Closed.addChangeListener cb
-  Stores.Home.Transactions.addChangeListener cb
+  Utils.treeEval Stores.Home, 'addChangeListener', [cb]
 
 Stores.Home.removeChangeListener = (cb) ->
-  Stores.Home.Sessions.Programmed.removeChangeListener cb
-  Stores.Home.Sessions.Underway.removeChangeListener cb
-  Stores.Home.Sessions.Closed.removeChangeListener cb
-  Stores.Home.Transactions.removeChangeListener cb
+  Utils.treeEval Stores.Home, 'removeChangeListener', [cb]
 
-module.exports = Stores
+window.listStores = module.exports = Stores

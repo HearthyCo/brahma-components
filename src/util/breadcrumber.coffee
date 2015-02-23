@@ -43,7 +43,7 @@ module.exports =
     @return {function}        Function which is called with args
   ###
   allergy: -> (args) ->
-    store = require '../stores/HistoryStore'
+    store = (require '../stores/EntityStores').HistoryEntry
 
     crumbs = (store, id) -> ->
       arr = []
@@ -87,7 +87,7 @@ module.exports =
   session: -> (args) ->
     # Default assign state for key = "state", if key equals "id" get state
     # of session returned from store and set state with session state
-    store = require '../stores/SessionStore'
+    store = (require '../stores/EntityStores').Session
 
     crumbs = (store, id) -> ->
       arr = []
