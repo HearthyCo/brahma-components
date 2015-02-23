@@ -8,7 +8,7 @@ module.exports = React.createClass
   displayName: 'toggleInput'
 
   render: ->
-    div {},
+    div className:'comp-toggleInput',
       div className: 'label',
         label {}, @props.label
 

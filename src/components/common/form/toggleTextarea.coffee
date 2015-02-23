@@ -8,7 +8,7 @@ module.exports = React.createClass
   displayName: 'toggleTextarea'
 
   render: ->
-    div {},
+    div className:'comp-toggleTextarea',
       div className: 'label',
         label {},
 
