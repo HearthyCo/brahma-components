@@ -12,3 +12,4 @@ module.exports =
   Session: Utils.mkEntityStore 'sessions'
   SessionUser: Utils.mkEntityStore 'sessionusers'
   HistoryEntry: Utils.mkEntityStore 'historyentries'
+  Message: Utils.mkEntityStore 'messages'
