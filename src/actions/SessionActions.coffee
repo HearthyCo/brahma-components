@@ -32,6 +32,18 @@ SessionActions =
       error: (xhr, status) ->
         console.error 'Can\t create session', status, xhr
 
+  assign: (sessionType) ->
+    Backbone.ajax
+      url: window.apiServer + '/session/assignPool'
+      contentType: "application/json; charset=utf-8"
+      type: 'POST'
+      dataType: 'jsonp'
+      data: JSON.stringify sessionType: sessionType
+      success: (result) ->
+        AppDispatcher.trigger 'session:assign', {}
+      error: (xhr, status) ->
+        console.error 'Can\t assign session', status, xhr
+
   refresh: (target) ->
     Utils.mkApiGetter '/session/' + target, 'session:', 'Session'
 

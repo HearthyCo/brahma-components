@@ -44,5 +44,17 @@ AppDispatcher.on 'all', (eventName, payload) ->
           msg = 'Error loading session #' + payload.id + ':'
           console.log msg, status, xhr
 
+    when 'session:assign'
+      if not SessionStore.get payload.id
+        SessionStore.add {id: payload.id}
+      SessionStore._get(payload.id).fetch
+        success: (session) ->
+          msg = 'Downloaded session #' + payload.id + ':'
+          console.log msg, session.toJSON()
+          #SessionStore.trigger 'change'
+        error: (xhr, status) ->
+          msg = 'Error loading session #' + payload.id + ':'
+          console.log msg, status, xhr
+
 
 module.exports = SessionStore

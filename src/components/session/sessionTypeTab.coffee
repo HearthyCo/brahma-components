@@ -18,13 +18,17 @@ module.exports = React.createClass
 
   render: ->
     _this = @
+
+    assign: -> SessionActions.assign sessionType
+
     div id: @props.id, className: 'comp-sessionTypeTab',
       h2 {}, @props.sessionType.name
       div className: 'sessiontype-queue',
         div className: 'queue-status',
           span className: 'queue-length', @props.sessionType.poolsize
           span className: 'queue-label', ' ' + @getIntlMessage('waiting')
-        button className: 'queue-assign', @getIntlMessage('add')
+        button className: 'queue-assign', onClick: assign,
+          @getIntlMessage('add')
       ul className: 'sessiontype-sessions',
         @props.sessions.map (s) ->
           timerclasses = 'session-timer '
