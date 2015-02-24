@@ -1,10 +1,8 @@
 AppDispatcher = require '../dispatcher/AppDispatcher'
-
-fieldId = 90200
+Utils = require '../util/actionsUtils'
 
 ServiceActions =
   refresh: ->
-    AppDispatcher.trigger 'service:refresh',
-      id: fieldId
+    Utils.mkApiGetter '/services', 'serviceTypes:', 'ServiceTypes'
 
 module.exports = ServiceActions

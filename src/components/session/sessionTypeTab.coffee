@@ -1,6 +1,8 @@
 React = require 'react'
 ReactIntl = require 'react-intl'
 
+SessionActions = require '../../actions/SessionActions'
+
 { div, h2, span, button, ul, li } = React.DOM
 
 #SessionEntry = React.createFactory require './sessionEntry'
@@ -19,13 +21,13 @@ module.exports = React.createClass
   render: ->
     _this = @
 
-    assign: -> SessionActions.assign sessionType
+    assign = -> SessionActions.assign _this.props.sessionType.id
 
     div id: @props.id, className: 'comp-sessionTypeTab',
       h2 {}, @props.sessionType.name
       div className: 'sessiontype-queue',
         div className: 'queue-status',
-          span className: 'queue-length', @props.sessionType.poolsize
+          span className: 'queue-length', @props.sessionType.waiting
           span className: 'queue-label', ' ' + @getIntlMessage('waiting')
         button className: 'queue-assign', onClick: assign,
           @getIntlMessage('add')

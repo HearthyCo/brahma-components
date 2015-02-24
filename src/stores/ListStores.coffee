@@ -11,16 +11,16 @@ Stores =
     Closed: Utils.mkListStore EntityStores.Session,
       'sessions:successClosedSessions': (o) -> o.userSessions
 
-  Home:
+  ClientHome:
     Sessions:
       Programmed: Utils.mkListStore EntityStores.Session,
-        'home:successHome': (o) -> o.home.sessions.programmed
+        'clientHome:successHome': (o) -> o.home.sessions.programmed
       Underway: Utils.mkListStore EntityStores.Session,
-        'home:successHome': (o) -> o.home.sessions.underway
+        'clientHome:successHome': (o) -> o.home.sessions.underway
       Closed: Utils.mkListStore EntityStores.Session,
-        'home:successHome': (o) -> o.home.sessions.closed
+        'clientHome:successHome': (o) -> o.home.sessions.closed
     Transactions: Utils.mkListStore EntityStores.Transaction,
-      'home:successHome': (o) -> o.home.transactions
+      'clientHome:successHome': (o) -> o.home.transactions
 
   Transactions: Utils.mkListStore EntityStores.Transaction,
     'transactions:successUserTransactions': (o) -> o.userTransactions
@@ -33,12 +33,22 @@ Stores =
     Participants: Utils.mkSubListStore EntityStores.SessionUser,
       'session:successSession': (o) -> o.participants
 
-Stores.Home.getAll = -> Utils.treeEval Stores.Home, 'getObjects', []
+  ServiceTypes: Utils.mkListStore EntityStores.ServiceType,
+    'serviceTypes:successServiceTypes': (o) ->
+      # (H)
+      o.allServiceTypes || o.servicetypes.map (st) -> st.id
 
-Stores.Home.addChangeListener = (cb) ->
-  Utils.treeEval Stores.Home, 'addChangeListener', [cb]
+  SessionsByServiceType: Utils.mkSubListStore EntityStores.Session,
+    'serviceTypes:successServiceTypes': (o) -> o.serviceTypeSessions
 
-Stores.Home.removeChangeListener = (cb) ->
-  Utils.treeEval Stores.Home, 'removeChangeListener', [cb]
+### Client ###
+# Home
+Stores.ClientHome.getAll = -> Utils.treeEval Stores.ClientHome, 'getObjects', []
+
+Stores.ClientHome.addChangeListener = (cb) ->
+  Utils.treeEval Stores.ClientHome, 'addChangeListener', [cb]
+
+Stores.ClientHome.removeChangeListener = (cb) ->
+  Utils.treeEval Stores.ClientHome, 'removeChangeListener', [cb]
 
 window.listStores = module.exports = Stores

@@ -6,9 +6,12 @@ _ = require 'underscore'
 UserBrief = React.createFactory require '../user/userBrief'
 SessionTypeTab = React.createFactory require '../session/sessionTypeTab'
 
-ServiceActions = require '../../actions/ServiceActions'
+ListStores = require '../../stores/ListStores'
+EntityStores = require '../../stores/EntityStores'
+
 UserActions = require '../../actions/UserActions'
-ServiceStore = require '../../stores/ServiceStore'
+SessionActions = require '../../actions/SessionActions'
+
 
 module.exports = React.createClass
 
@@ -19,19 +22,23 @@ module.exports = React.createClass
   contextTypes:
     user: React.PropTypes.object
 
-  getInitialState: ->
-    userMenuExpanded: false
-    services: []
+  getInitialState: -> @updateSession()
 
   componentWillMount: ->
-    ServiceActions.refresh()
+    SessionActions.getByServiceType()
 
   componentDidMount: ->
-    ServiceStore.addChangeListener @updateServices
+    EntityStores.Session.addChangeListener @updateSession
+    EntityStores.ServiceType.addChangeListener @updateSession
+    ListStores.ServiceTypes.addChangeListener @updateSession
+    ListStores.SessionsByServiceType.addChangeListener @updateSession
     document.addEventListener 'click', @handleDocumentClick
 
   componentWillUnmount: ->
-    ServiceStore.removeChangeListener @updateServices
+    EntityStores.Session.removeChangeListener @updateSession
+    EntityStores.ServiceType.removeChangeListener @updateSession
+    ListStores.ServiceTypes.removeChangeListener @updateSession
+    ListStores.SessionsByServiceType.removeChangeListener @updateSession
     document.removeEventListener 'click', @handleDocumentClick
 
   handleDocumentClick: (e) ->
@@ -50,17 +57,22 @@ module.exports = React.createClass
     console.log 'Nothing handled'
     @handleDocumentClick()
 
-  updateServices: ->
-    @setState services: ServiceStore.getAll()
-
+  updateSession: ->
+    newState =
+      servicetypes: ListStores.ServiceTypes.getObjects()
+      sessionsByServiceType: {}
+    for st in newState.servicetypes
+      newState.sessionsByServiceType[st.id] = ListStores.SessionsByServiceType.getObjects st.id
+    @setState newState
+    newState
 
   render: ->
+    _this = @
     umClasses = 'userMenu'
     if @state.userMenuExpanded
       umClasses += ' is-expanded'
 
-    sessTypes = @state.services
-    sessTypes.push {} # TODO: Fix this sucker!
+    console.log "SESSTYPES ", @state
 
     div id: 'menu',
       div className: 'top-area',
@@ -76,25 +88,9 @@ module.exports = React.createClass
           span className: 'indicator on',
             @getIntlMessage('active')
       div className: 'middle-area',
-        Object.keys(sessTypes[0]).map (field) ->
-          ret = sessTypes[0][field].map (st) ->
-            sessions = [
-              {
-                "id": 90700,
-                "title": "testSession1",
-              },
-              {
-                "id": 90704,
-                "title": "testSession5",
-              },
-              {
-                "id": 90708,
-                "title": "testSession2",
-              }
-            ] # TODO: Remove sample data ^^^
-            SessionTypeTab key: st.id, sessionType: st, sessions: sessions
-          ret.key = field
-          ret
+        @state.servicetypes.map (servicetype) ->
+          sessions = _this.state.sessionsByServiceType[servicetype.id] || []
+          SessionTypeTab key: servicetype.id, sessionType: servicetype, sessions: sessions
       div className: 'bottom-area',
         div className: 'title',
           @getIntlMessage('next-event')
