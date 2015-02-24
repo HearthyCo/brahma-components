@@ -32,14 +32,12 @@ module.exports = React.createClass
     EntityStores.ServiceType.addChangeListener @updateSession
     ListStores.ServiceTypes.addChangeListener @updateSession
     ListStores.SessionsByServiceType.addChangeListener @updateSession
-    document.addEventListener 'click', @handleDocumentClick
 
   componentWillUnmount: ->
     EntityStores.Session.removeChangeListener @updateSession
     EntityStores.ServiceType.removeChangeListener @updateSession
     ListStores.ServiceTypes.removeChangeListener @updateSession
     ListStores.SessionsByServiceType.removeChangeListener @updateSession
-    document.removeEventListener 'click', @handleDocumentClick
 
   handleDocumentClick: (e) ->
     @setState userMenuExpanded: false
@@ -53,8 +51,7 @@ module.exports = React.createClass
     UserActions.logout()
     @handleDocumentClick()
 
-  handleNothing: ->
-    console.log 'Nothing handled'
+  handleCloseMenu: ->
     @handleDocumentClick()
 
   updateSession: ->
@@ -76,12 +73,20 @@ module.exports = React.createClass
 
     div id: 'menu',
       div className: 'top-area',
-        div className: 'logo'
+        a href: '/',
+          div className: 'logo'
         div className: umClasses, onClick: @handleUserMenuClick,
+          div className: 'userMenu-wrapper', onClick: @handleCloseMenu
           span className: 'icon icon-right'
           ul className: 'userMenu-content',
-            li onClick: @handleNothing, 'Do nothing'
-            li onClick: @handleLogout, @getIntlMessage('logout')
+            li {},
+              a href: 'profile', @getIntlMessage 'edit-profile'
+            li {},
+              a
+                className: 'logout'
+                onClick: @handleLogout
+                @getIntlMessage('logout')
+
         if @context.user
           UserBrief user: @context.user
         div className: 'top-area',

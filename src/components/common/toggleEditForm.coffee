@@ -2,6 +2,8 @@ React = require 'react/addons'
 ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
+Utils = require '../../util/objectTools'
+
 { div, form, button, h3 } = React.DOM
 
 module.exports = React.createClass
@@ -10,11 +12,20 @@ module.exports = React.createClass
 
   mixins: [React.addons.LinkedStateMixin, ReactIntl]
 
+  propTypes:
+    id: React.PropTypes.string
+    title: React.PropTypes.string
+    defaults: React.PropTypes.object
+    submitCallback: React.PropTypes.func
+
   childContextTypes:
     editable: React.PropTypes.bool
 
   getInitialState: ->
-    editable: false
+    ret = editable: false
+    if @props.defaults
+      ret = _.extend ret, Utils.flatten values: @props.defaults
+    ret
 
   getChildContext: ->
     editable: @state.editable
@@ -24,7 +35,13 @@ module.exports = React.createClass
 
   handleClick: (e) ->
     e.preventDefault()
+    if @state.editable
+      @handleSubmit()
     @toggleEditable()
+
+  handleSubmit: ->
+    t = Utils.unflatten @state
+    @props.submitCallback? t.values
 
   render: ->
     _this = @
@@ -37,9 +54,9 @@ module.exports = React.createClass
     enhacedChildren = React.Children.map @props.children, (child) ->
       React.addons.cloneWithProps child,
         editable: _this.state.editable
-        valueLink: _this.linkState child.props.name
+        valueLink: _this.linkState 'values.' + child.props.name
 
-    form action: @props.action, className: tglEdFrm,
+    form id: @props.id, onSubmit: @handleSubmit, className: tglEdFrm,
       div className: 'field-set',
         div className: 'header',
           h3 {}, @props.title

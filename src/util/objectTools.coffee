@@ -1,4 +1,4 @@
-exports = {
+module.exports = exports =
 
   indexArrSet: (obj, arr, value) ->
     if arr.length is 1
@@ -11,6 +11,20 @@ exports = {
   indexStrSet: (obj, str, value) ->
     exports.indexArrSet obj, str.split('.'), value
 
-}
+  flatten: (obj, path, ret) ->
+    ret = ret || {}
+    path = path || ''
+    if typeof(obj) != 'object'
+      ret[path] = obj
+      return ret
+    if path isnt ''
+      path += '.'
+    for k, v of obj
+      @flatten v, path + k, ret
+    ret
 
-module.exports = exports
+  unflatten: (obj) ->
+    ret = {}
+    for k, v of obj
+      @indexStrSet ret, k, v
+    ret

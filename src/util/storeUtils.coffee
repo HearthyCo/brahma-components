@@ -107,6 +107,18 @@ module.exports = Utils =
 
     Store
 
+  # Equivalent to map for object trees.
+  # Arguments:
+  #   tree: the structure to iterate on.
+  #   fname: the function name to call on each leaf, if present.
+  #   args: array of arguments to pass to the function.
+  #   ignoreLayer: used internally to skip the first layer of a tree.
+  #       Useful when doing something like:
+  #         x.demo = (x) -> treeEval x, 'demo', [x]
+  #       So it doesn't get stuck on a recursive loop.
+  # Caveats:
+  #   fname will be called binded to the object containing it
+  #   recursion stops at any object containing fname, even if it's not a leaf
   treeEval: (tree, fname, args, ignoreLayer) ->
     return undefined if not tree
     return undefined if typeof tree is 'function'

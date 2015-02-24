@@ -5,6 +5,8 @@ _ = require 'underscore'
 { div, form, input, button, p } = React.DOM
 
 RoomMessage = React.createFactory require './roomMessage'
+ChatActions = require '../../actions/ChatActions'
+ListStores = require '../../stores/ListStores'
 
 module.exports = React.createClass
 
@@ -12,15 +14,20 @@ module.exports = React.createClass
 
   mixins: [ReactIntl]
 
+  propTypes:
+    session: React.PropTypes.object.isRequired
+
   contextTypes:
     user: React.PropTypes.object
 
   getInitialState: ->
-    msg =
-      timestamp: new Date()
-      text: 'Welcome to Hearthy chat!'
-      author: @context.user
-    messages: [ msg ]
+    messages: ListStores.Session.Messages.getObjects @props.session.id
+
+  componentDidMount: ->
+    ListStores.Session.Messages.addChangeListener @updateMessages
+
+  componentWillUnmount: ->
+    ListStores.Session.Messages.removeChangeListener @updateMessages
 
   componentWillUpdate: ->
     node = @refs.log.getDOMNode()
@@ -31,18 +38,15 @@ module.exports = React.createClass
       node = @refs.log.getDOMNode()
       node.scrollTop = node.scrollHeight
 
+  updateMessages: ->
+    @setState messages: ListStores.Session.Messages.getObjects @props.session.id
+
   handleMessage: (e) ->
     e.preventDefault()
     msgbox = @refs.msgbox.getDOMNode()
     newMessage = msgbox.value.trim()
     msgbox.value = ''
-    # TODO: Really send it
-    messages = @state.messages
-    messages.push
-      timestamp: new Date()
-      text: newMessage
-      author: @context.user
-    @setState messages
+    ChatActions.send @props.session.id, newMessage, @context.user
 
   render: ->
     div className: 'comp-room',
@@ -50,7 +54,7 @@ module.exports = React.createClass
         div className: 'session-client on',
           'A. Acuña García'
       div className: 'room-backlog', ref: 'log',
-        @state.messages.map (m) ->
+        @state.messages?.map (m) ->
           RoomMessage message: m
       form className: 'room-footer', onSubmit: @handleMessage,
         input
