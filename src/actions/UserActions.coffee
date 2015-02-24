@@ -16,5 +16,8 @@ UserActions =
   getMe: ->
     Utils.mkApiGetter '/me', 'user:', 'Me'
 
+  save: (user) ->
+    Utils.mkApiPoster '/me/update', user, 'user:', 'Save'
+
 
 module.exports = UserActions
