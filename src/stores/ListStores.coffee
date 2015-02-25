@@ -41,7 +41,6 @@ Stores =
         ret[o.session] = nl
         return ret
 
-
   ServiceTypes: Utils.mkListStore EntityStores.ServiceType,
     'serviceTypes:successServiceTypes': (o) ->
       # (H)
@@ -49,6 +48,7 @@ Stores =
 
   SessionsByServiceType: Utils.mkSubListStore EntityStores.Session,
     'serviceTypes:successServiceTypes': (o) -> o.serviceTypeSessions
+    'session:successAssign': (o) -> o.serviceTypeSessions
 
 ### Client ###
 # Home
