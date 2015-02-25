@@ -39,20 +39,15 @@ module.exports = React.createClass
     ListStores.ServiceTypes.removeChangeListener @updateSession
     ListStores.SessionsByServiceType.removeChangeListener @updateSession
 
-  handleDocumentClick: (e) ->
-    @setState userMenuExpanded: false
-    e.nativeEvent.stopImmediatePropagation()
-
-  handleUserMenuClick: (e) ->
+  handleOpenMenu: ->
     @setState userMenuExpanded: true
-    e.nativeEvent.stopImmediatePropagation()
+
+  handleCloseMenu: (e) ->
+    @setState userMenuExpanded: false
+    e.stopPropagation()
 
   handleLogout: ->
     UserActions.logout()
-    @handleDocumentClick()
-
-  handleCloseMenu: ->
-    @handleDocumentClick()
 
   updateSession: ->
     newState =
@@ -69,18 +64,16 @@ module.exports = React.createClass
     if @state.userMenuExpanded
       umClasses += ' is-expanded'
 
-    console.log "SESSTYPES ", @state
-
     div id: 'menu',
       div className: 'top-area',
         a href: '/',
           div className: 'logo'
-        div className: umClasses, onClick: @handleUserMenuClick,
+        div className: umClasses, onClick: @handleOpenMenu,
           div className: 'userMenu-wrapper', onClick: @handleCloseMenu
           span className: 'icon icon-right'
-          ul className: 'userMenu-content',
+          ul className: 'userMenu-content', onClick: @handleCloseMenu,
             li {},
-              a href: 'profile', @getIntlMessage 'edit-profile'
+              a href: '/profile', @getIntlMessage 'edit-profile'
             li {},
               a
                 className: 'logout'
