@@ -1,6 +1,6 @@
 {
   "name": "brahma-components",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "devDependencies": {
     "coffee-script": "^1.8.0",
     "exoskeleton": "^0.7.0",
