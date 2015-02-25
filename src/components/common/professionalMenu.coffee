@@ -63,6 +63,8 @@ module.exports = React.createClass
     umClasses = 'userMenu'
     if @state.userMenuExpanded
       umClasses += ' is-expanded'
+    else if @state.userMenuExpanded is false
+      umClasses += ' is-collapsed'
 
     div id: 'menu',
       div className: 'top-area',
