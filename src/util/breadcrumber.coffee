@@ -22,6 +22,22 @@ crumbBuilder = (label, link, cls) ->
 module.exports =
 
   ###
+    This function buid a breadcrumb for histories routes
+    @param  {string}    key   Name of key for get value in args
+    @return {function}        Function which is called with args
+  ###
+  histories: -> ->
+    crumbs = -> ->
+      arr = []
+      arr.push
+        label: @getIntlMessage('histories')
+        link: urlBuilder('histories')
+        className: 'clock'
+      arr
+
+    stores: [ ], list: crumbs()
+
+  ###
     This function buid a breadcrumb for allergies routes (allergies an allergy)
     @param  {string}    key   Name of key for get value in args
     @return {function}        Function which is called with args
