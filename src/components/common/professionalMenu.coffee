@@ -54,7 +54,8 @@ module.exports = React.createClass
       servicetypes: ListStores.ServiceTypes.getObjects()
       sessionsByServiceType: {}
     for st in newState.servicetypes
-      newState.sessionsByServiceType[st.id] = ListStores.SessionsByServiceType.getObjects st.id
+      newState.sessionsByServiceType[st.id] =
+        ListStores.SessionsByServiceType.getObjects st.id
     @setState newState
     newState
 
@@ -90,7 +91,10 @@ module.exports = React.createClass
       div className: 'middle-area',
         @state.servicetypes.map (servicetype) ->
           sessions = _this.state.sessionsByServiceType[servicetype.id] || []
-          SessionTypeTab key: servicetype.id, sessionType: servicetype, sessions: sessions
+          SessionTypeTab
+            key: servicetype.id
+            sessionType: servicetype
+            sessions: sessions
       div className: 'bottom-area',
         div className: 'title',
           @getIntlMessage('next-event')
