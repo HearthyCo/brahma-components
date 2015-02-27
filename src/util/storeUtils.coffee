@@ -130,3 +130,13 @@ module.exports = Utils =
       val = Utils.treeEval v, fname, args, false
       ret[k] = val if val isnt undefined
     ret
+
+  # Helper for bindings which need to append to a sublist store.
+  # Just put it as a middleware in front of a regular binding, and instead
+  # of overwritting, it will append to the already present values.
+  subListAppender: (func) -> (o, l) ->
+    ret = func o, l
+    for k, v of ret
+      if l[k]
+        ret[k] = l[k].concat v
+    return ret
