@@ -4,10 +4,11 @@ _ = require 'underscore'
 
 module.exports =
 
-  mkApiGetter: (endpoint, evtPrefix, evtSuffix) ->
-    AppDispatcher.trigger evtPrefix + 'request' + evtSuffix, {}
+  mkApiGetter: (endpoint, evtPrefix, evtSuffix, opts) ->
     url = window.apiServer + endpoint
-    Backbone.ajax
+    AppDispatcher.trigger evtPrefix + 'request' + evtSuffix, {}
+    opts = opts || {}
+    defaultOpts =
       dataType: 'jsonp'
       url: url
       success: (response) ->
@@ -16,11 +17,14 @@ module.exports =
       error: (xhr, status) ->
         console.error 'API GET Error:', url, status, xhr
         AppDispatcher.trigger evtPrefix + 'error' + evtSuffix, {}
+    opts = _.extend {}, defaultOpts, opts
+    Backbone.ajax opts
 
-  mkApiPoster: (endpoint, payload, evtPrefix, evtSuffix) ->
+  mkApiPoster: (endpoint, payload, evtPrefix, evtSuffix, opts) ->
     url = window.apiServer + endpoint
     AppDispatcher.trigger evtPrefix + 'request' + evtSuffix, payload
-    Backbone.ajax
+    opts = opts || {}
+    defaultOpts =
       dataType: 'jsonp'
       url: url
       contentType: "application/json; charset=utf-8"
@@ -32,3 +36,5 @@ module.exports =
       error: (xhr, status) ->
         console.error 'API POST Error:', url, status, xhr
         AppDispatcher.trigger evtPrefix + 'error' + evtSuffix, {}
+    opts = _.extend {}, defaultOpts, opts
+    Backbone.ajax opts

@@ -1,3 +1,4 @@
+_ = require 'underscore'
 Utils = require '../util/storeUtils'
 EntityStores = require './EntityStores'
 
@@ -33,13 +34,10 @@ Stores =
     Participants: Utils.mkSubListStore EntityStores.SessionUser,
       'session:successSession': (o) -> o.participants
     Messages: Utils.mkSubListStore EntityStores.Message,
-      'chat:successSend': (o, l) ->
-        nl = o.messages
-        if l[o.session]
-          nl = l[o.session].concat o.messages
-        ret = {}
-        ret[o.session] = nl
-        return ret
+      'chat:successSend': Utils.subListAppender (o, l) ->
+        _.object [[o.session, o.messages]]
+      'chat:requestSendFile': Utils.subListAppender (o, l) ->
+        _.object [[o.session, o.messages]]
 
   ServiceTypes: Utils.mkListStore EntityStores.ServiceType,
     'serviceTypes:successServiceTypes': (o) ->
