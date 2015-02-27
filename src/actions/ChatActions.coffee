@@ -53,6 +53,8 @@ ChatActions =
       success: (response) ->
         console.log 'API POST Success:', url, response
         payload.messages[0].status = 'success'
+        payload.messages[0].fileurl = response.attachments[0].url
+
         AppDispatcher.trigger 'chat:successSendFile', payload
 
 
