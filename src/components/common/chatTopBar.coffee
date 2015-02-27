@@ -22,7 +22,7 @@ module.exports = React.createClass
       userBar = div className: 'bar-profile',
         img className: 'avatar', src: avatar
         div className: 'details',
-          span class: 'name', fullname
+          span className: 'name', fullname
           a href: '/', 'Ver perfil y curriculum'
 
     header className: 'comp-chatTopBar',

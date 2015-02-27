@@ -5,7 +5,7 @@ Utils = require '../../util/frontendUtils'
 
 { div, form, input, button, p } = React.DOM
 
-RoomMessage = React.createFactory require './roomMessage'
+RoomMessage = React.createFactory require './mobileRoomMessage'
 ChatActions = require '../../actions/ChatActions'
 EntityStores = require '../../stores/EntityStores'
 ListStores = require '../../stores/ListStores'
@@ -58,9 +58,6 @@ module.exports = React.createClass
 
   render: ->
     div className: 'comp-mobileRoom',
-      div className: 'session-title',
-        div className: 'session-client on',
-          'A. Acuña García'
       div className: 'room-backlog', ref: 'log',
         @state.messages?.map (m) ->
           RoomMessage message: m
@@ -71,6 +68,3 @@ module.exports = React.createClass
           ref: 'msgbox'
         button className: 'room-send', @getIntlMessage('send')
         button className: 'upload', onClick: @handleUpload, 'Upload'
-      div className: 'end-session',
-        button {},
-          'Finalizar consulta'
