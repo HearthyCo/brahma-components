@@ -26,7 +26,8 @@ module.exports = React.createClass
           a href: '/', 'Ver perfil y curriculum'
 
     header className: 'comp-chatTopBar',
-      div className: 'menuBar',
-        a href: '/',
-          span className: 'icon icon-arrow-left'
-      userBar
+      div className: 'chatTopBar-wrapper',
+        div className: 'menuBar',
+          a href: '/',
+            span className: 'icon icon-arrow-left'
+        userBar
