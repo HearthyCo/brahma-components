@@ -21,6 +21,7 @@ module.exports = React.createClass
 
   getInitialState: ->
     messages: ListStores.Session.Messages.getObjects @props.session.id
+    hasText: false
 
   componentDidMount: ->
     EntityStores.Message.addChangeListener @updateMessages
@@ -56,15 +57,23 @@ module.exports = React.createClass
       for file in e.target.files
         ChatActions.sendFile _this.props.session.id, file, _this.context.user
 
+  handleChange: (e) ->
+    @setState hasText: e.target.value isnt ""
+
   render: ->
+    classes = 'room-footer'
+    if @state.hasText
+      classes += ' has-text'
+
     div className: 'comp-mobileRoom',
       div className: 'room-backlog', ref: 'log',
         @state.messages?.map (m) ->
           RoomMessage key: m.id, message: m
-      form className: 'room-footer', onSubmit: @handleMessage,
+      form className: classes, onSubmit: @handleMessage,
         input
           className: 'room-input'
           placeholder: @getIntlMessage('type-here')
+          onChange: @handleChange
           ref: 'msgbox'
         button className: 'room-send', @getIntlMessage('send')
         button className: 'upload', onClick: @handleUpload, 'Upload'
