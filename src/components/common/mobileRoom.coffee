@@ -48,6 +48,7 @@ module.exports = React.createClass
     msgbox = @refs.msgbox.getDOMNode()
     newMessage = msgbox.value.trim()
     msgbox.value = ''
+    @setState hasText: false
     ChatActions.send @props.session.id, newMessage, @context.user
 
   handleUpload: (e) ->
