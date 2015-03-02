@@ -60,7 +60,7 @@ module.exports = React.createClass
     div className: 'comp-mobileRoom',
       div className: 'room-backlog', ref: 'log',
         @state.messages?.map (m) ->
-          RoomMessage message: m
+          RoomMessage key: m.id, message: m
       form className: 'room-footer', onSubmit: @handleMessage,
         input
           className: 'room-input'

@@ -25,7 +25,7 @@ module.exports = React.createClass
     else if @props.message.type is 'attachment'
       body = span {},
         'ha enviado un archivo: '
-        a href: @props.message.fileurl,
+        a href: @props.message.fileurl, target: '_blank',
           @props.message.filename + ' (' +
             Utils.humanFilesize(@props.message.filesize) + ')'
 
