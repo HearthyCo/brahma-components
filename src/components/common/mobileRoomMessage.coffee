@@ -16,6 +16,9 @@ module.exports = React.createClass
     id: React.PropTypes.string
     message: React.PropTypes.object.isRequired
 
+  contextTypes:
+    user: React.PropTypes.object
+
   render: ->
     if @props.message.type is 'text'
       body = @props.message.text
@@ -27,7 +30,10 @@ module.exports = React.createClass
             Utils.humanFilesize(@props.message.filesize) + ')'
 
     status = @props.message.status || 'success'
+    own = @props.message.author is @context.user
+    classes = 'comp-mobileroommessage message-status-' + status
+    classes += if own then 'own' else 'remote'
 
-    div className: 'comp-roommessage message-status-' + status,
+    div className: classes,
       # No avatars or names here
       div className: 'message-body', body
