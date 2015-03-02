@@ -3,7 +3,7 @@ ReactIntl = require 'react-intl'
 _ = require 'underscore'
 Utils = require '../../util/frontendUtils'
 
-{ div, form, input, button, p } = React.DOM
+{ div, form, input, button, p, span } = React.DOM
 
 RoomMessage = React.createFactory require './mobileRoomMessage'
 ChatActions = require '../../actions/ChatActions'
@@ -18,6 +18,9 @@ module.exports = React.createClass
 
   propTypes:
     session: React.PropTypes.object.isRequired
+
+  contextTypes:
+    user: React.PropTypes.object
 
   getInitialState: ->
     messages: ListStores.Session.Messages.getObjects @props.session.id
@@ -76,4 +79,6 @@ module.exports = React.createClass
           onChange: @handleChange
           ref: 'msgbox'
         button className: 'room-send', @getIntlMessage('send')
-        button className: 'upload', onClick: @handleUpload, 'Upload'
+        button className: 'upload', onClick: @handleUpload,
+          span className: 'icon-home'
+          span className: 'icon-home'

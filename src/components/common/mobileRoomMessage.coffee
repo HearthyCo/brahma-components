@@ -31,8 +31,9 @@ module.exports = React.createClass
 
     status = @props.message.status || 'success'
     own = @props.message.author is @context.user
+    console.log @props.message.author, @context.user
     classes = 'comp-mobileroommessage message-status-' + status
-    classes += if own then 'own' else 'remote'
+    classes += if own then ' own' else ' remote'
 
     div className: classes,
       # No avatars or names here
