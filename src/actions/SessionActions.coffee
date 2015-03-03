@@ -33,10 +33,14 @@ SessionActions =
         console.error 'Can\t create session', status, xhr
 
   assign: (serviceType) ->
-    Utils.mkApiPoster '/session/assignPool', serviceType: serviceType, 'session:', 'Assign'
+    Utils.mkApiPoster '/session/assignPool', serviceType: serviceType,
+      'session:', 'Assign'
 
   refresh: (target) ->
     Utils.mkApiGetter '/session/' + target, 'session:', 'Session'
+
+  refreshMessages: (target) ->
+    Utils.mkApiGetter '/session/' + target, 'session:', 'Session' # DEBUG
 
   getByServiceType: ->
     Utils.mkApiGetter '/sessions/assigned', 'serviceTypes:', 'ServiceTypes'
