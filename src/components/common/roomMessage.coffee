@@ -33,7 +33,7 @@ module.exports = React.createClass
           @props.message.filename + ' (' +
             Utils.humanFilesize(@props.message.filesize) + ')'
 
-    status = @props.message.status || 'success'
+    status = @props.message.status || 'waiting'
 
     div className: 'comp-roommessage message-status-' + status,
       img className: 'message-avatar', src: avatar
