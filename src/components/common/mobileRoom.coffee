@@ -35,12 +35,12 @@ module.exports = React.createClass
     ListStores.Session.Messages.removeChangeListener @updateMessages
 
   componentWillUpdate: ->
-    node = @refs.log.getDOMNode()
+    node = document.getElementsByClassName('main-section')[0]
     @shouldScroll = node.scrollTop + node.offsetHeight is node.scrollHeight
 
   componentDidUpdate: ->
     if @shouldScroll
-      node = @refs.log.getDOMNode()
+      node = document.getElementsByClassName('main-section')[0]
       node.scrollTop = node.scrollHeight
 
   updateMessages: ->
@@ -70,7 +70,7 @@ module.exports = React.createClass
       classes += ' has-text'
 
     div className: 'comp-mobileRoom',
-      div className: 'room-backlog', ref: 'log',
+      div className: 'room-backlog',
         @state.messages?.map (m) ->
           RoomMessage key: m.id, message: m
       form className: classes, onSubmit: @handleMessage,
@@ -81,5 +81,6 @@ module.exports = React.createClass
           ref: 'msgbox'
         button className: 'room-send', @getIntlMessage('send')
         button className: 'upload', onClick: @handleUpload,
-          span className: 'icon-home'
-          span className: 'icon-home'
+          span className: 'icon icon-reel'
+          span {}, '|'
+          span className: 'icon icon-biometrics'
