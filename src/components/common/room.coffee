@@ -3,7 +3,7 @@ ReactIntl = require 'react-intl'
 _ = require 'underscore'
 Utils = require '../../util/frontendUtils'
 
-{ div, form, input, button, p } = React.DOM
+{ div, form, input, button, p, span } = React.DOM
 
 RoomMessage = React.createFactory require './roomMessage'
 ChatActions = require '../../actions/ChatActions'
@@ -73,7 +73,8 @@ module.exports = React.createClass
           placeholder: @getIntlMessage('type-here')
           ref: 'msgbox'
         button className: 'room-send', @getIntlMessage('send')
-        button className: 'upload', onClick: @handleUpload, 'Upload'
+        button className: 'upload', onClick: @handleUpload,
+          span className: 'icon icon-clip'
       div className: 'end-session',
         button {},
           'Finalizar consulta'
