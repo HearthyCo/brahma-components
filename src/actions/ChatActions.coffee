@@ -3,12 +3,9 @@ AppDispatcher = require '../dispatcher/AppDispatcher'
 Utils = require '../util/actionsUtils'
 Queue = require '../util/queue'
 
-messageId = (user, session) ->
+msgId = (user, session) ->
   date = new Date().getTime()
-  '' + session + user.id + date + zeroPad Queue.messageSent()
-
-zeroPad = (number) ->
-  ('00000000' + number).slice(-8)
+  '' + session + user.id + date + Queue.messagesSent()
 
 ChatActions =
   send: (session, msg, user) ->
@@ -19,8 +16,7 @@ ChatActions =
     payload =
       session: session
       messages: [
-        id: id
-        type: 'text'
+        type: 'message'
         timestamp: new Date().getTime()
         text: msg
         author: user
@@ -31,7 +27,7 @@ ChatActions =
     Queue.push payload
 
   sendFile: (session, file, user) ->
-    id = messageId user, session
+    id = msgId user, session
     payload =
       session: session
       messages: [

@@ -1,8 +1,8 @@
 Backbone = require 'exoskeleton'
 AppDispatcher = require '../dispatcher/AppDispatcher'
-
+socket = require '../util/socket'
 RETRY_NUMBER = 5
-isWorking = false
+isWorking = true
 count = RETRY_NUMBER
 
 successCallback = (queue, messages) ->
@@ -55,15 +55,13 @@ queue =
       @outbox = []
       # console.log 'Process:'
       # console.log '-', message for message in messages
-      # TODO
-      # Fake success.
-      success = if Math.random() >= 0.80 then true else false
-      if success
-        successCallback queue, messages
-      else
+      success = socket().send messages
+      if !success
         errorCallback queue, messages
+      else
+        successCallback queue, messages
   length: -> @outbox.length
-  messageSent: -> @sent
+  messagesSent: -> @sent
   pause: -> @paused = true
   resume: ->
     return if not @paused
