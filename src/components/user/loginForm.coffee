@@ -57,10 +57,10 @@ module.exports = React.createClass
       icon: 'email'
 
     loginPass=
-       label: password
-       name: 'password'
-       placeholder: password
-       icon: 'lock'
+      label: password
+      name: 'password'
+      placeholder: password
+      icon: 'lock'
 
     form action: @props.action, onSubmit: @handleSubmit, className: cmpLoginF,
       @buildComp 'email', loginUser
