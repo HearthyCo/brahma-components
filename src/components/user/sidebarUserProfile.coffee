@@ -55,6 +55,7 @@ module.exports = React.createClass
     allergies = @state.allergies.map (allergy) ->
       AllergyEntry key: allergy.id, allergy: allergy
 
+
     div className: 'comp-sidebarUserProfile',
       profile
       a className: 'view-profile', href: '/profile', @getIntlMessage 'view-more'
