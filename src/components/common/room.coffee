@@ -39,14 +39,19 @@ module.exports = React.createClass
     node = @refs.log.getDOMNode()
     @shouldScroll = node.scrollTop + node.offsetHeight is node.scrollHeight
 
+  componentWillReceiveProps: (next) ->
+    if @props.session.id isnt next.session.id
+      @updateMessages next
+
   componentDidUpdate: ->
     if @shouldScroll
       node = @refs.log.getDOMNode()
       node.scrollTop = node.scrollHeight
 
-  updateMessages: ->
+  updateMessages: (props) ->
+    props = props || @props
     @setState
-      messages: ListStores.Session.Messages.getObjects @props.session?.id
+      messages: ListStores.Session.Messages.getObjects props.session?.id
 
   handleMessage: (e) ->
     e.preventDefault()

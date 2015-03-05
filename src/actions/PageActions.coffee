@@ -3,10 +3,12 @@ _ = require 'underscore'
 Backbone = require 'exoskeleton'
 
 block = false
+timer = false
 
 PageActions =
   navigate: (route, opts) ->
     return if block
+    timer = setTimeout (-> block = false), 500
 
     block = if opts? then opts else {}
     window.router.navigate route, trigger: true
