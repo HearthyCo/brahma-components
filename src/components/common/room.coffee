@@ -40,7 +40,7 @@ module.exports = React.createClass
     @shouldScroll = node.scrollTop + node.offsetHeight is node.scrollHeight
 
   componentWillReceiveProps: (next) ->
-    if @props.session.id isnt next.session.id
+    if @props.session?.id isnt next.session?.id
       @updateMessages next
 
   componentDidUpdate: ->
@@ -60,6 +60,7 @@ module.exports = React.createClass
     msgbox.value = ''
     @setState hasText: false
     ChatActions.send @props.session.id, newMessage, @context.user
+    return # Prevent possible "return false" from previous line.
 
   handleUpload: (e) ->
     _this = @
@@ -92,7 +93,7 @@ module.exports = React.createClass
           fullname
       div className: 'room-backlog', ref: 'log',
         @state.messages?.map (m) ->
-          RoomMessage message: m
+          RoomMessage key: m.id, message: m
       form className: classes, onSubmit: @handleMessage,
         input
           className: 'room-input'
