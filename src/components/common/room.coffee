@@ -18,6 +18,7 @@ module.exports = React.createClass
 
   propTypes:
     session: React.PropTypes.object.isRequired
+    user: React.PropTypes.object
 
   contextTypes:
     user: React.PropTypes.object
@@ -71,10 +72,19 @@ module.exports = React.createClass
     if @state.hasText
       classes += ' has-text'
 
+    _this = @
+    if @props.user
+      fullname = ['name', 'surname1', 'surname2']
+        .map (f) -> _this.props.user[f]
+        .filter (v) -> v
+        .join ' '
+    else
+      fullname = @getIntlMessage 'loading'
+
     div className: 'comp-room',
       div className: 'session-title',
         div className: 'session-client on',
-          'A. Acuña García'
+          fullname
       div className: 'room-backlog', ref: 'log',
         @state.messages?.map (m) ->
           RoomMessage message: m
