@@ -3,35 +3,29 @@ AppDispatcher = require '../dispatcher/AppDispatcher'
 Utils = require '../util/actionsUtils'
 Queue = require '../util/queue'
 
-messageId = (user, session) ->
+msgId = (user, session) ->
   date = new Date().getTime()
-  '' + session + user.id + date + zeroPad Queue.messageSent()
-
-zeroPad = (number) ->
-  ('00000000' + number).slice(-8)
+  '' + session + user.id + date + Queue.messagesSent()
 
 ChatActions =
   send: (session, msg, user) ->
     # TODO: This is fake, but the success event should be the same.
     # Utils.mkApiPoster '/session/' + session + '/send', msg, 'chat:', 'Send'
 
-    id = messageId user, session
     payload =
       session: session
       messages: [
-        id: id
-        type: 'text'
+        type: 'message'
         timestamp: new Date().getTime()
         text: msg
         author: user
       ]
 
     AppDispatcher.trigger 'chat:requestSend', payload
-
     Queue.push payload
 
   sendFile: (session, file, user) ->
-    id = messageId user, session
+    id = msgId user, session
     payload =
       session: session
       messages: [
