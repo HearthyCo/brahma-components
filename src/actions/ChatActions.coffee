@@ -8,11 +8,13 @@ msgId = (user, session) ->
   '' + session + user.id + date + Queue.messagesSent()
 
 ChatActions =
-  send: (session, msg, user) ->
+  init: (socket) ->
+    Queue.socket = socket
+
+  send: (socket, session, msg, user) ->
     # TODO: This is fake, but the success event should be the same.
     # Utils.mkApiPoster '/session/' + session + '/send', msg, 'chat:', 'Send'
 
-    id = messageId user, session
     payload =
       session: session
       messages: [
@@ -23,7 +25,6 @@ ChatActions =
       ]
 
     AppDispatcher.trigger 'chat:requestSend', payload
-
     Queue.push payload
 
   sendFile: (session, file, user) ->

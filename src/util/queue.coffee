@@ -1,6 +1,5 @@
 Backbone = require 'exoskeleton'
 AppDispatcher = require '../dispatcher/AppDispatcher'
-socket = require '../util/socket'
 RETRY_NUMBER = 5
 isWorking = true
 count = RETRY_NUMBER
@@ -35,6 +34,7 @@ queue =
   sent: 0
   started: false
   paused: false
+  socket: null
   push: (message) ->
     # console.log '> Push to queue', message
     # When a new message is pushed, count of error is restarted;
@@ -55,7 +55,7 @@ queue =
       @outbox = []
       # console.log 'Process:'
       # console.log '-', message for message in messages
-      success = socket().send messages
+      success = @socket.send messages
       if !success
         errorCallback queue, messages
       else
