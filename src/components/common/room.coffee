@@ -23,7 +23,7 @@ module.exports = React.createClass
     user: React.PropTypes.object
 
   getInitialState: ->
-    messages: ListStores.Session.Messages.getObjects @props.session.id
+    messages: ListStores.Session.Messages.getObjects @props.session?.id
     hasText: false
 
   componentDidMount: ->
@@ -44,7 +44,8 @@ module.exports = React.createClass
       node.scrollTop = node.scrollHeight
 
   updateMessages: ->
-    @setState messages: ListStores.Session.Messages.getObjects @props.session.id
+    @setState
+      messages: ListStores.Session.Messages.getObjects @props.session?.id
 
   handleMessage: (e) ->
     e.preventDefault()

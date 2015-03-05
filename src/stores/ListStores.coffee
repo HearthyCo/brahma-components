@@ -28,7 +28,11 @@ Stores =
 
   History:
     Allergies: Utils.mkListStore EntityStores.HistoryEntry,
-      'history:successAllergies': (o) -> o.allergies
+      'history:successAllergies': (o) -> o.allergies # Client-only, needs review
+
+  User:
+    History: Utils.mkSubListStore EntityStores.HistoryEntry,
+      'session:successSession': (o) -> o.userHistoryEntries
 
   Session:
     Participants: Utils.mkSubListStore EntityStores.SessionUser,

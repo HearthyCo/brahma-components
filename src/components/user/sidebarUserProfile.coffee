@@ -7,7 +7,7 @@ ListStores = require '../../stores/ListStores'
 HistoryActions = require '../../actions/HistoryActions'
 
 AllergyEntry = React.createFactory require '../history/allergyEntry'
-IconSubListEntry = React.createFactory require '../common/iconSubListEntry'
+IconSubListEntry = React.createFactory require '../common/iconSublistEntry'
 HistoriesEntry = React.createFactory require '../history/historiesEntry'
 
 { div, span, strong, a, br, h2, img } = React.DOM
@@ -39,7 +39,7 @@ module.exports = React.createClass
   updateState: () ->
     ret =
       allergies: ListStores.History.Allergies.getObjects()
-      user: EntityStores.User.get @props.user.id
+      user: EntityStores.User.get @props.user?.id
     @setState ret
     ret
 
