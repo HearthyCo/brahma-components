@@ -4,10 +4,9 @@ _ = require 'underscore'
 
 EntityStores = require '../../stores/EntityStores'
 ListStores = require '../../stores/ListStores'
-HistoryActions = require '../../actions/HistoryActions'
 
 AllergyEntry = React.createFactory require '../history/allergyEntry'
-IconSubListEntry = React.createFactory require '../common/iconSubListEntry'
+IconSubListEntry = React.createFactory require '../common/iconSublistEntry'
 HistoriesEntry = React.createFactory require '../history/historiesEntry'
 
 { div, span, strong, a, br, h2, img } = React.DOM
@@ -28,18 +27,18 @@ module.exports = React.createClass
   componentDidMount: ->
     EntityStores.HistoryEntry.addChangeListener @updateState
     EntityStores.User.addChangeListener @updateState
-    ListStores.History.Allergies.addChangeListener @updateState
-    HistoryActions.refresh 'allergies'
+    ListStores.User.History.addChangeListener @updateState
 
   componentWillUnmount: ->
     EntityStores.HistoryEntry.removeChangeListener @updateState
     EntityStores.User.removeChangeListener @updateState
-    ListStores.History.Allergies.removeChangeListener @updateState
+    ListStores.User.History.removeChangeListener @updateState
 
   updateState: () ->
     ret =
-      allergies: ListStores.History.Allergies.getObjects()
-      user: EntityStores.User.get @props.user.id
+      history: ListStores.User.History.getObjects @props.user?.id
+      user: EntityStores.User.get @props.user?.id
+    _.defaults ret, history: []
     @setState ret
     ret
 
@@ -65,8 +64,10 @@ module.exports = React.createClass
     else
       profile = div {}
 
-    allergies = @state.allergies.map (allergy) ->
-      AllergyEntry key: allergy.id, allergy: allergy
+    allergies = @state.history
+      .filter (he) -> he.type is 'allergies'
+      .map (allergy) ->
+        AllergyEntry key: allergy.id, allergy: allergy
 
 
     div className: 'comp-sidebarUserProfile',

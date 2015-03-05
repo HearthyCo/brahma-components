@@ -3,7 +3,7 @@ ReactIntl = require 'react-intl'
 
 SessionActions = require '../../actions/SessionActions'
 
-{ div, h2, span, button, ul, li } = React.DOM
+{ div, h2, span, button, ul, li, a } = React.DOM
 
 #SessionEntry = React.createFactory require './sessionEntry'
 
@@ -17,6 +17,9 @@ module.exports = React.createClass
     id: React.PropTypes.string
     sessionType: React.PropTypes.object.isRequired
     sessions: React.PropTypes.array.isRequired
+
+  contextTypes:
+    opts: React.PropTypes.object
 
   render: ->
     _this = @
@@ -43,8 +46,8 @@ module.exports = React.createClass
           else
             timerclasses += 'notifications' # Fake
             value = '4'
-          if s.id is 90704 and _this.props.sessionType.id is 90300
+          if s.id.toString() is _this.context.opts.sessionId
             rowclasses = 'current'
           li key: s.id, className: rowclasses,
-            span className: 'session-title', s.title
+            a className: 'session-title', href: '/session/' + s.id, s.title
             span className: timerclasses, value

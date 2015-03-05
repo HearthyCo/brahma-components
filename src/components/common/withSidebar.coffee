@@ -25,10 +25,10 @@ module.exports = React.createClass
       contentClasses += ' is-collapsed'
 
     div id: @props.id, className: contentClasses,
-      div className: 'toogle',
-        span className: 'icon icon-question'
-        span className: 'toggle-button icon icon-right', onClick: @toggleDisplay
       div className: 'content', @props.children
       div className: 'side-wrapper',
         div className: 'side-header', @props.icons
         div className: 'side-content', @props.sidebar
+      div className: 'toogle',
+        span className: 'icon icon-question'
+        span className: 'toggle-button icon icon-right', onClick: @toggleDisplay
