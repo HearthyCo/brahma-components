@@ -8,10 +8,7 @@ msgId = (user, session) ->
   '' + session + user.id + date + Queue.messagesSent()
 
 ChatActions =
-  init: (socket) ->
-    Queue.socket = socket
-
-  send: (socket, session, msg, user) ->
+  send: (session, msg, user) ->
     # TODO: This is fake, but the success event should be the same.
     # Utils.mkApiPoster '/session/' + session + '/send', msg, 'chat:', 'Send'
 

@@ -24,7 +24,7 @@ module.exports = React.createClass
       .filter (v) -> v
       .join ' '
 
-    if @props.message.type is 'text'
+    if @props.message.type is 'message'
       body = @props.message.text
     else if @props.message.type is 'attachment'
       body = span {},

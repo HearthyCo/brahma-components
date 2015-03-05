@@ -5,44 +5,61 @@ defaults =
   port: 1337
   timeout: 2000
 
-module.exports = (user, opts) ->
+module.exports = (usr, opts) ->
   counter = 0
-  _.defaults opts || {}, defaults
+  user = usr
+  opts = opts || {}
+  _.defaults opts, defaults
 
   connect = ->
     new WebSocket 'ws://' + opts.hostname + ':' + opts.port
 
+  socket = connect()
+
   reconnect = ->
     console.log 'Connection closed, restart in', (opts.timeout/1000), 'seconds'
-    setTimeout connect(), opts.timeout
+    setTimeout(( ->
+      socket = _.extend connect(), extras
+    ), opts.timeout)
 
   msgId = (user, session) ->
-  date = new Date().getTime()
-  session = session || 0
-  '' + session + user.id + date + counter
+    date = new Date().getTime()
+    session = session || 0
+    '' + session + user.id + date + counter
 
-  socket = connect()
 
   socketWrapper =
     onmessage: (json) -> console.log json
     ping: ->
       o = id: msgId user, type: 'ping'
       socket.send JSON.stringify o
-    send: (messages) ->
+    send: (messages, callback) ->
       for message in messages
-        console.log 'CHECK MESSAGE', message
         message.id = msgId user, message.session
-        socket.send JSON.stringify messages
         counter++
+      socket.send JSON.stringify messages
+      checkSend = (t) ->
+        if socket.readyState isnt 1
+          callback true
+        else if socket.bufferedAmount is 0
+          callback false
+        else return true
+        clearInterval t if t
+        false
+
+      if checkSend()
+        interval = setInterval ((o) -> checkSend interval), 100
 
   extras =
     onopen: ->
       console.log 'Connection is opened and ready to use'
       # Do auth
-      authObject = messages: id: msgId user, type: 'handshake', data: user: user
+      id = msgId user
+      authObject = messages: [ id: id, type: 'handshake', data: user: user ]
+      console.log 'AUTH OBJECT', authObject
       socket.send JSON.stringify authObject
     onclose: ->
-      socket = _.extend reconnect(), extras
+      reconnect()
     onerror: (error) ->
       console.log 'An error occurred when sending/receiving data', error
     onmessage: (message) ->

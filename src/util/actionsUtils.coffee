@@ -17,6 +17,7 @@ module.exports =
       error: (xhr, status) ->
         console.error 'API GET Error:', url, status, xhr
         AppDispatcher.trigger evtPrefix + 'error' + evtSuffix, {}
+    defaultOpts.defaultOpts = defaultOpts
     opts = _.extend {}, defaultOpts, opts
     Backbone.ajax opts
 
@@ -36,5 +37,6 @@ module.exports =
       error: (xhr, status) ->
         console.error 'API POST Error:', url, status, xhr
         AppDispatcher.trigger evtPrefix + 'error' + evtSuffix, {}
+    defaultOpts.defaultOpts = defaultOpts
     opts = _.extend {}, defaultOpts, opts
     Backbone.ajax opts

@@ -1,13 +1,9 @@
 Utils = require '../util/storeUtils'
-Socket = require '../util/socket'
 
 module.exports =
   User: Utils.mkEntityStore 'users', (evt, payload) ->
-    loginEvents = ['user:successLogin', 'user:successSignup']
+    loginEvents = ['user:successLogin', 'user:successSignup', 'user:successMe']
     if loginEvents.indexOf(evt) >= 0
-      @currentUid = payload.users[0].id
-      @socket = Socket(payload.users[0])
-    if evt is 'user:successMe'
       @currentUid = payload.users[0].id
     if evt is 'user:didLogout'
       @currentUid = null

@@ -21,7 +21,6 @@ module.exports = React.createClass
 
   contextTypes:
     user: React.PropTypes.object
-    socket: React.PropTypes.object
 
   getInitialState: ->
     messages: ListStores.Session.Messages.getObjects @props.session.id
@@ -30,7 +29,6 @@ module.exports = React.createClass
   componentDidMount: ->
     EntityStores.Message.addChangeListener @updateMessages
     ListStores.Session.Messages.addChangeListener @updateMessages
-    ChatActions.init @context.socket
 
   componentWillUnmount: ->
     EntityStores.Message.removeChangeListener @updateMessages
