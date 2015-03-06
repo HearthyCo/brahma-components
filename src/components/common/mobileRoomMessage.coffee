@@ -21,16 +21,16 @@ module.exports = React.createClass
 
   render: ->
     if @props.message.type is 'message'
-      body = @props.message.text
+      body = @props.message.data.message
     else if @props.message.type is 'attachment'
       body = span {},
         'ha enviado un archivo: '
-        a href: @props.message.fileurl, target: '_blank',
-          @props.message.filename + ' (' +
-            Utils.humanFilesize(@props.message.filesize) + ')'
+        a href: @props.message.data.href, target: '_blank',
+          @props.message.data.message + ' (' +
+            Utils.humanFilesize(@props.message.data.size) + ')'
 
     status = @props.message.status || 'success'
-    own = @props.message.author is @context.user
+    own = @props.message.author is @context.user.id
     classes = 'comp-mobileroommessage message-status-' + status
     classes += if own then ' own' else ' remote'
 

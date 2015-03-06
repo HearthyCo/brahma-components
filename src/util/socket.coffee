@@ -7,7 +7,6 @@ defaults =
   timeout: 2000
 
 module.exports = (usr, opts) ->
-  counter = 0
   user = usr
   opts = opts || {}
   _.defaults opts, defaults
@@ -35,20 +34,16 @@ module.exports = (usr, opts) ->
   socketWrapper =
     onmessage: (json) -> console.log json
     ping: ->
-      id = SocketUtils.mkMessageId user.id, counter
+      id = SocketUtils.mkMessageId user.id
       o = id: id, type: 'ping'
       socket.send JSON.stringify o
       if checkSend()
         callback = ->
           console.log 'Ping done'
         interval = setInterval ((o) -> checkSend(callback, interval)), 100
-    send: (messagesList, callback) ->
-      for messages in messagesList
-        for message in messages
-          message.id = SocketUtils.mkMessageId user.id, counter, message.session
-          counter++
-        console.log 'MESSAGES', messages
-      socket.send JSON.stringify messagesList
+    send: (messages, callback) ->
+      console.log 'MESSAGES', messages
+      socket.send JSON.stringify messages
       if checkSend()
         interval = setInterval ((o) -> checkSend(callback, interval)), 100
 
@@ -56,10 +51,8 @@ module.exports = (usr, opts) ->
     onopen: ->
       console.log 'Connection is opened and ready to use'
       # Do auth
-      id = SocketUtils.mkMessageId user.id, counter
-      authObject = messages: [ id: id, type: 'handshake', data: user: user ]
-      console.log 'AUTH OBJECT', authObject
-      socket.send JSON.stringify authObject
+      id = SocketUtils.mkMessageId user.id
+      socket.send JSON.stringify [ id: id, type: 'handshake', data: user: user ]
       callback = ->
         console.log 'Auth done'
       if checkSend()

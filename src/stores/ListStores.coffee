@@ -2,8 +2,18 @@ _ = require 'underscore'
 Utils = require '../util/storeUtils'
 EntityStores = require './EntityStores'
 
-Stores =
+ListToSublist = (messages) ->
+  sessions = {}
+  for message in messages
+    sessions[message.session] = [] if not sessions[message.session]
+    sessions[message.session].push message.id
+  console.log 'ONMESSAGE SESSIONS', sessions
+  sessions
 
+# TODO doc
+ListToSublistAppender = (f) -> Utils.subListAppender (o) -> ListToSublist f o
+
+Stores =
   SessionsByState:
     Programmed: Utils.mkListStore EntityStores.Session,
       'sessions:successProgrammedSessions': (o) -> o.userSessions
@@ -38,12 +48,9 @@ Stores =
     Participants: Utils.mkSubListStore EntityStores.SessionUser,
       'session:successSession': (o) -> o.participants
     Messages: Utils.mkSubListStore EntityStores.Message,
-      'chat:successReceived': Utils.subListAppender (o, l) ->
-        _.object [[o.messages[0].session, o.messages]]
-      'chat:requestSend': Utils.subListAppender (o, l) ->
-        _.object [[o.session, o.messages]]
-      'chat:requestSendFile': Utils.subListAppender (o, l) ->
-        _.object [[o.session, o.messages]]
+      'chat:successReceived': ListToSublistAppender (o) -> o.messages
+      'chat:requestSend': ListToSublistAppender (o) -> o.messages
+      'chat:requestSendFile': ListToSublistAppender (o) -> o.messages
 
   ServiceTypes: Utils.mkListStore EntityStores.ServiceType,
     'serviceTypes:successServiceTypes': (o) ->
