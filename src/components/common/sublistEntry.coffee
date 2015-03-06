@@ -9,8 +9,7 @@ module.exports = React.createClass
   propTypes:
     id: React.PropTypes.number
     label: React.PropTypes.string.isRequired
-    sublabel: React.PropTypes.string.isRequired
-
+    sublabel: React.PropTypes.string
   getInitialState: () ->
     {}
 

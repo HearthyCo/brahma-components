@@ -42,6 +42,8 @@ Stores =
   User:
     History: Utils.mkSubListStore EntityStores.HistoryEntry,
       'session:successSession': (o) -> o.userHistoryEntries
+    Sessions: Utils.mkListStore EntityStores.Session,
+      'sessions:successSessions': (o) -> o.userSessions
 
   UserSignatures: Utils.mkListStore EntityStores.SignedEntry,
     'user:successLogin': (o) -> o.sign.map (i) -> i.id

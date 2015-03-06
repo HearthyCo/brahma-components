@@ -3,10 +3,9 @@ Utils = require '../util/actionsUtils'
 
 SessionsActions =
 
-  refresh: (target) ->
-    evtSuffix = target.charAt(0).toUpperCase() + target.slice(1) + 'Sessions'
-    Utils.mkApiGetter '/me/sessions/' + target.toLowerCase(),
-      'sessions:', evtSuffix
+  refresh: () ->
+    Utils.mkApiGetter '/me/sessions/' + 'closed', # DEBUG remove...
+      'sessions:', 'Sessions'
 
 
 
