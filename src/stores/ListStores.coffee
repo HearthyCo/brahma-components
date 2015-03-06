@@ -33,6 +33,8 @@ Stores =
   User:
     History: Utils.mkSubListStore EntityStores.HistoryEntry,
       'session:successSession': (o) -> o.userHistoryEntries
+    Sessions: Utils.mkListStore EntityStores.Session,
+      'sessions:successSessions': (o) -> o.userSessions
 
   Session:
     Participants: Utils.mkSubListStore EntityStores.SessionUser,
