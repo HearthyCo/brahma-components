@@ -52,7 +52,7 @@ module.exports = (usr, opts) ->
       console.log 'Connection is opened and ready to use'
       # Do auth
       id = SocketUtils.mkMessageId user.id
-      socket.send JSON.stringify [ id: id, type: 'handshake', data: user: user ]
+      socket.send JSON.stringify [ id: id, type: 'handshake', data: userId: user.id ]
       callback = ->
         console.log 'Auth done'
       if checkSend()
@@ -63,9 +63,11 @@ module.exports = (usr, opts) ->
       console.log 'An error occurred when sending/receiving data', error
     onmessage: (message) ->
       try
-        socketWrapper.onmessage JSON.parse message.data
+        data = JSON.parse message.data
       catch e
-        console.log 'This doesn\'t look like a valid JSON: ', message.data
+        console.log 'This doesn\'t look like a valid JSON: ', message.data, e
+
+      socketWrapper.onmessage data
 
   _.extend socket, extras
   socketWrapper

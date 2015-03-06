@@ -7,7 +7,6 @@ ListToSublist = (messages) ->
   for message in messages
     sessions[message.session] = [] if not sessions[message.session]
     sessions[message.session].push message.id
-  console.log 'ONMESSAGE SESSIONS', sessions
   sessions
 
 # TODO doc
