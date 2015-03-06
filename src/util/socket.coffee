@@ -52,7 +52,8 @@ module.exports = (usr, opts) ->
       console.log 'Connection is opened and ready to use'
       # Do auth
       id = SocketUtils.mkMessageId user.id
-      socket.send JSON.stringify [ id: id, type: 'handshake', data: userId: user.id ]
+      # TODO, unfake sessions
+      socket.send JSON.stringify [ id: id, type: 'handshake', data: userId: user.id, sessions: [ 90712 ] ]
       callback = ->
         console.log 'Auth done'
       if checkSend()
