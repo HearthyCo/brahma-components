@@ -6,24 +6,22 @@ isWorking = false
 count = RETRY_NUMBER
 
 successCallback = (queue, messages) ->
-  console.log 'Success. Sent:', messages.length, 'messages'
-  console.log '-', message for message in messages
+  console.log 'Success. Sent'
   isWorking = false
 
   for message in messages
     queue.sent++
-    message.messages[0].status = 'success'
+    message.status = 'success'
     AppDispatcher.trigger 'chat:successSend', message
 
   count = RETRY_NUMBER
   queue.process()
 
-errorCallback = (queue, messages) ->
-  console.log 'Error', count, '. Unshift queue:', messages.length, 'messages'
-  console.log '-', message for message in messages
+errorCallback = (queue, outbox) ->
+  console.log 'Error', count, '. Unshift queue'
   count--
   isWorking = false
-  queue.unshift messages
+  queue.unshift outbox
   if count == 0
     console.log 'Paused. Wait for reconnection.'
     queue.pause()
@@ -38,27 +36,30 @@ queue =
   socket: null
   initSocket: (user) ->
     @socket = Socket user, window.chatServer
-  push: (message) ->
-    console.log '> Push to queue', message
+    @socket.onmessage = (messages) ->
+      AppDispatcher.trigger 'chat:successReceived', messages: messages,
+  push: (payload) ->
+    console.log '> Push to queue', payload
     # When a new message is pushed, count of error is restarted;
     count = RETRY_NUMBER
     @started = true if not @started
-    @outbox.push message
+    messages = payload.messages
+    for message in messages
+      @outbox.push message
     if @paused
       @resume()
     else
       @process()
   unshift: (messages) ->
-    messages.push msg for msg in @outbox
+    messages.push message for message in @outbox
     @outbox = messages
   process: ->
-    console.log 'EVAL', not @paused, not isWorking, @length()
     if not @paused and not isWorking and @length()
       isWorking = true
       messages = @outbox
       @outbox = []
-      console.log 'Process:'
-      console.log '-', message for message in messages
+      # console.log 'Process:'
+      # console.log '-', message for message in messages
       @socket.send messages, (err) ->
         if not err
           successCallback queue, messages

@@ -1,41 +1,42 @@
 Backbone = require 'exoskeleton'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 Utils = require '../util/actionsUtils'
+SocketUtils = require '../util/socketUtils'
 Queue = require '../util/queue'
-
-msgId = (user, session) ->
-  date = new Date().getTime()
-  '' + session + user.id + date + Queue.messagesSent()
 
 ChatActions =
   send: (session, msg, user) ->
     # TODO: This is fake, but the success event should be the same.
     # Utils.mkApiPoster '/session/' + session + '/send', msg, 'chat:', 'Send'
 
+    id = SocketUtils.mkMessageId user.id, session
     payload =
-      session: session
       messages: [
+        id: id
         type: 'message'
+        session: session
+        author: user.id
+        data:
+          message: msg
         timestamp: new Date().getTime()
-        text: msg
-        author: user
       ]
 
     AppDispatcher.trigger 'chat:requestSend', payload
     Queue.push payload
 
   sendFile: (session, file, user) ->
-    id = msgId user, session
+    id = SocketUtils.mkMessageId user.id, session
     payload =
-      session: session
       messages: [
         id: id
         type: 'attachment'
+        session: session
+        author: user.id
+        data:
+          message: file.name
+          size: file.size
         status: 'pending'
         timestamp: new Date().getTime()
-        filename: file.name
-        filesize: file.size
-        author: user
       ]
 
     AppDispatcher.trigger 'chat:requestSendFile', payload
@@ -58,7 +59,8 @@ ChatActions =
       success: (response) ->
         console.log 'API POST Success:', url, response
         payload.messages[0].status = 'success'
-        payload.messages[0].fileurl = response.attachments[0].url
+        payload.messages[0].data.type = response.attachments[0].mime
+        payload.messages[0].data.href = response.attachments[0].url
 
         AppDispatcher.trigger 'chat:successSendFile', payload
 
