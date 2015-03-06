@@ -1,6 +1,7 @@
 Backbone = require 'exoskeleton'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 Utils = require '../util/actionsUtils'
+SocketUtils = require '../util/socketUtils'
 Queue = require '../util/queue'
 
 msgId = (user, session) ->
@@ -12,9 +13,11 @@ ChatActions =
     # TODO: This is fake, but the success event should be the same.
     # Utils.mkApiPoster '/session/' + session + '/send', msg, 'chat:', 'Send'
 
+    id = SocketUtils.mkMessageId user.id, Queue.messagesSent(), session
     payload =
       session: session
       messages: [
+        id: id
         type: 'message'
         timestamp: new Date().getTime()
         text: msg
@@ -25,7 +28,7 @@ ChatActions =
     Queue.push payload
 
   sendFile: (session, file, user) ->
-    id = msgId user, session
+    id = SocketUtils.mkMessageId user.id, Queue.messagesSent(), session
     payload =
       session: session
       messages: [

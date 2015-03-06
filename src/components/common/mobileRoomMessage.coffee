@@ -20,7 +20,7 @@ module.exports = React.createClass
     user: React.PropTypes.object
 
   render: ->
-    if @props.message.type is 'text'
+    if @props.message.type is 'message'
       body = @props.message.text
     else if @props.message.type is 'attachment'
       body = span {},
@@ -31,7 +31,6 @@ module.exports = React.createClass
 
     status = @props.message.status || 'success'
     own = @props.message.author is @context.user
-    console.log @props.message.author, @context.user
     classes = 'comp-mobileroommessage message-status-' + status
     classes += if own then ' own' else ' remote'
 

@@ -5,25 +5,25 @@ RETRY_NUMBER = 5
 isWorking = false
 count = RETRY_NUMBER
 
-successCallback = (queue, messages) ->
-  console.log 'Success. Sent:', messages.length, 'messages'
-  console.log '-', message for message in messages
+successCallback = (queue, outbox) ->
+  console.log 'Success. Sent'
   isWorking = false
 
-  for message in messages
-    queue.sent++
-    message.messages[0].status = 'success'
-    AppDispatcher.trigger 'chat:successSend', message
+  for queuedMessage in outbox
+    messages = queuedMessage.messages
+    for message in messages
+      queue.sent++
+      message.status = 'success'
+      AppDispatcher.trigger 'chat:successSend', message
 
   count = RETRY_NUMBER
   queue.process()
 
-errorCallback = (queue, messages) ->
-  console.log 'Error', count, '. Unshift queue:', messages.length, 'messages'
-  console.log '-', message for message in messages
+errorCallback = (queue, outbox) ->
+  console.log 'Error', count, '. Unshift queue'
   count--
   isWorking = false
-  queue.unshift messages
+  queue.unshift outbox
   if count == 0
     console.log 'Paused. Wait for reconnection.'
     queue.pause()
@@ -38,12 +38,24 @@ queue =
   socket: null
   initSocket: (user) ->
     @socket = Socket user, window.chatServer
+    @socket.onmessage = (o) ->
+      console.log 'O', o
+      AppDispatcher.trigger 'chat:successReceived', messages: [o]
   push: (message) ->
     console.log '> Push to queue', message
     # When a new message is pushed, count of error is restarted;
     count = RETRY_NUMBER
     @started = true if not @started
-    @outbox.push message
+
+    isQueued = false
+    for queuedMessage in @outbox
+      if message.session is queuedMessage.session
+        isQueued = true
+        messages = message.messages
+        for message in messages
+          queuedMessage.messages.push
+
+    @outbox.push message if !isQueued
     if @paused
       @resume()
     else
@@ -52,7 +64,6 @@ queue =
     messages.push msg for msg in @outbox
     @outbox = messages
   process: ->
-    console.log 'EVAL', not @paused, not isWorking, @length()
     if not @paused and not isWorking and @length()
       isWorking = true
       messages = @outbox

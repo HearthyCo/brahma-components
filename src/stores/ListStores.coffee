@@ -38,6 +38,8 @@ Stores =
     Participants: Utils.mkSubListStore EntityStores.SessionUser,
       'session:successSession': (o) -> o.participants
     Messages: Utils.mkSubListStore EntityStores.Message,
+      'chat:successReceived': Utils.subListAppender (o, l) ->
+        _.object [[o.messages[0].session, o.messages]]
       'chat:requestSend': Utils.subListAppender (o, l) ->
         _.object [[o.session, o.messages]]
       'chat:requestSendFile': Utils.subListAppender (o, l) ->
