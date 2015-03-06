@@ -43,6 +43,12 @@ Stores =
     History: Utils.mkSubListStore EntityStores.HistoryEntry,
       'session:successSession': (o) -> o.userHistoryEntries
 
+  UserSignatures: Utils.mkListStore EntityStores.SignedEntry,
+    'user:successLogin': (o) -> o.sign.map (i) -> i.id
+    'user:successSignup': (o) -> o.sign.map (i) -> i.id
+    'user:successMe': (o) -> o.sign.map (i) -> i.id
+    'session:successAssign': (o) -> o.sign.map (i) -> i.id
+
   Session:
     Participants: Utils.mkSubListStore EntityStores.SessionUser,
       'session:successSession': (o) -> o.participants
@@ -53,7 +59,6 @@ Stores =
 
   ServiceTypes: Utils.mkListStore EntityStores.ServiceType,
     'serviceTypes:successServiceTypes': (o) ->
-      # (H)
       o.allServiceTypes || o.servicetypes.map (st) -> st.id
 
   SessionsByServiceType: Utils.mkSubListStore EntityStores.Session,

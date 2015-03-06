@@ -53,7 +53,17 @@ module.exports = (usr, opts) ->
       # Do auth
       id = SocketUtils.mkMessageId user.id
       # TODO, unfake sessions
-      socket.send JSON.stringify [ id: id, type: 'handshake', data: userId: user.id, sessions: [ 90712 ] ]
+      console.log 'SESSIONS', EntityStores.SignedEntry.get('sessions').value
+      params = [
+        id: id,
+        type: 'handshake',
+        data:
+          userId: EntityStores.SignedEntry.get('userId').value
+          _userId_sign: EntityStores.SignedEntry.get('userId').signature
+          sessions: EntityStores.SignedEntry.get('sessions').value
+          _sessions_sign: EntityStores.SignedEntry.get('sessions').signature
+      ]
+      socket.send JSON.stringify params
       callback = ->
         console.log 'Auth done'
       if checkSend()
