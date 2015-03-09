@@ -13,6 +13,7 @@ module.exports = React.createClass
     label: React.PropTypes.string.isRequired
     icon: React.PropTypes.string.isRequired
     target: React.PropTypes.string
+    time: React.PropTypes.object
 
 
   ###
@@ -41,6 +42,8 @@ module.exports = React.createClass
         div className: 'label',
           div className: 'icon icon-' + @props.icon
           h2 {},
+            span className: 'date',
+              @props.time
             @props.label
         span className: 'icon icon-right'
       div className: 'entry-content',
