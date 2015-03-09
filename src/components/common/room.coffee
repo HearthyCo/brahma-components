@@ -91,9 +91,10 @@ module.exports = React.createClass
       div className: 'session-title',
         div className: 'session-client on',
           fullname
-      div className: 'room-backlog', ref: 'log',
-        @state.messages?.map (m) ->
-          RoomMessage key: m.id, message: m
+      div className: 'room-wrapper',
+        div className: 'room-backlog', ref: 'log',
+          @state.messages?.map (m) ->
+            RoomMessage key: m.id, message: m
       form className: classes, onSubmit: @handleMessage,
         input
           className: 'room-input'
