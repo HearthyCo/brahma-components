@@ -50,6 +50,8 @@ Stores =
     'user:successSignup': (o) -> o.sign.map (i) -> i.id
     'user:successMe': (o) -> o.sign.map (i) -> i.id
     'session:successAssign': (o) -> o.sign.map (i) -> i.id
+    'session:successCreated': (o) -> o.sign.map (i) -> i.id
+    'session:successBooked': (o) -> o.sign.map (i) -> i.id
 
   Session:
     Participants: Utils.mkSubListStore EntityStores.SessionUser,

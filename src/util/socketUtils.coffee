@@ -6,4 +6,4 @@ module.exports =
   mkMessageId: (user, session) ->
     date = new Date().getTime()
     session = session || 0
-    '' + user + session + date + counter++
+    '' + user + '.' + session + '.' + date + '.' + counter++

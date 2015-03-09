@@ -6,7 +6,7 @@ isWorking = false
 count = RETRY_NUMBER
 
 successCallback = (queue, messages) ->
-  console.log 'Success. Sent'
+  # console.log 'Success. Sent'
   isWorking = false
 
   for message in messages
@@ -18,7 +18,7 @@ successCallback = (queue, messages) ->
   queue.process()
 
 errorCallback = (queue, outbox) ->
-  console.log 'Error', count, '. Unshift queue'
+  # console.log 'Error', count, '. Unshift queue'
   count--
   isWorking = false
   queue.unshift outbox
@@ -36,10 +36,24 @@ queue =
   socket: null
   initSocket: (user) ->
     @socket = Socket user, window.chatServer
-    @socket.onmessage = (messages) ->
+    @socket.onmessage = (message) ->
+      messages = {}
+      switch message.type
+        when 'granted'
+          console.log 'Auth done'
+          if message.data
+            sortFn = (a, b) -> a.timestamp > b.timestamp
+            messages = message.data.messages.sort sortFn
+        when 'message'
+          console.log 'Message received', message
+          messages = [message]
+        when 'pong'
+          console.log 'Message received', message
+        when 'status'
+          console.warn 'Warn', message
       AppDispatcher.trigger 'chat:successReceived', messages: messages,
   push: (payload) ->
-    console.log '> Push to queue', payload
+    # console.log '> Push to queue', payload
     # When a new message is pushed, count of error is restarted;
     count = RETRY_NUMBER
     @started = true if not @started
