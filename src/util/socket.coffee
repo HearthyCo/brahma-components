@@ -1,5 +1,6 @@
 _ = require 'underscore'
 SocketUtils = require '../util/socketUtils'
+EntityStores = require '../stores/EntityStores'
 
 defaults =
   hostname: 'localhost'
@@ -35,37 +36,42 @@ module.exports = (usr, opts) ->
     onmessage: (json) -> console.log json
     ping: ->
       id = SocketUtils.mkMessageId user.id
-      o = id: id, type: 'ping'
-      socket.send JSON.stringify o
+      ping = id: id, type: 'ping', data: message: 'Ping'
+      socket.send JSON.stringify ping
       if checkSend()
         callback = ->
-          console.log 'Ping done'
+          console.log 'Ping sent'
         interval = setInterval ((o) -> checkSend(callback, interval)), 100
     send: (messages, callback) ->
-      console.log 'MESSAGES', messages
       socket.send JSON.stringify messages
       if checkSend()
         interval = setInterval ((o) -> checkSend(callback, interval)), 100
+    updateSessions: ->
+      session = [
+        id: SocketUtils.mkMessageId user.id
+        type: 'session'
+        data:
+          sessions: EntityStores.SignedEntry.get('sessions').value
+          _sessions_sign: EntityStores.SignedEntry.get('sessions').signature
+      ]
+      socket.send JSON.stringify session
 
   extras =
     onopen: ->
       console.log 'Connection is opened and ready to use'
       # Do auth
-      id = SocketUtils.mkMessageId user.id
-      # TODO, unfake sessions
-      console.log 'SESSIONS', EntityStores.SignedEntry.get('sessions').value
-      params = [
-        id: id,
-        type: 'handshake',
+      handshake = [
+        id: SocketUtils.mkMessageId user.id
+        type: 'handshake'
         data:
           userId: EntityStores.SignedEntry.get('userId').value
           _userId_sign: EntityStores.SignedEntry.get('userId').signature
           sessions: EntityStores.SignedEntry.get('sessions').value
           _sessions_sign: EntityStores.SignedEntry.get('sessions').signature
       ]
-      socket.send JSON.stringify params
+      socket.send JSON.stringify handshake
       callback = ->
-        console.log 'Auth done'
+        console.log 'Auth sent'
       if checkSend()
         interval = setInterval ((o) -> checkSend(callback, interval)), 100
     onclose: ->

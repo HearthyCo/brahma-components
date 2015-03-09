@@ -2,15 +2,24 @@ _ = require 'underscore'
 Utils = require '../util/storeUtils'
 EntityStores = require './EntityStores'
 
-ListToSublist = (messages) ->
+MixNewMessages = (data, current) ->
+  messages = data.messages
   sessions = {}
+  # Add new ones
   for message in messages
-    sessions[message.session] = [] if not sessions[message.session]
-    sessions[message.session].push message.id
-  sessions
-
-# TODO doc
-ListToSublistAppender = (f) -> Utils.subListAppender (o) -> ListToSublist f o
+    session = message.session
+    sessions[session] = true
+    current[session] = [] if not current[session]
+    pos = current[session].indexOf message.id
+    if pos is -1
+      current[message.session].push message.id
+  # Sort them by timestamp
+  for session of sessions
+    current[session].sort (a,b) ->
+      ta = EntityStores.Message.get(a)?.timestamp
+      tb = EntityStores.Message.get(b)?.timestamp
+      ta - tb
+  current
 
 Stores =
   SessionsByState:
@@ -50,14 +59,18 @@ Stores =
     'user:successSignup': (o) -> o.sign.map (i) -> i.id
     'user:successMe': (o) -> o.sign.map (i) -> i.id
     'session:successAssign': (o) -> o.sign.map (i) -> i.id
+    'session:successCreated': (o) -> o.sign.map (i) -> i.id
+    'session:successBooked': (o) -> o.sign.map (i) -> i.id
 
   Session:
     Participants: Utils.mkSubListStore EntityStores.SessionUser,
       'session:successSession': (o) -> o.participants
     Messages: Utils.mkSubListStore EntityStores.Message,
-      'chat:successReceived': ListToSublistAppender (o) -> o.messages
-      'chat:requestSend': ListToSublistAppender (o) -> o.messages
-      'chat:requestSendFile': ListToSublistAppender (o) -> o.messages
+      'chat:successReceived': MixNewMessages
+      'chat:requestSend': MixNewMessages
+      'chat:requestSendFile': MixNewMessages
+      'chat:successSendFile': MixNewMessages
+      'chat:errorSendFile': MixNewMessages
 
   ServiceTypes: Utils.mkListStore EntityStores.ServiceType,
     'serviceTypes:successServiceTypes': (o) ->
