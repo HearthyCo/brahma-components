@@ -4,6 +4,8 @@ _ = require 'underscore'
 
 Utils = require '../../util/frontendUtils'
 
+EntityStores = require '../../stores/EntityStores'
+
 { div, img, span, a } = React.DOM
 
 module.exports = React.createClass
@@ -17,10 +19,10 @@ module.exports = React.createClass
     message: React.PropTypes.object.isRequired
 
   render: ->
-    avatar = @props.message.author.avatar || '/res/images/default-avatar.png'
-    _this = @
+    author = EntityStores.User.get @props.message.author
+    avatar = author.avatar || '/res/images/default-avatar.png'
     fullname = ['name', 'surname1', 'surname2']
-      .map (f) -> _this.props.message.author[f]
+      .map (f) -> author[f]
       .filter (v) -> v
       .join ' '
 
