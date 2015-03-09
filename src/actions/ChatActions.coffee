@@ -45,7 +45,7 @@ ChatActions =
     fd.append 'upload', file
 
     url = window.apiServer + '/session/' + session + '/attach'
-    Backbone.ajax
+    opts =
       dataType: 'jsonp'
       url: url
       contentType: false
@@ -56,13 +56,22 @@ ChatActions =
         console.error 'API POST Error:', url, status, xhr
         payload.messages[0].status = 'error'
         AppDispatcher.trigger 'chat:errorSendFile', payload
+        setTimeout retry, 5000
       success: (response) ->
         console.log 'API POST Success:', url, response
         payload.messages[0].status = 'success'
         payload.messages[0].data.type = response.attachments[0].mime
         payload.messages[0].data.href = response.attachments[0].url
-
         AppDispatcher.trigger 'chat:successSendFile', payload
+
+    retries = 4
+    retry = ->
+      if retries-- > 0
+        payload.messages[0].status = 'pending'
+        AppDispatcher.trigger 'chat:requestSendFile', payload
+        Backbone.ajax opts
+
+    Backbone.ajax opts
 
 
 module.exports = ChatActions
