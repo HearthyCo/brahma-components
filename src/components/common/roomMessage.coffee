@@ -18,6 +18,14 @@ module.exports = React.createClass
     id: React.PropTypes.string
     message: React.PropTypes.object.isRequired
 
+  getIconForStatus: (status) ->
+    if status is 'pending'
+      span className: 'upload-status', '...'
+    else if status is 'success'
+      span className: 'upload-status icon icon-download'
+    else if status is 'error'
+      span className: 'upload-status icon icon-cross'
+
   render: ->
     author = EntityStores.User.get @props.message.author
     avatar = author.avatar || '/res/images/default-avatar.png'
@@ -33,7 +41,8 @@ module.exports = React.createClass
         'ha enviado un archivo: '
         a href: @props.message.data.href, target: '_blank',
           @props.message.data.message + ' (' +
-            Utils.humanFilesize(@props.message.data.size) + ')'
+            Utils.humanFilesize(@props.message.data.size) + ') '
+        @getIconForStatus @props.message.status
 
     status = @props.message.status || 'waiting'
 
