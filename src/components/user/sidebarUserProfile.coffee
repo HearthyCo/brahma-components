@@ -76,20 +76,20 @@ module.exports = React.createClass
       IconSubListEntry label: 'Alergias', icon: 'allergy',
         allergies
       IconSubListEntry label: 'Vacunas', icon: 'vaccine', target: '/allergies'
-      IconSubListEntry label: 'Problemas resueltos', icon: 'allergy',
-        HistoriesEntry {}
-        a className: 'view-more', href: '/history',
-          @getIntlMessage 'view-more'
-      IconSubListEntry label: 'Problemas actuales', icon: 'allergy',
-        HistoriesEntry {}
-        a className: 'view-more', href: '/history',
-          @getIntlMessage 'view-more'
       IconSubListEntry label: 'Tratamientos', icon: 'pill',
         HistoriesEntry {}
         HistoriesEntry {}
         a className: 'view-more', href: '/history',
           @getIntlMessage 'view-more'
-      IconSubListEntry label: 'Enfermería', icon: 'allergy',
+      IconSubListEntry label: 'Problemas resueltos', icon: 'problem-2',
+        HistoriesEntry {}
+        a className: 'view-more', href: '/history',
+          @getIntlMessage 'view-more'
+      IconSubListEntry label: 'Problemas actuales', icon: 'problem',
+        HistoriesEntry {}
+        a className: 'view-more', href: '/history',
+          @getIntlMessage 'view-more'
+      IconSubListEntry label: 'Enfermería', icon: 'nursing',
         HistoriesEntry {}
         a className: 'view-more', href: '/history',
           @getIntlMessage 'view-more'
