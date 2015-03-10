@@ -47,6 +47,9 @@ queue =
         when 'message'
           console.log 'Message received', message
           messages = [message]
+        when 'attachment'
+          console.log 'Attachment received', message
+          messages = [message]
         when 'pong'
           console.log 'Message received', message
         when 'status'

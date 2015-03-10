@@ -16,8 +16,9 @@ SessionActions =
 
   # TODO: check if it works
   book: (service, startDate) ->
-    Utils.mkApiPoster '/session/book', service: service, startDate: startDate,
-      'session:', 'Booked', success: (response) ->
+    Utils.mkApiPoster '/session/book',
+      { service: service, startDate: startDate }, 'session:', 'Booked',
+      success: (response) ->
         console.log 'API POST Success:', response
         AppDispatcher.trigger  'session:successBooked', response
         PageActions.navigate '/session/' + response.session.id

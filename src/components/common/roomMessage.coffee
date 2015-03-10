@@ -27,7 +27,7 @@ module.exports = React.createClass
       span className: 'upload-status icon icon-cross'
 
   render: ->
-    author = EntityStores.User.get @props.message.author
+    author = EntityStores.User.get(@props.message.author) || {}
     avatar = author.avatar || '/res/images/default-avatar.png'
     fullname = ['name', 'surname1', 'surname2']
       .map (f) -> author[f]
@@ -43,6 +43,8 @@ module.exports = React.createClass
           @props.message.data.message + ' (' +
             Utils.humanFilesize(@props.message.data.size) + ') '
         @getIconForStatus @props.message.status
+    else
+      return false
 
     status = @props.message.status || 'waiting'
 
