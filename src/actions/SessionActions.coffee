@@ -25,7 +25,10 @@ SessionActions =
 
   assign: (serviceType) ->
     Utils.mkApiPoster '/session/assignPool', serviceType: serviceType,
-      'session:', 'Assign'
+      'session:', 'Assign', success: (response) ->
+        console.log 'API POST Success:', response
+        AppDispatcher.trigger  'session:successAssign', response
+        Queue.socket.updateSessions() if Queue.socket
 
   refresh: (target) ->
     Utils.mkApiGetter '/session/' + target, 'session:', 'Session'
