@@ -3,6 +3,9 @@ ReactIntl = require 'react-intl'
 
 { a, span, div, strong, p } = React.DOM
 
+Trigger = React.createFactory require '../common/form/trigger'
+Indicator = React.createFactory require '../common/indicator'
+
 module.exports = React.createClass
 
   displayName: 'taskEntry'
@@ -21,28 +24,30 @@ module.exports = React.createClass
     div className: 'comp-taskEntry',
       div className: 'wrapper mini-cp',
         div className: 'taking-of',
-          span {}, 'dosages-done?'
+          span {}, @getIntlMessage 'dosage-done?'
+          Indicator {}
         div className: 'enable',
-          span {}, 'enable-notifications'
-          p {}, 'this-medication'
+          span {}, @getIntlMessage 'enable-notifications'
+          Trigger {}
+          p {}, @getIntlMessage 'this-medication'
       div className: 'label',
-        'Detalles'
-      div className: 'wrapper details',
+        @getIntlMessage 'details'
+      div className: 'details',
         div {},
-          strong {}, 'Medication :'
+          strong {}, @getIntlMessage('medication') + ' : '
           span {}, medication
         div {},
-          strong {}, 'Pharmaceutical form :'
+          strong {}, @getIntlMessage('pharmaceutical-form') + ' : '
           span {}, pharmaceuticalForm
         div {},
-          strong {}, 'Quantity :'
+          strong {}, @getIntlMessage('quantity') + ' : '
           span {}, quantity
         div {},
-          strong {}, 'Formula :'
+          strong {}, @getIntlMessage('formula') + ' : '
           span {}, formula
         div {},
-          strong {}, 'Instructions :'
+          strong {}, @getIntlMessage('instructions') + ' : '
           span {}, instructions
         div {},
-          strong {}, 'Duration :'
+          strong {}, @getIntlMessage('duration') + ' : '
           span {}, duration
