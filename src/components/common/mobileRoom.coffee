@@ -29,6 +29,8 @@ module.exports = React.createClass
   componentDidMount: ->
     EntityStores.Message.addChangeListener @updateMessages
     ListStores.Session.Messages.addChangeListener @updateMessages
+    node = @refs.log.getDOMNode()
+    node.scrollTop = node.scrollHeight
 
   componentWillUnmount: ->
     EntityStores.Message.removeChangeListener @updateMessages

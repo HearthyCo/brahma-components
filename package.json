@@ -10,7 +10,7 @@
     "grunt-contrib-coffee": "^0.12.0",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-jest": "mattparrish/grunt-jest",
+    "grunt-jest": "^0.1.3",
     "grunt-module-index": "~0.1.6",
     "jest-cli": "^0.2.1",
     "jshint-stylish": "^1.0.0",
