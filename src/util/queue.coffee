@@ -1,3 +1,4 @@
+Config = require '../util/config'
 Backbone = require 'exoskeleton'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 Socket = require '../util/socket'
@@ -35,7 +36,7 @@ queue =
   paused: false
   socket: null
   initSocket: (user) ->
-    @socket = Socket user, window.chatServer
+    @socket = Socket user, Config.chat
     @socket.onmessage = (message) ->
       messages = {}
       switch message.type

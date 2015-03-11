@@ -1,3 +1,4 @@
+Config = require '../util/config'
 Backbone = require 'exoskeleton'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 _ = require 'underscore'
@@ -5,7 +6,7 @@ _ = require 'underscore'
 module.exports =
 
   mkApiGetter: (endpoint, evtPrefix, evtSuffix, opts) ->
-    url = window.apiServer + endpoint
+    url = Config.api.url + endpoint
     AppDispatcher.trigger evtPrefix + 'request' + evtSuffix, {}
     opts = opts || {}
     defaultOpts =
@@ -22,7 +23,7 @@ module.exports =
     Backbone.ajax opts
 
   mkApiPoster: (endpoint, payload, evtPrefix, evtSuffix, opts) ->
-    url = window.apiServer + endpoint
+    url = Config.api.url + endpoint
     AppDispatcher.trigger evtPrefix + 'request' + evtSuffix, payload
     opts = opts || {}
     defaultOpts =

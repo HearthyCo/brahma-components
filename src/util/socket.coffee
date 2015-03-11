@@ -12,8 +12,12 @@ module.exports = (usr, opts) ->
   opts = opts || {}
   _.defaults opts, defaults
 
+  url = opts.hostname
+  url = opts.hostname + ':' + opts.port if opts.hostname is 'localhost'
+  url = 'ws://' + url
+
   connect = ->
-    new WebSocket 'ws://' + opts.hostname + ':' + opts.port
+    new WebSocket url
 
   socket = connect()
 

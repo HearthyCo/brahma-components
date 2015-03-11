@@ -1,3 +1,4 @@
+Config = require '../util/config'
 Backbone = require 'exoskeleton'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 Utils = require '../util/actionsUtils'
@@ -44,7 +45,7 @@ ChatActions =
     fd = new FormData()
     fd.append 'upload', file
 
-    url = window.apiServer + '/session/' + session + '/attach'
+    url = Config.api.url + '/session/' + session + '/attach'
     opts =
       dataType: 'jsonp'
       url: url

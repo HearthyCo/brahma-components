@@ -1,3 +1,4 @@
+Config = require '../util/config'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 Utils = require '../util/actionsUtils'
 Backbone = require 'exoskeleton'
@@ -14,7 +15,7 @@ TransactionActions =
       data.redirectUrls = redirectUrls
 
     Backbone.ajax
-      url: window.apiServer + '/transaction'
+      url: Config.api.url + '/transaction'
       contentType: "application/json; charset=utf-8"
       type: 'POST'
       dataType: 'jsonp'
@@ -31,7 +32,7 @@ TransactionActions =
 
   executePaypal: (paypalParams) ->
     Backbone.ajax
-      url: window.apiServer + '/transaction/execute'
+      url: Config.api.url + '/transaction/execute'
       contentType: "application/json; charset=utf-8"
       type: 'POST'
       dataType: 'jsonp'
