@@ -13,12 +13,10 @@ module.exports = React.createClass
 
   getDefaultProps: ->
     selected: moment()
-    date: moment()
-    month: moment()
-    week: moment()
 
   getInitialState: ->
     month: @props.selected.clone()
+    selected: @props.selected.clone()
 
   previous: ->
     month = @state.month
@@ -30,56 +28,57 @@ module.exports = React.createClass
     month.add 1, 'M'
     @setState month: month
 
-  select: ->
-    @props.selected = day.date
-    @forceUpdate()
-
-  renderMonthLabel: ->
-    span @state.month.format 'MMMM, YYYY'
+  select: (date) ->
+    @setState selected: date
 
   render: ->
 
     DayNames =
       div className: 'week names',
-        span className: 'day', 'Dom'
-        span className: 'day', 'Lun'
-        span className: 'day', 'Mar'
-        span className: 'day', 'Mie'
-        span className: 'day', 'Jue'
-        span className: 'day', 'Vie'
-        span className: 'day', 'Sab'
+        span className: 'day', @getIntlMessage 'mon'
+        span className: 'day', @getIntlMessage 'tue'
+        span className: 'day', @getIntlMessage 'wed'
+        span className: 'day', @getIntlMessage 'thu'
+        span className: 'day', @getIntlMessage 'fri'
+        span className: 'day', @getIntlMessage 'sat'
+        span className: 'day', @getIntlMessage 'sun'
 
     weeks = []
     done = false
-    date = @state.month.clone().startOf('month').add('w', -1).day 'Sunday'
+    date = @state.month.clone().startOf('month').startOf('isoWeek')
     monthIndex = date.month()
     count = 0
+    month = @state.month
+    _this = @
 
     while !done
 
       days = []
       date2 = date.clone()
-      month = @props.month
 
       i = 0
       while i < 7
         day =
           name: date2.format('dd').substring(0, 1)
           number: date2.date()
-          isCurrentMonth: date2.month() == month.month()
+          isCurrentMonth: date2.month() is month.month()
           isToday: date2.isSame(new Date, 'day')
-          date: date2
+          date: date2.clone()
         i++
 
-        days.push(
-          span
-            key: day.date.toString()
-            className: 'day' + (if day.isToday then ' today' else '') + (if day.isCurrentMonth then '' else ' different-month') + (if day.date.isSame(@props.selected) then ' selected' else ''), day.number
-        )
+        classname = 'day'
+        classname += ' today' if day.isToday
+        classname += ' different-month' if not day.isCurrentMonth
+        classname += ' selected' if day.date.isSame(@state.selected)
+        days.push span
+          key: day.date.toString()
+          onClick: ((day) -> -> _this.select day.date) day
+          date: day.date
+          className: classname,
+          span classname: 'colored', day.number
         date2.add(1, 'd')
 
-      weeks.push div className: 'week', key: date.day(), days
-      #Week key: date.toString(), date: date.clone(), month: @state.month, select: @select, selected: @props.selected
+      weeks.push div className: 'week', key: date.unix(), days
       date.add 1, 'w'
       done = count++ > 2 and monthIndex != date.month()
       monthIndex = date.month()
@@ -88,9 +87,9 @@ module.exports = React.createClass
 
     div className: 'comp-calendar',
       div className: 'header',
-        div className: 'fa icon icon-left', onClick: @previous
-        @renderMonthLabel()
-        div className: 'fa icon icon-right', onClick: @next
+        span className: 'icon icon-left', onClick: @previous
+        span className: 'month', @state.month.format 'MMMM, YYYY'
+        span className: 'icon icon-right', onClick: @next
 
       DayNames
       weeks
