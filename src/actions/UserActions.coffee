@@ -25,5 +25,17 @@ UserActions =
   save: (user) ->
     Utils.mkApiPoster '/me/update', user, 'user:', 'Save'
 
+  confirmMail: (uid, hash) ->
+    pl = userId: uid, hash: hash
+    Utils.mkApiPoster '/me/confirm', pl, 'user:', 'ConfirmMail'
+
+  requestPasswordChange: (email) ->
+    pl = email: email
+    Utils.mkApiPoster '/recover', pl, 'user:', 'RequestPasswordChange'
+
+  confirmPasswordChange: (uid, hash, password) ->
+    pl = userId: uid, hash: hash, newPassword: password
+    Utils.mkApiPoster '/recover/confirm', pl, 'user:', 'ConfirmPasswordChange'
+
 
 module.exports = UserActions
