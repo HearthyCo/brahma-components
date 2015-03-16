@@ -8,9 +8,11 @@ module.exports = React.createClass
   displayName: 'text'
 
   render: ->
+    omit = _.omit(@props, 'id', 'icon')
+
     div id: @props.id, className: 'field-set comp-text',
       label className: 'label',
         span className: 'icon icon-' + @props.icon
-      input _.extend _.omit(@props, 'id', 'icon'), className: 'field'
+      input _.extend omit, className: 'field', ref: 'input'
       div className: 'message',
         label className: 'message-form'
