@@ -1,6 +1,12 @@
 React = require 'react'
 
-{ table, tbody, tr, td } = React.DOM
+{ table, tbody, thead, tr, td, th, a } = React.DOM
+
+crudControls = (id) ->
+  [
+    a href: "", "edit"
+    a href: "", "delete"
+  ]
 
 module.exports = React.createClass
 
@@ -11,14 +17,18 @@ module.exports = React.createClass
     items: React.PropTypes.array
 
   render: ->
+    keys = @props.header or Object.keys @props.items[0]
+
     table id: @props.id,
+      thead {},
+        tr
+          keys.map (key) ->
+            th className: "key-#{key}", key
+          th className: "controls", "controls"
       tbody {},
         @props.items.map (item, i) ->
-          tableItem
           tr id: item.id,
-            (() ->
-              ret = []
-              for own key, value of item
-                ret.push td className: "key-#{key}", value
-              return ret
-            )()
+            keys.map (key) ->
+              td className: "key-#{key}", item[key]
+            td className: "controls",
+              crudControls item.id
