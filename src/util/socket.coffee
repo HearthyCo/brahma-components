@@ -70,8 +70,8 @@ module.exports = (usr, opts) ->
         data:
           userId: EntityStores.SignedEntry.get('userId').value
           _userId_sign: EntityStores.SignedEntry.get('userId').signature
-          sessions: EntityStores.SignedEntry.get('sessions').value
-          _sessions_sign: EntityStores.SignedEntry.get('sessions').signature
+          sessions: EntityStores.SignedEntry.get('sessions')?.value
+          _sessions_sign: EntityStores.SignedEntry.get('sessions')?.signature
       ]
       socket.send JSON.stringify handshake
       callback = ->
