@@ -13,7 +13,7 @@ module.exports = React.createClass
   render: ->
     table id: @props.id,
       tbody {},
-        items.map (item, i) ->
+        @props.items.map (item, i) ->
           tableItem
           tr id: item.id,
             (() ->
