@@ -5,8 +5,9 @@ module.exports =
     loginEvents = ['user:successLogin', 'user:successSignup', 'user:successMe']
     if loginEvents.indexOf(evt) >= 0
       @currentUid = payload.users[0].id
-    if evt is 'user:didLogout'
+    if evt is 'user:successLogout'
       @currentUid = null
+      @trigger 'change'
   Transaction: Utils.mkEntityStore 'transactions'
   ServiceType: Utils.mkEntityStore 'servicetypes'
   Session: Utils.mkEntityStore 'sessions'

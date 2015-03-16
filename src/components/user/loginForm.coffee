@@ -16,11 +16,17 @@ module.exports = React.createClass
 
   mixins: [React.addons.LinkedStateMixin, ReactIntl]
 
+  propTypes:
+    showRegister: React.PropTypes.bool
+
   handleSubmit: (e) ->
     e.preventDefault()
     obj = _.extend {}, @state
     # Do your form post-processing here
     UserActions.login obj
+
+  getDefaultProps: () ->
+    showRegister: true
 
   getInitialState: () ->
     return {}
@@ -50,13 +56,13 @@ module.exports = React.createClass
 
     cmpLoginF = 'comp-loginForm'
 
-    loginUser=
+    loginUser =
       label: email
       name: 'email'
       placeholder: email
       icon: 'email'
 
-    loginPass=
+    loginPass =
       label: password
       name: 'password'
       placeholder: password
@@ -69,7 +75,9 @@ module.exports = React.createClass
         a href: '/register',
           @getIntlMessage('forgotten-password?')
       @buildComp 'button', label: login
-      div className: 'create-account',
-        span {}, @getIntlMessage('do-not-have-account?')
-        a href: '/register',
-          signup
+
+      if @props.showRegister
+        div className: 'create-account',
+          span {}, @getIntlMessage('do-not-have-account?')
+          a href: '/register',
+            signup
