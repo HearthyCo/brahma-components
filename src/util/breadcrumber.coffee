@@ -87,9 +87,12 @@ module.exports =
   sessions: -> (args) ->
     crumbs = (state) -> ->
       arr = []
+      link = urlBuilder('sessions', state) if state?
+      link = urlBuilder('sessions') if not state?
+
       arr.push
         label: @getIntlMessage('sessions')
-        link: urlBuilder('sessions', state)
+        link: link
         className: 'clock'
       arr
 

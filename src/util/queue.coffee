@@ -55,7 +55,7 @@ queue =
           console.log 'Message received', message
         when 'status'
           console.warn 'Warn', message
-      AppDispatcher.trigger 'chat:successReceived', messages: messages,
+      AppDispatcher.trigger 'chat:successReceived', messages: messages
   push: (payload) ->
     # console.log '> Push to queue', payload
     # When a new message is pushed, count of error is restarted;
