@@ -32,7 +32,7 @@ module.exports = Utils =
         for s in payload[entityName]
           _models[s.id] = s
         if payload[entityName].length > 0
-          Store.trigger 'change'
+          setTimeout (-> Store.trigger 'change'), 0
 
     Store
 
@@ -66,7 +66,7 @@ module.exports = Utils =
         if ret instanceof Array
           _list = ret.map (v) ->
             if v instanceof Object then v.id else v
-          Store.trigger 'change'
+          setTimeout (-> Store.trigger 'change'), 0
 
     Store
 
@@ -84,6 +84,9 @@ module.exports = Utils =
 
       getObjects: (id) ->
         return _lists[id]?.map baseEntityStore.get
+
+      getKeys: ->
+        return Object.keys _lists
 
       # Standard events for views
       addChangeListener: (cb) -> @on 'change', cb
@@ -103,7 +106,8 @@ module.exports = Utils =
             _lists[owner] = list.map (v) ->
               if v instanceof Object then v.id else v
             changed = true
-        Store.trigger 'change' if changed
+        if changed
+          setTimeout (-> Store.trigger 'change'), 0
 
     Store
 
