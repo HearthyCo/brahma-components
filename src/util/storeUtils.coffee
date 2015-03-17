@@ -71,7 +71,6 @@ module.exports = Utils =
         if ret instanceof Array
           _list = ret.map (v) ->
             if v instanceof Object then v.id else v
-
           if opts.storageKey
             localStorage.setItem opts.storageKey, JSON.stringify _lists
           setTimeout ( -> Store.trigger 'change'), 0
@@ -97,6 +96,9 @@ module.exports = Utils =
 
       getObjects: (id) ->
         return _lists[id]?.map baseEntityStore.get
+
+      getKeys: ->
+        return Object.keys _lists
 
       # Standard events for views
       addChangeListener: (cb) -> @on 'change', cb

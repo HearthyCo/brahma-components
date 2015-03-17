@@ -49,10 +49,10 @@ module.exports = React.createClass
         , opt.label
 
   render: ->
-    email = @getIntlMessage('email')
-    password = @getIntlMessage('password')
-    login = @getIntlMessage('login')
-    signup = @getIntlMessage('signup')
+    email = @getIntlMessage 'email'
+    password = @getIntlMessage 'password'
+    login = @getIntlMessage 'login'
+    signup = @getIntlMessage 'signup'
 
     cmpLoginF = 'comp-loginForm'
 
@@ -72,12 +72,12 @@ module.exports = React.createClass
       @buildComp 'email', loginUser
       @buildComp 'password', loginPass
       div className: 'forgotten-pass',
-        a href: '/register',
-          @getIntlMessage('forgotten-password?')
+        a href: 'request/passwordChange',
+          @getIntlMessage 'forgotten-password?'
       @buildComp 'button', label: login
 
       if @props.showRegister
         div className: 'create-account',
-          span {}, @getIntlMessage('do-not-have-account?')
+          span {}, @getIntlMessage 'do-not-have-account?'
           a href: '/register',
             signup
