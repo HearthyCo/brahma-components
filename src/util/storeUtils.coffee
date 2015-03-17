@@ -32,15 +32,20 @@ module.exports = Utils =
         for s in payload[entityName]
           _models[s.id] = s
         if payload[entityName].length > 0
-          Store.trigger 'change'
+          setTimeout ( -> Store.trigger 'change'), 0
 
     Store
 
   # Creates a new List Store of the specified entity type
-  mkListStore: (baseEntityStore, bindings) ->
+  mkListStore: (baseEntityStore, bindings, opts) ->
+    opts = opts || {}
 
     # Private storage
     _list = []
+
+    if opts.storageKey
+      cached = JSON.parse localStorage.getItem opts.storageKey
+      _lists = cached if cached
 
     # Public interface
     Store = _.extend {}, Backbone.Events,
@@ -66,15 +71,23 @@ module.exports = Utils =
         if ret instanceof Array
           _list = ret.map (v) ->
             if v instanceof Object then v.id else v
-          Store.trigger 'change'
+
+          if opts.storageKey
+            localStorage.setItem opts.storageKey, JSON.stringify _lists
+          setTimeout ( -> Store.trigger 'change'), 0
 
     Store
 
   # Creates a new Sub-List Store of the specified entity type
-  mkSubListStore: (baseEntityStore, bindings) ->
+  mkSubListStore: (baseEntityStore, bindings, opts) ->
+    opts = opts || {}
 
     # Private storage
     _lists = {}
+
+    if opts.storageKey
+      cached = JSON.parse localStorage.getItem opts.storageKey
+      _lists = cached if cached
 
     # Public interface
     Store = _.extend {}, Backbone.Events,
@@ -103,7 +116,10 @@ module.exports = Utils =
             _lists[owner] = list.map (v) ->
               if v instanceof Object then v.id else v
             changed = true
-        Store.trigger 'change' if changed
+        if changed
+          if opts.storageKey
+            localStorage.setItem opts.storageKey, JSON.stringify _lists
+          setTimeout ( -> Store.trigger 'change'), 0
 
     Store
 
