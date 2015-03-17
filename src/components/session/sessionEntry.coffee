@@ -4,6 +4,7 @@ ReactIntl = require 'react-intl'
 { div, img, span, a } = React.DOM
 
 Datetime = React.createFactory require '../common/datetime'
+ListStores = require '../../stores/ListStores'
 
 module.exports = React.createClass
 
@@ -15,7 +16,6 @@ module.exports = React.createClass
     id: React.PropTypes.string
     session: React.PropTypes.object.isRequired
 
-
   render: ->
     div id: @props.id, className: 'comp-sessionentry',
       a className: 'session-link', href: '/session/' + @props.session.id,
@@ -23,4 +23,5 @@ module.exports = React.createClass
           Datetime value: @props.session.startDate
           span className: 'session-title', @props.session.title
         div className: 'session-notify',
-          span className: 'icon icon-advice'
+          if ListStores.Session.LastViewedMessage.getCounter(@props.session.id) > 0
+            span className: 'icon icon-advice'

@@ -67,10 +67,34 @@ Stores =
       'session:successSession': (o) -> o.participants
     Messages: Utils.mkSubListStore EntityStores.Message,
       'chat:successReceived': MixNewMessages
+      'chat:successHistoryReceived': MixNewMessages
       'chat:requestSend': MixNewMessages
       'chat:requestSendFile': MixNewMessages
       'chat:successSendFile': MixNewMessages
       'chat:errorSendFile': MixNewMessages
+    LastViewedMessage: Utils.mkSubListStore EntityStores.Message, {
+      'page:change': (o, l) ->
+        if o.page.displayName is 'roomPage' or o.page.displayName is 'sessionChatPage'
+          @currentSid = o.opts.sessionId
+          messages = Stores.Session.Messages.getIds(o.opts.sessionId) || []
+          l[o.opts.sessionId] = [messages[messages.length - 1]] if messages.length
+        else
+          # prevent invalid currentId when page is not a chat page
+          @currentSid = 0
+        l
+      'chat:successReceived': (o, l) ->
+        messageSession = o.messages[0].session + ''
+        if @currentSid is messageSession
+          messages = Stores.Session.Messages.getIds(messageSession) || []
+          l[messageSession] = [messages[messages.length - 1]] if messages.length
+        l
+      'chat:requestSend': (o, l) ->
+        messageSession = o.messages[0].session + ''
+        if @currentSid is messageSession
+          messages = Stores.Session.Messages.getIds(messageSession) || []
+          l[messageSession] = [messages[messages.length - 1]] if messages.length
+        l
+      }, storageKey: 'LastViewedMessage'
 
   ServiceTypes: Utils.mkListStore EntityStores.ServiceType,
     'serviceTypes:successServiceTypes': (o) ->
@@ -89,5 +113,16 @@ Stores.ClientHome.addChangeListener = (cb) ->
 
 Stores.ClientHome.removeChangeListener = (cb) ->
   Utils.treeEval Stores.ClientHome, 'removeChangeListener', [cb]
+
+### Common ###
+# Messages
+Stores.Session.LastViewedMessage.getCounter = (sessionId) ->
+  messages = Stores.Session.Messages.getIds(sessionId) || []
+  lastViewed = Stores.Session.LastViewedMessage.getIds sessionId
+
+  return 0 if not messages?
+  return messages.length if not lastViewed?
+
+  messages.length - messages.indexOf(lastViewed[0]) - 1
 
 window.listStores = module.exports = Stores

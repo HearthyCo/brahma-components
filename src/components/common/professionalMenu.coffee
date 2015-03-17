@@ -32,12 +32,14 @@ module.exports = React.createClass
     EntityStores.ServiceType.addChangeListener @updateSession
     ListStores.ServiceTypes.addChangeListener @updateSession
     ListStores.SessionsByServiceType.addChangeListener @updateSession
+    ListStores.Session.Messages.addChangeListener @updateSession
 
   componentWillUnmount: ->
     EntityStores.Session.removeChangeListener @updateSession
     EntityStores.ServiceType.removeChangeListener @updateSession
     ListStores.ServiceTypes.removeChangeListener @updateSession
     ListStores.SessionsByServiceType.removeChangeListener @updateSession
+    ListStores.Session.Messages.removeChangeListener @updateSession
 
   handleOpenMenu: ->
     @setState userMenuExpanded: true

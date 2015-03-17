@@ -13,7 +13,7 @@ successCallback = (queue, messages) ->
   for message in messages
     queue.sent++
     message.status = 'success'
-    AppDispatcher.trigger 'chat:successSend', message
+    AppDispatcher.trigger 'chat:successSend', messages: [message]
 
   count = RETRY_NUMBER
   queue.process()
