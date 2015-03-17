@@ -20,4 +20,4 @@ module.exports = React.createClass
         a href: '/',
           div className: 'logo'
       div className: 'middle-area',
-        a href: '/users', 'Users'
+        a href: '/crud/professional', 'Professionals'
