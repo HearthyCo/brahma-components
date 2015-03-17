@@ -45,12 +45,11 @@ module.exports = React.createClass
         id: opt.name
         , opt.label
 
-
   render: ->
-    email = @getIntlMessage('email')
-    password = @getIntlMessage('password')
-    signup = @getIntlMessage('signup')
-    login = @getIntlMessage('login')
+    email = @getIntlMessage 'email'
+    password = @getIntlMessage 'password'
+    signup = @getIntlMessage 'signup'
+    login = @getIntlMessage 'login'
 
     cmpLoginF = 'comp-signupForm'
 
@@ -66,13 +65,12 @@ module.exports = React.createClass
        placeholder: password
        icon: 'lock'
 
-
     # Mandatory fields: login, password, gender, name, birthdate
     form action: 'signup', onSubmit: @handleSubmit, className: cmpLoginF,
       @buildComp 'email', signupUser
       @buildComp 'password', signupPass
-      @buildComp 'button', { label: signup, }
+      @buildComp 'button', label: signup
       div className: 'start-session',
-        span {}, @getIntlMessage('i-have-account')
+        span {}, @getIntlMessage 'i-have-account'
         a href: '/login',
           login

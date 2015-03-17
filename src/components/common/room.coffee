@@ -18,7 +18,7 @@ module.exports = React.createClass
 
   propTypes:
     session: React.PropTypes.object.isRequired
-    user: React.PropTypes.object
+    #user: React.PropTypes.object
 
   contextTypes:
     user: React.PropTypes.object
@@ -78,19 +78,7 @@ module.exports = React.createClass
     if @state.hasText
       classes += ' has-text'
 
-    _this = @
-    if @props.user
-      fullname = ['name', 'surname1', 'surname2']
-        .map (f) -> _this.props.user[f]
-        .filter (v) -> v
-        .join ' '
-    else
-      fullname = @getIntlMessage 'loading'
-
     div className: 'comp-room',
-      div className: 'session-title',
-        div className: 'session-client on',
-          fullname
       div className: 'room-wrapper',
         div className: 'room-backlog', ref: 'log',
           @state.messages?.map (m) ->
@@ -98,12 +86,12 @@ module.exports = React.createClass
       form className: classes, onSubmit: @handleMessage,
         input
           className: 'room-input'
-          placeholder: @getIntlMessage('type-here')
+          placeholder: @getIntlMessage 'type-here'
           onChange: @handleChange
           ref: 'msgbox'
-        button className: 'room-send', @getIntlMessage('send')
+        button className: 'room-send', @getIntlMessage 'send'
         button className: 'upload', onClick: @handleUpload,
           span className: 'icon icon-clip'
       div className: 'end-session',
         button {},
-          'Finalizar consulta'
+          @getIntlMessage 'finish'

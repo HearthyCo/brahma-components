@@ -5,6 +5,7 @@ _ = require 'underscore'
 { div, ul, li, span, a } = React.DOM
 UserBrief = React.createFactory require '../user/userBrief'
 SessionTypeTab = React.createFactory require '../session/sessionTypeTab'
+Indicator = React.createFactory require './indicator'
 
 ListStores = require '../../stores/ListStores'
 EntityStores = require '../../stores/EntityStores'
@@ -81,13 +82,14 @@ module.exports = React.createClass
               a
                 className: 'logout'
                 onClick: @handleLogout
-                @getIntlMessage('logout')
+                @getIntlMessage 'logout'
 
         if @context.user
           UserBrief user: @context.user
         div className: 'top-area',
-          span className: 'indicator on',
-            @getIntlMessage('active')
+          span className: 'indicator-position',
+            Indicator {}
+            @getIntlMessage 'active'
       div className: 'middle-area',
         @state.servicetypes.map (servicetype) ->
           sessions = _this.state.sessionsByServiceType[servicetype.id] || []
@@ -97,7 +99,7 @@ module.exports = React.createClass
             sessions: sessions
       div className: 'bottom-area',
         div className: 'title',
-          @getIntlMessage('next-event')
+          @getIntlMessage 'next-event'
         div className: 'date',
           span className: 'day',
             '03'
