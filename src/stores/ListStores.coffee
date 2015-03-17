@@ -74,10 +74,11 @@ Stores =
       'chat:errorSendFile': MixNewMessages
     LastViewedMessage: Utils.mkSubListStore EntityStores.Message, {
       'page:change': (o, l) ->
-        if o.page.displayName is 'roomPage' or o.page.displayName is 'sessionChatPage'
+        pageName = o.page.displayName
+        if pageName is 'roomPage' or pageName is 'sessionChatPage'
           @currentSid = o.opts.sessionId
-          messages = Stores.Session.Messages.getIds(o.opts.sessionId) || []
-          l[o.opts.sessionId] = [messages[messages.length - 1]] if messages.length
+          messages = Stores.Session.Messages.getIds(@currentSid) || []
+          l[@currentSid] = [messages[messages.length - 1]] if messages.length
         else
           # prevent invalid currentId when page is not a chat page
           @currentSid = 0

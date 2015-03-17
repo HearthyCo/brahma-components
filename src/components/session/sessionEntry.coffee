@@ -17,11 +17,13 @@ module.exports = React.createClass
     session: React.PropTypes.object.isRequired
 
   render: ->
+    sessionId = @props.session.id
+
     div id: @props.id, className: 'comp-sessionentry',
       a className: 'session-link', href: '/session/' + @props.session.id,
         div className: 'session-label',
           Datetime value: @props.session.startDate
           span className: 'session-title', @props.session.title
         div className: 'session-notify',
-          if ListStores.Session.LastViewedMessage.getCounter(@props.session.id) > 0
+          if ListStores.Session.LastViewedMessage.getCounter(sessionId) > 0
             span className: 'icon icon-advice'

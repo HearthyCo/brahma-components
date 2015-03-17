@@ -11,7 +11,7 @@ module.exports = React.createClass
 
   render: ->
 
-    entry = 'Realizar ejercicio por lo menos dos veces al día. Estiramiento y calentamiento previo'
+    entry = 'Realiza ejercicio por lo menos dos veces al día. Estiramiento y ya'
 
     div className: 'comp-recomendationEntry',
       div className: 'label',
