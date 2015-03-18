@@ -2,6 +2,8 @@ _ = require 'underscore'
 Utils = require '../util/storeUtils'
 EntityStores = require './EntityStores'
 
+# Stores for Lists of Entities (EntityStores)
+
 MixNewMessages = (data, current) ->
   messages = data.messages
   sessions = {}
