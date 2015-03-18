@@ -22,5 +22,5 @@ module.exports = React.createClass
       div className: 'section',
         @props.children
       a className: 'view-more section-view-more', href: @props.url,
-        span className: 'icon icon-advice' if @props.advice
+        span className: 'icon icon-advice' if not @props.advice
         @getIntlMessage 'view-more'

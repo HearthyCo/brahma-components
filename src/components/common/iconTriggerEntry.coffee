@@ -14,7 +14,7 @@ module.exports = React.createClass
     label: React.PropTypes.string.isRequired
     icon: React.PropTypes.string.isRequired
     target: React.PropTypes.string
-    time: React.PropTypes.object.isRequired
+    time: React.PropTypes.string.isRequired #fake, change to object
     trigger: React.PropTypes.bool
 
   handleClick: ->
