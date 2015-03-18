@@ -8,12 +8,15 @@ module.exports = React.createClass
   displayName: 'text'
 
   render: ->
+
+    id = "input-#{@props.id}"
+
     div id: @props.id, className: 'field-set comp-text',
       div className: 'label',
-        label className: 'label-form',
+        label className: 'label-form', htmlFor: id,
           @props.label
 
       div className: 'field',
-        input _.omit @props, 'id'
+        input _.extend @props, { id: id }
       div className: 'message',
         label className: 'message-form'
