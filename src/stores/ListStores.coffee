@@ -21,6 +21,15 @@ MixNewMessages = (data, current) ->
       ta - tb
   current
 
+CheckLastViewed = (data, lastViewed) ->
+  messages = data.messages
+  messageSession = data.messages[0].session if messages? and messages.length
+  if @currentSid is messageSession
+    messages = Stores.Session.Messages.getIds(messageSession) || []
+    length = messages.length
+    lastViewed[messageSession] = [messages[length - 1]] if length
+  lastViewed
+
 Stores =
   SessionsByState:
     Programmed: Utils.mkListStore EntityStores.Session,
@@ -76,25 +85,15 @@ Stores =
       'page:change': (o, l) ->
         pageName = o.page.displayName
         if pageName is 'roomPage' or pageName is 'sessionChatPage'
-          @currentSid = o.opts.sessionId
+          @currentSid = parseInt o.opts.sessionId
           messages = Stores.Session.Messages.getIds(@currentSid) || []
           l[@currentSid] = [messages[messages.length - 1]] if messages.length
         else
           # prevent invalid currentId when page is not a chat page
           @currentSid = 0
         l
-      'chat:successReceived': (o, l) ->
-        messageSession = o.messages[0].session + ''
-        if @currentSid is messageSession
-          messages = Stores.Session.Messages.getIds(messageSession) || []
-          l[messageSession] = [messages[messages.length - 1]] if messages.length
-        l
-      'chat:requestSend': (o, l) ->
-        messageSession = o.messages[0].session + ''
-        if @currentSid is messageSession
-          messages = Stores.Session.Messages.getIds(messageSession) || []
-          l[messageSession] = [messages[messages.length - 1]] if messages.length
-        l
+      'chat:successReceived': CheckLastViewed
+      'chat:requestSend': CheckLastViewed
       }, storageKey: 'LastViewedMessage'
 
   ServiceTypes: Utils.mkListStore EntityStores.ServiceType,
@@ -125,5 +124,16 @@ Stores.Session.LastViewedMessage.getCounter = (sessionId) ->
   return messages.length if not lastViewed?
 
   messages.length - messages.indexOf(lastViewed[0]) - 1
+
+Stores.Session.isUpdated = (sessionId) ->
+  messages = Stores.Session.Messages.getIds(sessionId) || []
+  lastViewed = Stores.Session.LastViewedMessage.getIds sessionId
+
+  return true if not messages? or not messages.length
+  return false if not lastViewed?
+
+  lastArrived = [messages[messages.length - 1]]
+
+  lastViewed[0] is lastArrived[0]
 
 window.listStores = module.exports = Stores
