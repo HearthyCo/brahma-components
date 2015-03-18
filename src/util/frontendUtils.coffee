@@ -16,3 +16,38 @@ module.exports =
       bytes /= 1024
       u++
     bytes.toFixed(1) + ' ' + units[u]
+
+  b64toBlob: (b64Data, contentType, sliceSize) ->
+    contentType = contentType || ''
+    sliceSize = sliceSize || 512
+
+    byteCharacters = atob b64Data
+    byteArrays = []
+
+    offset = 0
+    while offset < byteCharacters.length
+      slice = byteCharacters.slice offset, offset + sliceSize
+
+      byteNumbers = new Array slice.length
+      i = 0
+      while i < slice.length
+        byteNumbers[i] = slice.charCodeAt(i)
+        i++
+
+      byteArray = new Uint8Array byteNumbers
+      byteArrays.push byteArray
+
+      offset += sliceSize
+
+    blob = new Blob byteArrays, type: contentType
+    blob
+
+  saveAs: (blob, filename) ->
+    a = document.createElement 'a'
+    a.style = 'display: none'
+    document.body.appendChild a
+    url = window.URL.createObjectURL blob
+    a.href = url
+    a.download = filename
+    a.click()
+    window.URL.revokeObjectURL url
