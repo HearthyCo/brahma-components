@@ -52,7 +52,6 @@ module.exports = React.createClass
   # -- OpenTok Events --
 
   onSessionJoin: ->
-    console.log 'onSessionJoin'
     # Join session and attach events.
     otsession = OT.initSession apiKey, @props.session.meta.opentokSession
     otsession.on 'streamCreated', (e) => @onStreamCreate e
@@ -62,7 +61,6 @@ module.exports = React.createClass
     @setState otsession: otsession
 
   onSessionConnect: (error) ->
-    console.log 'onSessionConnect'
     # Just got connected to a session. Start streaming.
     @state.otsession.publish OT.initPublisher 'room-video',
       insertMode: 'append'
@@ -71,14 +69,12 @@ module.exports = React.createClass
       fitMode: 'contain'
 
   onSessionLeave: (resetState) ->
-    console.log 'onSessionLeave'
     # Disconnect and clean-up when leaving a session.
     if @state.otsession
       @state.otsession.disconnect()
     @setState @getInitialState() if resetState
 
   onStreamCreate: (event) ->
-    console.log 'onStreamCreate'
     # A new stream has been created. Subscribe to it.
     stream = @state.otsession.subscribe event.stream, 'room-video',
       insertMode: 'append'
@@ -94,18 +90,15 @@ module.exports = React.createClass
     @context.setBlocked true
 
   onStreamJoin: (stream, err) ->
-    console.log 'onStreamJoin'
     # Just started receiving a stream.
     @setState videoProportion: stream.videoWidth() / stream.videoHeight()
 
   onStreamResize: (stream, event) ->
-    console.log 'onStreamResize'
     # Stream changed size
     @setState videoProportion: event.newValue.width / event.newValue.height
     @handleResize()
 
   onStreamDestroy: (event) ->
-    console.log 'onStreamDestroy', event
     # Stream finished
     streams = @state.subscriptions
     # To find the stream on the list, we have to compare by streamId.
