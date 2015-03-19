@@ -41,13 +41,3 @@ module.exports =
 
     blob = new Blob byteArrays, type: contentType
     blob
-
-  saveAs: (blob, filename) ->
-    a = document.createElement 'a'
-    a.style = 'display: none'
-    document.body.appendChild a
-    url = window.URL.createObjectURL blob
-    a.href = url
-    a.download = filename
-    a.click()
-    window.URL.revokeObjectURL url

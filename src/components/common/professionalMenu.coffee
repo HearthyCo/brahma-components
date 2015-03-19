@@ -20,6 +20,9 @@ module.exports = React.createClass
 
   mixins: [ReactIntl]
 
+  propTypes:
+    blocked: React.PropTypes.bool
+
   contextTypes:
     user: React.PropTypes.object
 
@@ -71,6 +74,7 @@ module.exports = React.createClass
       umClasses += ' is-collapsed'
 
     div id: 'menu',
+      if @props.blocked then div id: 'menu-block'
       div className: 'top-area',
         a href: '/',
           div className: 'logo'
