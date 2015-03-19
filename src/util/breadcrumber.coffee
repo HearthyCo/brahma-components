@@ -30,12 +30,38 @@ module.exports =
     crumbs = -> ->
       arr = []
       arr.push
-        label: @getIntlMessage('histories')
-        link: urlBuilder('histories')
-        className: 'clock'
+        label: @getIntlMessage 'histories'
+        link: urlBuilder 'histories'
+        className: 'history'
       arr
 
     stores: [ ], list: crumbs()
+
+  ###
+    This function buid a breadcrumb for allergies routes (allergies an allergy)
+    @param  {string}    key   Name of key for get value in args
+    @return {function}        Function which is called with args
+  ###
+  history: -> (args) ->
+    store = (require '../stores/EntityStores').HistoryEntry
+
+    crumbs = (store, id) -> ->
+      arr = []
+      history = store.get id
+
+      title = if history? then history.title else @getIntlMessage 'history'
+
+      arr.push
+        label: @getIntlMessage 'histories'
+        link: urlBuilder 'histories'
+        className: 'history'
+      arr.push
+        label: title
+        link: urlBuilder 'histories', id
+        className: 'history'
+      arr
+
+    stores: [ store ], list: crumbs store, args['id']
 
   ###
     This function buid a breadcrumb for allergies routes (allergies an allergy)
@@ -46,9 +72,9 @@ module.exports =
     crumbs = -> ->
       arr = []
       arr.push
-        label: @getIntlMessage('allergies')
-        link: urlBuilder('allergies')
-        className: 'clock'
+        label: @getIntlMessage 'allergies'
+        link: urlBuilder 'allergies'
+        className: 'history'
       arr
 
     stores: [ ], list: crumbs()
@@ -68,13 +94,13 @@ module.exports =
       title = if allergy? then allergy.title else @getIntlMessage 'allergy'
 
       arr.push
-        label: @getIntlMessage('allergies')
-        link: urlBuilder('allergies')
-        className: 'clock'
+        label: @getIntlMessage 'allergies'
+        link: urlBuilder 'allergies'
+        className: 'history'
       arr.push
         label: title
-        link: urlBuilder('allergies', id)
-        className: 'clock'
+        link: urlBuilder 'allergies', id
+        className: 'history'
       arr
 
     stores: [ store ], list: crumbs store, args['id']
@@ -91,7 +117,7 @@ module.exports =
       link = urlBuilder('sessions') if not state?
 
       arr.push
-        label: @getIntlMessage('sessions')
+        label: @getIntlMessage 'sessions'
         link: link
         className: 'clock'
       arr
@@ -134,8 +160,8 @@ module.exports =
 
       # Put session node first in array once we have a session state
       arr.push
-        label: @getIntlMessage('sessions')
-        link: urlBuilder('sessions', state)
+        label: @getIntlMessage 'sessions'
+        link: urlBuilder 'sessions', state
         className: 'clock'
       arr.push
         label: title
@@ -155,9 +181,9 @@ module.exports =
       arr = []
 
       arr.push
-        label: crumbBuilder @getIntlMessage('top-up')
-        link: urlBuilder('top-up')
-        className: 'clock'
+        label: crumbBuilder @getIntlMessage 'top-up'
+        link: urlBuilder 'top-up'
+        className: 'pig'
       arr
 
     stores: [ ], list: crumbs()
@@ -172,13 +198,29 @@ module.exports =
       arr = []
 
       arr.push
-        label: @getIntlMessage('top-up')
-        link: urlBuilder('top-up')
-        className: 'clock'
+        label: @getIntlMessage 'top-up'
+        link: urlBuilder 'top-up'
+        className: 'pig'
       arr.push
-        label: @getIntlMessage('payment-history')
-        link: urlBuilder('top-up', 'payments')
-        className: 'clock'
+        label: @getIntlMessage 'payment-history'
+        link: urlBuilder 'top-up', 'payments'
+        className: 'pig'
+      arr
+
+    stores: [ ], list: crumbs()
+
+  ###
+    This function buid a breadcrumb for histories routes
+    @param  {string}    key   Name of key for get value in args
+    @return {function}        Function which is called with args
+  ###
+  tasks: -> ->
+    crumbs = -> ->
+      arr = []
+      arr.push
+        label: @getIntlMessage 'treatments'
+        link: urlBuilder 'tasks'
+        className: 'pill'
       arr
 
     stores: [ ], list: crumbs()
