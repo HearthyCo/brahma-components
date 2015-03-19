@@ -8,10 +8,21 @@ module.exports = React.createClass
 
   propTypes:
     type: React.PropTypes.string
-    item: React.PropTypes.array
+    items: React.PropTypes.array
 
   render: ->
-    keys = @props.header or Object.keys @props.items[0]
+    items = @props.items or []
+
+    console.log 'items', items
+
+    keys = @props.header or
+
+    if @props.header
+      keys = @props.header
+    else if items.length is 0
+      keys = []
+    else
+      keys = Object.keys items[0]
 
     db = @props.type
 
@@ -21,7 +32,7 @@ module.exports = React.createClass
           keys.map (key) ->
             th className: "key-#{key}", key
       tbody {},
-        @props.items.map (item, i) ->
+        items.map (item, i) ->
           tr key: item.id, id: "item-#{item.id}",
             keys.map (key) ->
               td key: "key-#{key}", className: "key-#{key}",

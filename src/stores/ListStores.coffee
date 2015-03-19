@@ -2,7 +2,7 @@ _ = require 'underscore'
 Utils = require '../util/storeUtils'
 EntityStores = require './EntityStores'
 
-# Stores for Lists of Entities (EntityStores)
+# Stores for Lists of Entities
 
 MixNewMessages = (data, current) ->
   messages = data.messages
@@ -31,6 +31,10 @@ Stores =
       'sessions:successUnderwaySessions': (o) -> o.userSessions
     Closed: Utils.mkListStore EntityStores.Session,
       'sessions:successClosedSessions': (o) -> o.userSessions
+
+  UsersByType:
+    Professional: Utils.mkListStore EntityStores.User,
+      'users:successProfessionalUsers': (o) -> o.users
 
   ClientHome:
     Sessions:
