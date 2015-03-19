@@ -71,8 +71,9 @@ module.exports = React.createClass
       if @state?.preview?.element
         # Show our preview
         href = @props.message.data.href
-        body = span {},
-          'ha enviado una imagen '
+        body = div className: 'sent-img',
+          span {},
+            'ha enviado una imagen '
           a href: href, target: '_blank', 'VER'
           div {},
             a href: href, target: '_blank', ref: 'preview'
