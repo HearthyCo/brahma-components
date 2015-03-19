@@ -25,9 +25,11 @@ module.exports = React.createClass
   propTypes:
     session: React.PropTypes.object.isRequired
     sessionUser: React.PropTypes.object.isRequired
+    remoteStreamOpts: React.PropTypes.object
+    ownStreamOpts: React.PropTypes.object
+    noControls: React.PropTypes.bool
 
   contextTypes:
-    user: React.PropTypes.object
     setBlocked: React.PropTypes.func
 
   getInitialState: ->
@@ -36,6 +38,11 @@ module.exports = React.createClass
     subscriptions: []
     videoProportion: 1.5
     videoHeight: 400
+
+  getDefaultProps: ->
+    remoteStreamOpts: {}
+    ownStreamOpts: {}
+    noControls: false
 
   componentDidMount: ->
     window.addEventListener 'resize', @handleResize
@@ -62,11 +69,12 @@ module.exports = React.createClass
 
   onSessionConnect: (error) ->
     # Just got connected to a session. Start streaming.
-    @state.otsession.publish OT.initPublisher 'room-video',
+    opts = _.defaults @props.ownStreamOpts,
       insertMode: 'append'
       width: 192
       height: 192
       fitMode: 'contain'
+    @state.otsession.publish OT.initPublisher 'room-video', opts
 
   onSessionLeave: (resetState) ->
     # Disconnect and clean-up when leaving a session.
@@ -76,18 +84,19 @@ module.exports = React.createClass
 
   onStreamCreate: (event) ->
     # A new stream has been created. Subscribe to it.
-    stream = @state.otsession.subscribe event.stream, 'room-video',
+    opts = _.defaults @props.remoteStreamOpts,
       insertMode: 'append'
       width: '100%'
       height: '100%'
-      fitMode: 'contain',
+      fitMode: 'contain'
+    stream = @state.otsession.subscribe event.stream, 'room-video', opts,
       (err) => @onStreamJoin stream, err
     stream.on 'videoDimensionsChanged', (e) => @onStreamResize stream, e
 
     streams = @state.subscriptions
     streams.push stream
     @setState subscriptions: streams
-    @context.setBlocked true
+    @context.setBlocked true if @context.setBlocked
 
   onStreamJoin: (stream, err) ->
     # Just started receiving a stream.
@@ -106,7 +115,7 @@ module.exports = React.createClass
     pos = streams.indexOf copy[0] if copy.length
     streams.splice pos, 1 if pos isnt -1
     @setState subscriptions: streams
-    @context.setBlocked false if not streams.length
+    @context.setBlocked false if not streams.length and @context.setBlocked
 
   setVolume: (val) ->
     if val < 0 then val = 0
@@ -142,7 +151,7 @@ module.exports = React.createClass
       @takeSnapshot @state.subscriptions[0]
 
   render: ->
-    div id: 'room-video', ref: 'video', style: height: @state.videoHeight,
+    controls =
       div className: 'video-cp',
         span className: 'icon icon-logo'
         span className: 'settings',
@@ -152,3 +161,9 @@ module.exports = React.createClass
             span
               className: 'icon icon-volume on'
               style: width: @state.volume / 2 + 'px'
+
+    if @props.noControls
+      controls = false
+
+    div id: 'room-video', ref: 'video', style: height: @state.videoHeight,
+      controls
