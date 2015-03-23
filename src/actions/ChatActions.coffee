@@ -3,6 +3,7 @@ Backbone = require 'exoskeleton'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 Utils = require '../util/actionsUtils'
 SocketUtils = require '../util/socketUtils'
+FrontendUtils = require '../util/frontendUtils'
 Queue = require '../util/queue'
 
 ChatActions =
@@ -43,8 +44,6 @@ ChatActions =
     AppDispatcher.trigger 'chat:requestSendFile', payload
 
     fd = new FormData()
-    fd.append 'upload', file
-
     url = Config.api.url + '/session/' + session + '/attach'
     opts =
       dataType: 'jsonp'
@@ -63,6 +62,7 @@ ChatActions =
         payload.messages[0].status = 'success'
         payload.messages[0].data.type = response.attachments[0].mime
         payload.messages[0].data.href = response.attachments[0].url
+        payload.messages[0].data.hasThumb = response.attachments[0].hasThumb
         AppDispatcher.trigger 'chat:successSendFile', payload
 
     retries = 4
@@ -72,7 +72,16 @@ ChatActions =
         AppDispatcher.trigger 'chat:requestSendFile', payload
         Backbone.ajax opts
 
-    Backbone.ajax opts
+    if file.type.startsWith 'image/'
+      FrontendUtils.imageScaleBlob file, 1920, 1920, (blob) ->
+        fd.append 'upload', blob, file.name
+        FrontendUtils.imageScaleBlob blob, 125, 125, (thumbblob) ->
+          if thumbblob isnt blob
+            fd.append 'upload_thumb', thumbblob, file.name
+          Backbone.ajax opts
+    else
+      fd.append 'upload', file
+      Backbone.ajax opts
 
 
 module.exports = ChatActions
