@@ -80,7 +80,7 @@ ChatActions =
     if file.type.startsWith 'image/'
       FrontendUtils.imageScaleBlob file, 1920, 1920, (blob) ->
         fd.append 'upload', blob, file.name
-        FrontendUtils.imageScaleBlob blob, 125, 125, (thumbblob) ->
+        FrontendUtils.imageScaleBlob blob, 150, 150, (thumbblob) ->
           if thumbblob isnt blob
             fd.append 'upload_thumb', thumbblob, file.name
           Backbone.ajax opts

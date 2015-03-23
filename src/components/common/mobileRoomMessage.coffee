@@ -21,7 +21,7 @@ module.exports = React.createClass
 
   getIconForStatus: (status) ->
     if status is 'pending'
-      span className: 'upload-status', '...'
+      span className: 'upload-status icon icon-spinner'
     else if status is 'success'
       span className: 'upload-status icon icon-download'
     else if status is 'error'
@@ -41,11 +41,9 @@ module.exports = React.createClass
         classes += ' preview'
         href = @props.message.data.href
         body = div className: 'sent-img',
-          span {},
-            'ha enviado una imagen '
-          a href: href, target: '_blank', 'VER'
           div {},
             a href: href, target: '_blank',
+              span className: 'upload-status icon icon-download'
               img className: 'thumb', src: href + '_thumb'
       else
         # Show the text version
