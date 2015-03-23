@@ -106,16 +106,16 @@ module.exports = React.createClass
       div className: 'bottom-area',
         div className: 'title',
           @getIntlMessage 'next-event'
-        div className: 'date',
-          span className: 'day',
-            '03'
-          span className: 'month',
-            'diciembre'
-        div className: 'schedule',
-          span className: 'icon icon-clock'
-          span className: 'time',
-            '12:03'
-          span {},
-            'Videoconsulta'
+        div className: 'date-time',
+          div className: 'date',
+            span className: 'day',
+              '03'
+            span className: 'month',
+              'diciembre'
+          div className: 'schedule',
+            span className: 'time icon icon-clock',
+              '12:03'
+            span {},
+              'Videoconsulta'
         a href: '#' , className: 'button-pro',
           'Ver'
