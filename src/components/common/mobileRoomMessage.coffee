@@ -28,11 +28,15 @@ module.exports = React.createClass
       span className: 'upload-status icon icon-cross'
 
   render: ->
+    classes = 'comp-mobileroommessage message-status-' + status
+    classes += if own then ' own' else ' remote'
+
     if @props.message.type is 'message'
       body = @props.message.data.message
     else if @props.message.type is 'attachment'
       if @props.message.data.hasThumb
         # Show the preview
+        classes += ' preview'
         href = @props.message.data.href
         body = div className: 'sent-img',
           span {},
@@ -54,8 +58,6 @@ module.exports = React.createClass
 
     status = @props.message.status || 'success'
     own = @props.message.author is @context.user.id
-    classes = 'comp-mobileroommessage message-status-' + status
-    classes += if own then ' own' else ' remote'
 
     div className: classes,
       # No avatars or names here
