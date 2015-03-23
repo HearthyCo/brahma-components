@@ -21,11 +21,16 @@ module.exports = React.createClass
   childContextTypes:
     editable: React.PropTypes.bool
 
-  getInitialState: ->
+  getInitialState: (props) ->
+    props = props or @props
     ret = editable: false
-    if @props.defaults
-      ret = _.extend ret, Utils.flatten values: @props.defaults
+    if props.defaults
+      ret = _.extend ret, Utils.flatten values: props.defaults
     ret
+
+  componentWillReceiveProps: (next) ->
+    if @props.defaults isnt next.defaults
+      @setState @getInitialState next
 
   getChildContext: ->
     editable: @state.editable
@@ -55,6 +60,7 @@ module.exports = React.createClass
       React.addons.cloneWithProps child,
         editable: _this.state.editable
         valueLink: _this.linkState 'values.' + child.props.name
+        checkedLink: _this.linkState 'values.' + child.props.name
 
     form id: @props.id, onSubmit: @handleSubmit, className: tglEdFrm,
       div className: 'field-set',

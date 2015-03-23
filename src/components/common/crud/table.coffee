@@ -15,8 +15,6 @@ module.exports = React.createClass
 
     console.log 'items', items
 
-    keys = @props.header or
-
     if @props.header
       keys = @props.header
     else if items.length is 0

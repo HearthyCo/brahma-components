@@ -34,12 +34,11 @@ evt = null
 
 CrudActions =
   config: (_returned, _store, _type) ->
-    console.log "Crud config"
     returned = _returned
     store = _store
     type = _type
 
-    url = "/#{store}"
+    url = "#{store}"
     evt = capitalize(store)
     if type
       url = url + "/#{type}"
@@ -47,15 +46,15 @@ CrudActions =
 
   create: (user) ->
     console.log "Create:", user
-    Utils.mkApiPoster "#{url}/create", user: user,
+    Utils.mkApiPoster "#{url}/create", user,
       "#{returned}:", "#{evt}Create", success: (response) ->
         console.log "API POST Success:", response
         AppDispatcher.trigger  "#{returned}:successCreated", response
         PageActions.navigate "/crud#{url}/#{user.id}"
 
-  update: (uid, user) ->
-    console.log "Update:", uid, user
-    Utils.mkApiPoster "/#{url}/update/#{uid}", user: user,
+  update: (item) ->
+    console.log "Update:", item
+    Utils.mkApiPoster "/#{url}/update/#{item.id}", item,
       "#{returned}:", "#{evt}Update", success()
 
   delete: (uid) ->
