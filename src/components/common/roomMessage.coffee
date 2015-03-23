@@ -20,7 +20,7 @@ module.exports = React.createClass
 
   getIconForStatus: (status) ->
     if status is 'pending'
-      span className: 'upload-status', '...'
+      span className: 'upload-status icon icon-spinner'
     else if status is 'success'
       span className: 'upload-status icon icon-download'
     else if status is 'error'
