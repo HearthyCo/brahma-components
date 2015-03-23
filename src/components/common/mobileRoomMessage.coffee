@@ -28,6 +28,8 @@ module.exports = React.createClass
       span className: 'upload-status icon icon-cross'
 
   render: ->
+    status = @props.message.status || 'success'
+    own = @props.message.author is @context.user.id
     classes = 'comp-mobileroommessage message-status-' + status
     classes += if own then ' own' else ' remote'
 
@@ -55,9 +57,6 @@ module.exports = React.createClass
           @getIconForStatus @props.message.status
     else
       return false
-
-    status = @props.message.status || 'success'
-    own = @props.message.author is @context.user.id
 
     div className: classes,
       # No avatars or names here
