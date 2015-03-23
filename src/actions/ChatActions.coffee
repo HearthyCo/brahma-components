@@ -59,10 +59,15 @@ ChatActions =
         setTimeout retry, 5000
       success: (response) ->
         console.log 'API POST Success:', url, response
+        # Our ID was self-generated, but Play generates his own ID.
+        # On success, invalidate the old ID, and set the new one.
+        payload.messages.push JSON.parse JSON.stringify payload.messages[0]
         payload.messages[0].status = 'success'
         payload.messages[0].data.type = response.attachments[0].mime
         payload.messages[0].data.href = response.attachments[0].url
         payload.messages[0].data.hasThumb = response.attachments[0].hasThumb
+        payload.messages[0].id = 'play.attachment.' + response.attachments[0].id
+        payload.messages[1].type = 'discard'
         AppDispatcher.trigger 'chat:successSendFile', payload
 
     retries = 4
