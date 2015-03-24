@@ -2,7 +2,7 @@ React = require 'react'
 
 ModalActions = require '../../actions/ModalActions'
 
-{ a, img, span, div } = React.DOM
+{ span, div } = React.DOM
 
 module.exports = React.createClass
 
