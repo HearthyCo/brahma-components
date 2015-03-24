@@ -7,6 +7,8 @@ module.exports = React.createClass
 
   displayName: 'toggleInput'
 
+  statics: linkType: 'value'
+
   contextTypes:
     editable: React.PropTypes.bool
 
