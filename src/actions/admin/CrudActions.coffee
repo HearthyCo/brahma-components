@@ -16,6 +16,7 @@ In example:
 
 ###
 
+PageActions = require "../PageActions"
 AppDispatcher = require "../../dispatcher/AppDispatcher"
 Utils = require "../../util/actionsUtils"
 
@@ -36,11 +37,11 @@ CrudActions = (returned, store, type) ->
   actions =
     create: (item) ->
       console.log "Create:", item
-      Utils.mkApiPoster "#{url}/create", item,
+      Utils.mkApiPoster "/#{url}/create", item,
         "#{returned}:", "#{evt}Create", success: (response) ->
           console.log "API POST Success:", response
           AppDispatcher.trigger  "#{returned}:successCreated", response
-          PageActions.navigate "/crud#{url}/#{item.id}"
+          PageActions.navigate "/crud/#{type}/#{response.users[0].id}"
 
     read: (uid) ->
       console.log "Read:", uid
