@@ -44,13 +44,13 @@ CrudActions =
       url = url + "/#{type}"
       evt = capitalize(type) + evt
 
-  create: (user) ->
-    console.log "Create:", user
-    Utils.mkApiPoster "#{url}/create", user,
+  create: (item) ->
+    console.log "Create:", item
+    Utils.mkApiPoster "#{url}/create", item,
       "#{returned}:", "#{evt}Create", success: (response) ->
         console.log "API POST Success:", response
         AppDispatcher.trigger  "#{returned}:successCreated", response
-        PageActions.navigate "/crud#{url}/#{user.id}"
+        PageActions.navigate "/crud#{url}/#{item.id}"
 
   update: (item) ->
     console.log "Update:", item
