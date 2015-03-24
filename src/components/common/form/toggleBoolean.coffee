@@ -9,6 +9,8 @@ module.exports = React.createClass
 
   mixins: [React.addons.LinkedStateMixin]
 
+  statics: linkType: 'checked'
+
   contextTypes:
     editable: React.PropTypes.bool
 

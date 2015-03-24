@@ -56,12 +56,19 @@ module.exports = React.createClass
       tglEdFrm += ' editable'
       msg = @getIntlMessage 'save'
 
-    # checkedLink: _this.linkState 'values.' + child.props.name
-
     enhacedChildren = React.Children.map @props.children, (child) ->
-      React.addons.cloneWithProps child,
-        editable: _this.state.editable
-        valueLink: _this.linkState 'values.' + child.props.name
+      # Enhaced properties
+      props = editable: _this.state.editable
+
+      # Elements don't allow both methods together
+      switch child.type.linkType
+        when 'checked'
+          props.checkedLink = _this.linkState 'values.' + child.props.name
+        else
+          props.valueLink = _this.linkState 'values.' + child.props.name
+
+      # Clone them with these properties
+      React.addons.cloneWithProps child, props
 
     form id: @props.id, onSubmit: @handleSubmit, className: tglEdFrm,
       div className: 'field-set',
