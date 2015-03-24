@@ -21,11 +21,16 @@ module.exports = React.createClass
   childContextTypes:
     editable: React.PropTypes.bool
 
-  getInitialState: ->
+  getInitialState: (props) ->
+    props = props or @props
     ret = editable: false
-    if @props.defaults
-      ret = _.extend ret, Utils.flatten values: @props.defaults
+    if props.defaults
+      ret = _.extend ret, Utils.flatten values: props.defaults
     ret
+
+  componentWillReceiveProps: (next) ->
+    if @props.defaults isnt next.defaults
+      @setState @getInitialState next
 
   getChildContext: ->
     editable: @state.editable
@@ -50,6 +55,8 @@ module.exports = React.createClass
     if @state.editable
       tglEdFrm += ' editable'
       msg = @getIntlMessage 'save'
+
+    # checkedLink: _this.linkState 'values.' + child.props.name
 
     enhacedChildren = React.Children.map @props.children, (child) ->
       React.addons.cloneWithProps child,

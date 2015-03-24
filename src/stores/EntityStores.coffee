@@ -1,5 +1,7 @@
 Utils = require '../util/storeUtils'
 
+# Stores for Entities
+
 module.exports =
   User: Utils.mkEntityStore 'users', (evt, payload) ->
     loginEvents = ['user:successLogin', 'user:successSignup', 'user:successMe']
