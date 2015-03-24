@@ -26,55 +26,47 @@ success = ->
   success: (response) ->
     @defaultOpts.success response
 
-returned = null
-store = null
-type  = null
-url = null
-evt = null
+CrudActions = (returned, store, type) ->
+  url = "#{store}"
+  evt = capitalize(store)
+  if type
+    url = url + "/#{type}"
+    evt = capitalize(type) + evt
 
-CrudActions =
-  config: (_returned, _store, _type) ->
-    returned = _returned
-    store = _store
-    type = _type
+  actions =
+    create: (item) ->
+      console.log "Create:", item
+      Utils.mkApiPoster "#{url}/create", item,
+        "#{returned}:", "#{evt}Create", success: (response) ->
+          console.log "API POST Success:", response
+          AppDispatcher.trigger  "#{returned}:successCreated", response
+          PageActions.navigate "/crud#{url}/#{item.id}"
 
-    url = "#{store}"
-    evt = capitalize(store)
-    if type
-      url = url + "/#{type}"
-      evt = capitalize(type) + evt
+    read: (uid) ->
+      console.log "Read:", uid
+      Utils.mkApiGetter "/#{url}/#{uid}",
+        "#{returned}:", "#{evt}Read", success()
 
-  create: (item) ->
-    console.log "Create:", item
-    Utils.mkApiPoster "#{url}/create", item,
-      "#{returned}:", "#{evt}Create", success: (response) ->
-        console.log "API POST Success:", response
-        AppDispatcher.trigger  "#{returned}:successCreated", response
-        PageActions.navigate "/crud#{url}/#{item.id}"
+    update: (item) ->
+      console.log "Update:", item
+      Utils.mkApiPoster "/#{url}/update/#{item.id}", item,
+        "#{returned}:", "#{evt}Update", success()
 
-  update: (item) ->
-    console.log "Update:", item
-    Utils.mkApiPoster "/#{url}/update/#{item.id}", item,
-      "#{returned}:", "#{evt}Update", success()
+    delete: (uid) ->
+      console.log "Delete:", uid
+      Utils.mkApiPoster "/#{url}/delete/#{uid}", {},
+        "#{returned}:", "#{evt}Delete", success()
 
-  delete: (uid) ->
-    console.log "Delete:", uid
-    Utils.mkApiPoster "/#{url}/delete/#{uid}", {},
-      "#{returned}:", "#{evt}Delete", success()
+    ban: (uid) ->
+      console.log "Ban:", uid
+      Utils.mkApiPoster "/#{url}/ban/#{uid}", {},
+        "#{returned}:", "#{evt}Ban", success()
 
-  ban: (uid) ->
-    console.log "Ban:", uid
-    Utils.mkApiPoster "/#{url}/ban/#{uid}", {},
-      "#{returned}:", "#{evt}Ban", success()
+    refresh: ->
+      console.log "Refresh"
+      Utils.mkApiGetter "/#{url}",
+        "#{returned}s:", evt, success()
 
-  read: (uid) ->
-    console.log "Read:", uid
-    Utils.mkApiGetter "/#{url}/#{uid}",
-      "#{returned}:", "#{evt}Read", success()
-
-  refresh: ->
-    console.log "Refresh"
-    Utils.mkApiGetter "/#{url}",
-      "#{returned}s:", evt, success()
+  return actions
 
 module.exports = CrudActions
