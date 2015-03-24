@@ -1,6 +1,7 @@
 AppDispatcher = require '../dispatcher/AppDispatcher'
 Utils = require '../util/actionsUtils'
 Queue = require '../util/queue'
+FrontendUtils = require '../util/frontendUtils'
 
 success = ->
   success: (response) ->
@@ -37,5 +38,12 @@ UserActions =
     pl = userId: uid, hash: hash, newPassword: password
     Utils.mkApiPoster '/recover/confirm', pl, 'user:', 'ConfirmPasswordChange'
 
+  setAvatar: (file) ->
+    FrontendUtils.imageScaleCropBlob file, 150, 150, (blob) ->
+      pl = avatar: file
+      fd = new FormData()
+      fd.append 'upload', blob, file.name
+      opts = data: fd, contentType: false
+      Utils.mkApiPoster '/me/avatar', pl, 'user:', 'SetAvatar', opts
 
 module.exports = UserActions

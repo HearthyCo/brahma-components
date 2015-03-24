@@ -55,6 +55,7 @@ module.exports = React.createClass
   componentWillReceiveProps: (next) ->
     if next.session.id isnt @props.session.id
       @onSessionLeave true
+      @onSessionJoin()
 
   # -- OpenTok Events --
 

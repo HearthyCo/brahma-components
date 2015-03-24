@@ -9,6 +9,12 @@ module.exports = React.createClass
 
   propTypes:
     user: React.PropTypes.object
+    backAction: React.PropTypes.func
+
+  handleBackClick: (e) ->
+    if @props.backAction
+      e.stopPropagation()
+      @props.backAction()
 
   render: ->
     if @props.user
@@ -28,6 +34,5 @@ module.exports = React.createClass
     header className: 'comp-chatTopBar',
       div className: 'chatTopBar-wrapper',
         div className: 'menuBar',
-          a href: '/',
-            span className: 'icon icon-arrow-left'
+          span className: 'icon icon-arrow-left', onClick: @handleBackClick,
         userBar
