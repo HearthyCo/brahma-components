@@ -19,6 +19,8 @@ module.exports = React.createClass
       AlertActions.close()
 
   render: ->
+    # TODO: alert loop render
+
     _classname = "comp-alert"
     _classname += " level-#{@props.level}" if @props.level
 
