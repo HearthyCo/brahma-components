@@ -3,28 +3,35 @@ Utils = require '../util/actionsUtils'
 Queue = require '../util/queue'
 FrontendUtils = require '../util/frontendUtils'
 
-success = ->
-  success: (response) ->
-    @defaultOpts.success response
-    Queue.initSocket response.users[0]
+AlertActions = require './AlertActions'
+
+response = (actionId) ->
+  success: (resp) ->
+    @defaultOpts.success resp
+    Queue.initSocket resp.users[0]
+    AlertActions.show "alert-#{actionId}", "Success: #{actionId}", "success"
+
+  error: (resp) ->
+    @defaultOpts.error resp
+    AlertActions.show "alert-#{actionId}", "Error: #{actionId}", "error"
 
 UserActions =
 
   login: (user) ->
-    Utils.mkApiPoster '/login', user, 'user:', 'Login', success()
+    Utils.mkApiPoster '/login', user, 'user:', 'Login', response("UserLogin")
 
   logout: ->
-    Utils.mkApiPoster '/logout', {}, 'user:', 'Logout'
+    Utils.mkApiPoster '/logout', {}, 'user:', 'Logout', response("UserLogout")
 
   register: (user) ->
     user.login = user.login || user.email
-    Utils.mkApiPoster '', user, 'user:', 'Signup', success()
+    Utils.mkApiPoster '', user, 'user:', 'Signup', response("UserRegister")
 
   getMe: ->
-    Utils.mkApiGetter '/me', 'user:', 'Me', success()
+    Utils.mkApiGetter '/me', 'user:', 'Me', response("UserGetMe")
 
   save: (user) ->
-    Utils.mkApiPoster '/me/update', user, 'user:', 'Save'
+    Utils.mkApiPoster '/me/update', user, 'user:', 'Save', response("UserSave")
 
   confirmMail: (uid, hash) ->
     pl = userId: uid, hash: hash
