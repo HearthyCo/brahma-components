@@ -20,5 +20,5 @@ module.exports = React.createClass
 
     div className:'comp-toggleTextarea',
       div className: 'label',
-        label {}
+        label {}, @props.label
       div className: 'field', child

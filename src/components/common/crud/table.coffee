@@ -13,8 +13,6 @@ module.exports = React.createClass
   render: ->
     items = @props.items or []
 
-    console.log 'items', items
-
     if @props.header
       keys = @props.header
     else if items.length is 0
@@ -24,7 +22,7 @@ module.exports = React.createClass
 
     db = @props.type
 
-    table id: @props.type,
+    table id: @props.type, className: 'comp-crudTable',
       thead {},
         tr {},
           keys.map (key) ->

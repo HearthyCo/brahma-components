@@ -4,7 +4,7 @@ _ = require 'underscore'
 
 Utils = require '../../util/objectTools'
 
-{ div, form, button, h3 } = React.DOM
+{ div, form, button, h3, span } = React.DOM
 
 module.exports = React.createClass
 
@@ -38,10 +38,15 @@ module.exports = React.createClass
   toggleEditable: ->
     @setState editable: not @state.editable
 
-  handleClick: (e) ->
+  handleSave: (e) ->
     e.preventDefault()
     if @state.editable
       @handleSubmit()
+    @toggleEditable()
+
+  handleCancel: (e) ->
+    e.preventDefault()
+    @setState @props.defaults
     @toggleEditable()
 
   handleSubmit: ->
@@ -74,5 +79,9 @@ module.exports = React.createClass
       div className: 'field-set',
         div className: 'header',
           h3 {}, @props.title
-          button className: 'toggleButton', onClick: @handleClick, msg
+          button className: 'toggleButton', onClick: @handleSave, msg
+          if @state.editable
+            div className: 'cancel', onClick: @handleCancel,
+              span className: 'icon icon-cross'
+              span {}, @getIntlMessage 'cancel'
         enhacedChildren
