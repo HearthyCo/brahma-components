@@ -5,6 +5,8 @@ _ = require 'underscore'
 { div, ul, li, span, a } = React.DOM
 UserBrief = React.createFactory require '../user/userBrief'
 
+UserActions = require '../../actions/UserActions'
+
 module.exports = React.createClass
 
   displayName: 'adminMenu'
@@ -14,6 +16,9 @@ module.exports = React.createClass
   contextTypes:
     user: React.PropTypes.object
 
+  handleLogout: ->
+    UserActions.logout()
+
   render: ->
     div id: 'menu',
       div className: 'top-area',
@@ -21,3 +26,4 @@ module.exports = React.createClass
           div className: 'logo'
       div className: 'middle-area',
         a href: '/crud/professional', 'Professionals'
+        a href: '#', onClick: @handleLogout, 'Logout'
