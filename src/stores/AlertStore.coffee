@@ -19,9 +19,13 @@ AlertStore.addChangeListener = (callback) ->
 AlertStore.removeChangeListener = (callback) ->
   AlertStore.off 'change', callback
 
-AlertStore.getAlert = (id) -> AlertStore.alerts[id] or null
+AlertStore.getAlert    = (id) -> AlertStore.alerts[id] or null
+AlertStore.getAlertPos = (id) -> AlertStore.alertsIdx.indexOf(id)
 
-AlertStore.getAlerts = -> AlertStore.alerts
+AlertStore.getAlerts    = ->
+  alerts:    AlertStore.alerts
+  alertsIdx: AlertStore.alertsIdx
+  visible:   AlertStore.visible
 
 AlertStore.getFirstAlert = ->
   AlertStore.alerts[_.first(AlertStore.alertsIdx)] or null
@@ -73,7 +77,7 @@ _hideAlerts = ->
   return false
 
 _checkVisibility = ->
-  if alertsIdx.length > 0
+  if AlertStore.alertsIdx.length > 0
     _showAlerts()
   else
     _hideAlerts()

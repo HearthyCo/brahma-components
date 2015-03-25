@@ -9,8 +9,14 @@ module.exports = React.createClass
   displayName: 'alert'
 
   propTypes:
-    level: React.PropTypes.string
-    message: React.PropTypes.string
+    alertsIdx: React.PropTypes.array
+    alerts: React.PropTypes.object
+    visible: React.PropTypes.bool
+
+  getDefaultProps: ->
+    alertsIdx: []
+    alerts:    {}
+    visible:   false
 
   handleCloseClick: (e) ->
     if @props.onClose
@@ -19,13 +25,16 @@ module.exports = React.createClass
       AlertActions.close()
 
   render: ->
-    # TODO: alert loop render
-
     _classname = "comp-alert"
-    _classname += " level-#{@props.level}" if @props.level
+    _classname += if @props.visible then " visible" else " hidden"
 
     div className: _classname,
       div className: 'alert-close', onClick: @handleCloseClick,
         span className: 'icon icon-cross'
-      div className: 'message',
-        @props.content
+      div className: 'alerts',
+        @props.alertsIdx.map (id, i) =>
+          console.log 'Alert ID', id
+          alert = @props.alerts[id]
+          alert.onDone() if alert.onDone
+          div key: "alert-#{id}", className: "alert level-#{alert.level}",
+            span {}, alert.content
