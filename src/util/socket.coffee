@@ -13,7 +13,7 @@ module.exports = (usr, opts) ->
   _.defaults opts, defaults
 
   url = opts.hostname
-  url = opts.hostname + ':' + opts.port if opts.hostname is 'localhost'
+  url = opts.hostname + ':' + opts.port if opts.port
   url = 'ws://' + url
 
   connect = ->
