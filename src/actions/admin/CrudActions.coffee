@@ -23,10 +23,6 @@ Utils = require "../../util/actionsUtils"
 capitalize = (string) ->
   string.charAt(0).toUpperCase() + string.slice(1)
 
-success = ->
-  success: (response) ->
-    @defaultOpts.success response
-
 CrudActions = (returned, store, type) ->
   url = "#{store}"
   evt = capitalize(store)
@@ -39,34 +35,29 @@ CrudActions = (returned, store, type) ->
       console.log "Create:", item
       Utils.mkApiPoster "/#{url}/create", item,
         "#{returned}:", "#{evt}Create", success: (response) ->
-          console.log "API POST Success:", response
-          AppDispatcher.trigger  "#{returned}:successCreated", response
           PageActions.navigate "/crud/#{type}/#{response.users[0].id}"
 
     read: (uid) ->
       console.log "Read:", uid
-      Utils.mkApiGetter "/#{url}/#{uid}",
-        "#{returned}:", "#{evt}Read", success()
+      Utils.mkApiGetter "/#{url}/#{uid}", "#{returned}:", "#{evt}Read"
 
     update: (item) ->
       console.log "Update:", item
       Utils.mkApiPoster "/#{url}/update/#{item.id}", item,
-        "#{returned}:", "#{evt}Update", success()
+        "#{returned}:", "#{evt}Update"
 
     delete: (uid) ->
       console.log "Delete:", uid
       Utils.mkApiPoster "/#{url}/delete/#{uid}", {},
-        "#{returned}:", "#{evt}Delete", success()
+        "#{returned}:", "#{evt}Delete"
 
     ban: (uid) ->
       console.log "Ban:", uid
-      Utils.mkApiPoster "/#{url}/ban/#{uid}", {},
-        "#{returned}:", "#{evt}Ban", success()
+      Utils.mkApiPoster "/#{url}/ban/#{uid}", {}, "#{returned}:", "#{evt}Ban"
 
     refresh: ->
       console.log "Refresh"
-      Utils.mkApiGetter "/#{url}",
-        "#{returned}s:", evt, success()
+      Utils.mkApiGetter "/#{url}", "#{returned}s:", evt
 
   return actions
 
