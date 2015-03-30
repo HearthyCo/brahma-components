@@ -3,11 +3,11 @@ AppDispatcher = require '../dispatcher/AppDispatcher'
 ModalActions =
 
   show: (content) ->
-    AppDispatcher.trigger 'modal:show',
+    AppDispatcher.trigger 'modal:Show',
       content: content
 
   hide: (content) ->
-    AppDispatcher.trigger 'modal:hide', {}
+    AppDispatcher.trigger 'modal:Hide', {}
 
 
 window.modal = ModalActions

@@ -64,7 +64,7 @@ loadTranslation = (language) ->
 
 AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
-    when 'intl:requestChange'
+    when 'intl:Change:request'
       if IntlStore.messages[payload.locale]
         console.log 'Applied translation:', payload.locale
         IntlStore.locale = payload.locale

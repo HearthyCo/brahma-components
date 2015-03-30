@@ -35,58 +35,58 @@ CheckLastViewed = (data, lastViewed) ->
 Stores =
   SessionsByState:
     Programmed: Utils.mkListStore EntityStores.Session,
-      'sessions:successProgrammedSessions': (o) -> o.userSessions
+      'sessions:ProgrammedSessions:success': (o) -> o.userSessions
     Underway: Utils.mkListStore EntityStores.Session,
-      'sessions:successUnderwaySessions': (o) -> o.userSessions
+      'sessions:UnderwaySessions:success': (o) -> o.userSessions
     Closed: Utils.mkListStore EntityStores.Session,
-      'sessions:successClosedSessions': (o) -> o.userSessions
+      'sessions:ClosedSessions:success': (o) -> o.userSessions
 
   UsersByType:
     Professional: Utils.mkListStore EntityStores.User,
-      'users:successProfessionalUsers': (o) -> o.users
+      'users:ProfessionalUsers:success': (o) -> o.users
 
   ClientHome:
     Sessions:
       Programmed: Utils.mkListStore EntityStores.Session,
-        'clientHome:successHome': (o) -> o.home.sessions.programmed
+        'clientHome:Home:success': (o) -> o.home.sessions.programmed
       Underway: Utils.mkListStore EntityStores.Session,
-        'clientHome:successHome': (o) -> o.home.sessions.underway
+        'clientHome:Home:success': (o) -> o.home.sessions.underway
       Closed: Utils.mkListStore EntityStores.Session,
-        'clientHome:successHome': (o) -> o.home.sessions.closed
+        'clientHome:Home:success': (o) -> o.home.sessions.closed
     Transactions: Utils.mkListStore EntityStores.Transaction,
-      'clientHome:successHome': (o) -> o.home.transactions
+      'clientHome:Home:success': (o) -> o.home.transactions
 
   Transactions: Utils.mkListStore EntityStores.Transaction,
-    'transactions:successUserTransactions': (o) -> o.userTransactions
+    'transactions:UserTransactions:success': (o) -> o.userTransactions
 
   History:
     Allergies: Utils.mkListStore EntityStores.HistoryEntry,
-      'history:successAllergies': (o) -> o.allergies # Client-only, needs review
+      'history:Allergies:success': (o) -> o.allergies # Client-only, needs review
 
   User:
     History: Utils.mkSubListStore EntityStores.HistoryEntry,
-      'session:successSession': (o) -> o.userHistoryEntries
+      'session:Session:success': (o) -> o.userHistoryEntries
     Sessions: Utils.mkListStore EntityStores.Session,
-      'sessions:successSessions': (o) -> o.userSessions
+      'sessions:Sessions:success': (o) -> o.userSessions
 
   UserSignatures: Utils.mkListStore EntityStores.SignedEntry,
-    'user:successLogin': (o) -> o.sign.map (i) -> i.id
-    'user:successSignup': (o) -> o.sign.map (i) -> i.id
-    'user:successMe': (o) -> o.sign.map (i) -> i.id
-    'session:successAssign': (o) -> o.sign.map (i) -> i.id
-    'session:successCreated': (o) -> o.sign.map (i) -> i.id
-    'session:successBooked': (o) -> o.sign.map (i) -> i.id
+    'user:Login:success': (o) -> o.sign.map (i) -> i.id
+    'user:Signup:success': (o) -> o.sign.map (i) -> i.id
+    'user:Me:success': (o) -> o.sign.map (i) -> i.id
+    'session:Assign:success': (o) -> o.sign.map (i) -> i.id
+    'session:Created:success': (o) -> o.sign.map (i) -> i.id
+    'session:Booked:success': (o) -> o.sign.map (i) -> i.id
 
   Session:
     Participants: Utils.mkSubListStore EntityStores.SessionUser,
-      'session:successSession': (o) -> o.participants
+      'session:Session:success': (o) -> o.participants
     Messages: Utils.mkSubListStore EntityStores.Message,
-      'chat:successReceived': MixNewMessages
-      'chat:successHistoryReceived': MixNewMessages
-      'chat:requestSend': MixNewMessages
-      'chat:requestSendFile': MixNewMessages
-      'chat:successSendFile': MixNewMessages
-      'chat:errorSendFile': MixNewMessages
+      'chat:Received:success': MixNewMessages
+      'chat:HistoryReceived:success': MixNewMessages
+      'chat:Send:request': MixNewMessages
+      'chat:SendFile:request': MixNewMessages
+      'chat:SendFile:success': MixNewMessages
+      'chat:SendFile:error': MixNewMessages
     LastViewedMessage: Utils.mkSubListStore EntityStores.Message, {
       'page:change': (o, l) ->
         pageName = o.page.displayName
@@ -98,17 +98,17 @@ Stores =
           # prevent invalid currentId when page is not a chat page
           @currentSid = 0
         l
-      'chat:successReceived': CheckLastViewed
-      'chat:requestSend': CheckLastViewed
+      'chat:Received:success': CheckLastViewed
+      'chat:Send:request': CheckLastViewed
       }, storageKey: 'LastViewedMessage'
 
   ServiceTypes: Utils.mkListStore EntityStores.ServiceType,
-    'serviceTypes:successServiceTypes': (o) ->
+    'serviceTypes:ServiceTypes:success': (o) ->
       o.allServiceTypes || o.servicetypes.map (st) -> st.id
 
   SessionsByServiceType: Utils.mkSubListStore EntityStores.Session,
-    'serviceTypes:successServiceTypes': (o) -> o.serviceTypeSessions
-    'session:successAssign': (o) -> o.serviceTypeSessions
+    'serviceTypes:ServiceTypes:success': (o) -> o.serviceTypeSessions
+    'session:Assign:success': (o) -> o.serviceTypeSessions
 
 ### Client ###
 # Home

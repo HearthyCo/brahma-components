@@ -6,7 +6,7 @@ Backbone = require 'exoskeleton'
 TransactionActions =
 
   refresh: ->
-    Utils.mkApiGetter '/me/transactions', 'transactions:', 'UserTransactions'
+    Utils.mkApiGetter '/me/transactions', 'transactions', 'UserTransactions'
 
   createPaypal: (amount, redirectUrls) ->
     data = {}
@@ -39,11 +39,11 @@ TransactionActions =
       data: JSON.stringify paypalParams
       success: (result) ->
         result.serviceId = paypalParams.serviceId
-        AppDispatcher.trigger 'transaction:executePaypalSuccess', result
+        AppDispatcher.trigger 'transaction:ExecutePaypal:success', result
       error: (xhr, status) ->
-        AppDispatcher.trigger 'transaction:executePaypalError', {}
+        AppDispatcher.trigger 'transaction:ExecutePaypal:error', {}
 
   errorExecutePaypal: ->
-    AppDispatcher.trigger 'transaction:executePaypalError', {}
+    AppDispatcher.trigger 'transaction:ExecutePaypal:error', {}
 
 module.exports = TransactionActions

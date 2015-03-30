@@ -4,7 +4,7 @@ AppDispatcher = require '../dispatcher/AppDispatcher'
 _ = require 'underscore'
 
 
-mkApiCaller = (endpoint, evtPrefix, evtSuffix, opts) ->
+mkApiCaller = (endpoint, evtModel, evtAction, opts) ->
   url = Config.api.url + endpoint
   opts = opts || {}
   method = opts.type || 'GET'
@@ -19,15 +19,15 @@ mkApiCaller = (endpoint, evtPrefix, evtSuffix, opts) ->
       # with no response. As we always return something not-null, if we get
       # such a response, we call the error callback instead.
       return callbacks.error(null, 0) if not response
-      console.log "API #{method} Success:", url, response
-      AppDispatcher.trigger evtPrefix + 'success' + evtSuffix, response
+      console.log "API #{method} Success:", [evtModel, evtAction], url, response
+      AppDispatcher.trigger [evtModel,evtAction,'success'].join(':'), response
       opts.success response if opts.success
     error: (xhr, status) ->
-      console.error "API #{method} Error:", url, status, xhr
-      AppDispatcher.trigger evtPrefix + 'error' + evtSuffix, {}
+      console.error "API #{method} Error:", [evtModel, evtAction], url, status, xhr
+      AppDispatcher.trigger [evtModel,evtAction,'error'].join(':'), {}
       opts.error xhr, status if opts.error
 
-  AppDispatcher.trigger evtPrefix + 'request' + evtSuffix, opts.payload || {}
+  AppDispatcher.trigger [evtModel,evtAction,'request'].join(':'), opts.payload || {}
   Backbone.ajax _.extend {}, opts, callbacks
 
 
@@ -44,12 +44,12 @@ callbackRenamer = (opts) ->
 
 module.exports =
 
-  mkApiGetter: (endpoint, evtPrefix, evtSuffix, opts) ->
-    mkApiCaller endpoint, evtPrefix, evtSuffix, opts
+  mkApiGetter: (endpoint, evtModel, evtAction, opts) ->
+    mkApiCaller endpoint, evtModel, evtAction, opts
 
-  mkApiPoster: (endpoint, payload, evtPrefix, evtSuffix, opts) ->
+  mkApiPoster: (endpoint, payload, evtModel, evtAction, opts) ->
     opts = _.defaults {}, opts || {},
       contentType: "application/json; charset=utf-8"
       type: 'POST'
       data: JSON.stringify payload
-    mkApiCaller endpoint, evtPrefix, evtSuffix, opts
+    mkApiCaller endpoint, evtModel, evtAction, opts

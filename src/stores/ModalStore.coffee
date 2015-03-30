@@ -20,12 +20,12 @@ ModalStore.getModal = ->
 
 AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
-    when 'modal:show'
+    when 'modal:Show'
       ModalStore.visible = true
       if payload.content
         ModalStore.content = payload.content
       ModalStore.trigger 'change'
-    when 'modal:hide'
+    when 'modal:Hide'
       ModalStore.visible = false
       ModalStore.trigger 'change'
 

@@ -3,6 +3,6 @@ Utils = require '../util/actionsUtils'
 
 ServiceActions =
   refresh: ->
-    Utils.mkApiGetter '/services', 'serviceTypes:', 'ServiceTypes'
+    Utils.mkApiGetter '/services', 'serviceTypes', 'ServiceTypes'
 
 module.exports = ServiceActions

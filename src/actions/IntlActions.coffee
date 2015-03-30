@@ -3,7 +3,7 @@ AppDispatcher = require '../dispatcher/AppDispatcher'
 IntlActions =
 
   requestChange: (locale) ->
-    AppDispatcher.trigger 'intl:requestChange',
+    AppDispatcher.trigger 'intl:Change:request',
       locale: locale
 
 

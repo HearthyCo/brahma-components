@@ -23,7 +23,7 @@ PageStore.getPage = ->
 
 AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
-    when 'page:change'
+    when 'page:Change'
       opts = payload.opts
       PageStore.current = payload.page
       PageStore.breadcrumb = opts.breadcrumb

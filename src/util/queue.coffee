@@ -13,7 +13,7 @@ successCallback = (queue, messages) ->
   for message in messages
     queue.sent++
     message.status = 'success'
-    AppDispatcher.trigger 'chat:successSend', messages: [message]
+    AppDispatcher.trigger 'chat:Send:success', messages: [message]
 
   count = RETRY_NUMBER
   queue.process()
@@ -55,7 +55,7 @@ queue =
           console.log 'Message received', message
         when 'status'
           console.warn 'Warn', message
-      AppDispatcher.trigger 'chat:successReceived', messages: messages
+      AppDispatcher.trigger 'chat:Received:success', messages: messages
   push: (payload) ->
     # console.log '> Push to queue', payload
     # When a new message is pushed, count of error is restarted;

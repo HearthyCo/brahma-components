@@ -5,6 +5,6 @@ SessionsActions =
 
   refresh: () ->
     Utils.mkApiGetter '/me/sessions', # DEBUG remove...
-      'sessions:', 'Sessions'
+      'sessions', 'Sessions'
 
 module.exports = SessionsActions

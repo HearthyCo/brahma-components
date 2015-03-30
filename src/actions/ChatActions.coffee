@@ -9,7 +9,7 @@ Queue = require '../util/queue'
 ChatActions =
   send: (session, msg, user) ->
     # TODO: This is fake, but the success event should be the same.
-    # Utils.mkApiPoster '/session/' + session + '/send', msg, 'chat:', 'Send'
+    # Utils.mkApiPoster '/session/' + session + '/send', msg, 'chat', 'Send'
 
     id = SocketUtils.mkMessageId user.id, session
     payload =
@@ -23,7 +23,7 @@ ChatActions =
         timestamp: new Date().getTime()
       ]
 
-    AppDispatcher.trigger 'chat:requestSend', payload
+    AppDispatcher.trigger 'chat:Send:request', payload
     Queue.push payload
 
   sendFile: (session, file, user) ->
@@ -41,7 +41,7 @@ ChatActions =
         timestamp: new Date().getTime()
       ]
 
-    AppDispatcher.trigger 'chat:requestSendFile', payload
+    AppDispatcher.trigger 'chat:SendFile:request', payload
 
     fd = new FormData()
     url = Config.api.url + '/session/' + session + '/attach'
@@ -55,7 +55,7 @@ ChatActions =
       error: (xhr, status) ->
         console.error 'API POST Error:', url, status, xhr
         payload.messages[0].status = 'error'
-        AppDispatcher.trigger 'chat:errorSendFile', payload
+        AppDispatcher.trigger 'chat:SendFile:error', payload
         setTimeout retry, 5000
       success: (response) ->
         console.log 'API POST Success:', url, response
@@ -68,13 +68,13 @@ ChatActions =
         payload.messages[0].data.hasThumb = response.attachments[0].hasThumb
         payload.messages[0].id = 'play.attachment.' + response.attachments[0].id
         payload.messages[1].type = 'discard'
-        AppDispatcher.trigger 'chat:successSendFile', payload
+        AppDispatcher.trigger 'chat:SendFile:success', payload
 
     retries = 4
     retry = ->
       if retries-- > 0
         payload.messages[0].status = 'pending'
-        AppDispatcher.trigger 'chat:requestSendFile', payload
+        AppDispatcher.trigger 'chat:SendFile:request', payload
         Backbone.ajax opts
 
     if file.type.startsWith 'image/'

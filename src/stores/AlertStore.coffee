@@ -88,25 +88,45 @@ _destroyAlerts = ->
   AlertStore.alerts = {}
 
 AppDispatcher.on 'all', (eventName, payload) ->
-  switch eventName
-    when 'alert:show'
-      if _addAlert payload
-        _checkVisibility()
-        AlertStore.trigger 'change'
-      else
-        console.warn "AlertStore show: unknown alert ID [#{payload.id}]"
+  [ evtModel, evtAction, evtResult ] = eventName.split ':'
 
-    when 'alert:hide'
-      if _removeAlert payload.id
-        _checkVisibility()
-        AlertStore.trigger 'change'
-      else
-        # something is trying to hide an unknown alert
-        console.warn "AlertStore hide: unknown alert ID [#{payload.id}]"
+  # It's an alert call
+  if evtModel is 'alert'
+    switch evtAction
+      when 'Show'
+        if _addAlert payload
+          _checkVisibility()
+          AlertStore.trigger 'change'
+        else
+          console.warn "AlertStore show: unknown alert ID [#{payload.id}]"
 
-    when 'alert:close'
-      _destroyAlerts()
-      _hideAlerts()
-      AlertStore.trigger 'change'
+      when 'Hide'
+        if _removeAlert payload.id
+          _checkVisibility()
+          AlertStore.trigger 'change'
+        else
+          # something is trying to hide an unknown alert
+          console.warn "AlertStore hide: unknown alert ID [#{payload.id}]"
+
+      when 'Close'
+        _destroyAlerts()
+        _hideAlerts()
+        AlertStore.trigger 'change'
+
+  # It's an error
+  else if evtResult is 'error'
+    alertObj =
+      id: "alert-#{evtModel}_#{evtAction}"
+      content: "(#{evtModel}) #{evtAction} #{evtResult}"
+      level: evtResult
+
+    AppDispatcher.trigger 'alert:Show', alertObj
+
+  # It's an error
+  else if evtResult is 'success'
+    alertObj = id: "alert-#{evtModel}_#{evtAction}"
+
+    AppDispatcher.trigger 'alert:Hide', alertObj
+
 
 module.exports = AlertStore

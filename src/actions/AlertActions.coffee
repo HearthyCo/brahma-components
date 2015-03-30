@@ -3,7 +3,7 @@ AppDispatcher = require '../dispatcher/AppDispatcher'
 AlertActions =
 
   show: (id, content, level) ->
-    AppDispatcher.trigger 'alert:show',
+    AppDispatcher.trigger 'alert:Show',
       id: id
       content: content
       level: level or 'info'
@@ -15,10 +15,10 @@ AlertActions =
         # , 2000
 
   hide: (id) ->
-    AppDispatcher.trigger 'alert:hide',
+    AppDispatcher.trigger 'alert:Hide',
       id: id
 
   close: ->
-    AppDispatcher.trigger 'alert:close', {}
+    AppDispatcher.trigger 'alert:Close', {}
 
 module.exports = AlertActions

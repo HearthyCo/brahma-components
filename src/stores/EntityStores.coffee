@@ -4,10 +4,10 @@ Utils = require '../util/storeUtils'
 
 module.exports =
   User: Utils.mkEntityStore 'users', (evt, payload) ->
-    loginEvents = ['user:successLogin', 'user:successSignup', 'user:successMe']
+    loginEvents = ['user:Login:success', 'user:Signup:success', 'user:Me:success']
     if loginEvents.indexOf(evt) >= 0
       @currentUid = payload.users[0].id
-    if evt is 'user:successLogout'
+    if evt is 'user:Logout:success'
       @currentUid = null
       @trigger 'change'
   Transaction: Utils.mkEntityStore 'transactions'

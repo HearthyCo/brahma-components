@@ -32,32 +32,32 @@ CrudActions = (returned, store, type) ->
 
   actions =
     create: (item) ->
-      console.log "Create:", item
+      console.log "Create", item
       Utils.mkApiPoster "/#{url}/create", item,
-        "#{returned}:", "#{evt}Create", success: (response) ->
+        "#{returned}", "#{evt}Create", success: (response) ->
           PageActions.navigate "/crud/#{type}/#{response.users[0].id}"
 
     read: (uid) ->
       console.log "Read:", uid
-      Utils.mkApiGetter "/#{url}/#{uid}", "#{returned}:", "#{evt}Read"
+      Utils.mkApiGetter "/#{url}/#{uid}", "#{returned}", "#{evt}Read"
 
     update: (item) ->
       console.log "Update:", item
       Utils.mkApiPoster "/#{url}/update/#{item.id}", item,
-        "#{returned}:", "#{evt}Update"
+        "#{returned}", "#{evt}Update"
 
     delete: (uid) ->
       console.log "Delete:", uid
       Utils.mkApiPoster "/#{url}/delete/#{uid}", {},
-        "#{returned}:", "#{evt}Delete"
+        "#{returned}", "#{evt}Delete"
 
     ban: (uid) ->
       console.log "Ban:", uid
-      Utils.mkApiPoster "/#{url}/ban/#{uid}", {}, "#{returned}:", "#{evt}Ban"
+      Utils.mkApiPoster "/#{url}/ban/#{uid}", {}, "#{returned}", "#{evt}Ban"
 
     refresh: ->
       console.log "Refresh"
-      Utils.mkApiGetter "/#{url}", "#{returned}s:", evt
+      Utils.mkApiGetter "/#{url}", "#{returned}s", evt
 
   return actions
 

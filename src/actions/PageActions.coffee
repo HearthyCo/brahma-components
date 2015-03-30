@@ -18,7 +18,7 @@ PageActions =
     block = false
     _.extend t, opts
 
-    AppDispatcher.trigger 'page:change',
+    AppDispatcher.trigger 'page:Change',
       page: page, opts: t
 
 module.exports = PageActions
