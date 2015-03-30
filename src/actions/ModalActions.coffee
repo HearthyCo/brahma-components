@@ -1,7 +1,6 @@
 AppDispatcher = require '../dispatcher/AppDispatcher'
 
 ModalActions =
-
   show: (content) ->
     AppDispatcher.trigger 'modal:show',
       content: content
@@ -9,6 +8,4 @@ ModalActions =
   hide: (content) ->
     AppDispatcher.trigger 'modal:hide', {}
 
-
-window.modal = ModalActions
-module.exports = ModalActions
+window.brahma.actions.modal = module.exports = ModalActions

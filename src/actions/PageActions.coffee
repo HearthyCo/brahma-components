@@ -21,4 +21,4 @@ PageActions =
     AppDispatcher.trigger 'page:change',
       page: page, opts: t
 
-module.exports = PageActions
+window.brahma.actions.page = module.exports = PageActions
