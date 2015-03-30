@@ -48,7 +48,7 @@ module.exports =
     mkApiCaller endpoint, evtPrefix, evtSuffix, opts
 
   mkApiPoster: (endpoint, payload, evtPrefix, evtSuffix, opts) ->
-    opts = _.extend opts || {},
+    opts = _.defaults {}, opts || {},
       contentType: "application/json; charset=utf-8"
       type: 'POST'
       data: JSON.stringify payload
