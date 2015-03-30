@@ -1,4 +1,3 @@
-AppDispatcher = require '../dispatcher/AppDispatcher'
 Utils = require '../util/actionsUtils'
 
 ServiceActions =

@@ -3,4 +3,4 @@ Backbone = require 'exoskeleton'
 
 AppDispatcher = _.extend {}, Backbone.Events
 
-module.exports = AppDispatcher
+window.brahma.dispatcher = module.exports = AppDispatcher

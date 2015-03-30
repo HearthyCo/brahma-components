@@ -1,4 +1,3 @@
-AppDispatcher = require '../dispatcher/AppDispatcher'
 Utils = require '../util/actionsUtils'
 Queue = require '../util/queue'
 FrontendUtils = require '../util/frontendUtils'

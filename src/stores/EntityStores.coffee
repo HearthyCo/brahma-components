@@ -2,7 +2,7 @@ Utils = require '../util/storeUtils'
 
 # Stores for Entities
 
-module.exports =
+window.brahma.stores.entity = module.exports =
   User: Utils.mkEntityStore 'users', (evt, payload) ->
     loginEvents = ['user:Login:success', 'user:Signup:success', 'user:Me:success']
     if loginEvents.indexOf(evt) >= 0

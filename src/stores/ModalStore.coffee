@@ -29,5 +29,4 @@ AppDispatcher.on 'all', (eventName, payload) ->
       ModalStore.visible = false
       ModalStore.trigger 'change'
 
-window.modalstore = ModalStore
-module.exports = ModalStore
+window.brahma.stores.modal = module.exports = ModalStore

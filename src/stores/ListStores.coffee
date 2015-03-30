@@ -142,4 +142,4 @@ Stores.Session.isUpdated = (sessionId) ->
 
   lastViewed[0] is lastArrived[0]
 
-window.listStores = module.exports = Stores
+window.brahma.stores.list = module.exports = Stores

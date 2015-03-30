@@ -11,8 +11,7 @@ TransactionActions =
   createPaypal: (amount, redirectUrls) ->
     data = {}
     data.amount = amount
-    if redirectUrls?
-      data.redirectUrls = redirectUrls
+    data.redirectUrls = redirectUrls if redirectUrls?
 
     Backbone.ajax
       url: Config.api.url + '/transaction'
@@ -25,8 +24,7 @@ TransactionActions =
           url = result.redirect
           console.log 'Redirecting to paypal at:', url
           window.location.replace url
-        catch e
-          console.error 'Can\'t redirect to paypal:', e, result
+        catch e then console.error 'Can\'t redirect to paypal:', e, result
       error: (xhr, status) ->
         console.error 'Can\t redirect to paypal:', status, xhr
 
