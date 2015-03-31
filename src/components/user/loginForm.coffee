@@ -7,6 +7,7 @@ IconTextForm = React.createFactory require '../common/form/iconText'
 { div, form, a, button, span } = React.DOM
 
 UserActions = require '../../actions/UserActions'
+AlertStore = require '../../stores/AlertStore'
 
 ObjectTools = require '../../util/objectTools'
 
@@ -29,7 +30,10 @@ module.exports = React.createClass
     showRegister: true
 
   getInitialState: () ->
-    return {}
+    return error: AlertStore.getFormAlert('UserLogin') || false
+
+  componentWillReceiveProps: (next) ->
+    @setState @getInitialState()
 
   buildComp: (type, opt) ->
     obj =
@@ -40,6 +44,10 @@ module.exports = React.createClass
       type: type
       placeholder: opt.placeholder
       valueLink: @linkState opt.name
+      error: false
+
+    if @state.error
+      obj.error = ( @state.error.fields.indexOf(opt.name) > -1 )
 
     switch type
       when 'email' then IconTextForm obj
@@ -74,6 +82,9 @@ module.exports = React.createClass
       div className: 'forgotten-pass',
         a href: 'request/passwordChange',
           @getIntlMessage 'forgotten-password?'
+      if @state.error
+        div className: 'error-content', @state.error.content
+
       @buildComp 'button', label: login
 
       if @props.showRegister

@@ -10,8 +10,12 @@ response = (actionId) ->
       Queue.initSocket resp.users[0]
   #   AlertActions.show "alert-#{actionId}", "Success: #{actionId}", 'success'
 
-  # error: (resp) ->
-  #   AlertActions.show "alert-#{actionId}", "Error: #{actionId}", 'error'
+  error: (resp) ->
+    AlertActions.formAlert {
+      id: actionId
+      fields: ['email', 'password']
+      content: actionId
+    }
 
 UserActions =
 

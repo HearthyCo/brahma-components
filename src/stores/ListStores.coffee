@@ -60,8 +60,9 @@ Stores =
     'transactions:UserTransactions:success': (o) -> o.userTransactions
 
   History:
+    # Client-only, needs review
     Allergies: Utils.mkListStore EntityStores.HistoryEntry,
-      'history:Allergies:success': (o) -> o.allergies # Client-only, needs review
+      'history:Allergies:success': (o) -> o.allergies
 
   User:
     History: Utils.mkSubListStore EntityStores.HistoryEntry,

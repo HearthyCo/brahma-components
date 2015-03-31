@@ -23,11 +23,13 @@ mkApiCaller = (endpoint, evtModel, evtAction, opts) ->
       AppDispatcher.trigger [evtModel,evtAction,'success'].join(':'), response
       opts.success response if opts.success
     error: (xhr, status) ->
-      console.error "API #{method} Error:", [evtModel, evtAction], url, status, xhr
+      console.error "API #{method} Error:", [evtModel, evtAction], url,
+        status, xhr
       AppDispatcher.trigger [evtModel,evtAction,'error'].join(':'), {}
       opts.error xhr, status if opts.error
 
-  AppDispatcher.trigger [evtModel,evtAction,'request'].join(':'), opts.payload || {}
+  AppDispatcher.trigger [evtModel,evtAction,'request'].join(':'),
+    opts.payload || {}
   Backbone.ajax _.extend {}, opts, callbacks
 
 

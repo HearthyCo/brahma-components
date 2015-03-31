@@ -10,7 +10,10 @@ module.exports = React.createClass
   render: ->
     omit = _.omit(@props, 'id', 'icon')
 
-    div id: @props.id, className: 'field-set comp-text',
+    _className = 'field-set comp-text'
+    _className += " error" if @props.error
+
+    div id: @props.id, className: _className,
       label className: 'label',
         span className: 'icon icon-' + @props.icon
       input _.extend omit, className: 'field', ref: 'input'

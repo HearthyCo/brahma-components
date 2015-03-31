@@ -5,11 +5,16 @@ AppDispatcher = require '../dispatcher/AppDispatcher'
 AlertStore =
   visible: false
   alerts: {}
-  alertsIdx: []
   # item:
   #   id:      'something'
   #   content: false
   #   level:   'info'
+  alertsIdx: []
+  formAlerts: {}
+  # item:
+  #   id:      'something'
+  #   fields:  [ids]
+  #   content: 'stuff'
 
 _.extend AlertStore, Backbone.Events
 
@@ -33,6 +38,15 @@ AlertStore.getFirstAlert = ->
 AlertStore.getLastAlert = ->
   AlertStore.alerts[_.last(AlertStore.alertsIdx)] or null
 
+AlertStore.getFormAlert = (id) ->
+  if id
+    if AlertStore.formAlerts.hasOwnProperty id
+      return AlertStore.formAlerts[id]
+    else
+      return null
+  else
+    return AlertStore.formAlerts
+
 # Alert index functions
 _addIdx = (id) ->
   idx = AlertStore.alertsIdx
@@ -52,16 +66,25 @@ _removeIdx = (id) ->
 
 # Alert management functions
 _addAlert = (payload) ->
-  if payload.id
-    id = payload.id
-    _addIdx payload.id
-    AlertStore.alerts[id] = payload
-    return id
+  try
+    if payload.id
+      id = payload.id
+      _addIdx payload.id
+      AlertStore.alerts[id] = payload
+      return id
+  catch err
   return false
 
 _removeAlert = (id) ->
-  delete AlertStore.alerts[id]
+  try
+    if AlertStore.alerts.hasOwnProperty id
+      delete AlertStore.alerts[id]
+  catch err
   return _removeIdx id
+
+_addFormAlert = (payload) ->
+  AlertStore.formAlerts[payload.id] = payload
+  return payload.id
 
 # Alerts visibility functions
 _showAlerts = ->
@@ -88,7 +111,11 @@ _destroyAlerts = ->
   AlertStore.alerts = {}
 
 AppDispatcher.on 'all', (eventName, payload) ->
-  [ evtModel, evtAction, evtResult ] = eventName.split ':'
+  # Clean form alerts on page change
+  if eventName is 'page:Change'
+    AlertStore.formAlerts = {}
+  else
+    [ evtModel, evtAction, evtResult ] = eventName.split ':'
 
   # It's an alert call
   if evtModel is 'alert'
@@ -96,10 +123,10 @@ AppDispatcher.on 'all', (eventName, payload) ->
       when 'Show'
         if _addAlert payload
           _checkVisibility()
+          payload.onDone() if payload.onDone
           AlertStore.trigger 'change'
         else
           console.warn "AlertStore show: unknown alert ID [#{payload.id}]"
-
       when 'Hide'
         if _removeAlert payload.id
           _checkVisibility()
@@ -111,6 +138,10 @@ AppDispatcher.on 'all', (eventName, payload) ->
       when 'Close'
         _destroyAlerts()
         _hideAlerts()
+        AlertStore.trigger 'change'
+
+      when 'FormAlert'
+        _addFormAlert payload
         AlertStore.trigger 'change'
 
   # It's an error

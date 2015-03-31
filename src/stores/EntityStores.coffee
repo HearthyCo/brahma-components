@@ -4,7 +4,11 @@ Utils = require '../util/storeUtils'
 
 window.brahma.stores.entity = module.exports =
   User: Utils.mkEntityStore 'users', (evt, payload) ->
-    loginEvents = ['user:Login:success', 'user:Signup:success', 'user:Me:success']
+    loginEvents = [
+      'user:Login:success'
+      'user:Signup:success'
+      'user:Me:success'
+    ]
     if loginEvents.indexOf(evt) >= 0
       @currentUid = payload.users[0].id
     if evt is 'user:Logout:success'
