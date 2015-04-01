@@ -8,13 +8,12 @@ response = (actionId) ->
   success: (resp) ->
     if actionId in ['UserLogin', 'UserRegister', 'UserGetMe']
       Queue.initSocket resp.users[0]
-  #   AlertActions.show "alert-#{actionId}", "Success: #{actionId}", 'success'
 
   error: (resp) ->
     AlertActions.formAlert {
       id: actionId
       fields: ['email', 'password']
-      content: actionId
+      content: "Error on #{actionId}"
     }
 
 UserActions =

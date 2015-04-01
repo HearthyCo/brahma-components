@@ -9,6 +9,7 @@ GenderForm = React.createFactory require '../common/form/gender'
 { div, form, a, button, span } = React.DOM
 
 UserActions = require '../../actions/UserActions'
+AlertStore = require '../../stores/AlertStore'
 
 ObjectTools = require '../../util/objectTools'
 
@@ -26,7 +27,10 @@ module.exports = React.createClass
     UserActions.register obj
 
   getInitialState: () ->
-    return {}
+    return error: AlertStore.getFormAlert('UserRegister') || false
+
+  componentWillReceiveProps: (next) ->
+    @setState @getInitialState()
 
   buildComp: (type, opt) ->
     obj =
@@ -37,6 +41,9 @@ module.exports = React.createClass
       type: type
       placeholder: opt.placeholder
       valueLink: @linkState opt.name
+
+    if @state.error
+      obj.error = ( @state.error.fields.indexOf(opt.name) > -1 )
 
     switch type
       when 'email' then IconTextForm obj
@@ -69,7 +76,11 @@ module.exports = React.createClass
     form action: 'signup', onSubmit: @handleSubmit, className: cmpLoginF,
       @buildComp 'email', signupUser
       @buildComp 'password', signupPass
+      if @state.error
+        div className: 'error-content', @state.error.content
+
       @buildComp 'button', label: signup
+
       div className: 'start-session',
         span {}, @getIntlMessage 'i-have-account'
         a href: '/login',

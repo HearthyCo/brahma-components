@@ -79,11 +79,12 @@ module.exports = React.createClass
     form action: @props.action, onSubmit: @handleSubmit, className: cmpLoginF,
       @buildComp 'email', loginUser
       @buildComp 'password', loginPass
+      if @state.error
+        div className: 'error-content', @state.error.content
+
       div className: 'forgotten-pass',
         a href: 'request/passwordChange',
           @getIntlMessage 'forgotten-password?'
-      if @state.error
-        div className: 'error-content', @state.error.content
 
       @buildComp 'button', label: login
 
