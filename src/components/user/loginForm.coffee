@@ -80,7 +80,8 @@ module.exports = React.createClass
       @buildComp 'email', loginUser
       @buildComp 'password', loginPass
       if @state.error
-        div className: 'error-content', @state.error.content
+        div className: 'error-content',
+          @getIntlMessage @state.error.content
 
       div className: 'forgotten-pass',
         a href: 'request/passwordChange',

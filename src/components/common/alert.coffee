@@ -33,8 +33,9 @@ module.exports = React.createClass
         span className: 'icon icon-cross'
       div className: 'alerts',
         @props.alertsIdx.map (id, i) =>
-          console.log 'Alert ID', id
+          # console.log 'Alert ID', id
           alert = @props.alerts[id]
-          alert.onDone() if alert.onDone
-          div key: "alert-#{id}", className: "alert level-#{alert.level}",
-            span {}, alert.content
+          if alert.content
+            alert.onDone.call alert if alert.onDone
+            div key: "alert-#{id}", className: "alert level-#{alert.level}",
+              span {}, alert.content

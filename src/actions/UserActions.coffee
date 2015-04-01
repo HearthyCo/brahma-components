@@ -13,7 +13,7 @@ response = (actionId) ->
     AlertActions.formAlert {
       id: actionId
       fields: ['email', 'password']
-      content: "Error on #{actionId}"
+      content: "error-on-#{actionId.toLowerCase()}-form"
     }
 
 UserActions =

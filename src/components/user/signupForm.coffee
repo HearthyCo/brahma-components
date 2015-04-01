@@ -77,7 +77,8 @@ module.exports = React.createClass
       @buildComp 'email', signupUser
       @buildComp 'password', signupPass
       if @state.error
-        div className: 'error-content', @state.error.content
+        div className: 'error-content',
+          @getIntlMessage @state.error.content
 
       @buildComp 'button', label: signup
 

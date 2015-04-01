@@ -1,21 +1,30 @@
+_ = require 'underscore'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 
 AlertActions =
 
-  show: (id, content, level) ->
-    AppDispatcher.trigger 'alert:Show',
-      id: id
-      content: content
-      level: level or 'info'
+  show: (payload) ->
+    defaults =
+      id: 'alert-undefined'
+      content: 'Undetermined error'
+      level: 'info'
+      autoHide: 4000
       onDone: ->
-        setTimeout ->
-          AppDispatcher.trigger 'alert:Hide', id: id
-          console.info "#{id} should be dead x_x"
-        , 4000
+        if @autoHide
+          setTimeout (=> AlertActions.hide @id), parseInt @autoHide
+
+    _.defaults payload, defaults
+
+    # bind
+    payload.onDone = payload.onDone.bind payload
+
+    AppDispatcher.trigger 'alert:Show', payload
+
 
   hide: (id) ->
-    AppDispatcher.trigger 'alert:Hide',
-      id: id
+    # string or object
+    id = payload.id if _.isObject id
+    AppDispatcher.trigger 'alert:Hide', id: id
 
   close: ->
     AppDispatcher.trigger 'alert:Close', {}

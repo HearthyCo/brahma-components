@@ -1,6 +1,7 @@
 Backbone = require 'exoskeleton'
 _ = require 'underscore'
 AppDispatcher = require '../dispatcher/AppDispatcher'
+AlertActions = require '../actions/AlertActions'
 
 AlertStore =
   visible: false
@@ -125,15 +126,15 @@ AppDispatcher.on 'all', (eventName, payload) ->
           _checkVisibility()
           payload.onDone() if payload.onDone
           AlertStore.trigger 'change'
-        else
-          console.warn "AlertStore show: unknown alert ID [#{payload.id}]"
+        # else
+        #   console.warn "AlertStore show: unknown alert ID [#{payload.id}]"
       when 'Hide'
         if _removeAlert payload.id
           _checkVisibility()
           AlertStore.trigger 'change'
-        else
-          # something is trying to hide an unknown alert
-          console.warn "AlertStore hide: unknown alert ID [#{payload.id}]"
+        # else
+        #   # something is trying to hide an unknown alert
+        #   console.warn "AlertStore hide: unknown alert ID [#{payload.id}]"
 
       when 'Close'
         _destroyAlerts()
@@ -151,13 +152,11 @@ AppDispatcher.on 'all', (eventName, payload) ->
       content: "(#{evtModel}) #{evtAction} #{evtResult}"
       level: evtResult
 
-    AppDispatcher.trigger 'alert:Show', alertObj
+    AlertActions.show alertObj
 
   # It's an error
   else if evtResult is 'success'
-    alertObj = id: "alert-#{evtModel}_#{evtAction}"
-
-    AppDispatcher.trigger 'alert:Hide', alertObj
+    AlertActions.hide "alert-#{evtModel}_#{evtAction}"
 
 
 module.exports = AlertStore
