@@ -2,14 +2,11 @@ React = require 'react/addons'
 ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
-IconTextForm = React.createFactory require '../common/form/iconText'
-
-{ div, form, a, button, span } = React.DOM
-
-UserActions = require '../../actions/UserActions'
 AlertStore = require '../../stores/AlertStore'
+UserActions = require '../../actions/UserActions'
 
-ObjectTools = require '../../util/objectTools'
+IconTextForm = React.createFactory require '../common/form/iconText'
+{ div, form, a, button, span } = React.DOM
 
 module.exports = React.createClass
 
@@ -62,7 +59,7 @@ module.exports = React.createClass
     login = @getIntlMessage 'login'
     signup = @getIntlMessage 'signup'
 
-    cmpLoginF = 'comp-loginForm'
+    _className = 'comp-loginForm'
 
     loginUser =
       label: email
@@ -76,7 +73,8 @@ module.exports = React.createClass
       placeholder: password
       icon: 'lock'
 
-    form action: @props.action, onSubmit: @handleSubmit, className: cmpLoginF,
+    form action: @props.action or "post", onSubmit: @handleSubmit,
+      className: _className,
       @buildComp 'email', loginUser
       @buildComp 'password', loginPass
       if @state.error

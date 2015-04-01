@@ -3,15 +3,13 @@ ReactIntl = require 'react-intl'
 _ = require 'underscore'
 
 IconTextForm = React.createFactory require '../common/form/iconText'
-DateForm = React.createFactory require '../common/form/date'
-GenderForm = React.createFactory require '../common/form/gender'
+# DateForm = React.createFactory require '../common/form/date'
+# GenderForm = React.createFactory require '../common/form/gender'
 
 { div, form, a, button, span } = React.DOM
 
 UserActions = require '../../actions/UserActions'
 AlertStore = require '../../stores/AlertStore'
-
-ObjectTools = require '../../util/objectTools'
 
 module.exports = React.createClass
 
