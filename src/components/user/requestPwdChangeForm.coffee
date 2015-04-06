@@ -15,8 +15,23 @@ module.exports = React.createClass
   mixins: [ReactIntl]
 
   getInitialState: (next) ->
-    sent: if next then next.sent else false
-    error: AlertStore.getFormAlert('RequestPasswordChange') or false
+    newState = {}
+    # Set an initial error state
+    if not next or not next.hasOwnProperty 'error'
+      newState.error = AlertStore.getFormAlert(
+        'UserRequestPasswordChange',
+        'error'
+      ) or false
+    else
+      newState.error = next.error
+
+    # On error, retry is allowed
+    if newState.error
+      newState.sent = false
+    else
+      newState.sent = if next then next.sent else false
+
+    return newState
 
   componentWillReceiveProps: (next) ->
     @setState @getInitialState next
@@ -28,7 +43,7 @@ module.exports = React.createClass
 
     @setState
       sent: true
-      error: AlertStore.getFormAlert('RequestPasswordChange') or false
+      error: false
 
     UserActions.requestPasswordChange obj
 
@@ -41,7 +56,6 @@ module.exports = React.createClass
       label: email
       name: 'email'
       placeholder: email
-      disabled: @state.blocked
       ref: 'mail'
       type: 'email'
       icon: 'email'
@@ -66,4 +80,4 @@ module.exports = React.createClass
         div className: 'error-content',
           @getIntlMessage @state.error.content
 
-      button disabled: @state.blocked, send
+      button disabled: @state.sent, send
