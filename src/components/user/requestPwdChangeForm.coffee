@@ -49,6 +49,7 @@ module.exports = React.createClass
 
     if @state.error
       sendPass.error = ( @state.error.fields.indexOf(sendPass.name) > -1 )
+      _className += ' error'
 
     if @state.sent
       child = p {}, @getIntlMessage 'password-change-sent'
