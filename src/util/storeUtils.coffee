@@ -125,6 +125,34 @@ module.exports = Utils =
 
     Store
 
+  # Alternative to state for those elements that need it to be persistant
+  # This store provides an object for each key (similar to a EntityStore),
+  # but without event auto-binding, and with valuelink integration.
+  mkStateStore: (opts) ->
+    # Opts not used yet
+
+    _elements = {}
+
+    Store = _.extend {}, Backbone.Events,
+
+      # Standard events for views
+      addChangeListener: (cb) -> @on 'change', cb
+      removeChangeListener: (cb) -> @off 'change', cb
+
+      get: (key) ->
+        _elements[key]
+
+      set: (key, newValue) ->
+        _elements[key] = newValue
+        @trigger 'change'
+
+      linkState: (key) ->
+        requestChange: (newValue) -> Store.set key, newValue
+        value: Store.get key
+
+    Store
+
+
   # Equivalent to map for object trees.
   # Arguments:
   #   tree: the structure to iterate on.

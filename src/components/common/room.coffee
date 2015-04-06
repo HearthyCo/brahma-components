@@ -10,6 +10,8 @@ ChatActions = require '../../actions/ChatActions'
 EntityStores = require '../../stores/EntityStores'
 ListStores = require '../../stores/ListStores'
 
+InputStore = require('../../stores/StateStore').ChatTabs.inputs
+
 module.exports = React.createClass
 
   displayName: 'room'
@@ -25,11 +27,12 @@ module.exports = React.createClass
 
   getInitialState: ->
     messages: ListStores.Session.Messages.getObjects @props.session?.id
-    hasText: false
+    text: InputStore.get(@props.session?.id)
 
   componentDidMount: ->
     EntityStores.Message.addChangeListener @updateMessages
     ListStores.Session.Messages.addChangeListener @updateMessages
+    InputStore.addChangeListener @updateText
 
   componentWillUnmount: ->
     EntityStores.Message.removeChangeListener @updateMessages
@@ -42,6 +45,7 @@ module.exports = React.createClass
   componentWillReceiveProps: (next) ->
     if @props.session?.id isnt next.session?.id
       @updateMessages next
+      @updateText next
 
   componentDidUpdate: ->
     if @shouldScroll
@@ -53,12 +57,17 @@ module.exports = React.createClass
     @setState
       messages: ListStores.Session.Messages.getObjects props.session?.id
 
+  updateText: (props) ->
+    props = props || @props
+    @setState
+      text: InputStore.get(props.session?.id)
+
   handleMessage: (e) ->
     e.preventDefault()
     msgbox = @refs.msgbox.getDOMNode()
     newMessage = msgbox.value.trim()
     msgbox.value = ''
-    @setState hasText: false
+    InputStore.set @props.session.id, null
     ChatActions.send @props.session.id, newMessage, @context.user
     return # Prevent possible "return false" from previous line.
 
@@ -69,13 +78,10 @@ module.exports = React.createClass
       for file in e.target.files
         ChatActions.sendFile _this.props.session.id, file, _this.context.user
 
-  handleChange: (e) ->
-    @setState hasText: e.target.value isnt ""
-
 
   render: ->
     classes = 'room-footer'
-    if @state.hasText
+    if @state.text?.length
       classes += ' has-text'
 
     div className: 'comp-room',
@@ -87,7 +93,7 @@ module.exports = React.createClass
         input
           className: 'room-input'
           placeholder: @getIntlMessage 'type-here'
-          onChange: @handleChange
+          valueLink: InputStore.linkState @props.session?.id
           ref: 'msgbox'
         button className: 'room-send', @getIntlMessage 'send'
         button className: 'upload', onClick: @handleUpload,
