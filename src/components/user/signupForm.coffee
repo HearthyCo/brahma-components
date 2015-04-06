@@ -39,6 +39,8 @@ module.exports = React.createClass
       type: type
       placeholder: opt.placeholder
       valueLink: @linkState opt.name
+      error: false
+      required: true
 
     if @state.error
       obj.error = ( @state.error.fields.indexOf(opt.name) > -1 )
@@ -56,7 +58,8 @@ module.exports = React.createClass
     signup = @getIntlMessage 'signup'
     login = @getIntlMessage 'login'
 
-    cmpLoginF = 'comp-signupForm'
+    _className = 'comp-signupForm'
+    _className += ' error' if @state.error
 
     signupUser=
       label: email
@@ -71,7 +74,7 @@ module.exports = React.createClass
        icon: 'lock'
 
     # Mandatory fields: login, password, gender, name, birthdate
-    form action: 'signup', onSubmit: @handleSubmit, className: cmpLoginF,
+    form action: 'signup', onSubmit: @handleSubmit, className: _className,
       @buildComp 'email', signupUser
       @buildComp 'password', signupPass
       if @state.error

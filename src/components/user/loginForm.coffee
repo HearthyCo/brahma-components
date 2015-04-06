@@ -42,6 +42,7 @@ module.exports = React.createClass
       placeholder: opt.placeholder
       valueLink: @linkState opt.name
       error: false
+      required: true
 
     if @state.error
       obj.error = ( @state.error.fields.indexOf(opt.name) > -1 )
@@ -60,6 +61,7 @@ module.exports = React.createClass
     signup = @getIntlMessage 'signup'
 
     _className = 'comp-loginForm'
+    _className += ' error' if @state.error
 
     loginUser =
       label: email
@@ -73,7 +75,9 @@ module.exports = React.createClass
       placeholder: password
       icon: 'lock'
 
-    form action: @props.action or "post", onSubmit: @handleSubmit,
+    form
+      action: @props.action or "post"
+      onSubmit: @handleSubmit
       className: _className,
       @buildComp 'email', loginUser
       @buildComp 'password', loginPass
