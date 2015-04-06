@@ -10,8 +10,10 @@ module.exports = React.createClass
     id: React.PropTypes.number
     label: React.PropTypes.string.isRequired
     sublabel: React.PropTypes.string
+    defaultOpen: React.PropTypes.bool
+
   getInitialState: () ->
-    {}
+    isExpanded: @props.defaultOpen
 
   toggleDisplay: ->
     @setState isExpanded: not @state.isExpanded

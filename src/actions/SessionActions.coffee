@@ -40,4 +40,8 @@ SessionActions =
   getByServiceType: ->
     Utils.mkApiGetter '/sessions/assigned', 'serviceTypes', 'ServiceTypes'
 
+  updateReport: (target, report) ->
+    Utils.mkApiPoster '/sessionuser/' + target + '/report', report: report,
+      'session', 'UpdateReport'
+
 module.exports = SessionActions

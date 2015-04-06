@@ -10,7 +10,7 @@ ChatActions = require '../../actions/ChatActions'
 EntityStores = require '../../stores/EntityStores'
 ListStores = require '../../stores/ListStores'
 
-InputStore = require('../../stores/StateStore').ChatTabs.inputs
+InputStore = require('../../stores/StateStores').chatTabs.inputs
 
 module.exports = React.createClass
 
@@ -37,6 +37,7 @@ module.exports = React.createClass
   componentWillUnmount: ->
     EntityStores.Message.removeChangeListener @updateMessages
     ListStores.Session.Messages.removeChangeListener @updateMessages
+    InputStore.removeChangeListener @updateText
 
   componentWillUpdate: ->
     node = @refs.log.getDOMNode()
