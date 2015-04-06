@@ -129,8 +129,7 @@ module.exports = Utils =
   # This store provides an object for each key (similar to a EntityStore),
   # but without event auto-binding, and with valuelink integration.
   mkStateStore: (opts) ->
-    # Opts not used yet
-
+    opts = opts || {}
     _elements = {}
 
     Store = _.extend {}, Backbone.Events,
@@ -140,6 +139,8 @@ module.exports = Utils =
       removeChangeListener: (cb) -> @off 'change', cb
 
       get: (key) ->
+        if not (key of _elements) and 'default' of opts
+          _elements[key] = opts.default
         _elements[key]
 
       set: (key, newValue) ->

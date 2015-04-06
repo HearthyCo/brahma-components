@@ -39,7 +39,7 @@ module.exports = React.createClass
       history: ListStores.User.History.getObjects @props.user?.id
       user: EntityStores.User.get @props.user?.id
     _.defaults ret, history: []
-    @setState ret
+    @setState ret if @isMounted()
     ret
 
   render: ->

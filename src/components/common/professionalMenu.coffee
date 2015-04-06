@@ -62,7 +62,7 @@ module.exports = React.createClass
     for st in newState.servicetypes
       newState.sessionsByServiceType[st.id] =
         ListStores.SessionsByServiceType.getObjects st.id
-    @setState newState
+    @setState newState if @isMounted()
     newState
 
   render: ->

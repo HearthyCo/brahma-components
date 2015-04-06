@@ -7,10 +7,14 @@ Utils = require '../../util/frontendUtils'
 
 RoomMessage = React.createFactory require './roomMessage'
 ChatActions = require '../../actions/ChatActions'
+SessionActions = require '../../actions/SessionActions'
 EntityStores = require '../../stores/EntityStores'
 ListStores = require '../../stores/ListStores'
 
-InputStore = require('../../stores/StateStore').ChatTabs.inputs
+StateStores = require '../../stores/StateStores'
+InputStore = StateStores.chatTabs.inputs
+OpenSections = StateStores.chatTabs.openSections
+
 
 module.exports = React.createClass
 
@@ -37,6 +41,7 @@ module.exports = React.createClass
   componentWillUnmount: ->
     EntityStores.Message.removeChangeListener @updateMessages
     ListStores.Session.Messages.removeChangeListener @updateMessages
+    InputStore.removeChangeListener @updateText
 
   componentWillUpdate: ->
     node = @refs.log.getDOMNode()
@@ -78,6 +83,11 @@ module.exports = React.createClass
       for file in e.target.files
         ChatActions.sendFile _this.props.session.id, file, _this.context.user
 
+  handleFinish: ->
+    if @props.session.state isnt 'CLOSED'
+      SessionActions.close @props.session.id
+    OpenSections.set @props.session.id, 'report'
+
 
   render: ->
     classes = 'room-footer'
@@ -99,5 +109,5 @@ module.exports = React.createClass
         button className: 'upload', onClick: @handleUpload,
           span className: 'icon icon-clip'
       div className: 'end-session',
-        button {},
+        button onClick: @handleFinish,
           @getIntlMessage 'finish'
