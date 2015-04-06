@@ -56,6 +56,10 @@ module.exports = React.createClass
     SessionActions.updateReport @props.sessionUser.id,
       ReportStore.get @props.session?.id
 
+  handleFinish: ->
+    if true
+      SessionActions.finish @props.session.id
+
   render: ->
     if @props.user
       fullname = ['name', 'surname1', 'surname2']
@@ -65,11 +69,15 @@ module.exports = React.createClass
     else
       fullname = @getIntlMessage 'loading'
 
+    if @props.session.state is 'CLOSED'
+      header = 'La consulta ha finalizado. Por favor escribe ...'
+    else
+      header = 'Puedes ir cubriendo el informe durante la sesión.'
+
     # TODO: @getIntlMessage 'everything...'
     div className: 'comp-reportEditor',
-      '<' + fullname
-      p {},
-        'La consulta ha finalizado. Por favor escribe ...'
+      '< ' + fullname
+      p {}, header
 
       SublistEntry label: 'Crear informe', defaultOpen: true,
         'Escribe un informe'
@@ -79,3 +87,7 @@ module.exports = React.createClass
       SublistEntry label: 'Crear tratamiento',
         div {}, 'Recomendaciones'
         div {}, 'Fármacos'
+
+      div className: 'end-session',
+        button onClick: @handleFinish,
+          @getIntlMessage 'finish'
