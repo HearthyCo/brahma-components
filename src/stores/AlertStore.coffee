@@ -16,6 +16,7 @@ AlertStore =
   #   id:      'something'
   #   fields:  [ids]
   #   content: 'stuff'
+  #   level:   'error'
 
 _.extend AlertStore, Backbone.Events
 
@@ -39,10 +40,14 @@ AlertStore.getFirstAlert = ->
 AlertStore.getLastAlert = ->
   AlertStore.alerts[_.last(AlertStore.alertsIdx)] or null
 
-AlertStore.getFormAlert = (id) ->
+AlertStore.getFormAlert = (id, level = "error") ->
   if id
     if AlertStore.formAlerts.hasOwnProperty id
-      return AlertStore.formAlerts[id]
+      alert = AlertStore.formAlerts[id]
+      if not alert.level or alert.level is level
+        return AlertStore.formAlerts[id]
+      else
+        return null
     else
       return null
   else
@@ -83,6 +88,7 @@ _removeAlert = (id) ->
   catch err
   return _removeIdx id
 
+# Alerts for forms
 _addFormAlert = (payload) ->
   AlertStore.formAlerts[payload.id] = payload
   return payload.id
@@ -106,7 +112,7 @@ _checkVisibility = ->
   else
     _hideAlerts()
 
-# Reset to intial state
+# Reset to initial state
 _destroyAlerts = ->
   AlertStore.alertsIdx = []
   AlertStore.alerts = {}

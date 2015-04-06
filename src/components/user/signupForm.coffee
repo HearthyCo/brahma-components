@@ -25,7 +25,7 @@ module.exports = React.createClass
     UserActions.register obj
 
   getInitialState: () ->
-    return error: AlertStore.getFormAlert('UserRegister') || false
+    return error: AlertStore.getFormAlert('UserRegister', 'error') or false
 
   componentWillReceiveProps: (next) ->
     @setState @getInitialState()

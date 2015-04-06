@@ -44,6 +44,7 @@
   "email": "Correo electrónico",
   "error-on-userlogin-form": "Correo electrónico y contraseña no son correctos.",
   "error-on-userregister-form": "Los datos de registro no son correctos.",
+  "error-on-userrequestpasswordchange-form": "Ha ocurrido un error con tu solicitud. Por favor, comprueba que escribes el correo electrónico correcto e inténtalo de nuevo.",
   "example": "Ejemplo",
   "february": "Febrero",
   "female": "Mujer",
