@@ -49,7 +49,7 @@ module.exports = React.createClass
     state =
       report: newValue
 
-    @setState state
+    @setState state if @isMounted()
     state
 
   handleReportSave: ->
