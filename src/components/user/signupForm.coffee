@@ -39,6 +39,8 @@ module.exports = React.createClass
       type: type
       placeholder: opt.placeholder
       valueLink: @linkState opt.name
+      error: false
+      required: true
 
     if @state.error
       obj.error = ( @state.error.fields.indexOf(opt.name) > -1 )
