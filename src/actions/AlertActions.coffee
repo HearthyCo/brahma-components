@@ -3,6 +3,9 @@ AppDispatcher = require '../dispatcher/AppDispatcher'
 
 AlertActions =
 
+  ###
+    Triggers the event to show an alert
+  ###
   show: (payload) ->
     defaults =
       id: 'alert-undefined'
@@ -20,15 +23,23 @@ AlertActions =
 
     AppDispatcher.trigger 'alert:Show', payload
 
-
+  ###
+    Triggers the event to hide an alert
+  ###
   hide: (id) ->
     # string or object
     id = payload.id if _.isObject id
     AppDispatcher.trigger 'alert:Hide', id: id
 
+  ###
+    Triggers the event to hide every alert
+  ###
   close: ->
     AppDispatcher.trigger 'alert:Close', {}
 
+  ###
+    Alerts for forms. Commonly they'll be error or success.
+  ###
   formAlert: (payload) ->
     AppDispatcher.trigger 'alert:FormAlert', payload
 

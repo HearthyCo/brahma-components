@@ -27,7 +27,7 @@ module.exports = React.createClass
     showRegister: true
 
   getInitialState: () ->
-    return error: AlertStore.getFormAlert('UserLogin') || false
+    return error: AlertStore.getFormAlert('UserLogin', 'error') or false
 
   componentWillReceiveProps: (next) ->
     @setState @getInitialState()

@@ -44,6 +44,7 @@
   "enter-your-pass": "Enter your password",
   "error-on-userlogin-form": "Email and password are not valid.",
   "error-on-userregister-form": "Sign up data is not valid.",
+  "error-on-userrequestpasswordchange-form": "Your query returned an error. Please, check your email address and try again.",
   "example": "Example",
   "february": "February",
   "female": "Female",
