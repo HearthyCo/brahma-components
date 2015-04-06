@@ -5,7 +5,7 @@ jest.dontMock '../../util/objectTools'
 describe 'Breadcrumb', ->
   it 'return breadcrumb for allergies', ->
     Intl = require 'intl'
-    messages = require '../../../../hearthy-client/app/intl/es-ES.json'
+    messages = require '../../../../hearthy-client/app/locales/es-ES.json'
 
     React = require 'react/addons'
     breadcrumb = require '../common/breadcrumb'
@@ -32,7 +32,7 @@ describe 'Breadcrumb', ->
 
   it 'return breadcrumb for session state', ->
     Intl = require 'intl'
-    messages = require '../../../../hearthy-client/app/intl/es-ES.json'
+    messages = require '../../../../hearthy-client/app/locales/es-ES.json'
 
     React = require 'react/addons'
     breadcrumb = require '../common/breadcrumb'
