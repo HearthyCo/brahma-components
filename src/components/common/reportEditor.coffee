@@ -40,21 +40,28 @@ module.exports = React.createClass
     # We have to juggle with old and new values to use '' instead of null
     # Blame at: https://github.com/facebook/react/issues/2533
     props = props || @props
-    newValue = oldValue = ReportStore.get props.session?.id
-    if props.session and props.sessionUser
-      if not oldValue and props.sessionUser.report?.length
-        newValue = props.sessionUser.report
-        ReportStore.set props.session.id, newValue
+    newValue = ReportStore.get props.session?.id
+    if props.session and props.sessionUser and props.sessionUser.report?.length
+      oldValue = props.sessionUser.report
+      if not newValue
+        newValue = oldValue
+        ReportStore.set props.session.id, oldValue
+
+    reportStatus = if newValue is oldValue then 'saved' else 'edited'
 
     state =
       report: newValue
+      reportStatus: reportStatus
 
     @setState state if @isMounted()
     state
 
   handleReportSave: ->
-    SessionActions.updateReport @props.sessionUser.id,
+    r = SessionActions.updateReport @props.sessionUser.id,
       ReportStore.get @props.session?.id
+    @setState reportStatus: 'saving'
+    r.then => @setState reportStatus: 'saved'
+    r.catch => @setState reportStatus: 'error'
 
   handleFinish: ->
     if true
@@ -74,6 +81,8 @@ module.exports = React.createClass
     else
       header = 'Puedes ir cubriendo el informe durante la sesión.'
 
+    saveReportDisabled = @state.reportStatus in ['saved', 'saving']
+
     # TODO: @getIntlMessage 'everything...'
     div className: 'comp-reportEditor',
       '< ' + fullname
@@ -82,7 +91,11 @@ module.exports = React.createClass
       SublistEntry label: 'Crear informe', defaultOpen: true,
         'Escribe un informe'
         textarea valueLink: ReportStore.linkState @props.session?.id
-        button onClick: @handleReportSave, 'Guardar'
+        button
+          onClick: @handleReportSave
+          className: @state.reportStatus
+          disabled: saveReportDisabled,
+          'Guardar'
 
       SublistEntry label: 'Crear tratamiento',
         div {}, 'Recomendaciones'
