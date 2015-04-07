@@ -20,7 +20,7 @@ module.exports = React.createClass
     user: React.PropTypes.object
 
   render: ->
-    profileData = @props.profile || @context.user
+    profileData = @props.profile or @context.user
     if profileData
       profile = UserBrief user: profileData
     else

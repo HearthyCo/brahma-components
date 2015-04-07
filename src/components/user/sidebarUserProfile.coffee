@@ -44,7 +44,7 @@ module.exports = React.createClass
 
   render: ->
 
-    avatar = @props.user.avatar || '/res/images/default-avatar.png'
+    avatar = @props.user.avatar or '/res/images/default-avatar.png'
     _this = @
     user = EntityStores.User.get @props.user.id
     fullname = ['name', 'surname1', 'surname2']

@@ -27,8 +27,8 @@ module.exports = React.createClass
       span className: 'upload-status icon icon-cross'
 
   render: ->
-    author = EntityStores.User.get(@props.message.author) || {}
-    avatar = author.avatar || '/res/images/default-avatar.png'
+    author = EntityStores.User.get(@props.message.author) or {}
+    avatar = author.avatar or '/res/images/default-avatar.png'
     fullname = ['name', 'surname1', 'surname2']
       .map (f) -> author[f]
       .filter (v) -> v
@@ -57,7 +57,7 @@ module.exports = React.createClass
     else
       return false
 
-    status = @props.message.status || 'waiting'
+    status = @props.message.status or 'waiting'
 
     div className: 'comp-roommessage message-status-' + status,
       img className: 'message-avatar', src: avatar

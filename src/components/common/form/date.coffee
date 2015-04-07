@@ -48,7 +48,7 @@ module.exports = React.createClass
 
   valueAsObj: ->
     originalDate = if @props.valueLink then @props.valueLink.value
-    originalDate = originalDate || '0000-00-00'
+    originalDate = originalDate or '0000-00-00'
     obj =
       year: parseInt originalDate.substr(0, 4)
       month: parseInt originalDate.substr(5, 2)

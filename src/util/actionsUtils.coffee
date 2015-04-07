@@ -6,8 +6,8 @@ _ = require 'underscore'
 
 mkApiCaller = (endpoint, evtModel, evtAction, opts) ->
   url = Config.api.url + endpoint
-  opts = opts || {}
-  method = opts.type || 'GET'
+  opts = opts or {}
+  method = opts.type or 'GET'
 
   opts = _.defaults opts,
     dataType: 'jsonp'
@@ -29,7 +29,7 @@ mkApiCaller = (endpoint, evtModel, evtAction, opts) ->
       opts.error xhr, status if opts.error
 
   AppDispatcher.trigger [evtModel,evtAction,'request'].join(':'),
-    opts.payload || {}
+    opts.payload or {}
   Backbone.ajax _.extend {}, opts, callbacks
 
 
@@ -50,7 +50,7 @@ module.exports =
     mkApiCaller endpoint, evtModel, evtAction, opts
 
   mkApiPoster: (endpoint, payload, evtModel, evtAction, opts) ->
-    opts = _.defaults {}, opts || {},
+    opts = _.defaults {}, opts or {},
       contentType: "application/json; charset=utf-8"
       type: 'POST'
       data: JSON.stringify payload

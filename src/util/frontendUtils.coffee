@@ -21,8 +21,8 @@ module.exports =
 
   # Converts a base64 string into a blob, optionally setting its content type.
   b64toBlob: (b64Data, contentType, sliceSize) ->
-    contentType = contentType || ''
-    sliceSize = sliceSize || 512
+    contentType = contentType or ''
+    sliceSize = sliceSize or 512
 
     byteCharacters = atob b64Data
     byteArrays = []

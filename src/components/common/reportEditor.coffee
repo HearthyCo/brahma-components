@@ -39,7 +39,7 @@ module.exports = React.createClass
   updateReport: (props) ->
     # We have to juggle with old and new values to use '' instead of null
     # Blame at: https://github.com/facebook/react/issues/2533
-    props = props || @props
+    props = props or @props
     newValue = oldValue = ReportStore.get props.session?.id
     if props.session and props.sessionUser
       if not oldValue and props.sessionUser.report?.length

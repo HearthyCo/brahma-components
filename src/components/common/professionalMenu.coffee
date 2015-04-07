@@ -98,7 +98,7 @@ module.exports = React.createClass
             @getIntlMessage 'active'
       div className: 'middle-area',
         @state.servicetypes.map (servicetype) ->
-          sessions = _this.state.sessionsByServiceType[servicetype.id] || []
+          sessions = _this.state.sessionsByServiceType[servicetype.id] or []
           SessionTypeTab
             key: servicetype.id
             sessionType: servicetype

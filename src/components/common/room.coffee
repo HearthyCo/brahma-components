@@ -58,12 +58,12 @@ module.exports = React.createClass
       node.scrollTop = node.scrollHeight
 
   updateMessages: (props) ->
-    props = props || @props
+    props = props or @props
     @setState
       messages: ListStores.Session.Messages.getObjects props.session?.id
 
   updateText: (props) ->
-    props = props || @props
+    props = props or @props
     @setState
       text: InputStore.get(props.session?.id)
 

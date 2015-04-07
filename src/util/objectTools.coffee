@@ -12,8 +12,8 @@ module.exports = exports =
     exports.indexArrSet obj, str.split('.'), value
 
   flatten: (obj, path, ret) ->
-    ret = ret || {}
-    path = path || ''
+    ret = ret or {}
+    path = path or ''
     if typeof(obj) != 'object'
       ret[path] = obj
       return ret

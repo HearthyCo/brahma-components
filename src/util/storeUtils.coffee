@@ -38,7 +38,7 @@ module.exports = Utils =
 
   # Creates a new List Store of the specified entity type
   mkListStore: (baseEntityStore, bindings, opts) ->
-    opts = opts || {}
+    opts = opts or {}
 
     # Private storage
     _list = []
@@ -79,7 +79,7 @@ module.exports = Utils =
 
   # Creates a new Sub-List Store of the specified entity type
   mkSubListStore: (baseEntityStore, bindings, opts) ->
-    opts = opts || {}
+    opts = opts or {}
 
     # Private storage
     _lists = {}
@@ -129,7 +129,7 @@ module.exports = Utils =
   # This store provides an object for each key (similar to a EntityStore),
   # but without event auto-binding, and with valuelink integration.
   mkStateStore: (opts) ->
-    opts = opts || {}
+    opts = opts or {}
     _elements = {}
 
     Store = _.extend {}, Backbone.Events,

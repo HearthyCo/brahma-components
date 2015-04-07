@@ -27,8 +27,8 @@ module.exports = React.createClass
 
     div id: @props.id, className: 'comp-historyentry',
       h2 className: 'history-header',
-        span className: 'history-code', @props.history?.code || code
-        span className: 'history-title', @props.history?.title || title
+        span className: 'history-code', @props.history?.code or code
+        span className: 'history-title', @props.history?.title or title
       div className: 'history-body',
-        @props.history?.content || historyEntryText
+        @props.history?.content or historyEntryText
 

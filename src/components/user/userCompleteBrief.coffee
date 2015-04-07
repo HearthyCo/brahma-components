@@ -14,7 +14,7 @@ module.exports = React.createClass
     user: React.PropTypes.object.isRequired
 
   render: ->
-    avatar = @props.user.avatar || '/res/images/default-avatar.png'
+    avatar = @props.user.avatar or '/res/images/default-avatar.png'
     _this = @
     fullname = ['name', 'surname1', 'surname2']
       .map (f) -> _this.props.user[f]
@@ -24,8 +24,8 @@ module.exports = React.createClass
       .map (f) -> _this.props.user.meta?.address?[f]
       .filter (v) -> v
       .join ', '
-    fulladdress = fulladdress || 'Calle benito garcia de fuente nº2 3ºB, 320001'
-    phone = @props.user.meta?.address?.phone || '9XX XXX XXX'      # fake params
+    fulladdress = fulladdress or 'Calle benito garcia de fuente nº2 3ºB, 320001'
+    phone = @props.user.meta?.address?.phone or '9XX XXX XXX'      # fake params
     birthdate = if @props.user.birthdate
       @formatDate @props.user.birthdate, 'dateonly'
 
