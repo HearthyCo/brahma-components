@@ -9,7 +9,7 @@ defaults =
 
 module.exports = (usr, opts) ->
   user = usr
-  opts = opts || {}
+  opts = opts or {}
   _.defaults opts, defaults
 
   url = opts.hostname

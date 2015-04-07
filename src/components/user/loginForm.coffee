@@ -83,7 +83,9 @@ module.exports = React.createClass
       @buildComp 'password', loginPass
       if @state.error
         div className: 'error-content',
-          @getIntlMessage @state.error.content
+          span className: 'icon icon-cross'
+          span {},
+            @getIntlMessage @state.error.content
 
       div className: 'forgotten-pass',
         a href: 'request/passwordChange',

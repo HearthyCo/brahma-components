@@ -27,7 +27,7 @@ CheckLastViewed = (data, lastViewed) ->
   messages = data.messages
   messageSession = data.messages[0].session if messages? and messages.length
   if @currentSid is messageSession
-    messages = Stores.Session.Messages.getIds(messageSession) || []
+    messages = Stores.Session.Messages.getIds(messageSession) or []
     length = messages.length
     lastViewed[messageSession] = [messages[length - 1]] if length
   lastViewed
@@ -93,7 +93,7 @@ Stores =
         pageName = o.page.displayName
         if pageName is 'roomPage' or pageName is 'sessionChatPage'
           @currentSid = parseInt o.opts.sessionId
-          messages = Stores.Session.Messages.getIds(@currentSid) || []
+          messages = Stores.Session.Messages.getIds(@currentSid) or []
           l[@currentSid] = [messages[messages.length - 1]] if messages.length
         else
           # prevent invalid currentId when page is not a chat page
@@ -105,11 +105,12 @@ Stores =
 
   ServiceTypes: Utils.mkListStore EntityStores.ServiceType,
     'serviceTypes:ServiceTypes:success': (o) ->
-      o.allServiceTypes || o.servicetypes.map (st) -> st.id
+      o.allServiceTypes or o.servicetypes.map (st) -> st.id
 
   SessionsByServiceType: Utils.mkSubListStore EntityStores.Session,
     'serviceTypes:ServiceTypes:success': (o) -> o.serviceTypeSessions
     'session:Assign:success': (o) -> o.serviceTypeSessions
+    'session:Finish:success': (o) -> o.serviceTypeSessions
 
 ### Client ###
 # Home
@@ -124,7 +125,7 @@ Stores.ClientHome.removeChangeListener = (cb) ->
 ### Common ###
 # Messages
 Stores.Session.LastViewedMessage.getCounter = (sessionId) ->
-  messages = Stores.Session.Messages.getIds(sessionId) || []
+  messages = Stores.Session.Messages.getIds(sessionId) or []
   lastViewed = Stores.Session.LastViewedMessage.getIds sessionId
 
   return 0 if not messages?
@@ -133,7 +134,7 @@ Stores.Session.LastViewedMessage.getCounter = (sessionId) ->
   messages.length - messages.indexOf(lastViewed[0]) - 1
 
 Stores.Session.isUpdated = (sessionId) ->
-  messages = Stores.Session.Messages.getIds(sessionId) || []
+  messages = Stores.Session.Messages.getIds(sessionId) or []
   lastViewed = Stores.Session.LastViewedMessage.getIds sessionId
 
   return true if not messages? or not messages.length

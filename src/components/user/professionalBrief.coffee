@@ -14,7 +14,7 @@ module.exports = React.createClass
     user: React.PropTypes.object.isRequired
 
   render: ->
-    @props.user.avatar = @props.user.avatar || '/res/images/default-avatar.png'
+    @props.user.avatar = @props.user.avatar or '/res/images/default-avatar.png'
     _this = @
     fullname = ['name', 'surname1', 'surname2']
       .map (f) -> _this.props.user[f]

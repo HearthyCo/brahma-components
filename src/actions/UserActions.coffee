@@ -34,7 +34,7 @@ UserActions =
       'Logout', response 'UserLogout'
 
   register: (user) ->
-    user.login = user.login || user.email
+    user.login = user.login or user.email
     Utils.mkApiPoster '', user, 'user',
       'Signup', response 'UserRegister'
 

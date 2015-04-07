@@ -14,7 +14,7 @@ PageActions =
     window.router.navigate route, trigger: true
 
   change: (page, opts) ->
-    t = block || {}
+    t = block or {}
     block = false
     _.extend t, opts
 

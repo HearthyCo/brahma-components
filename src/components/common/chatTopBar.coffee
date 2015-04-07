@@ -18,7 +18,7 @@ module.exports = React.createClass
 
   render: ->
     if @props.user
-      avatar = @props.user.avatar || '/res/images/default-avatar.png'
+      avatar = @props.user.avatar or '/res/images/default-avatar.png'
       _this = @
       fullname = ['name', 'surname1', 'surname2']
         .map (f) -> _this.props.user[f]
