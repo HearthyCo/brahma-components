@@ -45,10 +45,10 @@ SessionActions =
       'session', 'UpdateReport'
 
   close: (target) ->
-    Utils.mkApiPoster '/session/' + target + '/close', 'session', 'Close'
+    Utils.mkApiPoster '/session/' + target + '/close', {}, 'session', 'Close'
 
   finish: (target) ->
-    Utils.mkApiPoster '/session/' + target + '/finish', 'session', 'Finish'
+    Utils.mkApiPoster '/session/' + target + '/finish', {}, 'session', 'Finish'
 
 
 module.exports = SessionActions

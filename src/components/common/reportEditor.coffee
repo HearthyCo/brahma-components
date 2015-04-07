@@ -7,6 +7,7 @@ _ = require 'underscore'
 SublistEntry = React.createFactory require './sublistEntry'
 
 SessionActions = require '../../actions/SessionActions'
+PageActions = require '../../actions/PageActions'
 EntityStores = require '../../stores/EntityStores'
 ListStores = require '../../stores/ListStores'
 
@@ -60,12 +61,17 @@ module.exports = React.createClass
     r = SessionActions.updateReport @props.sessionUser.id,
       ReportStore.get @props.session?.id
     @setState reportStatus: 'saving'
-    r.then => @setState reportStatus: 'saved'
-    r.catch => @setState reportStatus: 'error'
+    r.then(
+      => @setState reportStatus: 'saved'
+      => @setState reportStatus: 'error'
+    )
 
   handleFinish: ->
-    if true
-      SessionActions.finish @props.session.id
+    r = SessionActions.finish @props.session.id
+    r.then(
+      -> PageActions.navigate '/'
+      -> # Nothing
+    )
 
   render: ->
     if @props.user

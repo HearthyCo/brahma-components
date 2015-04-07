@@ -34,7 +34,12 @@ mkApiCaller = (endpoint, evtModel, evtAction, opts) ->
 
     AppDispatcher.trigger [evtModel,evtAction,'request'].join(':'),
       opts.payload || {}
-    Backbone.ajax _.extend {}, opts, callbacks
+    r = Backbone.ajax _.extend {}, opts, callbacks
+    # Prevent "Uncaught (in promise)"
+    r.then(
+      ->
+      ->
+    )
 
 
 callbackRenamer = (opts) ->
