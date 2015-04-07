@@ -5,33 +5,41 @@ _ = require 'underscore'
 
 
 mkApiCaller = (endpoint, evtModel, evtAction, opts) ->
-  url = Config.api.url + endpoint
-  opts = opts or {}
-  method = opts.type or 'GET'
+  new Promise (resolve, reject) ->
+    url = Config.api.url + endpoint
+    opts = opts or {}
+    method = opts.type or 'GET'
 
-  opts = _.defaults opts,
-    dataType: 'jsonp'
-    url: url
+    opts = _.defaults opts,
+      dataType: 'jsonp'
+      url: url
 
-  callbacks =
-    success: (response) ->
-      # When status is 0 and protocol is file, we wrongfully get a success
-      # with no response. As we always return something not-null, if we get
-      # such a response, we call the error callback instead.
-      return callbacks.error(null, 0) if not response
-      console.log "API #{method} Success:", [evtModel, evtAction], url, response
-      AppDispatcher.trigger [evtModel,evtAction,'success'].join(':'), response
-      opts.success response if opts.success
-    error: (xhr, status) ->
-      console.error "API #{method} Error:", [evtModel, evtAction], url,
-        status, xhr
-      AppDispatcher.trigger [evtModel,evtAction,'error'].join(':'), {}
-      opts.error xhr, status if opts.error
+    callbacks =
+      success: (response) ->
+        # When status is 0 and protocol is file, we wrongfully get a success
+        # with no response. As we always return something not-null, if we get
+        # such a response, we call the error callback instead.
+        return callbacks.error(null, 0) if not response
+        console.log "API #{method} Success:",
+          [evtModel, evtAction], url, response
+        AppDispatcher.trigger [evtModel,evtAction,'success'].join(':'), response
+        opts.success response if opts.success
+        resolve response
+      error: (xhr, status) ->
+        console.error "API #{method} Error:", [evtModel, evtAction], url,
+          status, xhr
+        AppDispatcher.trigger [evtModel,evtAction,'error'].join(':'), {}
+        opts.error xhr, status if opts.error
+        reject status
 
-  AppDispatcher.trigger [evtModel,evtAction,'request'].join(':'),
-    opts.payload or {}
-  Backbone.ajax _.extend {}, opts, callbacks
-
+    AppDispatcher.trigger [evtModel,evtAction,'request'].join(':'),
+      opts.payload or {}
+    r = Backbone.ajax _.extend {}, opts, callbacks
+    # Prevent "Uncaught (in promise)"
+    r.then(
+      ->
+      ->
+    )
 
 callbackRenamer = (opts) ->
   if opts

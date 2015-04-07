@@ -110,6 +110,7 @@ Stores =
   SessionsByServiceType: Utils.mkSubListStore EntityStores.Session,
     'serviceTypes:ServiceTypes:success': (o) -> o.serviceTypeSessions
     'session:Assign:success': (o) -> o.serviceTypeSessions
+    'session:Finish:success': (o) -> o.serviceTypeSessions
 
 ### Client ###
 # Home
