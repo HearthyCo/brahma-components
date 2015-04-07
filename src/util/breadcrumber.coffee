@@ -113,7 +113,7 @@ module.exports =
   sessions: -> (args) ->
     crumbs = (state) -> ->
       arr = []
-      link = urlBuilder('sessions', state) if state?
+      # link = urlBuilder('sessions', state) if state?
       link = urlBuilder('sessions') if not state?
 
       arr.push
@@ -161,15 +161,16 @@ module.exports =
       # Put session node first in array once we have a session state
       arr.push
         label: @getIntlMessage 'sessions'
-        link: urlBuilder 'sessions', state
+        # link: urlBuilder 'sessions', state
+        link: urlBuilder 'sessions'
         className: 'clock'
       arr.push
         label: title
-        link: urlBuilder('sessions', id)
+        link: urlBuilder 'session', id
         className: 'clock'
       arr
 
-    stores: [ store ], list: crumbs store, args['id']
+    stores: [ store ], list: crumbs store, args['sessionId']
 
   ###
     This function buid a breadcrumb for top-up routes
