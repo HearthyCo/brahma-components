@@ -12,8 +12,10 @@ module.exports = React.createClass
   propTypes:
     id: React.PropTypes.string
     title: React.PropTypes.string.isRequired
-    url: React.PropTypes.string.isRequired
+    url: React.PropTypes.string
     advice: React.PropTypes.bool
+    onViewMoreClick: React.PropTypes.func
+
 
   render: ->
 
@@ -21,6 +23,7 @@ module.exports = React.createClass
       className: 'view-more section-view-more'
       href: @props.url
       key: 'moreEntries'
+      onClick: @props.onViewMoreClick
 
     if @props.children?.length
       body = [

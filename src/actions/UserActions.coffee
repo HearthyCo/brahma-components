@@ -40,7 +40,7 @@ UserActions =
 
   getMe: ->
     Utils.mkApiGetter '/me', 'user',
-      'Me', response 'UserGetMe'
+      'Me'
 
   save: (user) ->
     Utils.mkApiPoster '/me/update', user, 'user',
