@@ -1,6 +1,6 @@
 React = require 'react'
 moment = require 'moment'
-ReactIntl = require 'react-intl'
+ReactIntl = require '../../mixins/ReactIntl'
 _ = require 'underscore'
 
 { div, img, span, a, i } = React.DOM

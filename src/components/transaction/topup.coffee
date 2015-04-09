@@ -1,5 +1,5 @@
 React = require 'react'
-ReactIntl = require 'react-intl'
+ReactIntl = require '../../mixins/ReactIntl'
 TransactionActions = require '../../actions/TransactionActions'
 
 { div, a } = React.DOM

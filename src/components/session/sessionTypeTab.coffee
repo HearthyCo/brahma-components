@@ -1,5 +1,5 @@
 React = require 'react'
-ReactIntl = require 'react-intl'
+ReactIntl = require '../../mixins/ReactIntl'
 
 SessionActions = require '../../actions/SessionActions'
 ListStores = require '../../stores/ListStores'
