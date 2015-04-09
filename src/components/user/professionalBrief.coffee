@@ -1,5 +1,5 @@
 React = require 'react'
-ReactIntl = require 'react-intl'
+ReactIntl = require '../../mixins/ReactIntl'
 
 { div, img, span, p } = React.DOM
 
