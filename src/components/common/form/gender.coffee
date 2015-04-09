@@ -1,5 +1,5 @@
 React = require 'react'
-ReactIntl = require 'react-intl'
+ReactIntl = require '../../../mixins/ReactIntl'
 { div, label, input } = React.DOM
 
 module.exports = React.createClass

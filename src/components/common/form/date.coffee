@@ -1,5 +1,5 @@
 React = require 'react'
-ReactIntl = require 'react-intl'
+ReactIntl = require '../../../mixins/ReactIntl'
 _ = require 'underscore'
 
 { div, label, option, select } = React.DOM

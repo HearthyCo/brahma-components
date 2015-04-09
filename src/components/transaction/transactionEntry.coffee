@@ -1,5 +1,5 @@
 React = require 'react'
-ReactIntl = require 'react-intl'
+ReactIntl = require '../../mixins/ReactIntl'
 
 { div, img, span, a } = React.DOM
 
@@ -22,10 +22,12 @@ module.exports = React.createClass
       sign = '+'
       extraClass = 'plus'
     amount = @formatNumber Math.abs(@props.transaction.amount) / 100, 'credits'
+    reason = @props.transaction.reason.toLowerCase().replace '_', '-'
+    reason = @getIntlMessage 'transaction-' + reason
 
     div id: @props.id, className: 'comp-transactionentry amount-' + extraClass,
       div className: 'transaction-label',
-        div className: 'session-reason', @props.transaction.reason
+        div className: 'session-reason', reason
         div className: 'session-title', @props.transaction.title
       div className: 'transation-date',
         span className: 'date',

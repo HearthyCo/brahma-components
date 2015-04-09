@@ -12,5 +12,8 @@ module.exports = ->
     #"jshint"
     "moduleIndex"
   ]
-  @registerTask "development", ["build"]
+  @registerTask "development",   ["build"]
+  @registerTask "preproduction", ["build"]
+  @registerTask "production",    ["build"]
+
   @registerTask "default", ["development"]

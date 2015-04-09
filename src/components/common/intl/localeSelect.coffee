@@ -3,6 +3,23 @@ Backbone = require 'exoskeleton'
 
 IntlActions = require '../../../actions/IntlActions'
 
+locales = (locale) ->
+  _locales =
+    'ca-ES': 'Català'
+    'en-US': 'English'
+    'es-ES': 'Español'
+    'eu-ES': 'Euskara'
+    'fr-FR': 'Français'
+    'it-IT': 'Italiano'
+    'de-DE': 'Deutsch'
+    'gl-ES': 'Galego'
+    'pt-PT': 'Português'
+
+  if _locales.hasOwnProperty locale
+    return _locales[locale]
+  else
+    return locale
+
 module.exports = React.createClass
 
   displayName: 'localeSelect'
@@ -23,4 +40,4 @@ module.exports = React.createClass
       @context.availableLocales.map (locale) ->
         React.createElement 'option',
           key: locale, value: locale,
-          locale
+          locales(locale)

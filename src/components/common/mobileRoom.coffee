@@ -1,5 +1,5 @@
 React = require 'react/addons'
-ReactIntl = require 'react-intl'
+ReactIntl = require '../../mixins/ReactIntl'
 _ = require 'underscore'
 Utils = require '../../util/frontendUtils'
 

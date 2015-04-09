@@ -1,10 +1,12 @@
 React = require 'react'
-ReactIntl = require 'react-intl'
+ReactIntl = require '../../mixins/ReactIntl'
 
 { div, img, span, a } = React.DOM
 
 Datetime = React.createFactory require '../common/datetime'
 ListStores = require '../../stores/ListStores'
+EntityStores = require '../../stores/EntityStores'
+
 
 module.exports = React.createClass
 
@@ -18,9 +20,16 @@ module.exports = React.createClass
 
   render: ->
     sessionId = @props.session.id
+    link = '/session/' + @props.session.id
+    if @props.session.state in ['REQUESTED', 'UNDERWAY']
+      st = EntityStores.ServiceType.get @props.session.serviceType
+      if st?.mode is 'VIDEO'
+        link += '/video'
+      else
+        link += '/chat'
 
     div id: @props.id, className: 'comp-sessionentry',
-      a className: 'session-link', href: '/session/' + @props.session.id,
+      a className: 'session-link', href: link,
         div className: 'session-label',
           Datetime value: @props.session.startDate
           span className: 'session-title', @props.session.title
