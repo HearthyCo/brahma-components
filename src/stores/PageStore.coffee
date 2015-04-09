@@ -4,8 +4,8 @@ _ = require 'underscore'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 
 PageStore =
-  current: null
-  breadcrumb: null
+  history: []
+  current: '/'
   opts: {}
 
 _.extend PageStore, Backbone.Events
@@ -17,17 +17,25 @@ PageStore.removeChangeListener = (callback) ->
   PageStore.off 'change', callback
 
 PageStore.getPage = ->
+  history: PageStore.history
   current: PageStore.current
-  breadcrumb: PageStore.breadcrumb
   opts: JSON.parse JSON.stringify PageStore.opts
+
+PageStore.getBack = ->
+  back = PageStore.history[0]
+  back = PageStore.history.pop() if PageStore.history.length > 1
+  back
 
 AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
     when 'page:Change'
-      opts = payload.opts
+      PageStore.history.push PageStore
       PageStore.current = payload.page
-      PageStore.breadcrumb = opts.breadcrumb
-      PageStore.opts = _.omit(opts, 'breadcrumb')
+      PageStore.opts = _.omit payload.opts, 'breadcrumb'
+      PageStore.trigger 'change'
+    when 'page:Back'
+      console.log "page:Back"
+      PageStore = PageStore
       PageStore.trigger 'change'
 
 module.exports = PageStore

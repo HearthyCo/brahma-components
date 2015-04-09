@@ -1,6 +1,8 @@
 React = require 'react/addons'
 ReactIntl = require 'react-intl'
 
+BreadcrumbStore = require '../../stores/BreadcrumbStore'
+
 { div, span, a } = React.DOM
 
 module.exports = React.createClass
@@ -9,25 +11,24 @@ module.exports = React.createClass
 
   mixins: [ReactIntl]
 
-  propTypes:
-    values: React.PropTypes.object.isRequired
-    breadcrumb: React.PropTypes.func
-
   getInitialState: ->
     subscriptions: []
 
   componentDidMount: ->
+    BreadcrumbStore.addChangeListener @updateBreadcrumb
     @updateBreadcrumb()
 
-  componentWillReceiveProps: (next) ->
-    @updateBreadcrumb next
+  # componentWillReceiveProps: (next) ->
+  #   @updateBreadcrumb next
 
   componentWillUnmount: ->
+    BreadcrumbStore.removeChangeListener @updateBreadcrumb
     for subscription in @state.subscriptions
       subscription.store.removeChangeListener subscription.handler
 
-  updateBreadcrumb: (props) ->
-    props = props or @props
+  updateBreadcrumb: () ->
+    breadcrumb = BreadcrumbStore.getBreadcrumb()
+    values = BreadcrumbStore.getOpts()
 
     subscriptions = @state.subscriptions
     for subscription in subscriptions
@@ -35,8 +36,8 @@ module.exports = React.createClass
 
     subscriptions = []
     objectState = {}
-    if props.breadcrumb?
-      objectState.breadcrumb = props.breadcrumb props.values
+    if breadcrumb?
+      objectState.breadcrumb = breadcrumb values
     else
       objectState.breadcrumb = stores: [], list: -> []
 
@@ -62,13 +63,13 @@ module.exports = React.createClass
     return false unless list.length
 
     list.unshift
-      label: 'home'
-      link: '/home'
-      className: 'home'
+      label: -> 'home'
+      link: -> '/home'
+      className: -> 'home'
 
     div className: 'comp-breadcrumb',
       list.map (crumb, i) ->
-        a href: crumb.link, key: i, className: 'crumb',
-          span className: 'icon icon-' + crumb.className
+        a href: crumb.link(), key: i, className: 'crumb',
+          span className: 'icon icon-' + crumb.className()
           span className: 'label',
-            crumb.label
+            crumb.label()

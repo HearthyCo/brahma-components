@@ -3,16 +3,23 @@ _ = require 'underscore'
 
 { header, div, a, span } = React.DOM
 
+BreadcrumbStore = require '../../stores/BreadcrumbStore'
+PageActions = require '../../actions/PageActions'
+
 module.exports = React.createClass
 
   displayName: 'topBar'
+
+  handleUp: ->
+    url = BreadcrumbStore.getUp()
+    PageActions.navigate url.link()
 
   render: ->
     header className: 'comp-topBar',
       div className: 'topBar-wrapper',
         div className: 'left-box',
           div className: 'menuBar',
-            a href: '/',
+            a onClick: @handleUp,
               span className: 'icon icon-arrow-left'
         div className: 'center-box',
           a href: '/',

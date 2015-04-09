@@ -11,7 +11,7 @@ PageActions =
     timer = setTimeout (-> block = false), 500
 
     block = if opts? then opts else {}
-    window.router.navigate route, trigger: true
+    window.brahma.router.navigate route, trigger: true
 
   change: (page, opts) ->
     t = block or {}
