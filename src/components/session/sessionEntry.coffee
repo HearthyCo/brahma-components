@@ -23,7 +23,7 @@ module.exports = React.createClass
     link = '/session/' + @props.session.id
     if @props.session.state in ['REQUESTED', 'UNDERWAY']
       st = EntityStores.ServiceType.get @props.session.serviceType
-      if st.mode is 'VIDEO'
+      if st?.mode is 'VIDEO'
         link += '/video'
       else
         link += '/chat'
