@@ -30,18 +30,21 @@ module.exports = React.createClass
     ->
       setAmount amount
 
-  render: ->
-    _this = @
+  handleTopupClick: ->
     srvId = @props.serviceId
     if srvId
       redirectUrls = {}
       redirectUrls.cancel = '/#transaction/url/cancel'
       redirectUrls.success = '/#transaction/success/session?serviceId=' + srvId
 
-      createPaypal = -> TransactionActions.createPaypal _this.state.amount,
-        redirectUrls
-    else
-      createPaypal = -> TransactionActions.createPaypal _this.state.amount
+    promise = TransactionActions.createPaypal @state.amount, redirectUrls
+    @setState wait: true
+
+  render: ->
+    _this = @
+
+    if @state.wait
+      return div id: "wait", @getIntlMessage 'moment-please'
 
     div id: @props.id, className: 'comp-topup',
       div className: 'topup-quantitypick',
@@ -58,5 +61,5 @@ module.exports = React.createClass
         div className: 'label',
           @formatMessage @getIntlMessage('top-up-confirm'),
             amount: @state.amount / 100
-        div className: 'button', onClick: createPaypal,
+        div className: 'button', onClick: @handleTopupClick,
           @getIntlMessage 'top-up'
