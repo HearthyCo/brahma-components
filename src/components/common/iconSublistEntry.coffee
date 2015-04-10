@@ -25,10 +25,11 @@ module.exports = React.createClass
     {}
 
   toggleDisplay: ->
-    if @props.target
-      PageActions.navigate @props.target
-    else
-      @setState isExpanded: not @state.isExpanded
+    if @props.rel isnt 'disabled'
+      if @props.target
+        PageActions.navigate @props.target
+      else
+        @setState isExpanded: not @state.isExpanded
 
   render: ->
     contentClasses = 'comp-iconsublistentry'
