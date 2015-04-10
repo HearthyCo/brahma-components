@@ -9,6 +9,8 @@ module.exports = React.createClass
 
   displayName: 'modal'
 
+  mixins: [ReactIntl]
+
   propTypes:
     id: React.PropTypes.string
     content: React.PropTypes.node.isRequired
