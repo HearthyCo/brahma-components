@@ -17,13 +17,14 @@ module.exports = React.createClass
     BreadcrumbStore.goUp()
 
   render: ->
+    onBackArrowPages = ['homePage', 'loginPage', 'signupPage']
     page = PageStore.getPage()
 
     header className: 'comp-topBar',
       div className: 'topBar-wrapper',
         div className: 'left-box',
           div className: 'menuBar',
-            if page.current.displayName isnt 'homePage'
+            if onBackArrowPages.indexOf(page.current.displayName) < 0
               a onClick: @handleUp,
                 span className: 'icon icon-arrow-left'
         div className: 'center-box',
