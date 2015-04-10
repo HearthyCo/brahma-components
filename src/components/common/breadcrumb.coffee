@@ -69,7 +69,13 @@ module.exports = React.createClass
 
     div className: 'comp-breadcrumb',
       list.map (crumb, i) ->
-        a href: crumb.link(), key: i, className: 'crumb',
+        link = crumb.link()
+        href = link if typeof link is 'string'
+        onClick = link if typeof link is 'function'
+        tag = if href then a else span
+        # React doesn't remove empty href, and we can't cancel the click event
+        # See https://github.com/facebook/react/issues/1448
+        tag href: href, onClick: onClick, key: i, className: 'crumb',
           span className: 'icon icon-' + crumb.className()
           span className: 'label',
             crumb.label()

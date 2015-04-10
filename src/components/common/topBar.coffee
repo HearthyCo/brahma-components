@@ -11,8 +11,9 @@ module.exports = React.createClass
   displayName: 'topBar'
 
   handleUp: ->
-    url = BreadcrumbStore.getUp()
-    PageActions.navigate url.link()
+    #url = BreadcrumbStore.getUp()
+    #PageActions.navigate url.link()
+    BreadcrumbStore.goUp()
 
   render: ->
     header className: 'comp-topBar',

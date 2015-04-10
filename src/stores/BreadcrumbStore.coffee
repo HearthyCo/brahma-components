@@ -2,6 +2,7 @@ React = require 'react'
 Backbone = require 'exoskeleton'
 _ = require 'underscore'
 AppDispatcher = require '../dispatcher/AppDispatcher'
+PageActions = require '../actions/PageActions'
 
 BreadcrumbStore =
   list: []
@@ -27,6 +28,14 @@ BreadcrumbStore.getUp = ->
   crumb = link: -> '/home'
   crumb = list[list.length - 2] if list.length > 1
   crumb
+
+BreadcrumbStore.goUp = ->
+  link = BreadcrumbStore.getUp()
+  href = link if typeof link is 'string'
+  onClick = link if typeof link is 'function'
+  PageActions.navigate href if href
+  onClick() if onClick
+  link
 
 BreadcrumbStore.getBreadcrumb = ->
   BreadcrumbStore.breadcrumb
