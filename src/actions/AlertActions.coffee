@@ -12,9 +12,11 @@ AlertActions =
       content: 'Undetermined error'
       level: 'info'
       autoHide: 4000
+      timer: null
       onDone: ->
+        clearTimeout @timer if @timer
         if @autoHide
-          setTimeout (=> AlertActions.hide @id), parseInt @autoHide
+          @timer = setTimeout (=> AlertActions.hide @id), parseInt @autoHide
 
     _.defaults payload, defaults
 
