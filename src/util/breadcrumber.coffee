@@ -1,3 +1,6 @@
+PageActions = require '../actions/PageActions'
+
+
 ###
   This functions creates an url from object list
   @param  {object} args   List of url nodes
@@ -142,11 +145,21 @@ module.exports =
     crumbs = ->
       arr = []
       session = store.get id
+      link = ->
+        if session?.state
+          state = session.state.toLowerCase()
+          state = 'closed' if state is 'finished'
+          state = 'underway' if state is 'requested'
+          -> PageActions.navigate '/sessions',
+            withSection: state
+        else
+          urlBuilder 'sessions'
+
 
       # Put session node first in array once we have a session state
       arr.push
         label: => @getIntlMessage 'sessions'
-        link: -> urlBuilder 'sessions'
+        link: link
         className: -> 'clock'
       arr.push
         label: =>
