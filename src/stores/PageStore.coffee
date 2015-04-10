@@ -31,15 +31,7 @@ AppDispatcher.on 'all', (eventName, payload) ->
       if PageStore.current?
         PageStore.history.push current: PageStore.current, opts: PageStore.opts
       PageStore.current = payload.page
-      PageStore.opts = _.omit payload.opts, 'breadcrumb'
+      PageStore.opts = payload.opts
       PageStore.trigger 'change'
-    when 'page:Back'
-      back = PageStore.getBack()
-      console.log "page:Back", back
-      if back?
-        PageStore.current = back.current
-        PageStore.opts = back.opts
-
-        PageStore.trigger 'change'
 
 module.exports = PageStore
