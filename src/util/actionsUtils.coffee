@@ -29,7 +29,11 @@ mkApiCaller = (endpoint, evtModel, evtAction, opts) ->
       error: (xhr, status) ->
         console.error "API #{method} Error:", [evtModel, evtAction], url,
           status, xhr, opts
-        AppDispatcher.trigger [evtModel,evtAction,opts.errorLevel].join(':'), opts
+        AppDispatcher.trigger [
+          evtModel
+          evtAction
+          opts.errorLevel
+        ].join(':'), opts
         opts.error xhr, status if opts.error
         reject status
 

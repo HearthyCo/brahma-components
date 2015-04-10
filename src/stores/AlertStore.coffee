@@ -75,6 +75,10 @@ _addAlert = (payload) ->
   try
     if payload.id
       id = payload.id
+      alert = AlertStore.alerts[id]
+      if alert and alert.timer
+        clearTimeout alert.timer
+        alert.timer = null
       _addIdx payload.id
       AlertStore.alerts[id] = payload
       return id
@@ -84,6 +88,10 @@ _addAlert = (payload) ->
 _removeAlert = (id) ->
   try
     if AlertStore.alerts.hasOwnProperty id
+      alert = Alert Store.alerts[id]
+      if alert.timer
+        clearTimeout alert.timer
+        alert.timer = null
       delete AlertStore.alerts[id]
   catch err
   return _removeIdx id
