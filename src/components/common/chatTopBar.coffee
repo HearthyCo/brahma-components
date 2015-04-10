@@ -29,7 +29,7 @@ module.exports = React.createClass
         img className: 'avatar', src: avatar
         div className: 'details',
           span className: 'name', fullname
-          a href: '/', 'Ver perfil y curriculum'
+          a href: '/', rel: 'disabled', 'Ver perfil y curriculum'
 
     header className: 'comp-chatTopBar',
       div className: 'chatTopBar-wrapper',
