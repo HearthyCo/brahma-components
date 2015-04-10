@@ -13,6 +13,7 @@ mkApiCaller = (endpoint, evtModel, evtAction, opts) ->
     opts = _.defaults opts,
       dataType: 'jsonp'
       url: url
+      errorLevel: 'error' # error, warn, debug
 
     callbacks =
       success: (response) ->
@@ -27,8 +28,8 @@ mkApiCaller = (endpoint, evtModel, evtAction, opts) ->
         resolve response
       error: (xhr, status) ->
         console.error "API #{method} Error:", [evtModel, evtAction], url,
-          status, xhr
-        AppDispatcher.trigger [evtModel,evtAction,'error'].join(':'), {}
+          status, xhr, opts
+        AppDispatcher.trigger [evtModel,evtAction,opts.errorLevel].join(':'), opts
         opts.error xhr, status if opts.error
         reject status
 
