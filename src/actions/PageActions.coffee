@@ -13,6 +13,9 @@ PageActions =
     block = if opts? then opts else {}
     window.brahma.router.navigate route, trigger: true
 
+  back: ->
+    AppDispatcher.trigger 'page:Back', {}
+
   change: (page, opts) ->
     t = block or {}
     block = false

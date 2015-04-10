@@ -5,7 +5,7 @@ AppDispatcher = require '../dispatcher/AppDispatcher'
 
 PageStore =
   history: []
-  current: '/'
+  current: null
   opts: {}
 
 _.extend PageStore, Backbone.Events
@@ -22,20 +22,24 @@ PageStore.getPage = ->
   opts: JSON.parse JSON.stringify PageStore.opts
 
 PageStore.getBack = ->
-  back = PageStore.history[0]
-  back = PageStore.history.pop() if PageStore.history.length > 1
-  back
+  return null if PageStore.history.length <= 0
+  PageStore.history.pop()
 
 AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
     when 'page:Change'
-      PageStore.history.push PageStore
+      if PageStore.current?
+        PageStore.history.push current: PageStore.current, opts: PageStore.opts
       PageStore.current = payload.page
       PageStore.opts = _.omit payload.opts, 'breadcrumb'
       PageStore.trigger 'change'
     when 'page:Back'
-      console.log "page:Back"
-      PageStore = PageStore
-      PageStore.trigger 'change'
+      back = PageStore.getBack()
+      console.log "page:Back", back
+      if back?
+        PageStore.current = back.current
+        PageStore.opts = back.opts
+
+        PageStore.trigger 'change'
 
 module.exports = PageStore

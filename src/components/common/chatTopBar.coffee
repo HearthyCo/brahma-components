@@ -3,6 +3,8 @@ _ = require 'underscore'
 
 { header, div, a, span, img } = React.DOM
 
+PageActions = require '../../actions/PageActions'
+
 module.exports = React.createClass
 
   displayName: 'chatTopBar'
@@ -15,6 +17,8 @@ module.exports = React.createClass
     if @props.backAction
       e.stopPropagation()
       @props.backAction()
+    else
+      PageActions.back()
 
   render: ->
     if @props.user
