@@ -11,7 +11,16 @@ SessionActions =
       'session', 'Created', success: (response) ->
         console.log 'API POST Success:', response
         AppDispatcher.trigger  'session:Created:success', response
-        PageActions.navigate '/session/' + response.session.id
+        link = '/session/' + response.session.id
+        st = response.servicetypes || []
+        st = st.filter (o) ->
+          o.id is response.session.serviceType
+        st = st[0] if st.length
+        if st?.mode is 'VIDEO'
+          link += '/video'
+        else
+          link += '/chat'
+        PageActions.navigate link
         Queue.socket.updateSessions() if Queue.socket
 
   # TODO: check if it works
