@@ -15,6 +15,6 @@ module.exports = React.createClass
 
     div className: 'comp-recomendationEntry',
       div className: 'label',
-        'Detalles'
+        @getIntlMessage 'details'
       div className: 'wrapper',
         entry

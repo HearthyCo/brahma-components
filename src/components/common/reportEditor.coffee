@@ -2,16 +2,19 @@ React = require 'react/addons'
 ReactIntl = require '../../mixins/ReactIntl'
 _ = require 'underscore'
 
-{ div, p, textarea, button } = React.DOM
+{ div, p, textarea, button, span } = React.DOM
 
-SublistEntry = React.createFactory require './sublistEntry'
+IconSubListEntry = React.createFactory require './iconSublistEntry'
+# ReportEntry = React.createFactory require './reportentry'
 
 SessionActions = require '../../actions/SessionActions'
 PageActions = require '../../actions/PageActions'
 EntityStores = require '../../stores/EntityStores'
 ListStores = require '../../stores/ListStores'
 
-ReportStore = require('../../stores/StateStores').chatTabs.reports
+StateStores = require('../../stores/StateStores')
+ReportStore = StateStores.chatTabs.reports
+OpenSectionsStore = StateStores.chatTabs.openSections
 
 module.exports = React.createClass
 
@@ -73,6 +76,9 @@ module.exports = React.createClass
       -> # Nothing
     )
 
+  handleHide: ->
+    OpenSectionsStore.set @props.session.id, null
+
   render: ->
     if @props.user
       fullname = ['name', 'surname1', 'surname2']
@@ -91,21 +97,28 @@ module.exports = React.createClass
 
     # TODO: @getIntlMessage 'everything...'
     div className: 'comp-reportEditor',
-      '< ' + fullname
-      p {}, header
+      div className: 'content',
+        div className: 'session-title',
+          div className: 'session-client',
+            span className: 'icon icon-arrow-left', onClick: @handleHide
+            span className: 'name', fullname
+            p className: 'intro', header
 
-      SublistEntry label: 'Crear informe', defaultOpen: true,
-        'Escribe un informe'
-        textarea valueLink: ReportStore.linkState @props.session?.id
-        button
-          onClick: @handleReportSave
-          className: @state.reportStatus
-          disabled: saveReportDisabled,
-          'Guardar'
+        IconSubListEntry icon: 'pencil', label: 'Crear informe', defaultOpen: true,
+          div className: 'comp-reportEntry',
+            div className: 'label',
+              'Escribe un informe'
+            textarea valueLink: ReportStore.linkState @props.session?.id
+            button
+              onClick: @handleReportSave
+              className: @state.reportStatus
+              disabled: saveReportDisabled,
+              'Guardar'
 
-      SublistEntry label: 'Crear tratamiento',
-        div {}, 'Recomendaciones'
-        div {}, 'Fármacos'
+        IconSubListEntry label: 'Crear tratamiento', icon: 'pill',
+          div className: 'comp-treatmentEntry',
+            div className: 'treatment-type', 'Recomendaciones'
+            div className: 'treatment-type', 'Fármacos'
 
       div className: 'end-session',
         button onClick: @handleFinish,
