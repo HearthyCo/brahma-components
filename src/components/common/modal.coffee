@@ -1,4 +1,5 @@
 React = require 'react'
+ReactIntl = require '../../mixins/ReactIntl'
 
 ModalActions = require '../../actions/ModalActions'
 
@@ -22,4 +23,4 @@ module.exports = React.createClass
       div className: 'modal-close', onClick: @onClose,
         span className: 'icon icon-cross'
       div className: 'modal-content',
-        @props.content
+        @getIntlMessage @props.content
