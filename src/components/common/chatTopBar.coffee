@@ -4,6 +4,7 @@ _ = require 'underscore'
 { header, div, a, span, img } = React.DOM
 
 PageActions = require '../../actions/PageActions'
+PageStore = require '../../stores/PageStore'
 
 module.exports = React.createClass
 
@@ -18,7 +19,8 @@ module.exports = React.createClass
       e.stopPropagation()
       @props.backAction()
     else
-      PageActions.back()
+      back = PageStore.getBack()
+      PageActions.change back.current, back.opts
 
   render: ->
     if @props.user

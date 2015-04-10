@@ -30,7 +30,7 @@ BreadcrumbStore.getUp = ->
   crumb
 
 BreadcrumbStore.goUp = ->
-  link = BreadcrumbStore.getUp()
+  link = BreadcrumbStore.getUp().link()
   href = link if typeof link is 'string'
   onClick = link if typeof link is 'function'
   PageActions.navigate href if href
