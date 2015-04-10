@@ -79,17 +79,17 @@ module.exports = React.createClass
       IconSubListEntry label: 'Tratamientos', icon: 'pill',
         HistoriesEntry {}
         HistoriesEntry {}
-        a className: 'view-more', href: '/history', rel: 'disabled'
+        a className: 'view-more', href: '/history', rel: 'disabled',
           @getIntlMessage 'view-more'
       IconSubListEntry label: 'Problemas resueltos', icon: 'problem-2',
         HistoriesEntry {}
-        a className: 'view-more', href: '/history', rel: 'disabled'
+        a className: 'view-more', href: '/history', rel: 'disabled',
           @getIntlMessage 'view-more'
       IconSubListEntry label: 'Problemas actuales', icon: 'problem',
         HistoriesEntry {}
-        a className: 'view-more', href: '/history', rel: 'disabled'
+        a className: 'view-more', href: '/history', rel: 'disabled',
           @getIntlMessage 'view-more'
       IconSubListEntry label: 'Enfermería', icon: 'nursing',
         HistoriesEntry {}
-        a className: 'view-more', href: '/history', rel: 'disabled'
+        a className: 'view-more', href: '/history', rel: 'disabled',
           @getIntlMessage 'view-more'
