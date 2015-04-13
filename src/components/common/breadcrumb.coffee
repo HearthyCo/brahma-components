@@ -11,6 +11,10 @@ module.exports = React.createClass
 
   mixins: [ReactIntl]
 
+  propTypes:
+    current: React.PropTypes.node.isRequired
+    props: React.PropTypes.object.isRequired
+
   getInitialState: ->
     subscriptions: []
 
@@ -18,8 +22,8 @@ module.exports = React.createClass
     BreadcrumbStore.addChangeListener @updateBreadcrumb
     @updateBreadcrumb()
 
-  # componentWillReceiveProps: (next) ->
-  #   @updateBreadcrumb next
+  componentWillReceiveProps: (next) ->
+    @updateBreadcrumb next
 
   componentWillUnmount: ->
     BreadcrumbStore.removeChangeListener @updateBreadcrumb
@@ -57,10 +61,11 @@ module.exports = React.createClass
     @setState objectState
 
   render: ->
-    breadcrumb = @state.breadcrumb
-    return false unless breadcrumb
-    list = breadcrumb.list.call @
-    return false unless list.length
+    #breadcrumb = @state.breadcrumb
+    #return false unless breadcrumb
+    #list = breadcrumb.getList.call @
+    #return false unless list.length
+    list = BreadcrumbStore.getList()
 
     list.unshift
       label: -> 'home'
@@ -68,7 +73,7 @@ module.exports = React.createClass
       className: -> 'home'
 
     div className: 'comp-breadcrumb',
-      list.map (crumb, i) ->
+      list.map (crumb, i) =>
         link = crumb.link()
         href = link if typeof link is 'string'
         onClick = link if typeof link is 'function'
@@ -78,4 +83,4 @@ module.exports = React.createClass
         tag href: href, onClick: onClick, key: i, className: 'crumb',
           span className: 'icon icon-' + crumb.className()
           span className: 'label',
-            crumb.label()
+            crumb.label.bind @

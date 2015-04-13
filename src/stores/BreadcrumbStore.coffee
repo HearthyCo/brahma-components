@@ -18,10 +18,7 @@ BreadcrumbStore.removeChangeListener = (callback) ->
   BreadcrumbStore.off 'change', callback
 
 BreadcrumbStore.getList = ->
-  list: BreadcrumbStore.list
-
-BreadcrumbStore.getOpts = ->
-  BreadcrumbStore.opts
+  BreadcrumbStore.list.slice 0
 
 BreadcrumbStore.getUp = ->
   list = BreadcrumbStore.list
@@ -43,17 +40,26 @@ BreadcrumbStore.getBreadcrumb = ->
 AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
     when 'page:Change'
-      opts = payload.opts
-      if opts.breadcrumb?
-        BreadcrumbStore.breadcrumb = opts.breadcrumb
-        BreadcrumbStore.opts = _.omit(opts, 'breadcrumb')
-        breadcrumb = BreadcrumbStore.breadcrumb
-        BreadcrumbStore.list = breadcrumb(BreadcrumbStore.opts).list()
-      else
-        BreadcrumbStore.breadcrumb = null
-        BreadcrumbStore.opts = {}
-        BreadcrumbStore.list = []
+      crumbs = []
+      element = payload.page
+      props = payload.opts
+      while true
+        if element.crumb
+          # Generate current crumb
+          do (element) ->
+            crumb =
+              label: -> element.crumb.title props
+              link: -> element.crumb.url props
+              stores: -> element.crumb.stores props
+              className: -> 'TODO: Change me'
+            crumbs.push crumb
+        break unless element.parent
+        # Go up one level
+        element = element.parent props
+        _.extend props, element.parentProps props if element.parentProps
 
+      BreadcrumbStore.list = crumbs
       BreadcrumbStore.trigger 'change'
 
-module.exports = BreadcrumbStore
+
+window.brahma.stores.breadcrumb = module.exports = BreadcrumbStore
