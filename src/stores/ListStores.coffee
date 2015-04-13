@@ -89,7 +89,7 @@ Stores =
       'chat:SendFile:success': MixNewMessages
       'chat:SendFile:error': MixNewMessages
     LastViewedMessage: Utils.mkSubListStore EntityStores.Message, {
-      'page:change': (o, l) ->
+      'page:Change': (o, l) ->
         pageName = o.page.displayName
         if pageName is 'roomPage' or pageName is 'sessionChatPage'
           @currentSid = parseInt o.opts.sessionId
