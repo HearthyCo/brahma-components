@@ -6,7 +6,7 @@ AlertActions = require './AlertActions'
 
 response = (actionId) ->
   success: (resp) ->
-    if actionId in ['UserLogin', 'UserRegister', 'UserGetMe']
+    if actionId in ['UserLogin', 'UserRegister']
       Queue.initSocket resp.users[0]
 
     AlertActions.formAlert {
@@ -40,7 +40,10 @@ UserActions =
 
   getMe: ->
     Utils.mkApiGetter '/me', 'user',
-      'Me', errorLevel: 'warn'
+      'Me', {
+        errorLevel: 'warn'
+        success: (resp) -> Queue.initSocket resp.users[0]
+      }
 
   save: (user) ->
     Utils.mkApiPoster '/me/update', user, 'user',
