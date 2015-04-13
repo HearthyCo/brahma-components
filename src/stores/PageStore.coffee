@@ -34,4 +34,4 @@ AppDispatcher.on 'all', (eventName, payload) ->
       PageStore.opts = payload.opts
       PageStore.trigger 'change'
 
-module.exports = PageStore
+window.brahma.stores.page = module.exports = PageStore
