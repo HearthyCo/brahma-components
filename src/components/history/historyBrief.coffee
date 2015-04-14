@@ -45,4 +45,4 @@ module.exports = React.createClass
         @getIntlMessage 'recent-activity'
       entries
       a className: 'view-more histories-view-more', href: '/histories',
-        @getIntlMessage('view-more')
+        @getIntlMessage 'view-more'
