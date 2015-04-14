@@ -2,7 +2,8 @@ EntityStores = require '../stores/EntityStores'
 
 module.exports =
   getUrl:
-    session: (session) ->
+    session: (sessionId) ->
+      session = EntityStores.Session.get sessionId
       if session
         url = '/session/' + session.id
         if session.state in ['REQUESTED', 'UNDERWAY']
