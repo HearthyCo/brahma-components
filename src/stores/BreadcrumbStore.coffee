@@ -18,10 +18,8 @@ BreadcrumbStore.removeChangeListener = (callback) ->
   BreadcrumbStore.off 'change', callback
 
 BreadcrumbStore.getList = ->
-  list: BreadcrumbStore.list
-
-BreadcrumbStore.getOpts = ->
-  BreadcrumbStore.opts
+  arr = BreadcrumbStore.list.slice 0
+  arr.reverse()
 
 BreadcrumbStore.getUp = ->
   list = BreadcrumbStore.list
@@ -37,23 +35,38 @@ BreadcrumbStore.goUp = ->
   onClick() if onClick
   link
 
-BreadcrumbStore.getBreadcrumb = ->
-  BreadcrumbStore.breadcrumb
+funcOrString = (f, args...) ->
+  if typeof f is 'function' then f.apply @, args else f
+
+updateBreadcrumb = (element, props) ->
+  crumbs = []
+  while true
+    if element.crumb
+      # Generate current crumb
+      do (element) ->
+        crumb =
+          props: props
+          label: -> funcOrString.call @, element.crumb.title, props
+          link: -> funcOrString.call @, element.crumb.url, props
+          stores: -> funcOrString.call @, element.crumb.stores or [], props
+          className: -> funcOrString.call @, 'TODO: Change me', props
+        crumbs.push crumb
+    break unless element.parent
+    # Go up one level
+    element = element.parent props
+    _.extend props, element.parentProps props if element.parentProps
+    console.log 'P:', props, element.parentProps? props
+
+  BreadcrumbStore.list = crumbs
+  BreadcrumbStore.trigger 'change'
+
 
 AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
     when 'page:Change'
-      opts = payload.opts
-      if opts.breadcrumb?
-        BreadcrumbStore.breadcrumb = opts.breadcrumb
-        BreadcrumbStore.opts = _.omit(opts, 'breadcrumb')
-        breadcrumb = BreadcrumbStore.breadcrumb
-        BreadcrumbStore.list = breadcrumb(BreadcrumbStore.opts).list()
-      else
-        BreadcrumbStore.breadcrumb = null
-        BreadcrumbStore.opts = {}
-        BreadcrumbStore.list = []
+      element = payload.page
+      props = payload.opts
+      updateBreadcrumb element, props
 
-      BreadcrumbStore.trigger 'change'
 
-module.exports = BreadcrumbStore
+window.brahma.stores.breadcrumb = module.exports = BreadcrumbStore
