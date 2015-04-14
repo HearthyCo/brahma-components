@@ -35,7 +35,7 @@ module.exports = React.createClass
       div key: key, className: 'section',
         div className: 'section-title', title
         entries.map (e) ->
-          a key: e.id, className: 'history-entry', href: '/allergy/' + e.id,
+          a className: 'history-entry', href: '/histories',
             div className: 'title', e.title
             div className: 'description', e.description
 
@@ -44,5 +44,5 @@ module.exports = React.createClass
       div className: 'activity',
         @getIntlMessage 'recent-activity'
       entries
-      a className: 'view-more histories-view-more', href: '/allergies',
+      a className: 'view-more histories-view-more', href: '/histories',
         @getIntlMessage('view-more')
