@@ -29,33 +29,42 @@ BreadcrumbStore.getUp = ->
 
 BreadcrumbStore.goUp = ->
   link = BreadcrumbStore.getUp().link()
-  href = link if typeof link is 'string'
-  onClick = link if typeof link is 'function'
-  PageActions.navigate href if href
-  onClick() if onClick
-  link
+  if 'function' is typeof link
+    link()
+  else
+    PageActions.navigate link
 
 funcOrString = (f, args...) ->
-  if typeof f is 'function' then f.apply @, args else f
+  page = window.brahma.currentPage # holy mother of gosh
+  if typeof f is 'function'
+    wrapper = ->
+      f.apply page, args
+    return wrapper
+  else
+    return f
 
 updateBreadcrumb = (element, props) ->
   crumbs = []
+
   while true
     if element.crumb
+      if not _.isArray element.crumb
+        element.crumb = [element.crumb]
       # Generate current crumb
-      do (element) ->
-        crumb =
-          props: props
-          label: -> funcOrString.call @, element.crumb.title, props
-          link: -> funcOrString.call @, element.crumb.url, props
-          stores: -> funcOrString.call @, element.crumb.stores or [], props
-          className: -> funcOrString.call @, 'TODO: Change me', props
-        crumbs.push crumb
+      for _crumb in element.crumb
+        do (_crumb) ->
+          crumb =
+            props: props
+            label: -> funcOrString _crumb.title, props
+            link: -> funcOrString _crumb.url, props
+            stores: -> funcOrString _crumb.stores or [], props
+            className: -> funcOrString 'TODO: Change me', props
+          crumbs.push crumb
     break unless element.parent
+
     # Go up one level
     element = element.parent props
     _.extend props, element.parentProps props if element.parentProps
-    console.log 'P:', props, element.parentProps? props
 
   BreadcrumbStore.list = crumbs
   BreadcrumbStore.trigger 'change'

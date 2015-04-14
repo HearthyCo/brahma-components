@@ -75,7 +75,11 @@ module.exports = React.createClass
       profile
       IconSubListEntry label: 'Alergias', icon: 'allergy',
         allergies
-      IconSubListEntry label: 'Vacunas', icon: 'vaccine', target: '/allergies', rel: 'disabled'
+      IconSubListEntry
+        label: 'Vacunas'
+        icon: 'vaccine'
+        target: '/allergies'
+        rel: 'disabled'
       IconSubListEntry label: 'Tratamientos', icon: 'pill',
         HistoriesEntry {}
         HistoriesEntry {}

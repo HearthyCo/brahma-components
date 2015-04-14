@@ -56,7 +56,7 @@ module.exports = React.createClass
       className: -> 'home'
 
     div className: 'comp-breadcrumb',
-      list.map (crumb, i) =>
+      list.map (crumb, i) ->
         link = crumb.link()
         if typeof link is 'function'
           onClick = link
@@ -68,7 +68,13 @@ module.exports = React.createClass
         tag = if href then a else span
         # React doesn't remove empty href, and we can't cancel the click event
         # See https://github.com/facebook/react/issues/1448
-        tag href: href, onClick: onClick, rel: 'norouter', key: i, className: 'crumb',
+        tag
+          href: href
+          onClick: onClick
+          rel: 'norouter'
+          key: i
+          className: 'crumb',
+
           span className: 'icon icon-' + crumb.className()
           span className: 'label',
-            crumb.label.apply @
+            crumb.label()

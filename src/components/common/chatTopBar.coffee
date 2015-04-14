@@ -5,6 +5,7 @@ _ = require 'underscore'
 
 PageActions = require '../../actions/PageActions'
 PageStore = require '../../stores/PageStore'
+BreadcrumbStore = require '../../stores/BreadcrumbStore'
 
 module.exports = React.createClass
 
@@ -19,8 +20,9 @@ module.exports = React.createClass
       e.stopPropagation()
       @props.backAction()
     else
-      back = PageStore.getBack()
-      PageActions.change back.current, back.opts
+      # back = PageStore.getBack()
+      # PageActions.change back.current, back.opts
+      BreadcrumbStore.goUp()
 
   render: ->
     if @props.user
