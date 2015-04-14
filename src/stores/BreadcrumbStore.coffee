@@ -18,7 +18,8 @@ BreadcrumbStore.removeChangeListener = (callback) ->
   BreadcrumbStore.off 'change', callback
 
 BreadcrumbStore.getList = ->
-  BreadcrumbStore.list.slice 0
+  arr = BreadcrumbStore.list.slice 0
+  arr.reverse()
 
 BreadcrumbStore.getUp = ->
   list = BreadcrumbStore.list
@@ -34,8 +35,8 @@ BreadcrumbStore.goUp = ->
   onClick() if onClick
   link
 
-BreadcrumbStore.getBreadcrumb = ->
-  BreadcrumbStore.breadcrumb
+callFuncOrString = (f, args...) ->
+  if typeof f is 'function' then f.apply @, args else f
 
 AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
@@ -48,10 +49,10 @@ AppDispatcher.on 'all', (eventName, payload) ->
           # Generate current crumb
           do (element) ->
             crumb =
-              label: -> element.crumb.title props
-              link: -> element.crumb.url props
-              stores: -> element.crumb.stores props
-              className: -> 'TODO: Change me'
+              label: -> callFuncOrString.call @, element.crumb.title, props
+              link: -> callFuncOrString.call @, element.crumb.url, props
+              stores: -> callFuncOrString.call @, element.crumb.stores, props
+              className: -> callFuncOrString.call @, 'TODO: Change me', props
             crumbs.push crumb
         break unless element.parent
         # Go up one level

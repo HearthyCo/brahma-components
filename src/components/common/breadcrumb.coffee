@@ -31,42 +31,24 @@ module.exports = React.createClass
       subscription.store.removeChangeListener subscription.handler
 
   updateBreadcrumb: () ->
-    breadcrumb = BreadcrumbStore.getBreadcrumb()
-    values = BreadcrumbStore.getOpts()
-
-    subscriptions = @state.subscriptions
-    for subscription in subscriptions
-      subscription.store.removeChangeListener subscription.handler
-
+    list = BreadcrumbStore.getList()
     subscriptions = []
-    objectState = {}
-    if breadcrumb?
-      objectState.breadcrumb = breadcrumb values
-    else
-      objectState.breadcrumb = stores: [], list: -> []
 
-    breadcrumb = objectState.breadcrumb
-
-    _this = @
-    if breadcrumb? and breadcrumb.stores?
-      for store in breadcrumb.stores
+    for crumb in list
+      stores = crumb.stores()
+      for store in stores
         objectSubscription = {}
         objectSubscription.store = store
-        objectSubscription.handler = -> _this.updateBreadcrumb()
+        objectSubscription.handler = => @updateBreadcrumb()
         objectSubscription.store.addChangeListener objectSubscription.handler
         subscriptions.push objectSubscription
 
-    objectState.subscriptions = subscriptions
-
+    objectState = subscriptions: subscriptions
     @setState objectState
 
   render: ->
-    #breadcrumb = @state.breadcrumb
-    #return false unless breadcrumb
-    #list = breadcrumb.getList.call @
-    #return false unless list.length
     list = BreadcrumbStore.getList()
-
+    return false if not list.length
     list.unshift
       label: -> 'home'
       link: -> '/home'
@@ -83,4 +65,4 @@ module.exports = React.createClass
         tag href: href, onClick: onClick, key: i, className: 'crumb',
           span className: 'icon icon-' + crumb.className()
           span className: 'label',
-            crumb.label.bind @
+            crumb.label.apply @
