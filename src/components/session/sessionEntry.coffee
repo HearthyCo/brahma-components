@@ -7,6 +7,7 @@ Datetime = React.createFactory require '../common/datetime'
 ListStores = require '../../stores/ListStores'
 EntityStores = require '../../stores/EntityStores'
 
+urlUtils = require '../../util/urlUtils'
 
 module.exports = React.createClass
 
@@ -20,13 +21,7 @@ module.exports = React.createClass
 
   render: ->
     sessionId = @props.session.id
-    link = '/session/' + @props.session.id
-    if @props.session.state in ['REQUESTED', 'UNDERWAY']
-      st = EntityStores.ServiceType.get @props.session.serviceType
-      if st?.mode is 'VIDEO'
-        link += '/video'
-      else
-        link += '/chat'
+    link = urlUtils.getUrl.session @props.session
 
     div id: @props.id, className: 'comp-sessionentry',
       a className: 'session-link', href: link,
