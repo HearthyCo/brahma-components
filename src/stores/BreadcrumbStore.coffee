@@ -35,7 +35,7 @@ BreadcrumbStore.goUp = ->
   onClick() if onClick
   link
 
-callFuncOrString = (f, args...) ->
+funcOrString = (f, args...) ->
   if typeof f is 'function' then f.apply @, args else f
 
 AppDispatcher.on 'all', (eventName, payload) ->
@@ -50,10 +50,10 @@ AppDispatcher.on 'all', (eventName, payload) ->
           do (element) ->
             crumb =
               props: props
-              label: -> callFuncOrString.call @, element.crumb.title, props
-              link: -> callFuncOrString.call @, element.crumb.url, props
-              stores: -> callFuncOrString.call @, element.crumb.stores, props
-              className: -> callFuncOrString.call @, 'TODO: Change me', props
+              label: -> funcOrString.call @, element.crumb.title, props
+              link: -> funcOrString.call @, element.crumb.url, props
+              stores: -> funcOrString.call @, element.crumb.stores or [], props
+              className: -> funcOrString.call @, 'TODO: Change me', props
             crumbs.push crumb
         break unless element.parent
         # Go up one level
