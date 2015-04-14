@@ -49,6 +49,7 @@ AppDispatcher.on 'all', (eventName, payload) ->
           # Generate current crumb
           do (element) ->
             crumb =
+              props: props
               label: -> callFuncOrString.call @, element.crumb.title, props
               link: -> callFuncOrString.call @, element.crumb.url, props
               stores: -> callFuncOrString.call @, element.crumb.stores, props
