@@ -13,7 +13,7 @@ module.exports = React.createClass
     defaultOpen: React.PropTypes.bool
 
   getInitialState: () ->
-    isExpanded: @props.defaultOpen
+    isExpanded: @props.defaultOpen or undefined
 
   toggleDisplay: ->
     @setState isExpanded: not @state.isExpanded
