@@ -38,30 +38,35 @@ BreadcrumbStore.goUp = ->
 funcOrString = (f, args...) ->
   if typeof f is 'function' then f.apply @, args else f
 
+updateBreadcrumb = (element, props) ->
+  crumbs = []
+  while true
+    if element.crumb
+      # Generate current crumb
+      do (element) ->
+        crumb =
+          props: props
+          label: -> funcOrString.call @, element.crumb.title, props
+          link: -> funcOrString.call @, element.crumb.url, props
+          stores: -> funcOrString.call @, element.crumb.stores or [], props
+          className: -> funcOrString.call @, 'TODO: Change me', props
+        crumbs.push crumb
+    break unless element.parent
+    # Go up one level
+    element = element.parent props
+    _.extend props, element.parentProps props if element.parentProps
+    console.log 'P:', props, element.parentProps? props
+
+  BreadcrumbStore.list = crumbs
+  BreadcrumbStore.trigger 'change'
+
+
 AppDispatcher.on 'all', (eventName, payload) ->
   switch eventName
     when 'page:Change'
-      crumbs = []
       element = payload.page
       props = payload.opts
-      while true
-        if element.crumb
-          # Generate current crumb
-          do (element) ->
-            crumb =
-              props: props
-              label: -> funcOrString.call @, element.crumb.title, props
-              link: -> funcOrString.call @, element.crumb.url, props
-              stores: -> funcOrString.call @, element.crumb.stores or [], props
-              className: -> funcOrString.call @, 'TODO: Change me', props
-            crumbs.push crumb
-        break unless element.parent
-        # Go up one level
-        element = element.parent props
-        _.extend props, element.parentProps props if element.parentProps
-
-      BreadcrumbStore.list = crumbs
-      BreadcrumbStore.trigger 'change'
+      updateBreadcrumb element, props
 
 
 window.brahma.stores.breadcrumb = module.exports = BreadcrumbStore

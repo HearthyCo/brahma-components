@@ -2,6 +2,7 @@ React = require 'react/addons'
 ReactIntl = require '../../mixins/ReactIntl'
 
 BreadcrumbStore = require '../../stores/BreadcrumbStore'
+PageActions = require '../../actions/PageActions'
 
 { div, span, a } = React.DOM
 
@@ -57,12 +58,17 @@ module.exports = React.createClass
     div className: 'comp-breadcrumb',
       list.map (crumb, i) =>
         link = crumb.link()
-        href = link if typeof link is 'string'
-        onClick = link if typeof link is 'function'
+        if typeof link is 'function'
+          onClick = link
+        else
+          href = link
+          onClick = (e) ->
+            e.preventDefault()
+            PageActions.navigate link, crumb.props
         tag = if href then a else span
         # React doesn't remove empty href, and we can't cancel the click event
         # See https://github.com/facebook/react/issues/1448
-        tag href: href, onClick: onClick, key: i, className: 'crumb',
+        tag href: href, onClick: onClick, rel: 'norouter', key: i, className: 'crumb',
           span className: 'icon icon-' + crumb.className()
           span className: 'label',
             crumb.label.apply @
