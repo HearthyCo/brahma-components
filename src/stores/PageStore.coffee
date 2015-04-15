@@ -32,6 +32,6 @@ AppDispatcher.on 'all', (eventName, payload) ->
         PageStore.history.push current: PageStore.current, opts: PageStore.opts
       PageStore.current = payload.page
       PageStore.opts = payload.opts
-      PageStore.trigger 'change'
+      PageStore.trigger 'change', PageStore.getPage
 
 window.brahma.stores.page = module.exports = PageStore
