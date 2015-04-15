@@ -29,11 +29,12 @@ BreadcrumbStore.getUp = ->
   crumb
 
 BreadcrumbStore.goUp = ->
-  link = BreadcrumbStore.getUp().link()
+  up = BreadcrumbStore.getUp()
+  link = up.link()
   if 'function' is typeof link
     link()
   else
-    PageActions.navigate link
+    PageActions.navigate link, up.props
 
 funcOrString = (f, args...) ->
   # All crumb values can be either a function or a string.

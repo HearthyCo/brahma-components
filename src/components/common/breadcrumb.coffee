@@ -45,7 +45,7 @@ module.exports = React.createClass
         subscriptions.push objectSubscription
 
     objectState = subscriptions: subscriptions
-    @setState objectState
+    @setState objectState if @isMounted()
 
   render: ->
     list = BreadcrumbStore.getList()
