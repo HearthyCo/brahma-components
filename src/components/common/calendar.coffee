@@ -75,7 +75,7 @@ module.exports = React.createClass
           onClick: ((day) -> -> _this.select day.date) day
           date: day.date
           className: classname,
-          span classname: 'colored', day.number
+          span className: 'colored', day.number
         date2.add(1, 'd')
 
       weeks.push div className: 'week', key: date.unix(), days
