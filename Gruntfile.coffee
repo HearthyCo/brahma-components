@@ -16,4 +16,5 @@ module.exports = ->
   @registerTask "preproduction", ["build"]
   @registerTask "production",    ["build"]
 
+  @registerTask "mobile",  ['development']
   @registerTask "default", ["development"]
