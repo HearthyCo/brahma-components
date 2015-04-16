@@ -13,6 +13,10 @@ TransactionActions =
     data.amount = amount
     data.redirectUrls = redirectUrls if redirectUrls?
 
+    if process.env.HEARTHY_APP isnt 'web'
+      AppDispatcher.trigger 'transaction:CreatePaypal:request', data
+      return
+
     Backbone.ajax
       url: Config.api.url + '/transaction'
       contentType: "application/json; charset=utf-8"
@@ -44,4 +48,4 @@ TransactionActions =
   errorExecutePaypal: ->
     AppDispatcher.trigger 'transaction:ExecutePaypal:error', {}
 
-module.exports = TransactionActions
+window.brahma.actions.transaction = module.exports = TransactionActions
