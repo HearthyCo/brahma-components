@@ -27,14 +27,24 @@ module.exports = (usr, opts) ->
       socket = _.extend connect(), extras
     ), opts.timeout)
 
+  # Checks if messages have been sent
+  # Return: [bool] still waiting
   checkSend = (callback, t) ->
+    # Socket not ready
     if socket.readyState isnt 1
-      callback true
+      callback true if callback # call err
+    # Buffer empty
     else if socket.bufferedAmount is 0
-      callback false
-    else return true
-    clearInterval t if t
-    false
+      callback false if callback # call success (!err)
+    else
+      return true # Socket ready and buffer has something, keep waiting
+
+    # Done, stop waiting
+    if t
+      clearInterval t
+
+    # Done
+    return false
 
   socketWrapper =
     onmessage: (json) -> console.log json
