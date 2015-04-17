@@ -8,6 +8,7 @@ TransactionActions =
   refresh: ->
     Utils.mkApiGetter '/me/transactions', 'transactions', 'UserTransactions'
 
+  # Creates a new Paypal payment, and redirects to the authorization URL
   createPaypal: (amount, redirectUrls) ->
     data = {}
     data.amount = amount
@@ -17,12 +18,7 @@ TransactionActions =
       AppDispatcher.trigger 'transaction:CreatePaypal:request', data
       return
 
-    Backbone.ajax
-      url: Config.api.url + '/transaction'
-      contentType: "application/json; charset=utf-8"
-      type: 'POST'
-      dataType: 'jsonp'
-      data: JSON.stringify data
+    Utils.mkApiPoster '/transaction', data, 'transaction', 'CreatePaypal',
       success: (result) ->
         try
           url = result.redirect
@@ -32,19 +28,22 @@ TransactionActions =
       error: (xhr, status) ->
         console.error 'Can\t redirect to paypal:', status, xhr
 
+  # Sends a just-authorized payment to be executed at the server
   executePaypal: (paypalParams) ->
-    Backbone.ajax
-      url: Config.api.url + '/transaction/execute'
-      contentType: "application/json; charset=utf-8"
-      type: 'POST'
-      dataType: 'jsonp'
-      data: JSON.stringify paypalParams
-      success: (result) ->
-        result.serviceId = paypalParams.serviceId
-        AppDispatcher.trigger 'transaction:ExecutePaypal:success', result
-      error: (xhr, status) ->
-        AppDispatcher.trigger 'transaction:ExecutePaypal:error', {}
+    Utils.mkApiPoster '/transaction/execute', paypalParams,
+      'transaction', 'ExecutePaypal'
 
+  # Sends an authorization from the mobile sdk to be captured by the server
+  capturePaypal: (id, amount) ->
+    # We use the same event as executePaypal because they are always
+    # handled the same way
+    opts =
+      authorizationId: id
+      amount: amount
+    Utils.mkApiPoster '/transaction/capture', opts,
+      'transaction', 'ExecutePaypal'
+
+  # Notifies of an error during Paypal operations
   errorExecutePaypal: ->
     AppDispatcher.trigger 'transaction:ExecutePaypal:error', {}
 
