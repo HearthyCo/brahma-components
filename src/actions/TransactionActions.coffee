@@ -14,10 +14,9 @@ TransactionActions =
     data.redirectUrls = redirectUrls if redirectUrls?
 
     Backbone.ajax
-      url: Config.api.url + '/transaction'
-      contentType: "application/json; charset=utf-8"
       type: 'POST'
-      dataType: 'jsonp'
+      url: Config.api.url + '/transaction'
+      contentType: 'application/json; charset=utf-8'
       data: JSON.stringify data
       success: (result) ->
         try
@@ -30,10 +29,9 @@ TransactionActions =
 
   executePaypal: (paypalParams) ->
     Backbone.ajax
-      url: Config.api.url + '/transaction/execute'
-      contentType: "application/json; charset=utf-8"
       type: 'POST'
-      dataType: 'jsonp'
+      url: Config.api.url + '/transaction/execute'
+      contentType: 'application/json; charset=utf-8'
       data: JSON.stringify paypalParams
       success: (result) ->
         result.serviceId = paypalParams.serviceId

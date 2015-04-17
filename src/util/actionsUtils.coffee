@@ -11,7 +11,6 @@ mkApiCaller = (endpoint, evtModel, evtAction, opts) ->
     method = opts.type or 'GET'
 
     opts = _.defaults opts,
-      dataType: 'jsonp'
       url: url
       errorLevel: 'error' # error, warn, debug
 

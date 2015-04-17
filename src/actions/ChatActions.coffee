@@ -46,11 +46,10 @@ ChatActions =
     fd = new FormData()
     url = Config.api.url + '/session/' + session + '/attach'
     opts =
-      dataType: 'jsonp'
+      type: 'POST'
       url: url
       contentType: false
       processData: false
-      type: 'POST'
       data: fd
       error: (xhr, status) ->
         console.error 'API POST Error:', url, status, xhr

@@ -50,7 +50,7 @@ IntlStore.removeChangeListener = (callback) ->
 
 loadTranslation = (language) ->
   Backbone.ajax
-    dataType: 'jsonp'
+    type: 'GET'
     url: getSourceUrl language
     cache: true
     success: (response) ->
