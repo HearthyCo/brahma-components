@@ -4,22 +4,16 @@ Backbone = require 'exoskeleton'
 PageActions = require './PageActions'
 Queue = require '../util/queue'
 
-SessionActions =
+urlUtils = require '../util/urlUtils'
 
+SessionActions =
   create: (service) ->
     Utils.mkApiPoster '/session/create', service: service,
       'session', 'Created', success: (response) ->
         console.log 'API POST Success:', response
         AppDispatcher.trigger  'session:Created:success', response
-        link = '/session/' + response.session.id
-        st = response.servicetypes || []
-        st = st.filter (o) ->
-          o.id is response.session.serviceType
-        st = st[0] if st.length
-        if st?.mode is 'VIDEO'
-          link += '/video'
-        else
-          link += '/chat'
+
+        link = urlUtils.getUrl.session response.session
         PageActions.navigate link
         Queue.socket.updateSessions() if Queue.socket
 
