@@ -23,14 +23,8 @@ MixNewMessages = (data, current) ->
       ta - tb
   current
 
-CheckLastViewed = (data, lastViewed) ->
-  messages = data.messages
-  messageSession = data.messages[0].session if messages? and messages.length
-  if @currentSid is messageSession
-    messages = Stores.Session.Messages.getIds(messageSession) or []
-    length = messages.length
-    lastViewed[messageSession] = [messages[length - 1]] if length
-  lastViewed
+# pre-defined
+CheckLastViewed = ->
 
 Stores =
   SessionsByState:
@@ -111,6 +105,15 @@ Stores =
     'serviceTypes:ServiceTypes:success': (o) -> o.serviceTypeSessions
     'session:Assign:success': (o) -> o.serviceTypeSessions
     'session:Finish:success': (o) -> o.serviceTypeSessions
+
+CheckLastViewed = (data, lastViewed) ->
+  messages = data.messages
+  messageSession = data.messages[0].session if messages? and messages.length
+  if @currentSid is messageSession
+    messages = Stores.Session.Messages.getIds(messageSession) or []
+    length = messages.length
+    lastViewed[messageSession] = [messages[length - 1]] if length
+  lastViewed
 
 ### Client ###
 # Home

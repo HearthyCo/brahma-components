@@ -18,7 +18,7 @@ module.exports = React.createClass
 
     if @context.editable
       child = select _.omit(@props, 'id', 'label', 'options'),
-        @props.options.map (op, i) ->
+        @props.options.map (op) ->
           option key: op, value: op,
             op
     else

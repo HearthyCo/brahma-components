@@ -14,9 +14,10 @@ AlertActions =
       autoHide: 4000
       timer: null
       onDone: ->
-        clearTimeout @timer if @timer
+        window.clearTimeout @timer if @timer
         if @autoHide
-          @timer = setTimeout (=> AlertActions.hide @id), parseInt @autoHide
+          @timer = window.setTimeout (=> AlertActions.hide @id),
+            parseInt @autoHide
 
     _.defaults payload, defaults
 
@@ -30,7 +31,7 @@ AlertActions =
   ###
   hide: (id) ->
     # string or object
-    id = payload.id if _.isObject id
+    id = id if _.isObject id
     AppDispatcher.trigger 'alert:Hide', id: id
 
   ###

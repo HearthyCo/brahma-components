@@ -77,7 +77,7 @@ _addAlert = (payload) ->
       id = payload.id
       alert = AlertStore.alerts[id]
       if alert and alert.timer
-        clearTimeout alert.timer
+        window.clearTimeout alert.timer
         alert.timer = null
       _addIdx payload.id
       AlertStore.alerts[id] = payload
@@ -88,9 +88,9 @@ _addAlert = (payload) ->
 _removeAlert = (id) ->
   try
     if AlertStore.alerts.hasOwnProperty id
-      alert = Alert Store.alerts[id]
+      alert = AlertStore.alerts[id]
       if alert.timer
-        clearTimeout alert.timer
+        window.clearTimeout alert.timer
         alert.timer = null
       delete AlertStore.alerts[id]
   catch err

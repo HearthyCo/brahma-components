@@ -2,7 +2,7 @@ Utils = require '../util/actionsUtils'
 
 HomeActions =
 
-  refresh: (user) ->
+  refresh: ->
     Utils.mkApiGetter '/me/home', 'clientHome', 'Home'
 
 module.exports = HomeActions

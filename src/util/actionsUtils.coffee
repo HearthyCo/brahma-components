@@ -5,7 +5,7 @@ _ = require 'underscore'
 
 
 mkApiCaller = (endpoint, evtModel, evtAction, opts) ->
-  new Promise (resolve, reject) ->
+  new window.Promise (resolve, reject) ->
     url = Config.api.url + endpoint
     opts = opts or {}
     method = opts.type or 'GET'

@@ -2,12 +2,15 @@ Config = require '../util/config'
 Backbone = require 'exoskeleton'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 Socket = require '../util/socket'
-RETRY_NUMBER = 5
+maxRetries = 5
 isWorking = false
-count = RETRY_NUMBER
+# coffeelint-variable-scope bug
+###coffeelint-variable-scope-ignore###
+count = maxRetries
 
 successCallback = (queue, messages) ->
   # console.log 'Success. Sent'
+  ###coffeelint-variable-scope-ignore###
   isWorking = false
 
   for message in messages
@@ -15,12 +18,15 @@ successCallback = (queue, messages) ->
     message.status = 'success'
     AppDispatcher.trigger 'chat:Send:success', messages: [message]
 
-  count = RETRY_NUMBER
+  ###coffeelint-variable-scope-ignore###
+  count = maxRetries
   queue.process()
 
 errorCallback = (queue, outbox) ->
   # console.log 'Error', count, '. Unshift queue'
+  ###coffeelint-variable-scope-ignore###
   count--
+  ###coffeelint-variable-scope-ignore###
   isWorking = false
   queue.unshift outbox
   if count == 0
@@ -59,7 +65,7 @@ queue =
   push: (payload) ->
     # console.log '> Push to queue', payload
     # When a new message is pushed, count of error is restarted;
-    count = RETRY_NUMBER
+    count = maxRetries
     @started = true if not @started
     messages = payload.messages
     for message in messages
@@ -73,6 +79,7 @@ queue =
     @outbox = messages
   process: ->
     if not @paused and not isWorking and @length()
+      ###coffeelint-variable-scope-ignore###
       isWorking = true
       messages = @outbox
       @outbox = []

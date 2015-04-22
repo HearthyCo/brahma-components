@@ -3,6 +3,7 @@ React = require 'react'
 { div, span } = React.DOM
 
 IconBadge = React.createFactory require './iconbadge'
+PageActions = require '../../actions/PageActions'
 
 module.exports = React.createClass
 
