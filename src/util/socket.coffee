@@ -84,6 +84,8 @@ module.exports = (usr, opts) ->
         data:
           userId: EntityStores.SignedEntry.get('userId').value
           _userId_sign: EntityStores.SignedEntry.get('userId').signature
+          userRole: EntityStores.SignedEntry.get('userRole').value
+          _userRole_sign: EntityStores.SignedEntry.get('userRole').signature
           sessions: EntityStores.SignedEntry.get('sessions')?.value
           _sessions_sign: EntityStores.SignedEntry.get('sessions')?.signature
       ]
