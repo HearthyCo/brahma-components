@@ -46,7 +46,7 @@ queue =
     @socket.onmessage = (message) ->
       messages = {}
       switch message.type
-        when 'granted'
+        when 'joined'
           console.log 'Auth done'
           if message.data
             AppDispatcher.trigger 'chat:Received:success',
