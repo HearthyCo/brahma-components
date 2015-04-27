@@ -30,7 +30,10 @@ module.exports = Utils =
         extraHandle.call Store, eventName, payload
       if payload[entityName] and payload[entityName] instanceof Array
         for s in payload[entityName]
-          _models[s.id] = s
+          if not _models[s.id]
+            _models[s.id] = s
+          else
+            _models[s.id] = _.extend _models[s.id], s
         if payload[entityName].length > 0
           window.setTimeout ( -> Store.trigger 'change'), 0
 
