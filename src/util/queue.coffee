@@ -49,16 +49,15 @@ queue =
         when 'granted'
           console.log 'Auth done'
           if message.data
-            sortFn = (a, b) -> a.timestamp > b.timestamp
-            messages = message.data.messages.sort sortFn
-        when 'message'
-          console.log 'Message received', message
-          messages = [message]
-        when 'attachment'
-          console.log 'Attachment received', message
-          messages = [message]
-        when 'pong'
-          console.log 'Message received', message
+            AppDispatcher.trigger 'chat:Received:success',
+              messages: message.data.messages
+        when 'message', 'attachment'
+          AppDispatcher.trigger 'chat:Received:success', messages: [message]
+        when 'update'
+          # We send only the update data through the dispatcher
+          # so the stores can pick it up using standard path conventions
+          console.log 'Async update:', message.data
+          AppDispatcher.trigger 'update:Received:success', message.data
         when 'status'
           console.warn 'Warn', message
       AppDispatcher.trigger 'chat:Received:success', messages: messages
