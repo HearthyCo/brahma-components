@@ -1,4 +1,3 @@
-AppDispatcher = require '../dispatcher/AppDispatcher'
 EntityStores = require '../stores/EntityStores'
 
 module.exports =
@@ -11,7 +10,7 @@ module.exports =
         url = '/session/' + session.id
         if session.state in ['REQUESTED', 'UNDERWAY']
           st = EntityStores.ServiceType.get session.serviceType
-          if st?.mode is 'VIDEO' and process.env.HEARTHY_APP is 'web'
+          if st?.mode is 'VIDEO'
             url += '/video'
           else
             url += '/chat'

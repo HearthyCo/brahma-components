@@ -19,8 +19,16 @@ PageActions =
 
   change: (page, opts) ->
     t = block or {}
+
     ###coffeelint-variable-scope-ignore###
+    t.url = window.location.hash.replace '#', '/'
+    # if isBackNavigation exists then removes url to avoid push current page
+    # in history to prevent infite back loops
+    if t.isBackNavigation? and t.isBackNavigation
+      t = _.omit t, 'url', 'isBackNavigation'
+
     block = false
+
     _.extend t, opts
 
     AppDispatcher.trigger 'page:Change',

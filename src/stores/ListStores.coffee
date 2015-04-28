@@ -23,6 +23,12 @@ MixNewMessages = (data, current) ->
       ta - tb
   current
 
+WithReset = (handler) -> (data, current) ->
+  ret = handler.call @, data, current
+  for key of current
+    ret[key] = [] if not ret[key]
+  ret
+
 # pre-defined
 CheckLastViewed = ->
 
@@ -102,9 +108,9 @@ Stores =
       o.allServiceTypes or o.servicetypes.map (st) -> st.id
 
   SessionsByServiceType: Utils.mkSubListStore EntityStores.Session,
-    'serviceTypes:ServiceTypes:success': (o) -> o.serviceTypeSessions
-    'session:Assign:success': (o) -> o.serviceTypeSessions
-    'session:Finish:success': (o) -> o.serviceTypeSessions
+    'serviceTypes:ServiceTypes:success': WithReset (o) -> o.serviceTypeSessions
+    'session:Assign:success': WithReset (o) -> o.serviceTypeSessions
+    'session:Finish:success': WithReset (o) -> o.serviceTypeSessions
 
 CheckLastViewed = (data, lastViewed) ->
   messages = data.messages
@@ -135,6 +141,14 @@ Stores.Session.LastViewedMessage.getCounter = (sessionId) ->
   return messages.length if not lastViewed?
 
   messages.length - messages.indexOf(lastViewed[0]) - 1
+
+Stores.Session.Participants.getProfessional = (sessionId) ->
+  sessionusers = Stores.Session.Participants.getObjects sessionId
+  professionals = []
+  if sessionusers
+    users = sessionusers.map (o) -> EntityStores.User.get o.user
+    professionals = users.filter (o) -> o.userType is 'professional'
+  professionals
 
 Stores.Session.isUpdated = (sessionId) ->
   messages = Stores.Session.Messages.getIds(sessionId) or []
