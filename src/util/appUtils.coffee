@@ -7,6 +7,8 @@ Utils = require '../util/frontendUtils'
 ChatActions = require '../actions/ChatActions'
 PageActions = require '../actions/PageActions'
 
+AppInterface = AppInterface or {}
+
 mkBind = (store, evnt, callbackFn) ->
   callback = () ->
     callbackFn()

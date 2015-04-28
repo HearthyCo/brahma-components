@@ -103,19 +103,19 @@ module.exports = React.createClass
             key: servicetype.id
             sessionType: servicetype
             sessions: sessions
-      div className: 'bottom-area',
-        div className: 'title',
-          @getIntlMessage 'next-event'
-        div className: 'date-time',
-          div className: 'date',
-            span className: 'day',
-              '03'
-            span className: 'month',
-              'diciembre'
-          div className: 'schedule',
-            span className: 'time icon icon-clock',
-              '12:03'
-            span {},
-              'Videoconsulta'
-        a href: '#' , className: 'button-pro',
-          'Ver'
+      # div className: 'bottom-area',
+      #   div className: 'title',
+      #     @getIntlMessage 'next-event'
+      #   div className: 'date-time',
+      #     div className: 'date',
+      #       span className: 'day',
+      #         '03'
+      #       span className: 'month',
+      #         'diciembre'
+      #     div className: 'schedule',
+      #       span className: 'time icon icon-clock',
+      #         '12:03'
+      #       span {},
+      #         'Videoconsulta'
+      #   a href: '#' , className: 'button-pro',
+      #     'Ver'
