@@ -64,15 +64,6 @@ module.exports = (usr, opts) ->
       socket.send JSON.stringify messages
       if checkSend()
         interval = window.setInterval (-> checkSend(callback, interval)), 100
-    updateSessions: ->
-      session = [
-        id: SocketUtils.mkMessageId user.id
-        type: 'session'
-        data:
-          sessions: EntityStores.SignedEntry.get('sessions').value
-          _sessions_sign: EntityStores.SignedEntry.get('sessions').signature
-      ]
-      socket.send JSON.stringify session
 
   extras =
     onopen: ->
