@@ -1,4 +1,5 @@
 React = require 'react/addons'
+ReactIntl = require '../../mixins/ReactIntl'
 
 AlertActions = require '../../actions/AlertActions'
 
@@ -7,6 +8,8 @@ AlertActions = require '../../actions/AlertActions'
 module.exports = React.createClass
 
   displayName: 'alert'
+
+  mixins: [ReactIntl]
 
   propTypes:
     alertsIdx: React.PropTypes.array
@@ -35,6 +38,12 @@ module.exports = React.createClass
         @props.alertsIdx.map (id) =>
           # console.log 'Alert ID', id
           alert = @props.alerts[id]
+
+          if alert.intl
+            _message = @getIntlMessage alert.intl
+            if _message.substring(0, 6) isnt '[intl:'
+              alert.content = _message
+
           if alert.content
             alert.onDone.call alert if alert.onDone
             div key: "alert-#{id}", className: "alert level-#{alert.level}",

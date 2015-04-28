@@ -163,6 +163,7 @@ AppDispatcher.on 'all', (eventName, payload) ->
   else if evtResult is 'error'
     alertObj =
       id: "alert-#{evtModel}_#{evtAction}"
+      intl: "alert-#{evtModel}_#{evtAction}_#{evtResult}"
       content: "(#{evtModel}) #{evtAction} #{evtResult}"
       level: evtResult
 
