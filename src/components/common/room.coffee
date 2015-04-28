@@ -99,15 +99,20 @@ module.exports = React.createClass
         div className: 'room-backlog', ref: 'log',
           @state.messages?.map (m) ->
             RoomMessage key: m.id, message: m
-      form className: classes, onSubmit: @handleMessage,
-        input
-          className: 'room-input'
-          placeholder: @getIntlMessage 'type-here'
-          valueLink: InputStore.linkState @props.session?.id
-          ref: 'msgbox'
-        button className: 'room-send', @getIntlMessage 'send'
-        button className: 'upload', onClick: @handleUpload,
-          span className: 'icon icon-clip'
-      div className: 'end-session',
-        button onClick: @handleFinish,
-          @getIntlMessage 'close-session'
+      if @props.session?.state not in ['CLOSED', 'FINISHED']
+        form className: classes, onSubmit: @handleMessage,
+          input
+            className: 'room-input'
+            placeholder: @getIntlMessage 'type-here'
+            valueLink: InputStore.linkState @props.session?.id
+            ref: 'msgbox'
+          button className: 'room-send', @getIntlMessage 'send'
+          button className: 'upload', onClick: @handleUpload,
+            span className: 'icon icon-clip'
+        div className: 'end-session',
+          button onClick: @handleFinish,
+            @getIntlMessage 'close-session'
+      else
+        div className: 'end-session',
+          button onClick: @handleFinish,
+            @getIntlMessage 'closed-finish-session'
