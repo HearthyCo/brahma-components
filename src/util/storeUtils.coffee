@@ -16,6 +16,9 @@ module.exports = Utils =
       get: (id) ->
         return _models[id]
 
+      getIds: ->
+        return _models
+
       # Standard events for views
       addChangeListener: (cb) -> @on 'change', cb
       removeChangeListener: (cb) -> @off 'change', cb

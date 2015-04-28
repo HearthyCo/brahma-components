@@ -1,6 +1,6 @@
 _ = require 'underscore'
 
-module.exports =
+window.brahma.utils.frontend = module.exports =
 
   # Shows the "Select file" dialog, and passes the selection to the callback.
   pickFile: (callback) ->

@@ -133,6 +133,14 @@ Stores.Session.LastViewedMessage.getCounter = (sessionId) ->
 
   messages.length - messages.indexOf(lastViewed[0]) - 1
 
+Stores.Session.Participants.getProfessional = (sessionId) ->
+  sessionusers = Stores.Session.Participants.getObjects @sessionId
+  professionals = []
+  if sessionusers
+    users = sessionusers.map (o) -> EntityStores.User.get o.user
+    professionals = users.filter (o) -> o.userType is 'professional'
+  professionals
+
 Stores.Session.isUpdated = (sessionId) ->
   messages = Stores.Session.Messages.getIds(sessionId) or []
   lastViewed = Stores.Session.LastViewedMessage.getIds sessionId
