@@ -143,7 +143,7 @@ Stores.Session.LastViewedMessage.getCounter = (sessionId) ->
   messages.length - messages.indexOf(lastViewed[0]) - 1
 
 Stores.Session.Participants.getProfessional = (sessionId) ->
-  sessionusers = Stores.Session.Participants.getObjects @sessionId
+  sessionusers = Stores.Session.Participants.getObjects sessionId
   professionals = []
   if sessionusers
     users = sessionusers.map (o) -> EntityStores.User.get o.user
