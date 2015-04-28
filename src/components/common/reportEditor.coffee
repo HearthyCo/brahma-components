@@ -69,6 +69,8 @@ module.exports = React.createClass
         IconSubListEntry label: taskLabel, icon: 'pill',
           ReportTaskEntry {}
 
-      div className: 'end-session',
-        button onClick: @handleFinish,
-          @getIntlMessage 'finish'
+        div className: 'end-session',
+          if @props.session.state is 'CLOSED'
+            button
+              onClick: @handleFinish,
+              @getIntlMessage 'finish-session'

@@ -110,4 +110,4 @@ module.exports = React.createClass
           span className: 'icon icon-clip'
       div className: 'end-session',
         button onClick: @handleFinish,
-          @getIntlMessage 'finish'
+          @getIntlMessage 'close-session'

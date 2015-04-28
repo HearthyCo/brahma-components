@@ -61,14 +61,15 @@ module.exports = React.createClass
       => @setState reportStatus: 'error'
     )
 
-
   render: ->
     saveReportDisabled = @state.reportStatus in ['saved', 'saving']
 
     div className: 'comp-reportEntry',
       div className: 'label',
         @getIntlMessage 'write-report'
-      textarea valueLink: ReportStore.linkState @props.session?.id
+      textarea
+        valueLink: ReportStore.linkState @props.session?.id
+        required: true
       button
         onClick: @handleReportSave
         className: @state.reportStatus
