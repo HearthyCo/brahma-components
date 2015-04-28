@@ -5,7 +5,7 @@ ModalActions =
     AppDispatcher.trigger 'modal:Show',
       content: content
 
-  hide: (content) ->
+  hide: ->
     AppDispatcher.trigger 'modal:Hide', {}
 
 window.brahma.actions.modal = module.exports = ModalActions

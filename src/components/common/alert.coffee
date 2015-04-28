@@ -18,7 +18,7 @@ module.exports = React.createClass
     alerts:    {}
     visible:   false
 
-  handleCloseClick: (e) ->
+  handleCloseClick: ->
     if @props.onClose
       @props.onClose()
     else
@@ -32,7 +32,7 @@ module.exports = React.createClass
       div className: 'alert-close', onClick: @handleCloseClick,
         span className: 'icon icon-cross'
       div className: 'alerts',
-        @props.alertsIdx.map (id, i) =>
+        @props.alertsIdx.map (id) =>
           # console.log 'Alert ID', id
           alert = @props.alerts[id]
           if alert.content

@@ -17,13 +17,17 @@ module.exports = (usr, opts) ->
   url = 'ws://' + url
 
   connect = ->
-    new WebSocket url
+    new window.WebSocket url
 
   socket = connect()
 
+  # pre-define
+  extras = {}
+
   reconnect = ->
     console.log 'Connection closed, restart in', (opts.timeout/1000), 'seconds'
-    setTimeout(( ->
+    window.setTimeout(( ->
+      ###coffeelint-variable-scope-ignore###
       socket = _.extend connect(), extras
     ), opts.timeout)
 
@@ -41,7 +45,7 @@ module.exports = (usr, opts) ->
 
     # Done, stop waiting
     if t
-      clearInterval t
+      window.clearInterval t
 
     # Done
     return false
@@ -55,20 +59,11 @@ module.exports = (usr, opts) ->
       if checkSend()
         callback = ->
           console.log 'Ping sent'
-        interval = setInterval ((o) -> checkSend(callback, interval)), 100
+        interval = window.setInterval (-> checkSend(callback, interval)), 100
     send: (messages, callback) ->
       socket.send JSON.stringify messages
       if checkSend()
-        interval = setInterval ((o) -> checkSend(callback, interval)), 100
-    updateSessions: ->
-      session = [
-        id: SocketUtils.mkMessageId user.id
-        type: 'session'
-        data:
-          sessions: EntityStores.SignedEntry.get('sessions').value
-          _sessions_sign: EntityStores.SignedEntry.get('sessions').signature
-      ]
-      socket.send JSON.stringify session
+        interval = window.setInterval (-> checkSend(callback, interval)), 100
 
   extras =
     onopen: ->
@@ -80,6 +75,8 @@ module.exports = (usr, opts) ->
         data:
           userId: EntityStores.SignedEntry.get('userId').value
           _userId_sign: EntityStores.SignedEntry.get('userId').signature
+          userRole: EntityStores.SignedEntry.get('userRole').value
+          _userRole_sign: EntityStores.SignedEntry.get('userRole').signature
           sessions: EntityStores.SignedEntry.get('sessions')?.value
           _sessions_sign: EntityStores.SignedEntry.get('sessions')?.signature
       ]
@@ -87,7 +84,7 @@ module.exports = (usr, opts) ->
       callback = ->
         console.log 'Auth sent'
       if checkSend()
-        interval = setInterval ((o) -> checkSend(callback, interval)), 100
+        interval = window.setInterval (-> checkSend(callback, interval)), 100
     onclose: ->
       reconnect()
     onerror: (error) ->
@@ -95,8 +92,8 @@ module.exports = (usr, opts) ->
     onmessage: (message) ->
       try
         data = JSON.parse message.data
-      catch e
-        console.log 'This doesn\'t look like a valid JSON: ', message.data, e
+      catch ex
+        console.log 'This doesn\'t look like a valid JSON: ', message.data, ex
 
       socketWrapper.onmessage data
 

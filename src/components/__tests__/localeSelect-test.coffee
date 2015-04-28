@@ -15,6 +15,7 @@ describe 'Locale Select', ->
       messages: { 'es-ES': {} },
       ->
         obj = TestUtils.renderIntoDocument React.createElement LocaleSelect, {}
+        ###coffeelint-variable-scope-ignore###
         select = TestUtils.findRenderedDOMComponentWithTag obj, 'select'
 
     node = select.getDOMNode()

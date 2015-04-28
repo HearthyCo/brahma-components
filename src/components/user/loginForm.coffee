@@ -29,7 +29,7 @@ module.exports = React.createClass
   getInitialState: () ->
     return error: AlertStore.getFormAlert('UserLogin', 'error') or false
 
-  componentWillReceiveProps: (next) ->
+  componentWillReceiveProps: -> #(next) ->
     @setState @getInitialState()
 
   buildComp: (type, opt) ->

@@ -43,8 +43,12 @@ ChatActions =
 
     AppDispatcher.trigger 'chat:SendFile:request', payload
 
-    fd = new FormData()
+    fd = new window.FormData()
     url = Config.api.url + '/session/' + session + '/attach'
+
+    # pre-define
+    retry = ->
+
     opts =
       type: 'POST'
       url: url
@@ -55,7 +59,7 @@ ChatActions =
         console.error 'API POST Error:', url, status, xhr
         payload.messages[0].status = 'error'
         AppDispatcher.trigger 'chat:SendFile:error', payload
-        setTimeout retry, 5000
+        window.setTimeout retry, 5000
       success: (response) ->
         console.log 'API POST Success:', url, response
         # Our ID was self-generated, but Play generates his own ID.

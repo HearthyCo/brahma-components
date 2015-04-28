@@ -24,7 +24,8 @@ TransactionActions =
           url = result.redirect
           console.log 'Redirecting to paypal at:', url
           window.location.replace url
-        catch e then console.error 'Can\'t redirect to paypal:', e, result
+        catch ex
+          console.error 'Can\'t redirect to paypal:', ex, result
       error: (xhr, status) ->
         console.error 'Can\t redirect to paypal:', status, xhr
 

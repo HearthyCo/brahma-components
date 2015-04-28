@@ -15,7 +15,7 @@ response = (actionId) ->
       level: "success"
     }
 
-  error: (resp) ->
+  error: -> #(resp) ->
     AlertActions.formAlert {
       id: actionId
       fields: ['email', 'password']
@@ -67,7 +67,7 @@ UserActions =
   setAvatar: (file) ->
     FrontendUtils.imageScaleCropBlob file, 150, 150, (blob) ->
       pl = avatar: file
-      fd = new FormData()
+      fd = new window.FormData()
       fd.append 'upload', blob, file.name
       opts = data: fd, contentType: false
       Utils.mkApiPoster '/me/avatar', pl, 'user',

@@ -33,9 +33,12 @@ module.exports = Utils =
         extraHandle.call Store, eventName, payload
       if payload[entityName] and payload[entityName] instanceof Array
         for s in payload[entityName]
-          _models[s.id] = s
+          if not _models[s.id]
+            _models[s.id] = s
+          else
+            _models[s.id] = _.extend _models[s.id], s
         if payload[entityName].length > 0
-          setTimeout ( -> Store.trigger 'change'), 0
+          window.setTimeout ( -> Store.trigger 'change'), 0
 
     Store
 
@@ -44,11 +47,14 @@ module.exports = Utils =
     opts = opts or {}
 
     # Private storage
+    # coffeelint-variable-scope bug
+    ###coffeelint-variable-scope-ignore###
     _list = []
 
     if opts.storageKey
-      cached = JSON.parse localStorage.getItem opts.storageKey
-      _lists = cached if cached
+      cached = JSON.parse window.localStorage.getItem opts.storageKey
+      ###coffeelint-variable-scope-ignore###
+      _list = cached if cached
 
     # Public interface
     Store = _.extend {}, Backbone.Events,
@@ -75,8 +81,8 @@ module.exports = Utils =
           _list = ret.map (v) ->
             if v instanceof Object then v.id else v
           if opts.storageKey
-            localStorage.setItem opts.storageKey, JSON.stringify _lists
-          setTimeout ( -> Store.trigger 'change'), 0
+            window.localStorage.setItem opts.storageKey, JSON.stringify _list
+          window.setTimeout ( -> Store.trigger 'change'), 0
 
     Store
 
@@ -88,7 +94,7 @@ module.exports = Utils =
     _lists = {}
 
     if opts.storageKey
-      cached = JSON.parse localStorage.getItem opts.storageKey
+      cached = JSON.parse window.localStorage.getItem opts.storageKey
       _lists = cached if cached
 
     # Public interface
@@ -123,8 +129,8 @@ module.exports = Utils =
             changed = true
         if changed
           if opts.storageKey
-            localStorage.setItem opts.storageKey, JSON.stringify _lists
-          setTimeout ( -> Store.trigger 'change'), 0
+            window.localStorage.setItem opts.storageKey, JSON.stringify _lists
+          window.setTimeout ( -> Store.trigger 'change'), 0
 
     Store
 

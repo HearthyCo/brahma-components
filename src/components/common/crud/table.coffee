@@ -28,7 +28,7 @@ module.exports = React.createClass
           keys.map (key) ->
             th className: "key-#{key}", key
       tbody {},
-        items.map (item, i) ->
+        items.map (item) ->
           tr key: item.id, id: "item-#{item.id}",
             keys.map (key) ->
               td key: "key-#{key}", className: "key-#{key}",

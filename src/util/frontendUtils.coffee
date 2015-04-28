@@ -4,7 +4,7 @@ window.brahma.utils.frontend = module.exports =
 
   # Shows the "Select file" dialog, and passes the selection to the callback.
   pickFile: (callback) ->
-    filewrapper = document.createElement 'div'
+    filewrapper = window.document.createElement 'div'
     filewrapper.innerHTML = '<input type="file">'
     file = filewrapper.firstChild
     file.addEventListener 'change', callback, false
@@ -24,7 +24,7 @@ window.brahma.utils.frontend = module.exports =
     contentType = contentType or ''
     sliceSize = sliceSize or 512
 
-    byteCharacters = atob b64Data
+    byteCharacters = window.atob b64Data
     byteArrays = []
 
     offset = 0
@@ -37,25 +37,25 @@ window.brahma.utils.frontend = module.exports =
         byteNumbers[i] = slice.charCodeAt(i)
         i++
 
-      byteArray = new Uint8Array byteNumbers
+      byteArray = new window.Uint8Array byteNumbers
       byteArrays.push byteArray
 
       offset += sliceSize
 
-    blob = new Blob byteArrays, type: contentType
+    blob = new window.Blob byteArrays, type: contentType
     blob
 
   # Resizes a file using the given resizer function, and passes the
   # result blob to the callback.
   imageResizeBlob: (file, callback, resizer) ->
-    url = URL.createObjectURL file
-    img = document.createElement 'img'
+    url = window.URL.createObjectURL file
+    img = window.document.createElement 'img'
     img.onload = =>
-      canvas = document.createElement 'canvas'
+      canvas = window.document.createElement 'canvas'
       ret = resizer img, canvas
       if not ret
         return callback file
-      URL.revokeObjectURL url
+      window.URL.revokeObjectURL url
       targetType = file.type
       if targetType isnt 'image/jpeg' and targetType isnt 'image/png'
         targetType = 'image/jpeg'

@@ -3,7 +3,7 @@ moment = require 'moment'
 ReactIntl = require '../../mixins/ReactIntl'
 _ = require 'underscore'
 
-{ div, img, span, a, i } = React.DOM
+{ div, span } = React.DOM
 
 module.exports = React.createClass
 

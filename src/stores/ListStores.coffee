@@ -23,14 +23,14 @@ MixNewMessages = (data, current) ->
       ta - tb
   current
 
-CheckLastViewed = (data, lastViewed) ->
-  messages = data.messages
-  messageSession = data.messages[0].session if messages? and messages.length
-  if @currentSid is messageSession
-    messages = Stores.Session.Messages.getIds(messageSession) or []
-    length = messages.length
-    lastViewed[messageSession] = [messages[length - 1]] if length
-  lastViewed
+WithReset = (handler) -> (data, current) ->
+  ret = handler.call @, data, current
+  for key of current
+    ret[key] = [] if not ret[key]
+  ret
+
+# pre-defined
+CheckLastViewed = ->
 
 Stores =
   SessionsByState:
@@ -108,9 +108,18 @@ Stores =
       o.allServiceTypes or o.servicetypes.map (st) -> st.id
 
   SessionsByServiceType: Utils.mkSubListStore EntityStores.Session,
-    'serviceTypes:ServiceTypes:success': (o) -> o.serviceTypeSessions
-    'session:Assign:success': (o) -> o.serviceTypeSessions
-    'session:Finish:success': (o) -> o.serviceTypeSessions
+    'serviceTypes:ServiceTypes:success': WithReset (o) -> o.serviceTypeSessions
+    'session:Assign:success': WithReset (o) -> o.serviceTypeSessions
+    'session:Finish:success': WithReset (o) -> o.serviceTypeSessions
+
+CheckLastViewed = (data, lastViewed) ->
+  messages = data.messages
+  messageSession = data.messages[0].session if messages? and messages.length
+  if @currentSid is messageSession
+    messages = Stores.Session.Messages.getIds(messageSession) or []
+    length = messages.length
+    lastViewed[messageSession] = [messages[length - 1]] if length
+  lastViewed
 
 ### Client ###
 # Home

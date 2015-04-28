@@ -61,21 +61,22 @@ module.exports = React.createClass
 
   onSessionJoin: ->
     # Join session and attach events.
-    otsession = OT.initSession apiKey, @props.session.meta.opentokSession
+    otsession = window.OT.initSession apiKey,
+      @props.session.meta.opentokSession
     otsession.on 'streamCreated', (e) => @onStreamCreate e
     otsession.on 'streamDestroyed', (e) => @onStreamDestroy e
     token = @props.sessionUser.meta.opentokToken
     otsession.connect token, (e) => @onSessionConnect e
     @setState otsession: otsession
 
-  onSessionConnect: (error) ->
+  onSessionConnect: -> #(error) ->
     # Just got connected to a session. Start streaming.
     opts = _.defaults @props.ownStreamOpts,
       insertMode: 'append'
       width: 192
       height: 192
       fitMode: 'contain'
-    @state.otsession.publish OT.initPublisher 'room-video', opts
+    @state.otsession.publish window.OT.initPublisher 'room-video', opts
 
   onSessionLeave: (resetState) ->
     # Disconnect and clean-up when leaving a session.
@@ -99,7 +100,7 @@ module.exports = React.createClass
     @setState subscriptions: streams
     @context.setBlocked true if @context.setBlocked
 
-  onStreamJoin: (stream, err) ->
+  onStreamJoin: (stream) ->#(stream, err) ->
     # Just started receiving a stream.
     @setState videoProportion: stream.videoWidth() / stream.videoHeight()
 
