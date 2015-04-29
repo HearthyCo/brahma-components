@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Utils = require '../util/storeUtils'
 EntityStores = require './EntityStores'
+PageStore = require './PageStore'
 
 # Stores for Lists of Entities
 
@@ -99,6 +100,13 @@ Stores =
       'chat:SendFile:success': MixNewMessages
       'chat:SendFile:error': MixNewMessages
     LastViewedMessage: Utils.mkSubListStore EntityStores.Message, {
+      'chat:ToggleVideo:open': ->
+        @currentSid = 0
+      'chat:ToggleVideo:close': (o, l) ->
+        @currentSid = parseInt PageStore.getPage().opts.sessionId
+        messages = Stores.Session.Messages.getIds(@currentSid) or []
+        l[@currentSid] = [messages[messages.length - 1]] if messages.length
+        l
       'page:Change': (o, l) ->
         pageName = o.page.displayName
         if pageName is 'roomPage' or pageName is 'sessionChatPage'
