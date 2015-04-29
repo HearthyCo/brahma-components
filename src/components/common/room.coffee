@@ -109,6 +109,7 @@ module.exports = React.createClass
           button className: 'room-send', @getIntlMessage 'send'
           button className: 'upload', onClick: @handleUpload,
             span className: 'icon icon-clip'
+      if @props.session?.state not in ['CLOSED', 'FINISHED']
         div className: 'end-session',
           button onClick: @handleFinish,
             @getIntlMessage 'close-session'
