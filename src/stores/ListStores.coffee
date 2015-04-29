@@ -30,7 +30,17 @@ WithReset = (handler) -> (data, current) ->
   ret
 
 # pre-defined
-CheckLastViewed = ->
+Stores = {}
+
+CheckLastViewed = (data, lastViewed) ->
+  messages = data.messages
+  messageSession = data.messages[0].session if messages? and messages.length
+
+  if @currentSid is messageSession
+    messages = Stores.Session.Messages.getIds(messageSession) or []
+    length = messages.length
+    lastViewed[messageSession] = [messages[length - 1]] if length
+  lastViewed
 
 Stores =
   SessionsByState:
@@ -111,15 +121,6 @@ Stores =
     'serviceTypes:ServiceTypes:success': WithReset (o) -> o.serviceTypeSessions
     'session:Assign:success': WithReset (o) -> o.serviceTypeSessions
     'session:Finish:success': WithReset (o) -> o.serviceTypeSessions
-
-CheckLastViewed = (data, lastViewed) ->
-  messages = data.messages
-  messageSession = data.messages[0].session if messages? and messages.length
-  if @currentSid is messageSession
-    messages = Stores.Session.Messages.getIds(messageSession) or []
-    length = messages.length
-    lastViewed[messageSession] = [messages[length - 1]] if length
-  lastViewed
 
 ### Client ###
 # Home
