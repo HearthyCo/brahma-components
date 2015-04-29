@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Utils = require '../util/storeUtils'
 EntityStores = require './EntityStores'
+PageStore = require './PageStore'
 
 # Stores for Lists of Entities
 
@@ -30,12 +31,22 @@ WithReset = (handler) -> (data, current) ->
   ret
 
 # pre-defined
-CheckLastViewed = ->
+Stores = {}
+
+CheckLastViewed = (data, lastViewed) ->
+  messages = data.messages
+  messageSession = data.messages[0].session if messages? and messages.length
+
+  if @currentSid is messageSession
+    messages = Stores.Session.Messages.getIds(messageSession) or []
+    length = messages.length
+    lastViewed[messageSession] = [messages[length - 1]] if length
+  lastViewed
 
 Stores =
   SessionsByState:
-    Programmed: Utils.mkListStore EntityStores.Session,
-      'sessions:ProgrammedSessions:success': (o) -> o.userSessions
+    # Programmed: Utils.mkListStore EntityStores.Session,
+    #   'sessions:ProgrammedSessions:success': (o) -> o.userSessions
     Underway: Utils.mkListStore EntityStores.Session,
       'sessions:UnderwaySessions:success': (o) -> o.userSessions
     Closed: Utils.mkListStore EntityStores.Session,
@@ -47,8 +58,8 @@ Stores =
 
   ClientHome:
     Sessions:
-      Programmed: Utils.mkListStore EntityStores.Session,
-        'clientHome:Home:success': (o) -> o.home.sessions.programmed
+      # Programmed: Utils.mkListStore EntityStores.Session,
+      #   'clientHome:Home:success': (o) -> o.home.sessions.programmed
       Underway: Utils.mkListStore EntityStores.Session,
         'clientHome:Home:success': (o) -> o.home.sessions.underway
       Closed: Utils.mkListStore EntityStores.Session,
@@ -89,6 +100,13 @@ Stores =
       'chat:SendFile:success': MixNewMessages
       'chat:SendFile:error': MixNewMessages
     LastViewedMessage: Utils.mkSubListStore EntityStores.Message, {
+      'chat:ToggleVideo:open': ->
+        @currentSid = 0
+      'chat:ToggleVideo:close': (o, l) ->
+        @currentSid = parseInt PageStore.getPage().opts.sessionId
+        messages = Stores.Session.Messages.getIds(@currentSid) or []
+        l[@currentSid] = [messages[messages.length - 1]] if messages.length
+        l
       'page:Change': (o, l) ->
         pageName = o.page.displayName
         if pageName is 'roomPage' or pageName is 'sessionChatPage'
@@ -111,15 +129,6 @@ Stores =
     'serviceTypes:ServiceTypes:success': WithReset (o) -> o.serviceTypeSessions
     'session:Assign:success': WithReset (o) -> o.serviceTypeSessions
     'session:Finish:success': WithReset (o) -> o.serviceTypeSessions
-
-CheckLastViewed = (data, lastViewed) ->
-  messages = data.messages
-  messageSession = data.messages[0].session if messages? and messages.length
-  if @currentSid is messageSession
-    messages = Stores.Session.Messages.getIds(messageSession) or []
-    length = messages.length
-    lastViewed[messageSession] = [messages[length - 1]] if length
-  lastViewed
 
 ### Client ###
 # Home
