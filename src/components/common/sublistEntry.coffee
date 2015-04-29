@@ -1,5 +1,7 @@
 React = require 'react'
 
+PageActions = require '../../actions/PageActions'
+
 { div, span, h2, p } = React.DOM
 
 module.exports = React.createClass
