@@ -1,6 +1,6 @@
 {
   "name": "brahma-components",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "React components and more",
   "main": "dist/index.js",
   "scripts": {
