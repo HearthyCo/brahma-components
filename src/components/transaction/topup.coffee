@@ -49,7 +49,6 @@ module.exports = React.createClass
 
   render: ->
     _this = @
-    viewHistory = @getIntlMessage 'top-up'
 
     if @state.wait
       return div id: "wait", @getIntlMessage 'moment-please'
@@ -71,4 +70,5 @@ module.exports = React.createClass
         div className: 'button', onClick: @handlePaymentsClick,
           span className: 'icon icon-coin'
           @getIntlMessage 'view-payment-history'
-      IconButton label: viewHistory, onClick: @handleTopupClick
+      div className: 'button', onClick: @handleTopupClick,
+        @getIntlMessage 'top-up'
