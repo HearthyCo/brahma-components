@@ -17,11 +17,11 @@ MixNewMessages = (data, current) ->
     if pos is -1
       current[message.session].push message.id
   # Sort them by timestamp
-  for session of sessions
-    current[session].sort (a,b) ->
-      ta = EntityStores.Message.get(a)?.timestamp
-      tb = EntityStores.Message.get(b)?.timestamp
-      ta - tb
+  # for session of sessions
+  #   current[session].sort (a,b) ->
+  #     ta = EntityStores.Message.get(a)?.timestamp
+  #     tb = EntityStores.Message.get(b)?.timestamp
+  #     ta - tb
   current
 
 WithReset = (handler) -> (data, current) ->
