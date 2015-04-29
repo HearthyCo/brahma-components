@@ -10,13 +10,21 @@ module.exports = React.createClass
     id: React.PropTypes.number
     label: React.PropTypes.string.isRequired
     sublabel: React.PropTypes.string
+    target: React.PropTypes.string
+    onClick: React.PropTypes.func
     defaultOpen: React.PropTypes.bool
 
   getInitialState: () ->
     isExpanded: @props.defaultOpen or undefined
 
   toggleDisplay: ->
-    @setState isExpanded: not @state.isExpanded
+    if @props.rel isnt 'disabled'
+      if @props.target
+        PageActions.navigate @props.target
+      else if @props.onClick
+        @props.onClick.call @
+      else
+        @setState isExpanded: not @state.isExpanded
 
   render: ->
     contentClasses = 'comp-sublistentry'
