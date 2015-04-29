@@ -1,8 +1,12 @@
 React = require 'react'
 ReactIntl = require '../../mixins/ReactIntl'
-TransactionActions = require '../../actions/TransactionActions'
 
-{ div, a } = React.DOM
+TransactionActions = require '../../actions/TransactionActions'
+PageActions = require '../../actions/PageActions'
+
+IconButton = React.createFactory require '../common/iconbutton'
+
+{ div, a, span } = React.DOM
 
 module.exports = React.createClass
 
@@ -30,6 +34,9 @@ module.exports = React.createClass
     ->
       setAmount amount
 
+  handlePaymentsClick: ->
+    PageActions.navigate '/top-up/payments'
+
   handleTopupClick: ->
     srvId = @props.serviceId
     if srvId
@@ -42,6 +49,7 @@ module.exports = React.createClass
 
   render: ->
     _this = @
+    viewHistory = @getIntlMessage 'top-up'
 
     if @state.wait
       return div id: "wait", @getIntlMessage 'moment-please'
@@ -59,7 +67,8 @@ module.exports = React.createClass
               _this.formatNumber n / 100, 'credits'
       div className: 'topup-confirm',
         div className: 'label',
-          @formatMessage @getIntlMessage('top-up-confirm'),
-            amount: @state.amount / 100
-        div className: 'button', onClick: @handleTopupClick,
-          @getIntlMessage 'top-up'
+          @getIntlMessage('view-payment-history-message')
+        div className: 'button', onClick: @handlePaymentsClick,
+          span className: 'icon icon-coin'
+          @getIntlMessage 'view-payment-history'
+      IconButton label: viewHistory, onClick: @handleTopupClick
