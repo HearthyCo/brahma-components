@@ -44,8 +44,8 @@ CheckLastViewed = (data, lastViewed) ->
 
 Stores =
   SessionsByState:
-    Programmed: Utils.mkListStore EntityStores.Session,
-      'sessions:ProgrammedSessions:success': (o) -> o.userSessions
+    # Programmed: Utils.mkListStore EntityStores.Session,
+    #   'sessions:ProgrammedSessions:success': (o) -> o.userSessions
     Underway: Utils.mkListStore EntityStores.Session,
       'sessions:UnderwaySessions:success': (o) -> o.userSessions
     Closed: Utils.mkListStore EntityStores.Session,
@@ -57,8 +57,8 @@ Stores =
 
   ClientHome:
     Sessions:
-      Programmed: Utils.mkListStore EntityStores.Session,
-        'clientHome:Home:success': (o) -> o.home.sessions.programmed
+      # Programmed: Utils.mkListStore EntityStores.Session,
+      #   'clientHome:Home:success': (o) -> o.home.sessions.programmed
       Underway: Utils.mkListStore EntityStores.Session,
         'clientHome:Home:success': (o) -> o.home.sessions.underway
       Closed: Utils.mkListStore EntityStores.Session,
