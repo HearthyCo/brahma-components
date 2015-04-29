@@ -37,17 +37,20 @@ module.exports = React.createClass
     # Blame at: https://github.com/facebook/react/issues/2533
     props = props or @props
     newValue = ReportStore.get props.session?.id
+    loaded = @state?.loaded
     if props.session and props.sessionUser and props.sessionUser.report?.length
       oldValue = props.sessionUser.report
-      if not newValue
+      if not loaded and not newValue
         newValue = oldValue
         ReportStore.set props.session.id, oldValue
+      loaded = true
 
     reportStatus = if newValue is oldValue then 'saved' else 'edited'
 
     state =
       report: newValue
       reportStatus: reportStatus
+      loaded: loaded
 
     @setState state if @isMounted()
     state
