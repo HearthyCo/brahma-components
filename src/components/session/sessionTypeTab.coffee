@@ -27,9 +27,11 @@ module.exports = React.createClass
 
   componentDidMount: ->
     ListStores.Session.LastViewedMessage.addChangeListener @update
+    ListStores.Session.Messages.addChangeListener @update
 
   componentWillUnmount: ->
     ListStores.Session.LastViewedMessage.removeChangeListener @update
+    ListStores.Session.Messages.removeChangeListener @update
 
   update: ->
     counters = {}

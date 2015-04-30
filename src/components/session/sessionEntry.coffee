@@ -19,6 +19,23 @@ module.exports = React.createClass
     id: React.PropTypes.string
     session: React.PropTypes.object.isRequired
 
+  getInitialState: ->
+    @update()
+
+  componentDidMount: ->
+    ListStores.Session.LastViewedMessage.addChangeListener @update
+    ListStores.Session.Messages.addChangeListener @update
+
+  componentWillUnmount: ->
+    ListStores.Session.LastViewedMessage.removeChangeListener @update
+    ListStores.Session.Messages.removeChangeListener @update
+
+  update: ->
+    counter = ListStores.Session.LastViewedMessage.getCounter @props.session.id
+    state = counter: counter
+    @setState state if @isMounted()
+    state
+
   render: ->
     sessionId = @props.session.id
     link = urlUtils.getUrl.session @props.session
@@ -29,5 +46,5 @@ module.exports = React.createClass
           Datetime value: @props.session.startDate
           span className: 'session-title', @props.session.title
         div className: 'session-notify',
-          if ListStores.Session.LastViewedMessage.getCounter(sessionId) > 0
+          if @state.counter  > 0
             span className: 'icon icon-advice'
