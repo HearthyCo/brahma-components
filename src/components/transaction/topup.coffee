@@ -48,6 +48,7 @@ module.exports = React.createClass
     @setState wait: true
 
   render: ->
+    label =  @getIntlMessage 'view-payment-history'
     _this = @
 
     if @state.wait
@@ -64,11 +65,9 @@ module.exports = React.createClass
               classes += ' active'
             div className: classes, key: n, onClick: _this.getAmountSetter(n),
               _this.formatNumber n / 100, 'credits'
-      div className: 'topup-confirm',
+      div className: 'topup-history',
         div className: 'label',
           @getIntlMessage('view-payment-history-message')
-        div className: 'button', onClick: @handlePaymentsClick,
-          span className: 'icon icon-coin'
-          @getIntlMessage 'view-payment-history'
+        IconButton icon: 'coin', url:'/top-up/payments', label: label
       div className: 'button', onClick: @handleTopupClick,
         @getIntlMessage 'top-up'
