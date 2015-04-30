@@ -2,6 +2,8 @@ React = require 'react'
 
 PageActions = require '../../actions/PageActions'
 
+FrontendUtils = require '../../util/frontendUtils'
+
 { div, span, h2, p } = React.DOM
 
 module.exports = React.createClass
@@ -26,6 +28,8 @@ module.exports = React.createClass
       else if @props.onClick
         @props.onClick.call @
       else
+        if not @state.isExpanded
+          FrontendUtils.scrollAnimated @refs.element.getDOMNode()
         @setState isExpanded: not @state.isExpanded
 
   render: ->
@@ -35,7 +39,7 @@ module.exports = React.createClass
     else if @state.isExpanded is false
       contentClasses += ' is-collapsed'
 
-    div id: @props.id, className: contentClasses,
+    div id: @props.id, className: contentClasses, ref: 'element',
       div className: 'entry-button', onClick: @toggleDisplay,
         div className: 'label',
           h2 {},

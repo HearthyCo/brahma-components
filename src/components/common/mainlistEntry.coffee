@@ -5,6 +5,8 @@ React = require 'react'
 IconBadge = React.createFactory require './iconbadge'
 PageActions = require '../../actions/PageActions'
 
+FrontendUtils = require '../../util/frontendUtils'
+
 module.exports = React.createClass
 
   displayName: 'mainlistentry'
@@ -28,6 +30,8 @@ module.exports = React.createClass
     if @props.target
       PageActions.navigate @props.target
     else
+      if not @state.isExpanded
+        FrontendUtils.scrollAnimated @refs.element.getDOMNode()
       @setState isExpanded: not @state.isExpanded
 
   render: ->
@@ -38,7 +42,7 @@ module.exports = React.createClass
     else if @state.isExpanded is false
       contentClasses += ' is-collapsed'
 
-    div id: @props.id, className: contentClasses,
+    div id: @props.id, className: contentClasses, ref: 'element',
       div className: 'entry-button', onClick: @toggleDisplay,
         span className: 'label',
           @props.label

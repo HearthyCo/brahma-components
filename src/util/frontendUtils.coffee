@@ -1,5 +1,30 @@
 _ = require 'underscore'
 
+# Adapted from https://gist.github.com/louisremi/1114293#file_anim_loop_x.js
+raf = window.requestAnimationFrame       or
+      window.mozRequestAnimationFrame    or
+      window.webkitRequestAnimationFrame or
+      window.msRequestAnimationFrame     or
+      window.oRequestAnimationFrame;
+animLoop = (render, element) ->
+  ###coffeelint-variable-scope-ignore###
+  running = true
+  ###coffeelint-variable-scope-ignore###
+  lastFrame = +new Date
+  theloop = (now) ->
+    if running != false
+      if raf
+        raf theloop, element
+      else
+        window.setTimeout theloop, 16
+      now = if now? > 1e4 then now else +new Date
+      deltaT = now - lastFrame
+      if deltaT < 160
+        running = render deltaT, now
+      lastFrame = now;
+  theloop()
+
+
 window.brahma.utils.frontend = module.exports =
 
   # Shows the "Select file" dialog, and passes the selection to the callback.
@@ -105,3 +130,29 @@ window.brahma.utils.frontend = module.exports =
       console.log 'ctx.drawImage img', sx, sy, sw, sh, 0, 0, width, height
       ctx.drawImage img, sx, sy, sw, sw, 0, 0, width, height
       true
+
+  # Animates a scroll to the specified element, taking into account that it
+  # might have an ongoing animation. Useful for accordions.
+  scrollAnimated: (element) ->
+    # Scroll animation length. Should be >= to the element's animation length.
+    length = 500 # ms
+    # Animation easing function. Should take and output values in range 0..1.
+    easing = (x) -> x * x * (3 - 2 * x)
+
+    # Calculate the fixed points of our animations
+    startScroll = window.pageYOffset
+    endScroll = 0
+    t = element
+    while t
+      endScroll += t.offsetTop
+      t = t.offsetParent
+    perMsScroll = (endScroll - startScroll) / length
+
+    ###coffeelint-variable-scope-ignore###
+    totalT = 0
+
+    # Set our animation loop
+    animLoop (deltaT) ->
+      totalT += deltaT
+      window.scroll 0, startScroll + totalT * perMsScroll
+      return totalT < length
