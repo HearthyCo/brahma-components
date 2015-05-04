@@ -73,4 +73,11 @@ UserActions =
       Utils.mkApiPoster '/me/avatar', pl, 'user',
         'SetAvatar', opts
 
-module.exports = UserActions
+  updatePushNotifications: (token, service, lang) ->
+    payload =
+      token: token
+      proto: service
+      lang: lang
+    Utils.mkApiPoster '/me/push', payload, 'user', 'updatePushNotifications'
+
+window.brahma.actions.user = module.exports = UserActions

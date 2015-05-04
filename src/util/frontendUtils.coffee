@@ -133,19 +133,22 @@ window.brahma.utils.frontend = module.exports =
 
   # Animates a scroll to the specified element, taking into account that it
   # might have an ongoing animation. Useful for accordions.
-  scrollAnimated: (element) ->
+  # offset: Margin to leave between the top of the element and the viewport
+  scrollAnimated: (element, offset) ->
     # Scroll animation length. Should be >= to the element's animation length.
     length = 500 # ms
     # Animation easing function. Should take and output values in range 0..1.
     easing = (x) -> x * x * (3 - 2 * x)
 
     # Calculate the fixed points of our animations
+    offset = offset or 0
     startScroll = window.pageYOffset
     endScroll = 0
     t = element
     while t
       endScroll += t.offsetTop
       t = t.offsetParent
+    endScroll -= offset
     perMsScroll = (endScroll - startScroll) / length
 
     ###coffeelint-variable-scope-ignore###
