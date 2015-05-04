@@ -16,8 +16,17 @@ module.exports = (usr, opts) ->
   url = opts.hostname + ':' + opts.port if opts.port
   url = 'ws://' + url
 
+  # pre-define
+  socketWrapper = {}
+
   connect = ->
-    new window.WebSocket url, ["protocolOne", "protocolTwo"]
+    try
+      sock = new window.WebSocket url
+    catch ex
+      # console.log "Connection unavailable", ex
+      socketWrapper.onerror ex
+
+    return sock
 
   socket = connect()
 
@@ -32,33 +41,36 @@ module.exports = (usr, opts) ->
       socket = _.extend connect(), extras
     ), opts.timeout)
 
+
   # Checks if messages have been sent
   # Return: [bool] still waiting
-  checkSend = (callback, t) ->
+  checkSend = (callback, timer) ->
+    retry = true
     if socket.readyState isnt window.WebSocket.OPEN
       # Socket not ready
-      # console.log "check: Socket not ready",
-      #   "Ready: #{socket.readyState}", "Buffer: #{socket.bufferedAmount}",
-      #   "Protocol: #{socket.protocol}", "Check timer: #{t}"
+      # console.log "> check: Socket not ready", SocketUtils.socketDebug(socket)
       callback true if callback # call err
+      retry = true
     else if socket.bufferedAmount is 0
       # Buffer empty, message sent
-      # console.log "check: Buffer empty",
-      #   "Ready: #{socket.readyState}", "Buffer: #{socket.bufferedAmount}",
-      #   "Protocol: #{socket.protocol}", "Check timer: #{t}"
+      # console.log "> check: Buffer empty", SocketUtils.socketDebug(socket)
       callback false if callback # call success (!err)
+      retry = false
     else
       # Socket ready and buffer has something, keep waiting
-      # console.log "check: Buffer has something",
-      #   "Ready: #{socket.readyState}", "Buffer: #{socket.bufferedAmount}",
-      #   "Protocol: #{socket.protocol}", "Check timer: #{t}"
-      return true
+      # console.log "> check: Retrying delivery", SocketUtils.socketDebug(socket)
+      retry = true
 
     # Done, stop waiting
-    window.clearInterval t if t
+    if not retry and timer
+      # console.log "> check: Clearing timer #{timer} with retry #{retry}"
+      window.clearInterval timer
 
     # Callback called
-    return false
+    # if callback
+      # console.log "> check: Retry", retry, "with callback", callback
+
+    return retry
 
   # Default callbacks
   socketWrapper =
@@ -75,16 +87,25 @@ module.exports = (usr, opts) ->
       socket.send JSON.stringify ping
       if checkSend()
         interval = window.setInterval (->
-          checkSend(socketWrapper.onping, interval)
+          checkSend socketWrapper.onping, interval
         ), 100
 
     send: (messages, callback) ->
-      socket.send JSON.stringify messages
+      err = false
+      try
+        socket.send JSON.stringify messages
+      catch ex
+        console.log "> Send exception:", ex
+        callback true if callback
+        return
+
       if checkSend()
         interval = window.setInterval (-> checkSend(callback, interval)), 100
-      # console.log 'Sending', messages, "Ready: #{socket.readyState}",
-      #   "Buffer: #{socket.bufferedAmount}", "Protocol: #{socket.protocol}"
-      #   "Check timer: #{interval}"
+
+      # console.log 'Sending', messages, SocketUtils.socketDebug(socket)
+
+    isReady: ->
+      return (socket.readyState is window.WebSocket.OPEN)
 
   extras =
     onopen: ->
@@ -104,7 +125,7 @@ module.exports = (usr, opts) ->
       socket.send JSON.stringify handshake
       if checkSend()
         interval = window.setInterval (->
-          checkSend(socketWrapper.onAuth, interval)
+          checkSend socketWrapper.onauth, interval
         ), 100
     onclose: (code) ->
       socketWrapper.onclose code if socketWrapper.onclose
@@ -112,7 +133,7 @@ module.exports = (usr, opts) ->
     onerror: (error) ->
       socketWrapper.onerror error if socketWrapper.onerror
     onmessage: (message) ->
-      console.log "> Message received"
+      # console.log "> Message received"
       try
         data = JSON.parse message.data
       catch ex
@@ -123,6 +144,10 @@ module.exports = (usr, opts) ->
 
   # Extend socket
   _.extend socket, extras
+
+  window.brahma.socketClose = -> socket.close()
+  window.brahma.socketOpen = ->
+    socket = _.extend connect(), extras
 
   # Return wrapper
   socketWrapper

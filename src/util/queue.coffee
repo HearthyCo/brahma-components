@@ -13,6 +13,12 @@ successCallback = (queue, messages) ->
   ###coffeelint-variable-scope-ignore###
   isWorking = false
 
+  # msgs = []
+  # for message in messages
+  #   msgs.push message.data.message
+
+  # console.log "> Success for #{messages.length}", msgs
+
   for message in messages
     queue.sent++
     message.status = 'success'
@@ -22,21 +28,25 @@ successCallback = (queue, messages) ->
   count = maxRetries
   queue.process()
 
-errorCallback = (queue, outbox) ->
-  # console.log "> Error #{count}. Unshift queue"
+errorCallback = (queue, messages) ->
   ###coffeelint-variable-scope-ignore###
   count--
   ###coffeelint-variable-scope-ignore###
   isWorking = false
-  queue.unshift outbox
+
+  # console.log "> Error for #{messages.length}. Tries left: #{count}"
+
+  queue.unshift messages
   if count == 0
-    # console.log "> Paused. Wait for reconnection."
+    # console.log "> Paused with #{messages.length}. Wait for connection"
     queue.pause()
   else
     queue.process()
 
 queue =
+  # We store here all the outcoming messages
   outbox: []
+
   sent: 0
   started: false
   paused: false
@@ -47,7 +57,7 @@ queue =
       messages = {}
       switch message.type
         when 'joined'
-          console.log '> Joined', message
+          # console.log '> Joined', message
           if message.data
             AppDispatcher.trigger 'chat:Received:success',
               messages: message.data.messages
@@ -56,11 +66,13 @@ queue =
         when 'update'
           # We send only the update data through the dispatcher
           # so the stores can pick it up using standard path conventions
-          console.log '> Async update:', message.data
+          # console.log '> Async update:', message.data
           AppDispatcher.trigger 'update:Received:success', message.data
         when 'status'
           console.warn 'Warn', message
       AppDispatcher.trigger 'chat:Received:success', messages: messages
+    @socket.onauth = -> queue.resume()
+
   push: (payload) ->
     # console.log '> Push to queue', payload
     # When a new message is pushed, count of error is restarted;
@@ -73,29 +85,48 @@ queue =
       @resume()
     else
       @process()
+
+  # Adds messages on queue to the unsent messages
   unshift: (messages) ->
+    # Keep potential a new queue
     messages.push message for message in @outbox
     @outbox = messages
+    # console.log "Failed delivery. Queue with #{@outbox.length} message(s)"
+
   process: ->
+
+    # msgs = []
+    # for message in @outbox
+    #   msgs.push message.data.message
+
+    # console.log "Called process with #{@outbox.length} message(s) on queue:",
+      # msgs
+
     if not @paused and not isWorking and @outbox.length
       ###coffeelint-variable-scope-ignore###
       isWorking = true
+
+      # We're working on these messages
       messages = @outbox
       @outbox = []
-      # console.log "> Processing #{messages.length}"
-      @socket.send messages, (err) ->
-        if not err
-          successCallback queue, messages
-        else
-          errorCallback queue, messages
+
+      # console.log "> Processing #{messages.length} queued", msgs
+      if @socket.isReady()
+        @socket.send messages, (err) ->
+          if err
+            errorCallback queue, messages
+          else
+            successCallback queue, messages
+      else
+        errorCallback queue, messages
+
   length: -> @outbox.length
   messagesSent: -> @sent
   pause: ->
-    console.log "> Queue paused"
+    # console.log "> Queue paused"
     @paused = true
   resume: ->
-    console.log "> Queue resumed"
-    return if not @paused
+    # console.log "> Queue resumed"
     @paused = false
     @process()
 

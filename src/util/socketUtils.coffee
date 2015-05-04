@@ -7,3 +7,8 @@ module.exports =
     date = new Date().getTime()
     session = session or 0
     '' + user + '.' + session + '.' + date + '.' + counter++
+
+  socketDebug: (socket) ->
+    return "Ready: #{socket.readyState}" +
+      " Buffer: #{socket.bufferedAmount}" +
+      " Protocol: #{socket.protocol}"
