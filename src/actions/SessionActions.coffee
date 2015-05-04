@@ -4,6 +4,8 @@ Backbone = require 'exoskeleton'
 PageActions = require './PageActions'
 Queue = require '../util/queue'
 
+AlertActions = require './AlertActions'
+
 urlUtils = require '../util/urlUtils'
 
 SessionActions =
@@ -27,9 +29,18 @@ SessionActions =
 
   assign: (serviceType) ->
     Utils.mkApiPoster '/session/assignPool', serviceType: serviceType,
-      'session', 'Assign', success: (response) ->
+      'session', 'Assign',
+      success: (response) ->
         console.log 'API POST Success:', response
         AppDispatcher.trigger  'session:Assign:success', response
+      error: (xhr) ->
+        alert = id: 'alert-session_Assign', level: 'error'
+        if xhr.response.indexOf('No pending') isnt -1
+          alert.intl = 'alert-session_Assign-pending'
+        else if xhr.response.indexOf('too many') isnt -1
+          alert.intl = 'alert-session_Assign-many'
+        else return # Leave the default one
+        AlertActions.show alert
 
   refresh: (target) ->
     Utils.mkApiGetter '/session/' + target, 'session', 'Session'

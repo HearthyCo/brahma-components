@@ -3,7 +3,7 @@ ReactIntl = require '../../mixins/ReactIntl'
 
 { a, img, span, div } = React.DOM
 
-UserBrief = React.createFactory require '../user/userBrief'
+HomeUserbrief = React.createFactory require '../user/homeUserbrief'
 
 module.exports = React.createClass
 
@@ -22,7 +22,7 @@ module.exports = React.createClass
   render: ->
     profileData = @props.profile or @context.user
     if profileData
-      profile = UserBrief user: profileData
+      profile = HomeUserbrief user: profileData
     else
       profile = div {}
 
