@@ -17,7 +17,7 @@ module.exports = (usr, opts) ->
   url = 'ws://' + url
 
   # pre-define
-  socketWrapper = {}
+  socketWrapper = null
 
   connect = ->
     try
@@ -48,17 +48,17 @@ module.exports = (usr, opts) ->
     retry = true
     if socket.readyState isnt window.WebSocket.OPEN
       # Socket not ready
-      # console.log "> check: Socket not ready", SocketUtils.socketDebug(socket)
+      # console.log "> check: Socket not ready"
       callback true if callback # call err
       retry = true
     else if socket.bufferedAmount is 0
       # Buffer empty, message sent
-      # console.log "> check: Buffer empty", SocketUtils.socketDebug(socket)
+      # console.log "> check: Buffer empty"
       callback false if callback # call success (!err)
       retry = false
     else
       # Socket ready and buffer has something, keep waiting
-      # console.log "> check: Retrying delivery", SocketUtils.socketDebug(socket)
+      # console.log "> check: Retrying delivery"
       retry = true
 
     # Done, stop waiting
@@ -147,6 +147,7 @@ module.exports = (usr, opts) ->
 
   window.brahma.socketClose = -> socket.close()
   window.brahma.socketOpen = ->
+    ###coffeelint-variable-scope-ignore###
     socket = _.extend connect(), extras
 
   # Return wrapper
