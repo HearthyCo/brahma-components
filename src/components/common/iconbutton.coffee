@@ -14,13 +14,17 @@ module.exports = React.createClass
     onClick: React.PropTypes.func
 
   render: ->
+    element = a
+
     opts =
       id: @props.id
       className: 'comp-iconbutton'
       href: @props.url
       onClick: @props.onClick,
 
-    a opts,
+    element = span if @props.onClick
+
+    element opts,
       span className: 'icon icon-' + @props.icon
       span className: 'button-label',
         @props.label
