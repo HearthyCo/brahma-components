@@ -9,7 +9,7 @@ isWorking = false
 count = maxRetries
 
 successCallback = (queue, messages) ->
-  # console.log 'Success. Sent'
+  # console.log '> Success. Sent'
   ###coffeelint-variable-scope-ignore###
   isWorking = false
 
@@ -23,14 +23,14 @@ successCallback = (queue, messages) ->
   queue.process()
 
 errorCallback = (queue, outbox) ->
-  # console.log 'Error', count, '. Unshift queue'
+  # console.log "> Error #{count}. Unshift queue"
   ###coffeelint-variable-scope-ignore###
   count--
   ###coffeelint-variable-scope-ignore###
   isWorking = false
   queue.unshift outbox
   if count == 0
-    console.log 'Paused. Wait for reconnection.'
+    # console.log "> Paused. Wait for reconnection."
     queue.pause()
   else
     queue.process()
@@ -47,7 +47,7 @@ queue =
       messages = {}
       switch message.type
         when 'joined'
-          console.log 'Auth done'
+          console.log '> Joined', message
           if message.data
             AppDispatcher.trigger 'chat:Received:success',
               messages: message.data.messages
@@ -56,7 +56,7 @@ queue =
         when 'update'
           # We send only the update data through the dispatcher
           # so the stores can pick it up using standard path conventions
-          console.log 'Async update:', message.data
+          console.log '> Async update:', message.data
           AppDispatcher.trigger 'update:Received:success', message.data
         when 'status'
           console.warn 'Warn', message
@@ -77,13 +77,12 @@ queue =
     messages.push message for message in @outbox
     @outbox = messages
   process: ->
-    if not @paused and not isWorking and @length()
+    if not @paused and not isWorking and @outbox.length
       ###coffeelint-variable-scope-ignore###
       isWorking = true
       messages = @outbox
       @outbox = []
-      # console.log 'Process:'
-      # console.log '-', message for message in messages
+      # console.log "> Processing #{messages.length}"
       @socket.send messages, (err) ->
         if not err
           successCallback queue, messages
@@ -91,8 +90,11 @@ queue =
           errorCallback queue, messages
   length: -> @outbox.length
   messagesSent: -> @sent
-  pause: -> @paused = true
+  pause: ->
+    console.log "> Queue paused"
+    @paused = true
   resume: ->
+    console.log "> Queue resumed"
     return if not @paused
     @paused = false
     @process()

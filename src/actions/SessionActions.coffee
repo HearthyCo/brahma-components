@@ -2,7 +2,6 @@ AppDispatcher = require '../dispatcher/AppDispatcher'
 Utils = require '../util/actionsUtils'
 Backbone = require 'exoskeleton'
 PageActions = require './PageActions'
-Queue = require '../util/queue'
 
 urlUtils = require '../util/urlUtils'
 

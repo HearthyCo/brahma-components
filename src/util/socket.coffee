@@ -17,7 +17,7 @@ module.exports = (usr, opts) ->
   url = 'ws://' + url
 
   connect = ->
-    new window.WebSocket url
+    new window.WebSocket url, ["protocolOne", "protocolTwo"]
 
   socket = connect()
 
@@ -25,7 +25,8 @@ module.exports = (usr, opts) ->
   extras = {}
 
   reconnect = ->
-    console.log 'Connection closed, restart in', (opts.timeout/1000), 'seconds'
+    console.log '> Connection closed, restart in',
+      (opts.timeout/1000), 'seconds'
     window.setTimeout(( ->
       ###coffeelint-variable-scope-ignore###
       socket = _.extend connect(), extras
@@ -34,40 +35,60 @@ module.exports = (usr, opts) ->
   # Checks if messages have been sent
   # Return: [bool] still waiting
   checkSend = (callback, t) ->
-    # Socket not ready
-    if socket.readyState isnt 1
+    if socket.readyState isnt window.WebSocket.OPEN
+      # Socket not ready
+      # console.log "check: Socket not ready",
+      #   "Ready: #{socket.readyState}", "Buffer: #{socket.bufferedAmount}",
+      #   "Protocol: #{socket.protocol}", "Check timer: #{t}"
       callback true if callback # call err
-    # Buffer empty
     else if socket.bufferedAmount is 0
+      # Buffer empty, message sent
+      # console.log "check: Buffer empty",
+      #   "Ready: #{socket.readyState}", "Buffer: #{socket.bufferedAmount}",
+      #   "Protocol: #{socket.protocol}", "Check timer: #{t}"
       callback false if callback # call success (!err)
     else
-      return true # Socket ready and buffer has something, keep waiting
+      # Socket ready and buffer has something, keep waiting
+      # console.log "check: Buffer has something",
+      #   "Ready: #{socket.readyState}", "Buffer: #{socket.bufferedAmount}",
+      #   "Protocol: #{socket.protocol}", "Check timer: #{t}"
+      return true
 
     # Done, stop waiting
-    if t
-      window.clearInterval t
+    window.clearInterval t if t
 
-    # Done
+    # Callback called
     return false
 
+  # Default callbacks
   socketWrapper =
-    onmessage: (json) -> console.log json
+    onmessage: (json) -> console.log "> onMessage", json
+    onerror: (error) -> console.log "> onError", error
+    onclose: (code) -> console.log "> onClose", code
+    onopen: -> console.log "> onOpen"
+    onauth: -> console.log "> onAuth"
+    onping: -> console.log "> onPing"
+
     ping: ->
       id = SocketUtils.mkMessageId user.id
       ping = id: id, type: 'ping', data: message: 'Ping'
       socket.send JSON.stringify ping
       if checkSend()
-        callback = ->
-          console.log 'Ping sent'
-        interval = window.setInterval (-> checkSend(callback, interval)), 100
+        interval = window.setInterval (->
+          checkSend(socketWrapper.onping, interval)
+        ), 100
+
     send: (messages, callback) ->
       socket.send JSON.stringify messages
       if checkSend()
         interval = window.setInterval (-> checkSend(callback, interval)), 100
+      # console.log 'Sending', messages, "Ready: #{socket.readyState}",
+      #   "Buffer: #{socket.bufferedAmount}", "Protocol: #{socket.protocol}"
+      #   "Check timer: #{interval}"
 
   extras =
     onopen: ->
-      console.log 'Connection is opened and ready to use'
+      socketWrapper.onopen() if socketWrapper.onopen
       # Do auth
       handshake = [
         id: SocketUtils.mkMessageId user.id
@@ -81,21 +102,27 @@ module.exports = (usr, opts) ->
           _sessions_sign: EntityStores.SignedEntry.get('sessions')?.signature
       ]
       socket.send JSON.stringify handshake
-      callback = ->
-        console.log 'Auth sent'
       if checkSend()
-        interval = window.setInterval (-> checkSend(callback, interval)), 100
-    onclose: ->
+        interval = window.setInterval (->
+          checkSend(socketWrapper.onAuth, interval)
+        ), 100
+    onclose: (code) ->
+      socketWrapper.onclose code if socketWrapper.onclose
       reconnect()
     onerror: (error) ->
-      console.log 'An error occurred when sending/receiving data', error
+      socketWrapper.onerror error if socketWrapper.onerror
     onmessage: (message) ->
+      console.log "> Message received"
       try
         data = JSON.parse message.data
       catch ex
-        console.log 'This doesn\'t look like a valid JSON: ', message.data, ex
+        console.log '> This doesn\'t look like a valid JSON: ',
+          message.data, ex
 
-      socketWrapper.onmessage data
+      socketWrapper.onmessage data if socketWrapper.onmessage
 
+  # Extend socket
   _.extend socket, extras
+
+  # Return wrapper
   socketWrapper
