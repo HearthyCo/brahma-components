@@ -31,7 +31,8 @@ module.exports = React.createClass
       PageActions.navigate @props.target
     else
       if not @state.isExpanded
-        FrontendUtils.scrollAnimated @refs.element.getDOMNode()
+        offset = if process.env.HEARTHY_APP isnt 'web' then 0 else 80
+        FrontendUtils.scrollAnimated @refs.element.getDOMNode(), offset
       @setState isExpanded: not @state.isExpanded
 
   render: ->
