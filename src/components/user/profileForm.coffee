@@ -96,6 +96,7 @@ module.exports = React.createClass
       action: @props.action or "post"
       onSubmit: @handleSubmit
       className: _className,
+      div className:'title', @getIntlMessage 'personal-data'
       @buildComp 'text', userName
       @buildComp 'text', userSurname1
       @buildComp 'text', userSurname2
