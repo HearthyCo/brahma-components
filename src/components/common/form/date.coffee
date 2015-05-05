@@ -12,7 +12,7 @@ module.exports = React.createClass
 
   days: ->
     days = []
-    days.push option { key: 0, value: 0 }, @getIntlMessage('day')
+    days.push option { key: 0, value: '' }, @getIntlMessage('day')
     days.push option { key: i, value: i }, {i} for i in [1..31]
     days
 
@@ -33,7 +33,7 @@ module.exports = React.createClass
       'Diciembre'
     ]
 
-    months.push option {key: 0, value: 0}, @getIntlMessage('month')
+    months.push option {key: 0, value: ''}, @getIntlMessage('month')
     months.push option {key: i, value: i}, names[i-1] for i in [1..names.length]
     months
 
@@ -42,7 +42,7 @@ module.exports = React.createClass
     date = new Date()
     year = date.getFullYear()
 
-    years.push option { key: 0, value: 0 }, @getIntlMessage('year')
+    years.push option { key: 0, value: '' }, @getIntlMessage('year')
     years.push option { key: i, value: i }, {i} for i in [1900..year]
     years
 
@@ -64,24 +64,40 @@ module.exports = React.createClass
     if @props.valueLink
       @props.valueLink.requestChange date
 
-  mkSelect: (name, options, value) ->
-    select(
-      className: 'select-form'
-      name: name
-      value: value
-      onChange: @handleChange.bind(@, name)
-      , options
-    )
+  mkSelect: (opts, options) ->
+    opts.className = 'select-form'
+    opts.onChange = @handleChange.bind(@, opts.name)
+
+    select opts,
+      options
 
   render: ->
     obj = @valueAsObj()
+
+    day =
+      name: 'day'
+      value: obj.day
+
+    month =
+      name: 'month'
+      value: obj.month
+
+    year =
+      name: 'year'
+      value: obj.year
+
+    if @props.required
+      day.required = true
+      month.required = true
+      year.required = true
+
     div id: @props.id, className: 'field-set comp-date',
       div className: 'label',
         label className: 'label-form',
           @props.label
       div className: 'field',
-        @mkSelect 'day', @days(), obj.day
-        @mkSelect 'month', @months(), obj.month
-        @mkSelect 'year', @years(), obj.year
+        @mkSelect day, @days()
+        @mkSelect month, @months()
+        @mkSelect year, @years()
       div className: 'message',
         label className: 'message-form'
