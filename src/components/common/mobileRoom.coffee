@@ -51,10 +51,12 @@ module.exports = React.createClass
   handleMessage: (e) ->
     e.preventDefault()
     msgbox = @refs.msgbox.getDOMNode()
-    newMessage = msgbox.value.trim()
-    msgbox.value = ''
-    @setState hasText: false
-    ChatActions.send @props.session.id, newMessage, @context.user
+    newMessage = msgbox.value?.trim()
+    if newMessage
+      msgbox.value = ''
+      @setState hasText: false
+      ChatActions.send @props.session.id, newMessage, @context.user
+    return
 
   handleUpload: (e) ->
     _this = @

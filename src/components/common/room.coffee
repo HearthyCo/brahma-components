@@ -70,10 +70,11 @@ module.exports = React.createClass
   handleMessage: (e) ->
     e.preventDefault()
     msgbox = @refs.msgbox.getDOMNode()
-    newMessage = msgbox.value.trim()
-    msgbox.value = ''
-    InputStore.set @props.session.id, null
-    ChatActions.send @props.session.id, newMessage, @context.user
+    newMessage = msgbox.value?.trim()
+    if newMessage
+      msgbox.value = ''
+      InputStore.set @props.session.id, null
+      ChatActions.send @props.session.id, newMessage, @context.user
     return # Prevent possible "return false" from previous line.
 
   handleUpload: (e) ->
