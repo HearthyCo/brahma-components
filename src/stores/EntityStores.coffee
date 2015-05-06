@@ -21,3 +21,4 @@ window.brahma.stores.entity = module.exports =
   HistoryEntry: Utils.mkEntityStore 'historyentries'
   Message: Utils.mkEntityStore 'messages'
   SignedEntry: Utils.mkEntityStore 'sign'
+  Misc: Utils.mkEntityStore 'misc'
