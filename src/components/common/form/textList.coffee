@@ -49,6 +49,6 @@ module.exports = React.createClass
               @getIntlMessage 'remove'
 
       div className: 'new-entry',
-        element ref: 'input'
+        element ref: 'input', placeholder: @getIntlMessage 'write-here'
         button onClick: @handleAdd,
-          @getIntlMessage 'add-another'
+          @getIntlMessage 'add'

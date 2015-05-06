@@ -40,8 +40,12 @@ module.exports = React.createClass
       @props.onComplete?()
 
   render: ->
-    prev = span className: 'icon icon-arrow-left', onClick: @handlePrev
-    next = span className: 'icon icon-arrow-right', onClick: @handleNext
+    prevClasses = 'icon icon-arrow-left'
+    nextClasses = 'icon icon-arrow-right'
+    prevClasses += ' back' if @props.valueLink.value is 1
+    nextClasses += ' complete' if @props.valueLink.value is @props.total
+    prev = span className: prevClasses, onClick: @handlePrev
+    next = span className: nextClasses, onClick: @handleNext
     div className: 'comp-steps', id: @props.id,
       prev unless @props.valueLink.value is 1 and @props.noCancel
       div className: 'progress',
