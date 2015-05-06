@@ -28,4 +28,4 @@ module.exports = React.createClass
       div className: 'birth',
         @getIntlMessage('birth'), ': '
         birthdate
-      div className: 'gender', @props.user.gender
+      div className: 'gender', @getIntlMessage @props.user.gender.toLowerCase()

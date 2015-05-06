@@ -1,4 +1,5 @@
 React = require 'react'
+_ = require 'underscore'
 ReactIntl = require '../../mixins/ReactIntl'
 
 { a, img, span, div } = React.DOM
@@ -26,7 +27,8 @@ module.exports = React.createClass
     else
       profile = div {}
 
-    entries = for key, entries of @props.history
+    history = _.omit @props.history, "treatments", "conditions"
+    entries = for key, list of history
       try
         title = @getIntlMessage key
       catch error
@@ -34,15 +36,16 @@ module.exports = React.createClass
 
       div key: key, className: 'section',
         div className: 'section-title', title
-        entries.map (e) ->
-          a className: 'history-entry', href: '/histories', key: e.id,
-            div className: 'title', e.title
-            div className: 'description', e.description
+        list.map (e, i) ->
+          span className: 'history-entry', key: i,
+            div className: 'title', e
+            #div className: 'description', e.description
 
     div id: @props.id, className: 'comp-historybrief',
       profile
-      div className: 'activity',
-        @getIntlMessage 'recent-activity'
+      if entries.length
+        div className: 'activity',
+          @getIntlMessage 'recent-activity'
       entries
-      a className: 'view-more histories-view-more', href: '/histories',
-        @getIntlMessage 'view-more'
+        # a className: 'view-more histories-view-more', href: '/histories',
+        #   @getIntlMessage 'view-more'
