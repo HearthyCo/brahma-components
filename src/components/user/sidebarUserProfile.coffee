@@ -19,6 +19,7 @@ module.exports = React.createClass
 
   propTypes:
     user: React.PropTypes.object.isRequired
+    session: React.PropTypes.object
 
 
   getInitialState: ->
@@ -69,31 +70,49 @@ module.exports = React.createClass
       .map (allergy) ->
         AllergyEntry key: allergy.id, allergy: allergy
 
+    # Simple history (covered before the session)
+    history = @state.user?.meta?.history or {}
+    historyBox = (label, icon, section) =>
+      if section?.length
+        IconSubListEntry label: @getIntlMessage(label), icon: icon,
+          div className: 'comp-historiesentry',
+            section.map (e, i) ->
+              div className: 'entry', key: i,
+                e
+
 
     div className: 'comp-sidebarUserProfile',
       h2 className: 'sideBar-section', @getIntlMessage 'history'
       profile
-      IconSubListEntry label: 'Alergias', icon: 'allergy',
-        allergies
-      IconSubListEntry
-        label: 'Vacunas'
-        icon: 'vaccine'
-        target: '/allergies'
-        rel: 'disabled'
-      IconSubListEntry label: 'Tratamientos', icon: 'pill',
-        HistoriesEntry {}
-        HistoriesEntry {}
-        a className: 'view-more', href: '/history', rel: 'disabled',
-          @getIntlMessage 'view-more'
-      IconSubListEntry label: 'Problemas resueltos', icon: 'problem-2',
-        HistoriesEntry {}
-        a className: 'view-more', href: '/history', rel: 'disabled',
-          @getIntlMessage 'view-more'
-      IconSubListEntry label: 'Problemas actuales', icon: 'problem',
-        HistoriesEntry {}
-        a className: 'view-more', href: '/history', rel: 'disabled',
-          @getIntlMessage 'view-more'
-      IconSubListEntry label: 'Enfermería', icon: 'nursing',
-        HistoriesEntry {}
-        a className: 'view-more', href: '/history', rel: 'disabled',
-          @getIntlMessage 'view-more'
+      # IconSubListEntry label: 'Alergias', icon: 'allergy',
+      #   allergies
+      # IconSubListEntry
+      #   label: 'Vacunas'
+      #   icon: 'vaccine'
+      #   target: '/allergies'
+      #   rel: 'disabled'
+      # IconSubListEntry label: 'Tratamientos', icon: 'pill',
+      #   HistoriesEntry {}
+      #   HistoriesEntry {}
+      #   a className: 'view-more', href: '/history', rel: 'disabled',
+      #     @getIntlMessage 'view-more'
+      # IconSubListEntry label: 'Problemas resueltos', icon: 'problem-2',
+      #   HistoriesEntry {}
+      #   a className: 'view-more', href: '/history', rel: 'disabled',
+      #     @getIntlMessage 'view-more'
+      # IconSubListEntry label: 'Problemas actuales', icon: 'problem',
+      #   HistoriesEntry {}
+      #   a className: 'view-more', href: '/history', rel: 'disabled',
+      #     @getIntlMessage 'view-more'
+      # IconSubListEntry label: 'Enfermería', icon: 'nursing',
+      #   HistoriesEntry {}
+      #   a className: 'view-more', href: '/history', rel: 'disabled',
+      #     @getIntlMessage 'view-more'
+      IconSubListEntry label: @getIntlMessage('reason'), icon: 'nursing',
+        div className: 'comp-historiesentry',
+          div className: 'entry',
+            @props.session?.meta?.reason
+
+      historyBox 'allergies', 'allergy', history.allergies
+      historyBox 'conditions', 'problem', history.conditions
+      historyBox 'treatments', 'pill', history.treatments

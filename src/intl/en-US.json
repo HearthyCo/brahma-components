@@ -126,6 +126,7 @@
   "rating-4": "Severe",
   "rating-5": "Very severe",
   "rating-undefined": "Unspecified",
+  "reason": "Consultation reason",
   "recent-activity": "Recent activity",
   "recommendation": "Recommendation",
   "recommended": "Recommended",
