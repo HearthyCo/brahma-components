@@ -8,8 +8,15 @@ AlertActions = require './AlertActions'
 urlUtils = require '../util/urlUtils'
 
 SessionActions =
+
   create: (service) ->
-    Utils.mkApiPoster '/session/create', service: service,
+    # Before really creating the session, redirect the user to the form
+    PageActions.navigate '/session/new/' + service + '/form'
+
+  realCreate: (service, meta) ->
+    payload = service: service
+    payload.meta = meta if meta
+    Utils.mkApiPoster '/session/create', payload,
       'session', 'Created', success: (response) ->
         console.log 'API POST Success:', response
         AppDispatcher.trigger  'session:Created:success', response
