@@ -21,8 +21,13 @@ module.exports = React.createClass
     just toggle the element content visibility.
   ###
 
-  getInitialState: () ->
-    {}
+  getInitialState: (props) ->
+    props = props or @props
+    isExpanded: props.defaultOpen or null
+
+  componentWillReceiveProps: (next) ->
+    if @props.defaultOpen isnt next.defaultOpen
+      @setState @getInitialState next
 
   toggleDisplay: ->
     if @props.rel isnt 'disabled'

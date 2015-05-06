@@ -18,8 +18,13 @@ module.exports = React.createClass
     onClick: React.PropTypes.func
     defaultOpen: React.PropTypes.bool
 
-  getInitialState: () ->
-    isExpanded: @props.defaultOpen or undefined
+  getInitialState: (props) ->
+    props = props or @props
+    isExpanded: props.defaultOpen or null
+
+  componentWillReceiveProps: (next) ->
+    if @props.defaultOpen isnt next.defaultOpen
+      @setState @getInitialState next
 
   toggleDisplay: ->
     if @props.rel isnt 'disabled'
