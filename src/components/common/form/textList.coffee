@@ -27,10 +27,12 @@ module.exports = React.createClass
   handleAdd: (e) ->
     e.preventDefault()
     node = @refs.input.getDOMNode()
-    newValue = @props.valueLink.value
-    newValue.push node.value
-    node.value = ''
-    @props.valueLink.requestChange newValue
+    value = node.value?.trim()
+    if value
+      newValue = @props.valueLink.value
+      newValue.push value
+      node.value = ''
+      @props.valueLink.requestChange newValue
 
   render: ->
     className = 'comp-textList'

@@ -52,7 +52,7 @@ module.exports = React.createClass
       header = @getIntlMessage 'create-report-during-session'
 
     reportLabel = @getIntlMessage 'create-report'
-    taskLabel = @getIntlMessage 'create-treatment'
+    # taskLabel = @getIntlMessage 'create-treatment'
 
 
     div className: 'comp-reportEditor',
@@ -66,8 +66,8 @@ module.exports = React.createClass
         IconSubListEntry icon: 'pencil', label: reportLabel, defaultOpen: true,
           ReportEntry session: @props.session, sessionUser: @props.sessionUser
 
-        IconSubListEntry label: taskLabel, icon: 'pill',
-          ReportTaskEntry {}
+        # IconSubListEntry label: taskLabel, icon: 'pill',
+        #   ReportTaskEntry {}
 
         div className: 'end-session',
           if @props.session.state is 'CLOSED'
