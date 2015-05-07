@@ -2,6 +2,9 @@ Config = require '../util/config'
 Backbone = require 'exoskeleton'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 Socket = require '../util/socket'
+
+SessionActions = require '../actions/SessionActions'
+
 maxRetries = 5
 isWorking = false
 # coffeelint-variable-scope bug
@@ -43,6 +46,23 @@ errorCallback = (queue, messages) ->
   else
     queue.process()
 
+# Check if two arrays contains the same elements, with shallow compare.
+arrayEquals = (a, b) ->
+  return false if a?.length isnt b?.length
+  for i in [0..a.length - 1]
+    return false if a[i] isnt b[i]
+  true
+
+# Call a function that returns a promise after a brief delay. If the promise
+# result doesn't pass a check, retry only once after a longer delay.
+promiseCheckOrRetry = (f, check) ->
+  cb = ->
+    promise = f()
+    promise.then (val) ->
+      if not check(val)
+        window.setTimeout f, 500
+  window.setTimeout cb, 50
+
 queue =
   # We store here all the outcoming messages
   outbox: []
@@ -68,6 +88,17 @@ queue =
           # so the stores can pick it up using standard path conventions
           # console.log '> Async update:', message.data
           AppDispatcher.trigger 'update:Received:success', message.data
+        when 'reload'
+          # Call a refresh/reload action on the specified entity
+          switch message.data.type
+            when 'session'
+              promiseCheckOrRetry(
+                () -> SessionActions.refresh message.data.target
+                (pl) ->
+                  got = pl.users?.map (e) -> e.id
+                  expected = message.data.participants
+                  arrayEquals got, expected
+              )
         when 'status'
           console.warn 'Warn', message
       AppDispatcher.trigger 'chat:Received:success', messages: messages

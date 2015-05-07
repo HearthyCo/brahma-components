@@ -8,7 +8,10 @@ module.exports = React.createClass
 
   mixins: [ReactIntl]
 
+  propTypes:
+    value: React.PropTypes.bool
+
   render: ->
 
     div id: @props.id, className: 'comp-indicator',
-      div className: 'on'
+      div className: if @props.value then 'on' else 'off'
