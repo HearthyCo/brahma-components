@@ -6,6 +6,7 @@ Utils = require '../../util/frontendUtils'
 { div, form, input, button, p, span } = React.DOM
 
 RoomMessage = React.createFactory require './mobileRoomMessage'
+InputMultiline = React.createFactory require './form/inputMultiline'
 ChatActions = require '../../actions/ChatActions'
 EntityStores = require '../../stores/EntityStores'
 ListStores = require '../../stores/ListStores'
@@ -48,14 +49,17 @@ module.exports = React.createClass
   updateMessages: ->
     @setState messages: ListStores.Session.Messages.getObjects @props.session.id
 
-  handleMessage: (e) ->
+  sendMessage: (msg) ->
+    if msg
+      ChatActions.send @props.session.id, msg, @context.user
+    return
+
+  handleSubmit: (e) ->
     e.preventDefault()
-    msgbox = @refs.msgbox.getDOMNode()
-    newMessage = msgbox.value?.trim()
-    if newMessage
-      msgbox.value = ''
-      @setState hasText: false
-      ChatActions.send @props.session.id, newMessage, @context.user
+    @sendMessage @refs.msgbox.getValue()
+    # Clear input
+    @refs.msgbox.setValue ""
+    @setState hasText: false
     return
 
   handleUpload: (e) ->
@@ -65,8 +69,8 @@ module.exports = React.createClass
       for file in e.target.files
         ChatActions.sendFile _this.props.session.id, file, _this.context.user
 
-  handleChange: (e) ->
-    @setState hasText: e.target.value isnt ""
+  handleChange: ->
+    @setState hasText: @refs.msgbox.getValue() isnt ""
 
   render: ->
     classes = 'room-footer'
@@ -78,11 +82,12 @@ module.exports = React.createClass
         div className: 'room-backlog', ref: 'log',
           @state.messages?.map (m) ->
             RoomMessage key: m.id, message: m
-      form className: classes, onSubmit: @handleMessage,
-        input
+      form className: classes, onSubmit: @handleSubmit, ref: 'form',
+        InputMultiline
           className: 'room-input'
           placeholder: @getIntlMessage('type-here')
           onChange: @handleChange
+          onEnter: @handleSubmit
           ref: 'msgbox'
         button className: 'room-send', @getIntlMessage('send')
         button className: 'upload', onClick: @handleUpload,
