@@ -10,7 +10,8 @@ module.exports = React.createClass
   lastScrollHeight: 0
 
   propTypes:
-    rowsLimit: React.PropTypes.integer
+    rowsMax: React.PropTypes.integer
+    rowsMin: React.PropTypes.integer
 
   componentDidMount: ->
     input = @refs.input.getDOMNode()
@@ -18,7 +19,8 @@ module.exports = React.createClass
       @lastScrollHeight = input.scrollHeight
 
   getDefaultProps: ->
-    rowsLimit: 5
+    rowsMax: 5
+    rowsMin: 1
 
   getValue: -> @refs.input.getDOMNode().value.trim()
   setValue: (newValue) ->
@@ -53,11 +55,11 @@ module.exports = React.createClass
     # If we don't decrease the amount of rows,
     # the scrollHeight would show the scrollHeight for
     # all the rows, even if there is no text.
-    inputDOM.setAttribute "rows", "1"
+    inputDOM.setAttribute "rows", @props.rowsMin
     if inputDOM.value
-      if rows < @props.rowsLimit and inputDOM.scrollHeight > @lastScrollHeight
+      if rows < @props.rowsMax and inputDOM.scrollHeight > @lastScrollHeight
         ++rows
-      else if rows > 1 and inputDOM.scrollHeight < @lastScrollHeight
+      else if rows > @props.rowsMin and inputDOM.scrollHeight < @lastScrollHeight
         --rows
       inputDOM.setAttribute "rows", rows
     @lastScrollHeight = inputDOM.scrollHeight
@@ -65,7 +67,7 @@ module.exports = React.createClass
 
   render: ->
     className = (@props.className or "") + " inputMultiline"
-    props = _.extend { rows: 1 }, @props,
+    props = _.extend { rows: @props.rowsMin }, @props,
       onKeyPress: @handleKeyPress
       ref: 'input', className: className
     textarea props
