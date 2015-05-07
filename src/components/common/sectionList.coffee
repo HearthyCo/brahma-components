@@ -25,11 +25,13 @@ module.exports = React.createClass
       key: 'moreEntries'
       onClick: @props.onViewMoreClick
 
+    element = if @props.url then a else span
+
     if @props.children?.length
       body = [
         div className: 'section',key: 'Entries',
           @props.children
-        a opts,
+        element opts,
           span className: 'icon icon-advice' if not @props.advice
           @getIntlMessage 'view-more'
       ]
