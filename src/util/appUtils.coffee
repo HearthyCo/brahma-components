@@ -35,9 +35,10 @@ execUpdateToolbar = (sessionId, participants) -> ->
       name = professional.name if professional.name?
       name += ' ' + professional.surname1 if name?
       name = professional.email if not name?
+      id = professional.id if professional.id?
       avatar = professional.avatar if professional.avatar?
 
-      AppInterface.updateChatToolbar name, avatar
+      AppInterface.updateChatToolbar name, id, avatar
 
 AppUtils =
   back: ->
@@ -54,6 +55,11 @@ AppUtils =
         session = PageStore.getPage().opts.sessionId
         user = EntityStores.User.get EntityStores.User.currentUid
         ChatActions.sendFile session, file, user if session? and user?
+
+  goProfessionalProfile: (professionalId) ->
+    sessionId = PageStore.getPage().opts?.sessionId
+    if sessionId
+      PageActions.navigate '/session/' + sessionId + '/user/' + professionalId
 
   startNativeVideo: ->
     pageObject = PageStore.getPage()

@@ -14,6 +14,7 @@ module.exports = React.createClass
   propTypes:
     user: React.PropTypes.object
     backAction: React.PropTypes.func
+    noLink: React.PropTypes.bool
 
   handleBackClick: (e) ->
     if @props.backAction
@@ -33,11 +34,13 @@ module.exports = React.createClass
         .filter (v) -> v
         .join ' '
 
+      url = "/session/#{@props.sessionId}/user/#{@props.user.id}"
       userBar = div className: 'bar-profile',
         img className: 'avatar', src: avatar
         div className: 'details',
           span className: 'name', fullname
-          a href: '/', rel: 'disabled', 'Ver perfil y curriculum'
+          if not @props.noLink
+            a href: url, 'Ver perfil y curriculum'
 
     header className: 'comp-chatTopBar',
       div className: 'chatTopBar-wrapper',
