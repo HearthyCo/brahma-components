@@ -3,7 +3,9 @@ _ = require 'underscore'
 
 ReactIntl = require '../../../mixins/ReactIntl'
 
-{ div, span, input, textarea, button } = React.DOM
+InputMultiline = React.createFactory require './inputMultiline'
+
+{ div, span, input, button } = React.DOM
 
 module.exports = React.createClass
 
@@ -14,10 +16,6 @@ module.exports = React.createClass
   propTypes:
     id: React.PropTypes.string
     valueLink: React.PropTypes.object.isRequired
-    multiline: React.PropTypes.bool
-
-  getDefaultProps: ->
-    multiline: false
 
   handleRemove: (i) -> =>
     newValue = @props.valueLink.value
@@ -26,21 +24,17 @@ module.exports = React.createClass
 
   handleAdd: (e) ->
     e.preventDefault()
-    node = @refs.input.getDOMNode()
-    value = node.value?.trim()
+    value = @refs.input.getValue()
     if value
       newValue = @props.valueLink.value
       newValue.push value
-      node.value = ''
       @props.valueLink.requestChange newValue
+    # Clear input
+    @refs.input.setValue ""
+    return
 
   render: ->
     className = 'comp-textList'
-    if @props.multiline
-      element = textarea
-      className += ' multiline'
-    else
-      element = input
 
     div className: className, id: @props.id,
       div className: 'entries',
@@ -51,6 +45,9 @@ module.exports = React.createClass
               @getIntlMessage 'remove'
 
       div className: 'new-entry',
-        element ref: 'input', placeholder: @getIntlMessage 'write-here'
+        InputMultiline
+          ref: 'input'
+          placeholder: @getIntlMessage 'write-here'
+          onEnter: @handleAdd
         button onClick: @handleAdd,
           @getIntlMessage 'add'

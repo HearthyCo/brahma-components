@@ -10,8 +10,11 @@ module.exports = React.createClass
   lastScrollHeight: 0
 
   propTypes:
-    rowsMax: React.PropTypes.integer
-    rowsMin: React.PropTypes.integer
+    rowsMax: React.PropTypes.number
+    rowsMin: React.PropTypes.number
+    valueLink: React.PropTypes.object
+    onEnter: React.PropTypes.func
+    onKeyPress: React.PropTypes.func
 
   componentDidMount: ->
     input = @refs.input.getDOMNode()
@@ -35,20 +38,12 @@ module.exports = React.createClass
     # If the user has pressed enter
     if e.key is "Enter"
       e.preventDefault()
-      if @props.onEnter
-        @props.onEnter.call @, e
-      else
-        # Prevent HTML5 behaviuor detecting an id (string)
-        if inputDOM.form and "string" isnt typeof inputDOM.form
-          # This should submit but it does not :(
-          inputDOM.form.submit() if inputDOM.form.submit
-
+      @props.onEnter?.call @, e
       @setValue ""
     else
       @resizeInput inputDOM
       # Extendable event
-      if @props.onKeyPress
-        @props.onKeyPress.call @, e
+      @props.onKeyPress?.call @, e
 
   resizeInput: (inputDOM) ->
     rows = parseInt inputDOM.getAttribute "rows"
@@ -59,15 +54,16 @@ module.exports = React.createClass
     if inputDOM.value
       if rows < @props.rowsMax and inputDOM.scrollHeight > @lastScrollHeight
         ++rows
-      else if rows > @props.rowsMin and inputDOM.scrollHeight < @lastScrollHeight
-        --rows
+      else
+        if rows > @props.rowsMin and inputDOM.scrollHeight < @lastScrollHeight
+          --rows
       inputDOM.setAttribute "rows", rows
     @lastScrollHeight = inputDOM.scrollHeight
-
 
   render: ->
     className = (@props.className or "") + " inputMultiline"
     props = _.extend { rows: @props.rowsMin }, @props,
       onKeyPress: @handleKeyPress
       ref: 'input', className: className
+
     textarea props
