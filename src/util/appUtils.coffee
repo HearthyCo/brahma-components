@@ -24,21 +24,18 @@ execNativeVideo = (sessionId, participants) -> ->
   tokBoxToken = participants[0].meta.opentokToken
   AppInterface.startNativeVideo tokBoxSession, tokBoxToken
 
-execUpdateToolbar = (sessionId, participants) -> ->
-  if not participants?
-    participants = ListStores.Session.Participants.getObjects sessionId
-  if participants.length
-    users = participants.map (userObj) -> EntityStores.User.get userObj.user
-    professionals = users.filter (userObj) -> userObj.userType is 'professional'
-    professional = professionals[0] if professionals.length
-    if professional?
-      name = professional.name if professional.name?
-      name += ' ' + professional.surname1 if name?
-      name = professional.email if not name?
-      id = professional.id if professional.id?
-      avatar = professional.avatar if professional.avatar?
+execUpdateToolbar = (sessionId) -> ->
+  professionals = ListStores.Session.Participants.getProfessional sessionId
+  professional = professionals[0]
 
-      AppInterface.updateChatToolbar name, id, avatar
+  if professional?
+    name = professional.name if professional.name?
+    name += ' ' + professional.surname1 if name? and professional.surname1
+    name = professional.email if not name?
+    id = professional.id if professional.id?
+    avatar = professional.avatar if professional.avatar?
+
+    AppInterface.updateChatToolbar name, id, avatar
 
 AppUtils =
   back: ->
@@ -82,7 +79,7 @@ AppUtils =
       participants = ListStores.Session.Participants.getObjects sessionId
 
       if participants?
-        execUpdateToolbar(sessionId, participants)()
+        execUpdateToolbar(sessionId)()
       else
         mkBind EntityStores.SessionUser, 'change', execUpdateToolbar sessionId
 
