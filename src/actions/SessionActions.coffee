@@ -1,9 +1,12 @@
+_ = require 'underscore'
 AppDispatcher = require '../dispatcher/AppDispatcher'
 Utils = require '../util/actionsUtils'
 Backbone = require 'exoskeleton'
 PageActions = require './PageActions'
 
 AlertActions = require './AlertActions'
+
+ListStores = require '../stores/ListStores'
 
 urlUtils = require '../util/urlUtils'
 
@@ -34,11 +37,16 @@ SessionActions =
         PageActions.navigate '/session/' + response.session.id
 
   assign: (serviceType) ->
+    oldIds = ListStores.SessionsByServiceType.getIds serviceType
     Utils.mkApiPoster '/session/assignPool', serviceType: serviceType,
       'session', 'Assign',
       success: (response) ->
         console.log 'API POST Success:', response
         AppDispatcher.trigger  'session:Assign:success', response
+        newIds = ListStores.SessionsByServiceType.getIds serviceType
+        diff = _.difference newIds, oldIds
+        if diff.length
+          PageActions.navigate '/session/' + diff[0]
       error: (xhr) ->
         alert = id: 'alert-session_Assign', level: 'error'
         if xhr.response.indexOf('No pending') isnt -1
