@@ -32,7 +32,11 @@ window.brahma.utils.frontend = module.exports =
     filewrapper = window.document.createElement 'div'
     filewrapper.innerHTML = '<input type="file">'
     file = filewrapper.firstChild
-    file.addEventListener 'change', callback, false
+    document.body.appendChild file
+    cbwrapper = ->
+      callback.apply @, arguments
+      document.body.removeChild file
+    file.addEventListener 'change', cbwrapper, false
     file.click()
 
   # Converst a number of bytes into a human-readable string
