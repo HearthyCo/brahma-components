@@ -71,7 +71,8 @@ ChatActions =
         payload.messages[0].data.hasThumb = response.attachments[0].hasThumb
         payload.messages[0].id = 'play.attachment.' + response.attachments[0].id
         payload.messages[1].type = 'discard'
-        AppDispatcher.trigger 'chat:SendFile:success', payload
+        AppDispatcher.trigger 'chat:SendFile:success',
+          JSON.parse JSON.stringify payload
 
     retries = 4
     retry = ->
