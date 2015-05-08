@@ -73,7 +73,7 @@ module.exports = React.createClass
     else if @state.userMenuExpanded is false
       umClasses += ' is-collapsed'
 
-    div id: 'menu',
+    div id: 'menu', className: 'comp-professionalMenu',
       if @props.blocked then div id: 'menu-block'
       div className: 'top-area',
         a href: '/',
