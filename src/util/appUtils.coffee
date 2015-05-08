@@ -7,8 +7,6 @@ Utils = require '../util/frontendUtils'
 ChatActions = require '../actions/ChatActions'
 PageActions = require '../actions/PageActions'
 
-AppInterface = window.AppInterface
-
 mkBind = (store, evnt, callbackFn) ->
   callback = () ->
     callbackFn()
@@ -22,7 +20,7 @@ execNativeVideo = (sessionId, participants) -> ->
   session = EntityStores.Session.get sessionId
   tokBoxSession = session.meta.opentokSession
   tokBoxToken = participants[0].meta.opentokToken
-  AppInterface.startNativeVideo tokBoxSession, tokBoxToken
+  window.AppInterface.startNativeVideo tokBoxSession, tokBoxToken
 
 execUpdateToolbar = (sessionId) -> ->
   professionals = ListStores.Session.Participants.getProfessional sessionId
@@ -35,16 +33,16 @@ execUpdateToolbar = (sessionId) -> ->
     id = professional.id if professional.id?
     avatar = professional.avatar if professional.avatar?
 
-    AppInterface.updateChatToolbar name, id, avatar
+    window.AppInterface.updateChatToolbar name, id, avatar
 
 AppUtils =
   back: ->
     pageBackObject = PageStore.goBack()
 
     if not pageBackObject?
-      AppInterface.closeApp()
+      window.AppInterface.closeApp()
 
-  paypalBuy: (data) -> AppInterface.paypalBuy data.amount
+  paypalBuy: (data) -> window.AppInterface.paypalBuy data.amount
 
   pickFile: ->
     Utils.pickFile (e) ->
@@ -84,6 +82,7 @@ AppUtils =
         mkBind EntityStores.SessionUser, 'change', execUpdateToolbar sessionId
 
   updateCurrentPage: ->
-    AppInterface.updateCurrentPage PageStore.getPage().current.displayName
+    displayName = PageStore.getPage().current.displayName
+    window.AppInterface.updateCurrentPage displayName
 
 window.brahma.utils.app = module.exports = AppUtils
