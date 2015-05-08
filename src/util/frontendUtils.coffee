@@ -32,10 +32,10 @@ window.brahma.utils.frontend = module.exports =
     filewrapper = window.document.createElement 'div'
     filewrapper.innerHTML = '<input type="file">'
     file = filewrapper.firstChild
-    document.body.appendChild file
+    window.document.body.appendChild file
     cbwrapper = ->
       callback.apply @, arguments
-      document.body.removeChild file
+      window.document.body.removeChild file
     file.addEventListener 'change', cbwrapper, false
     file.click()
 
