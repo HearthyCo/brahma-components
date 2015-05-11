@@ -104,6 +104,7 @@
   "new-session": "Nueva consulta",
   "next-event": "Próximo evento",
   "no-doctors": "No hay doctores conectados en este instante. Seleccione otro tipo de consulta, o espere...",
+  "no-doctors-message": "Tu consulta acaba de comenzar, pero aún no tienes médico asignado. Puedes poner información adicional en este chat, el médico la verá en cuanto se incorpore. Recibirás una notificación cuando la consulta haya sido respondida. Las consultas gratuitas tienen un tiempo de respuesta de 24 horas.",
   "november": "Noviembre",
   "october": "Octubre",
   "other": "Otro",
