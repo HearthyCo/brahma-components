@@ -30,7 +30,7 @@ module.exports = React.createClass
 
   componentWillReceiveProps: (next) ->
     if @props.defaults isnt next.defaults
-      @setState @getInitialState next
+      @replaceState @getInitialState next
 
   getChildContext: ->
     editable: @state.editable
@@ -46,7 +46,7 @@ module.exports = React.createClass
 
   handleCancel: (e) ->
     e.preventDefault()
-    @setState @props.defaults
+    @replaceState @getInitialState()
     @toggleEditable()
 
   handleSubmit: ->
