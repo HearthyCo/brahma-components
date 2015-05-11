@@ -104,6 +104,7 @@
   "new-session": "New session",
   "next-event": "Next event",
   "no-doctors": "No doctors online right now. Please choose other session type, or wait...",
+  "no-doctors-message": "Your consultation just started but you still don't have a doctor assigned. You can write aditional information bellow. The doctor will see it as soon as he signs in the application. You will receive a notification in your phone when the doctor answers. Please, remember free consultations have an average response time of 24 hours.",
   "november": "November",
   "october": "October",
   "other": "Other",

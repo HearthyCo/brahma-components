@@ -26,16 +26,20 @@ module.exports = React.createClass
   getInitialState: ->
     messages: ListStores.Session.Messages.getObjects @props.session.id
     hasText: false
+    hasProfessional:
+      ListStores.Session.Participants.getIds(@props.session.id)?.length > 1
 
   componentDidMount: ->
     EntityStores.Message.addChangeListener @updateMessages
     ListStores.Session.Messages.addChangeListener @updateMessages
+    ListStores.Session.Participants.addChangeListener @updateParticipants
     node = @refs.log.getDOMNode()
     node.scrollTop = node.scrollHeight
 
   componentWillUnmount: ->
     EntityStores.Message.removeChangeListener @updateMessages
     ListStores.Session.Messages.removeChangeListener @updateMessages
+    ListStores.Session.Participants.removeChangeListener @updateParticipants
 
   componentWillUpdate: ->
     node = @refs.log.getDOMNode()
@@ -48,6 +52,10 @@ module.exports = React.createClass
 
   updateMessages: ->
     @setState messages: ListStores.Session.Messages.getObjects @props.session.id
+
+  updateParticipants: ->
+    @setState hasProfessional:
+      ListStores.Session.Participants.getIds(@props.session.id)?.length > 1
 
   sendMessage: (msg) ->
     if msg
@@ -80,6 +88,11 @@ module.exports = React.createClass
     div className: 'comp-mobileRoom',
       div className: 'room-wrapper',
         div className: 'room-backlog', ref: 'log',
+          if not @state.hasProfessional
+            div className: 'no-doctor',
+              div className: 'message-body',
+                @getIntlMessage 'no-doctors-message'
+
           @state.messages?.map (m) ->
             RoomMessage key: m.id, message: m
       form className: classes, onSubmit: @handleSubmit, ref: 'form',
@@ -92,5 +105,3 @@ module.exports = React.createClass
         button className: 'room-send', @getIntlMessage('send')
         button className: 'upload', onClick: @handleUpload,
           span className: 'icon icon-reel'
-          span {}, '|'
-          span className: 'icon icon-biometrics'
