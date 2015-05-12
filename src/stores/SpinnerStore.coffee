@@ -70,7 +70,7 @@ AppDispatcher.on 'all', (eventName) ->
     if timer is null
       timer = window.setTimeout timerTick, delay
 
-  else if tokens[2] in ['error', 'success']
+  else if tokens[2] in ['error', 'success', 'warn']
     # Remove from queue
     waitingFor = _.filter waitingFor, (entry) -> entry.event isnt name
     # Simulate a timer tick to update status, and clear actual timer
