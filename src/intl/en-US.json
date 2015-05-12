@@ -39,6 +39,7 @@
   "conditions": "Clinical conditions",
   "config": "Configuration",
   "confirm-cancel": "Are you sure? your unsaved data will be lost",
+  "confirm-close-session": "Are you sure that you want to close this consultation?",
   "continue": "Continue",
   "create": "Create",
   "create-report": "Create a report",

@@ -39,6 +39,7 @@
   "conditions": "Condiciones clínicas",
   "config": "Configuración",
   "confirm-cancel": "¿Seguro que deseas cancelar? Los datos sin guardar se perderán.",
+  "confirm-close-session": "¿Seguro que quieres cerrar la consulta?",
   "continue": "Continuar",
   "create": "Crear",
   "create-report": "Crear informe",
