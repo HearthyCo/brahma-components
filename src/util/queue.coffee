@@ -72,6 +72,7 @@ queue =
   paused: false
   socket: null
   initSocket: (user) ->
+    @socket?.close()
     @socket = Socket user, Config.chat
     @socket.onmessage = (message) ->
       messages = {}
@@ -103,6 +104,9 @@ queue =
           console.warn 'Warn', message
       AppDispatcher.trigger 'chat:Received:success', messages: messages
     @socket.onauth = -> queue.resume()
+
+  close: ->
+    @socket?.close()
 
   push: (payload) ->
     # console.log '> Push to queue', payload
