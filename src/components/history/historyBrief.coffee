@@ -49,3 +49,5 @@ module.exports = React.createClass
       entries
         # a className: 'view-more histories-view-more', href: '/histories',
         #   @getIntlMessage 'view-more'
+        a className: 'view-more histories-view-more', href: '/profile',
+          @getIntlMessage 'edit'
