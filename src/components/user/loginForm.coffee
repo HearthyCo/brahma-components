@@ -88,7 +88,7 @@ module.exports = React.createClass
             @getIntlMessage @state.error.content
 
       div className: 'forgotten-pass',
-        a href: 'request/passwordChange',
+        a href: '/request/passwordChange',
           @getIntlMessage 'forgotten-password?'
 
       @buildComp 'button', label: login
