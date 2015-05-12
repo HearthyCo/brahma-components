@@ -100,6 +100,7 @@
   "moment-please": "Wait a moment, please...",
   "mon": "M",
   "month": "Month",
+  "must-write-reason-session": "Must specify a reason for a new session",
   "name": "Name",
   "new-session": "New consultation",
   "next-event": "Next event",
