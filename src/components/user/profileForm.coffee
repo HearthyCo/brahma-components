@@ -19,21 +19,28 @@ module.exports = React.createClass
 
   propTypes:
     showRegister: React.PropTypes.bool
+    user: React.PropTypes.object
+    onSubmit: React.PropTypes.func
+    labelNext: React.PropTypes.string
 
   handleSubmit: (e) ->
     e.preventDefault()
     obj = _.extend {}, @state
     # Do your form post-processing here
-    UserActions.save obj
+    UserActions.save(obj).then =>
+      @props.onSubmit?()
 
   getDefaultProps: () ->
     showRegister: true
 
-  getInitialState: () ->
-    return error: AlertStore.getFormAlert('UserLogin', 'error') or false
+  getInitialState: (props) ->
+    props = props or @props
+    console.log 'props:', props
+    return _.extend {}, props.user,
+      error: AlertStore.getFormAlert('UserLogin', 'error') or false
 
-  componentWillReceiveProps: -> #(next) ->
-    @setState @getInitialState()
+  componentWillReceiveProps: (next) ->
+    @setState @getInitialState next
 
   buildComp: (type, opt) ->
     obj =
@@ -64,7 +71,7 @@ module.exports = React.createClass
     surname2 = @getIntlMessage 'surname-2'
     birthdate = @getIntlMessage 'birthdate'
     gender = @getIntlMessage 'gender'
-    next = @getIntlMessage 'continue'
+    next = @props.labelNext or @getIntlMessage 'continue'
 
     _className = 'comp-profileDataForm'
     _className += ' error' if @state.error

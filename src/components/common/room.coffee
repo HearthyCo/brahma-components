@@ -86,7 +86,10 @@ module.exports = React.createClass
 
   handleFinish: ->
     if @props.session.state isnt 'CLOSED'
-      SessionActions.close @props.session.id
+      if window.confirm @getIntlMessage 'confirm-close-session'
+        SessionActions.close @props.session.id
+      else
+        return
     OpenSections.set @props.session.id, 'report'
 
 
