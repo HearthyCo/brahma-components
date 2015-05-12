@@ -45,6 +45,11 @@ module.exports = React.createClass
       # Extendable event
       @props.onKeyPress?.call @, e
 
+  handleInput: (e) ->
+    @resizeInput e.target
+    # Extendable event
+    @props.onInput?.call @, e
+
   resizeInput: (inputDOM) ->
     rows = parseInt inputDOM.getAttribute "rows"
     # If we don't decrease the amount of rows,
@@ -63,7 +68,7 @@ module.exports = React.createClass
   render: ->
     className = (@props.className or "") + " inputMultiline"
     props = _.extend { rows: @props.rowsMin }, @props,
-      onKeyPress: @handleKeyPress
+      onKeyPress: @handleKeyPress, onInput: @handleInput
       ref: 'input', className: className
 
     textarea props
