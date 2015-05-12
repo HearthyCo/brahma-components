@@ -19,7 +19,7 @@ SafeIntl =
           str = str.replace "{{#{k}}}", v
 
     catch e
-      console.error "Error: Intl string not found: #{arguments[0]}"
+      console.warn "Warning! Intl string not found: #{arguments[0]}"
       str = "[intl:#{arguments[0]}]"
 
     return str

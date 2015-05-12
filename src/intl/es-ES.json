@@ -11,6 +11,7 @@
   "alert-session_Assign-pending": "No hay consultas disponibles para asignar en este momento.",
   "alert-session_Assign-many": "Ha alcanzado el límite de consultas simultaneas para este tipo.",
   "alert-session_Finish_error": "Error: El informe debe estar cubierto.",
+  "alert-user_Signup_error": "Usuario ya registrado o error de conexión",
   "allergies": "Alergias",
   "allergy": "Alergia",
   "any-allergies": "¿Presentas alguna alergia?",
