@@ -107,6 +107,9 @@ module.exports = (usr, opts) ->
     isReady: ->
       return (socket.readyState is window.WebSocket.OPEN)
 
+    close: ->
+      socket.close()
+
   extras =
     onopen: ->
       socketWrapper.onopen() if socketWrapper.onopen
@@ -129,7 +132,7 @@ module.exports = (usr, opts) ->
         ), 100
     onclose: (code) ->
       socketWrapper.onclose code if socketWrapper.onclose
-      reconnect()
+      reconnect() if not code.wasClean
     onerror: (error) ->
       socketWrapper.onerror error if socketWrapper.onerror
     onmessage: (message) ->

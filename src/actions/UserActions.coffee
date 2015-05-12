@@ -9,6 +9,9 @@ response = (actionId) ->
     if actionId in ['UserLogin', 'UserRegister']
       Queue.initSocket resp.users[0]
 
+    if actionId is 'UserLogout'
+      Queue.close()
+
     AlertActions.formAlert {
       id: actionId
       content: "success-on-#{actionId.toLowerCase()}-form"

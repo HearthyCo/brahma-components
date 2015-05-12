@@ -23,7 +23,7 @@ module.exports = React.createClass
     @props.valueLink.requestChange newValue
 
   handleAdd: (e) ->
-    e.preventDefault()
+    e?.preventDefault()
     value = @refs.input.getValue()
     if value
       newValue = @props.valueLink.value
