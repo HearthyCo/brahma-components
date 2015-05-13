@@ -1,6 +1,8 @@
 React = require 'react/addons'
 ReactIntl = require '../../mixins/ReactIntl'
 _ = require 'underscore'
+Utils = require '../../util/frontendUtils'
+
 
 { div, p, button, span } = React.DOM
 
@@ -39,10 +41,7 @@ module.exports = React.createClass
 
   render: ->
     if @props.user
-      fullname = ['name', 'surname1', 'surname2']
-        .map (f) => @props.user[f]
-        .filter (v) -> v
-        .join ' '
+      fullname = Utils.fullName @props.user
     else
       fullname = @getIntlMessage 'loading'
 
