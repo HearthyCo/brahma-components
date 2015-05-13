@@ -1,5 +1,7 @@
 React = require 'react/addons'
 _ = require 'underscore'
+Utils = require '../../util/frontendUtils'
+
 
 { header, div, a, span, img } = React.DOM
 
@@ -28,11 +30,7 @@ module.exports = React.createClass
   render: ->
     if @props.user
       avatar = @props.user.avatar or '/res/images/default-avatar.png'
-      _this = @
-      fullname = ['name', 'surname1', 'surname2']
-        .map (f) -> _this.props.user[f]
-        .filter (v) -> v
-        .join ' '
+      fullname = Utils.fullName @props.user
 
       url = "/session/#{@props.sessionId}/user/#{@props.user.id}"
       userBar = div className: 'bar-profile',

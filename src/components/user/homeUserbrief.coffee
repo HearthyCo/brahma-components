@@ -1,5 +1,7 @@
 React = require 'react'
 ReactIntl = require '../../mixins/ReactIntl'
+Utils = require '../../util/frontendUtils'
+
 
 { div, img } = React.DOM
 
@@ -15,10 +17,7 @@ module.exports = React.createClass
 
   render: ->
     _this = @
-    fullname = ['name', 'surname1', 'surname2']
-      .map (f) -> _this.props.user[f]
-      .filter (v) -> v
-      .join ' '
+    fullname = Utils.fullName @props.user
 
     birthdate = if @props.user.birthdate
       @formatDate @props.user.birthdate, 'dateonly'

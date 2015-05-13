@@ -1,6 +1,7 @@
 React = require 'react/addons'
 ReactIntl = require '../../mixins/ReactIntl'
 _ = require 'underscore'
+Utils = require '../../util/frontendUtils'
 
 EntityStores = require '../../stores/EntityStores'
 ListStores = require '../../stores/ListStores'
@@ -48,11 +49,7 @@ module.exports = React.createClass
     avatar = @props.user.avatar or '/res/images/default-avatar.png'
     _this = @
     user = EntityStores.User.get @props.user.id
-    fullname = ['name', 'surname1', 'surname2']
-      .map (f) -> user[f]
-      .filter (v) -> v
-      .join ' '
-
+    fullname = Utils.fullName user
 
     profileData = @state.user
     if profileData
