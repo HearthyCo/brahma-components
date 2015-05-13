@@ -89,19 +89,29 @@ module.exports = React.createClass
       div className: 'room-wrapper',
         div className: 'room-backlog', ref: 'log',
           if not @state.hasProfessional
-            div className: 'no-doctor',
+            div className: 'notification-message no-doctor',
               div className: 'message-body',
                 @getIntlMessage 'no-doctors-message'
 
           @state.messages?.map (m) ->
             RoomMessage key: m.id, message: m
-      form className: classes, onSubmit: @handleSubmit, ref: 'form',
-        InputMultiline
-          className: 'room-input'
-          placeholder: @getIntlMessage('type-here')
-          onChange: @handleChange
-          onEnter: @handleSubmit
-          ref: 'msgbox'
-        button className: 'room-send', @getIntlMessage('send')
-        button className: 'upload', onClick: @handleUpload,
-          span className: 'icon icon-reel'
+
+          if @props.session?.state is 'CLOSED'
+            div className: 'notification-message session-closed',
+              div className: 'message-body',
+                @getIntlMessage 'session-closed-message'
+
+      if @props.session?.state in ['CLOSED', 'FINISHED']
+        div className: 'session-chat-closed',
+          @getIntlMessage 'session-chat-closed'
+      else
+        form className: classes, onSubmit: @handleSubmit, ref: 'form',
+          InputMultiline
+            className: 'room-input'
+            placeholder: @getIntlMessage('type-here')
+            onChange: @handleChange
+            onEnter: @handleSubmit
+            ref: 'msgbox'
+          button className: 'room-send', @getIntlMessage('send')
+          button className: 'upload', onClick: @handleUpload,
+            span className: 'icon icon-reel'
