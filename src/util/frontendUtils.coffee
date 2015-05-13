@@ -163,3 +163,10 @@ window.brahma.utils.frontend = module.exports =
       totalT += deltaT
       window.scroll 0, startScroll + totalT * perMsScroll
       return totalT < length
+
+  # Returns the full name of a user
+  fullName: (user) ->
+    ['name', 'surname1', 'surname2']
+      .map (f) -> user[f]
+      .filter (v) -> v
+      .join ' '

@@ -29,10 +29,7 @@ module.exports = React.createClass
   render: ->
     author = EntityStores.User.get(@props.message.author) or {}
     avatar = author.avatar or '/res/images/default-avatar.png'
-    fullname = ['name', 'surname1', 'surname2']
-      .map (f) -> author[f]
-      .filter (v) -> v
-      .join ' '
+    fullname = Utils.fullName author
     if @props.message.type is 'message'
       body = @props.message.data.message
     else if @props.message.type is 'attachment'

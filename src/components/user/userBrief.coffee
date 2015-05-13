@@ -1,4 +1,5 @@
 React = require 'react'
+Utils = require '../../util/frontendUtils'
 
 { div, img } = React.DOM
 
@@ -12,11 +13,7 @@ module.exports = React.createClass
 
   render: ->
     avatar = @props.user.avatar or '/res/images/default-avatar.png'
-    _this = @
-    fullname = ['name', 'surname1', 'surname2']
-      .map (f) -> _this.props.user[f]
-      .filter (v) -> v
-      .join ' '
+    fullname = Utils.fullName @props.user
 
     div id: @props.id, className: 'comp-userbrief',
       img className: 'avatar', src: avatar

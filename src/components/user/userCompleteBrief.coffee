@@ -1,5 +1,6 @@
 React = require 'react'
 ReactIntl = require '../../mixins/ReactIntl'
+Utils = require '../../util/frontendUtils'
 
 { div, img, span } = React.DOM
 
@@ -16,10 +17,7 @@ module.exports = React.createClass
   render: ->
     avatar = @props.user.avatar or '/res/images/default-avatar.png'
     _this = @
-    fullname = ['name', 'surname1', 'surname2']
-      .map (f) -> _this.props.user[f]
-      .filter (v) -> v
-      .join ' '
+    fullname = Utils.fullName @props.user
     fulladdress = ['street', 'city', 'postalcode']
       .map (f) -> _this.props.user.meta?.address?[f]
       .filter (v) -> v
