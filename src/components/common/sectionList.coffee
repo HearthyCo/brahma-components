@@ -32,7 +32,7 @@ module.exports = React.createClass
         div className: 'section',key: 'Entries',
           @props.children
         element opts,
-          span className: 'icon icon-advice' if not @props.advice
+          span className: 'icon icon-advice' if @props.advice
           @getIntlMessage 'view-more'
       ]
 
