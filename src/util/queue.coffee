@@ -84,6 +84,11 @@ queue =
               messages: message.data.messages
         when 'message', 'attachment'
           AppDispatcher.trigger 'chat:Received:success', messages: [message]
+        when 'kick'
+          promiseCheckOrRetry(
+            () -> SessionActions.refresh message.data.session
+            (pl) -> pl.sessions?[0]?.state in ['CLOSED', 'FINISHED']
+          )
         when 'update'
           # We send only the update data through the dispatcher
           # so the stores can pick it up using standard path conventions
@@ -96,9 +101,14 @@ queue =
               promiseCheckOrRetry(
                 () -> SessionActions.refresh message.data.target
                 (pl) ->
-                  got = pl.users?.map (e) -> e.id
-                  expected = message.data.participants
-                  arrayEquals got, expected
+                  if message.data.participants
+                    # If we got a participants list, it should match
+                    got = pl.users?.map (e) -> e.id
+                    expected = message.data.participants
+                    return arrayEquals got, expected
+                  else
+                    # This might be a new report notification
+                    return pl.sessions?[0]?.state is 'FINISHED'
               )
         when 'status'
           console.warn 'Warn', message
