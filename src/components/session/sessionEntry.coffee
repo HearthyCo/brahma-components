@@ -8,6 +8,7 @@ ListStores = require '../../stores/ListStores'
 EntityStores = require '../../stores/EntityStores'
 
 urlUtils = require '../../util/urlUtils'
+Utils = require '../../util/frontendUtils'
 
 module.exports = React.createClass
 
@@ -39,12 +40,21 @@ module.exports = React.createClass
   render: ->
     sessionId = @props.session.id
     link = urlUtils.getUrl.session @props.session
+    # Title should be the first known of these properties:
+    # Professional name, Service type name, Session title
+    title = @props.session.title
+    st = EntityStores.ServiceType.get @props.session.serviceType
+    title = st.name if st?.name?
+    # Disabled professional name because we don't get the participants list
+    # on the session list endpoint (for now)
+    #profs = ListStores.Session.Participants.getProfessional @props.session.id
+    #title = Utils.fullName profs[0] if profs?[0]?
 
     div id: @props.id, className: 'comp-sessionentry',
       a className: 'session-link', href: link,
         div className: 'session-label',
           Datetime value: @props.session.startDate
-          span className: 'session-title', @props.session.title
+          span className: 'session-title', title
         div className: 'session-notify',
           if @state.counter  > 0
             span className: 'icon icon-advice'
