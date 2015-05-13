@@ -83,6 +83,8 @@ AppUtils =
 
   updateCurrentPage: ->
     displayName = PageStore.getPage().current.displayName
-    window.AppInterface.updateCurrentPage displayName
+    user = EntityStores.User.get EntityStores.User.currentUid
+    isValidUser = user?.name?
+    window.AppInterface.updateCurrentPage displayName, isValidUser
 
 window.brahma.utils.app = module.exports = AppUtils
