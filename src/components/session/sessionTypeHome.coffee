@@ -52,7 +52,7 @@ module.exports = React.createClass
         div className: 'queue-status',
           span {}, @getIntlMessage('currently-there-are') + ' '
           span className: 'queue-length', @props.sessionType.waiting + ' '
-          span className: 'queue-type', @props.sessionType.name
+          span className: 'queue-type', @getIntlMessage @props.sessionType.name
           span {}, ' ' + @getIntlMessage 'waiting'
         if @props.sessionType.waiting
           div className: 'start-session',
