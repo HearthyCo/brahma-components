@@ -89,7 +89,7 @@ module.exports = React.createClass
       div className: 'room-wrapper',
         div className: 'room-backlog', ref: 'log',
           if not @state.hasProfessional
-            div className: 'notification-message no-doctor',
+            div className: 'notification-message',
               div className: 'message-body',
                 @getIntlMessage 'no-doctors-message'
 
@@ -97,7 +97,7 @@ module.exports = React.createClass
             RoomMessage key: m.id, message: m
 
           if @props.session?.state is 'CLOSED'
-            div className: 'notification-message session-closed',
+            div className: 'notification-message',
               div className: 'message-body',
                 @getIntlMessage 'session-closed-message'
 
