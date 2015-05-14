@@ -49,12 +49,7 @@ module.exports = React.createClass
     # on the session list endpoint (for now)
     #profs = ListStores.Session.Participants.getProfessional @props.session.id
     #title = Utils.fullName profs[0] if profs?[0]?
-    # Notification mark should appear on new messages for underway sessions,
-    # or if there are changes we haven't seen yet for other states.
-    if @props.session.state is 'UNDERWAY'
-      advice = @state.counter > 0
-    else
-      advice = false # TODO: Consider other states
+    advice = ListStores.Session.hasUpdates @props.session.id
 
 
     div id: @props.id, className: 'comp-sessionentry',
