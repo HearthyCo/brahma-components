@@ -49,6 +49,13 @@ module.exports = React.createClass
     # on the session list endpoint (for now)
     #profs = ListStores.Session.Participants.getProfessional @props.session.id
     #title = Utils.fullName profs[0] if profs?[0]?
+    # Notification mark should appear on new messages for underway sessions,
+    # or if there are changes we haven't seen yet for other states.
+    if @props.session.state is 'UNDERWAY'
+      advice = @state.counter > 0
+    else
+      advice = false # TODO: Consider other states
+
 
     div id: @props.id, className: 'comp-sessionentry',
       a className: 'session-link', href: link,
@@ -56,5 +63,5 @@ module.exports = React.createClass
           Datetime value: @props.session.startDate
           span className: 'session-title', title
         div className: 'session-notify',
-          if @state.counter  > 0
+          if advice
             span className: 'icon icon-advice'
