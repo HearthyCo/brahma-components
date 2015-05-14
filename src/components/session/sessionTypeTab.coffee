@@ -52,8 +52,9 @@ module.exports = React.createClass
         div className: 'queue-status',
           span className: 'queue-length', @props.sessionType.waiting
           span className: 'queue-label', ' ' + @getIntlMessage('waiting')
-        button className: 'queue-assign', onClick: @handleAssign,
-          @getIntlMessage('add')
+        if @props.sessionType.waiting
+          button className: 'queue-assign', onClick: @handleAssign,
+            @getIntlMessage('add')
       ul className: 'sessiontype-sessions',
         @props.sessions.map (s) ->
           timerclasses = 'session-timer '
