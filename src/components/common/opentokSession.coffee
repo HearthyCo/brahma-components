@@ -83,6 +83,7 @@ module.exports = React.createClass
     if @state.otsession
       @state.otsession.disconnect()
     @setState @getInitialState() if resetState
+    @context.setBlocked false if @context.setBlocked
 
   onStreamCreate: (event) ->
     # A new stream has been created. Subscribe to it.
