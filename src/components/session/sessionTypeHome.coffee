@@ -45,6 +45,8 @@ module.exports = React.createClass
 
   render: ->
     _this = @
+    type = @props.sessionType.name
+    type += 's' if @props.sessionType.waiting isnt 1
 
     div id: @props.id, className: 'comp-sessionTypeHome',
       span className: 'icon icon-' + @props.icon
@@ -52,7 +54,9 @@ module.exports = React.createClass
         div className: 'queue-status',
           span {}, @getIntlMessage('currently-there-are') + ' '
           span className: 'queue-length', @props.sessionType.waiting + ' '
-          span className: 'queue-type', @getIntlMessage @props.sessionType.name
+          span className: 'queue-type',
+            @getIntlMessage type
+
           span {}, ' ' + @getIntlMessage 'waiting'
         if @props.sessionType.waiting
           div className: 'start-session',

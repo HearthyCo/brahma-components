@@ -44,7 +44,7 @@ module.exports = React.createClass
     # Professional name, Service type name, Session title
     title = @props.session.title
     st = EntityStores.ServiceType.get @props.session.serviceType
-    title = st.name if st?.name?
+    title = @getIntlMessage st.name if st?.name?
     # Disabled professional name because we don't get the participants list
     # on the session list endpoint (for now)
     #profs = ListStores.Session.Participants.getProfessional @props.session.id
