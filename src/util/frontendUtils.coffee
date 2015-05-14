@@ -29,13 +29,19 @@ window.brahma.utils.frontend = module.exports =
 
   # Shows the "Select file" dialog, and passes the selection to the callback.
   pickFile: (callback) ->
+    # If there is any old input, remove it first. Might happen on cancel.
+    file = window.document.getElementById "hiddenFile"
+    window.document.body.removeChild file if file
+    # Create a new one
     filewrapper = window.document.createElement 'div'
-    filewrapper.innerHTML = '<input type="file">'
+    filewrapper.innerHTML = '<input id="hiddenFile" type="file">'
     file = filewrapper.firstChild
     window.document.body.appendChild file
+    # Callback wrapper so we can remove the input when no longer useful
     cbwrapper = ->
       callback.apply @, arguments
       window.document.body.removeChild file
+    # Show the file picker dialog
     file.addEventListener 'change', cbwrapper, false
     file.click()
 
