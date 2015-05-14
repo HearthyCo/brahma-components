@@ -1,13 +1,15 @@
 EntityStores = require '../stores/EntityStores'
 ListStores = require '../stores/ListStores'
 PageStore = require '../stores/PageStore'
+SpinnerStore = require '../stores/SpinnerStore'
 
 Utils = require '../util/frontendUtils'
 
 ChatActions = require '../actions/ChatActions'
 PageActions = require '../actions/PageActions'
 
-mkBind = (store, evnt, callbackFn) ->
+# It binds once
+bindOnce = (store, evnt, callbackFn) ->
   callback = () ->
     callbackFn()
     store.unbind evnt, callback
@@ -42,8 +44,10 @@ AppUtils =
     if not pageBackObject?
       window.AppInterface.closeApp()
 
+  # Buy with paypal
   paypalBuy: (data) -> window.AppInterface.paypalBuy data.amount
 
+  # Pick a file to send to chat
   pickFile: ->
     Utils.pickFile (e) ->
       for file in e.target.files
@@ -51,11 +55,13 @@ AppUtils =
         user = EntityStores.User.get EntityStores.User.currentUid
         ChatActions.sendFile session, file, user if session? and user?
 
+  # Navigate to professional profile
   goProfessionalProfile: (professionalId) ->
     sessionId = PageStore.getPage().opts?.sessionId
     if sessionId
       PageActions.navigate '/session/' + sessionId + '/user/' + professionalId
 
+  # Start native video on video session
   startNativeVideo: ->
     pageObject = PageStore.getPage()
     current = pageObject.current.displayName
@@ -66,9 +72,10 @@ AppUtils =
       if participants?
         execNativeVideo(sessionId, participants)()
       else
-        mkBind ListStores.Session.Participants, 'change',
+        bindOnce ListStores.Session.Participants, 'change',
           execNativeVideo sessionId
 
+  # Update chat toolbar when participants change
   updateChatToolbar: ->
     pageObject = PageStore.getPage()
     current = pageObject.current.displayName
@@ -79,12 +86,19 @@ AppUtils =
       if participants?
         execUpdateToolbar(sessionId)()
       else
-        mkBind EntityStores.SessionUser, 'change', execUpdateToolbar sessionId
+        bindOnce EntityStores.SessionUser, 'change', execUpdateToolbar sessionId
 
   updateCurrentPage: ->
     displayName = PageStore.getPage().current.displayName
     user = EntityStores.User.get EntityStores.User.currentUid
     isValidUser = user?.name?
     window.AppInterface.updateCurrentPage displayName, isValidUser
+
+  # Potential user change
+  updateUid: ->
+    window.AppInterface.updateUid EntityStores.User.currentUid
+
+  setLoadingStatus: ->
+    window.AppInterface.setLoadingStatus SpinnerStore.showSpinner()
 
 window.brahma.utils.app = module.exports = AppUtils
