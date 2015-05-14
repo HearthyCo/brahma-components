@@ -36,6 +36,8 @@ TransactionActions =
 
   # Sends an authorization from the mobile sdk to be captured by the server
   capturePaypal: (id, amount) ->
+    # Send a success event as we need to "close" the previous *:request
+    AppDispatcher.trigger 'transaction:CreatePaypal:success', {}
     # We use the same event as executePaypal because they are always
     # handled the same way
     opts =
