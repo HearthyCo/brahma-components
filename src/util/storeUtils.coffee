@@ -29,16 +29,23 @@ module.exports = Utils =
     AppDispatcher.on 'all', (eventName, payload) ->
       # We don't really care about the event name.
       # Only check if it contains interesting entities.
+      elements = []
       if extraHandle
-        extraHandle.call Store, eventName, payload
+        ret = extraHandle.call Store, eventName, payload
+        if ret
+          ret = [ret] if ret not instanceof Array
+          elements = elements.concat ret
+
       if payload[entityName] and payload[entityName] instanceof Array
-        for s in payload[entityName]
-          if not _models[s.id]
-            _models[s.id] = s
-          else
-            _models[s.id] = _.extend _models[s.id], s
-        if payload[entityName].length > 0
-          window.setTimeout ( -> Store.trigger 'change'), 0
+        elements = elements.concat payload[entityName]
+
+      for s in elements
+        if not _models[s.id]
+          _models[s.id] = s
+        else
+          _models[s.id] = _.extend _models[s.id], s
+      if elements.length > 0
+        window.setTimeout ( -> Store.trigger 'change'), 0
 
     Store
 

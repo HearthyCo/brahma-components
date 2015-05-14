@@ -26,13 +26,15 @@ module.exports = React.createClass
   contextTypes:
     user: React.PropTypes.object
 
-  getInitialState: -> @updateSession()
+  getInitialState: ->
+    _.extend {}, @updateSession(), @updateSocket()
 
   componentWillMount: ->
     SessionActions.getByServiceType()
 
   componentDidMount: ->
     EntityStores.Session.addChangeListener @updateSession
+    EntityStores.Misc.addChangeListener @updateSocket
     EntityStores.ServiceType.addChangeListener @updateSession
     ListStores.ServiceTypes.addChangeListener @updateSession
     ListStores.SessionsByServiceType.addChangeListener @updateSession
@@ -40,6 +42,7 @@ module.exports = React.createClass
 
   componentWillUnmount: ->
     EntityStores.Session.removeChangeListener @updateSession
+    EntityStores.Misc.removeChangeListener @updateSocket
     EntityStores.ServiceType.removeChangeListener @updateSession
     ListStores.ServiceTypes.removeChangeListener @updateSession
     ListStores.SessionsByServiceType.removeChangeListener @updateSession
@@ -65,8 +68,14 @@ module.exports = React.createClass
     @setState newState if @isMounted()
     newState
 
+  updateSocket: ->
+    newState = socketState: (EntityStores.Misc.get('socket')?.state or false)
+    @setState newState if @isMounted()
+    newState
+
   render: ->
     _this = @
+
     umClasses = 'userMenu'
     if @state.userMenuExpanded
       umClasses += ' is-expanded'
@@ -92,10 +101,11 @@ module.exports = React.createClass
 
         if @context.user
           UserBrief user: @context.user
+
         div className: 'top-area',
           span className: 'indicator-position',
-            Indicator {}
-            @getIntlMessage 'active'
+            Indicator value: @state.socketState
+            @getIntlMessage if @state.socketState then 'active' else 'inactive'
       div className: 'middle-area',
         @state.servicetypes.map (servicetype) ->
           sessions = _this.state.sessionsByServiceType[servicetype.id] or []

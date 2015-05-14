@@ -1,6 +1,7 @@
 _ = require 'underscore'
 SocketUtils = require '../util/socketUtils'
 EntityStores = require '../stores/EntityStores'
+AppDispatcher = require '../dispatcher/AppDispatcher'
 
 defaults =
   hostname: 'localhost'
@@ -75,9 +76,15 @@ module.exports = (usr, opts) ->
   # Default callbacks
   socketWrapper =
     onmessage: (json) -> console.log "> onMessage", json
-    onerror: (error) -> console.log "> onError", error
-    onclose: (code) -> console.log "> onClose", code
-    onopen: -> console.log "> onOpen"
+    onerror: (error) ->
+      console.log "> onError", error
+      AppDispatcher.trigger 'user:Socket:error', error: error
+    onclose: (code) ->
+      console.log "> onClose", code
+      AppDispatcher.trigger 'user:Socket:close', code: code
+    onopen: ->
+      console.log "> onOpen"
+      AppDispatcher.trigger 'user:Socket:open', {}
     onauth: -> console.log "> onAuth"
     onping: -> console.log "> onPing"
 
