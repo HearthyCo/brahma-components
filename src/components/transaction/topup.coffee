@@ -5,6 +5,7 @@ TransactionActions = require '../../actions/TransactionActions'
 PageActions = require '../../actions/PageActions'
 
 IconButton = React.createFactory require '../common/iconbutton'
+#FormattedNumber = React.createFactory ReactIntl.FormattedNumber
 
 { div, a, span } = React.DOM
 
@@ -12,7 +13,7 @@ module.exports = React.createClass
 
   displayName: 'topUp'
 
-  mixins: [ReactIntl]
+  mixins: [ReactIntl.IntlMixin]
 
   propTypes:
     id: React.PropTypes.string
@@ -64,7 +65,7 @@ module.exports = React.createClass
             if _this.state.amount is n
               classes += ' active'
             div className: classes, key: n, onClick: _this.getAmountSetter(n),
-              _this.formatNumber n / 100, 'credits'
+              "#{(n / 100)} €"
       div className: 'topup-history',
         div className: 'label',
           @getIntlMessage('view-payment-history-message')
