@@ -47,7 +47,7 @@ module.exports = React.createClass
     _this = @
 
     div id: @props.id, className: 'comp-sessionTypeTab',
-      h2 {},  @getIntlMessage @props.sessionType.name
+      h2 {},  @getIntlMessage(@props.sessionType.name + 's')
       div className: 'sessiontype-queue',
         div className: 'queue-status',
           span className: 'queue-length', @props.sessionType.waiting

@@ -44,11 +44,13 @@ module.exports = React.createClass
     # Professional name, Service type name, Session title
     title = @props.session.title
     st = EntityStores.ServiceType.get @props.session.serviceType
-    title = st.name if st?.name?
+    title = @getIntlMessage st.name if st?.name?
     # Disabled professional name because we don't get the participants list
     # on the session list endpoint (for now)
     #profs = ListStores.Session.Participants.getProfessional @props.session.id
     #title = Utils.fullName profs[0] if profs?[0]?
+    advice = ListStores.Session.hasUpdates @props.session.id
+
 
     div id: @props.id, className: 'comp-sessionentry',
       a className: 'session-link', href: link,
@@ -56,5 +58,5 @@ module.exports = React.createClass
           Datetime value: @props.session.startDate
           span className: 'session-title', title
         div className: 'session-notify',
-          if @state.counter  > 0
+          if advice
             span className: 'icon icon-advice'

@@ -159,15 +159,19 @@ Stores.Session.Participants.getProfessional = (sessionId) ->
     professionals = users.filter (o) -> o.userType is 'professional'
   professionals
 
-Stores.Session.isUpdated = (sessionId) ->
-  messages = Stores.Session.Messages.getIds(sessionId) or []
-  lastViewed = Stores.Session.LastViewedMessage.getIds sessionId
+Stores.Session.hasUpdates = (sessionId) ->
+  session = EntityStores.Session.get sessionId
+  if session.state is 'UNDERWAY'
+    messages = Stores.Session.Messages.getIds(sessionId) or []
+    lastViewed = Stores.Session.LastViewedMessage.getIds sessionId
 
-  return true if not messages? or not messages.length
-  return false if not lastViewed?
+    return false if not messages? or not messages.length
+    return true if not lastViewed?
 
-  lastArrived = [messages[messages.length - 1]]
+    lastArrived = [messages[messages.length - 1]]
 
-  lastViewed[0] is lastArrived[0]
+    return lastViewed[0] isnt lastArrived[0]
+  else
+    return false
 
 window.brahma.stores.list = module.exports = Stores
