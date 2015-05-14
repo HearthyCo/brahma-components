@@ -54,7 +54,8 @@ module.exports = React.createClass
           span className: 'queue-length', @props.sessionType.waiting + ' '
           span className: 'queue-type', @props.sessionType.name
           span {}, ' ' + @getIntlMessage 'waiting'
-        div className: 'start-session',
-          span {}, @getIntlMessage 'begin-session-now'
-          button className: 'queue-assign', onClick: @handleAssign,
-            @getIntlMessage 'start'
+        if @props.sessionType.waiting
+          div className: 'start-session',
+            span {}, @getIntlMessage 'begin-session-now'
+            button className: 'queue-assign', onClick: @handleAssign,
+              @getIntlMessage 'start'
