@@ -101,4 +101,14 @@ AppUtils =
   setLoadingStatus: ->
     window.AppInterface.setLoadingStatus SpinnerStore.showSpinner()
 
+  sessionChange: (pl) ->
+    # If we are on a video page of a session, and it is now closed, kill video
+    pageObject = PageStore.getPage()
+    current = pageObject.current.displayName
+    if current is 'sessionVideoPage' or current is 'sessionChatPage'
+      sessionId = pageObject.opts.sessionId
+        EntityStores.Session.get(sessionId)?.state
+      if EntityStores.Session.get(sessionId)?.state in ['CLOSED', 'FINISHED']
+        window.AppInterface.videoSessionEnd sessionId
+
 window.brahma.utils.app = module.exports = AppUtils
