@@ -101,7 +101,7 @@ AppUtils =
   setLoadingStatus: ->
     window.AppInterface.setLoadingStatus SpinnerStore.showSpinner()
 
-  sessionChange: (pl) ->
+  sessionChange: ->
     # If we are on a video page of a session, and it is now closed, kill video
     pageObject = PageStore.getPage()
     current = pageObject.current.displayName
