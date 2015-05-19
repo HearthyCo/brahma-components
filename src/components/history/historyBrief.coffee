@@ -43,11 +43,11 @@ module.exports = React.createClass
 
     div id: @props.id, className: 'comp-historybrief',
       profile
+      a className: 'view-more histories-view-more', href: '/profile',
+        @getIntlMessage 'edit'
       if entries.length
         div className: 'activity',
           @getIntlMessage 'recent-activity'
       entries
         # a className: 'view-more histories-view-more', href: '/histories',
         #   @getIntlMessage 'view-more'
-        a className: 'view-more histories-view-more', href: '/profile',
-          @getIntlMessage 'edit'
