@@ -107,7 +107,6 @@ AppUtils =
     current = pageObject.current.displayName
     if current is 'sessionVideoPage' or current is 'sessionChatPage'
       sessionId = pageObject.opts.sessionId
-        EntityStores.Session.get(sessionId)?.state
       if EntityStores.Session.get(sessionId)?.state in ['CLOSED', 'FINISHED']
         window.AppInterface.videoSessionEnd sessionId
 
