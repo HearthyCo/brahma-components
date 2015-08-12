@@ -39,7 +39,7 @@ module.exports = React.createClass
         list.map (e, i) ->
           span className: 'history-entry', key: i,
             div className: 'title', e
-            #div className: 'description', e.description
+            div className: 'description', e.description
 
     div id: @props.id, className: 'comp-historybrief',
       profile
@@ -49,5 +49,5 @@ module.exports = React.createClass
         div className: 'activity',
           @getIntlMessage 'recent-activity'
       entries
-        # a className: 'view-more histories-view-more', href: '/histories',
-        #   @getIntlMessage 'view-more'
+        a className: 'view-more histories-view-more', href: '/histories',
+          @getIntlMessage 'view-more'
