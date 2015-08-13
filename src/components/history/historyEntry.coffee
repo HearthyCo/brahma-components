@@ -13,15 +13,14 @@ module.exports = React.createClass
 
     # fake content
     code = '(000714) '
-    title = 'Afrontamiento familiar comprometido'
+    title = 'Vacuna subcutánea antiviral'
     historyEntryText =
       '''
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      consequat. Duis aute irure dolor in reprehenderit in voluptate
-      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      proident, sunt in culpa qui officia deserunt mollit anim id est.
+      Pueden provocar reacción local, inflamación, formación de granuloma y
+      necrosis.
+      La técnica de aplicación SC se efectúa con el bisel a 45º hacia arriba.
+      No es necesario aspirar
+      Por esta vía se aplican las vacunas antivirales vivas atenuadas.
       '''
     # end fake content
 
