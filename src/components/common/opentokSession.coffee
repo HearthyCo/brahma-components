@@ -13,7 +13,7 @@ Utils = require '../../util/frontendUtils'
 
 
 # OpenTOK settings
-apiKey = "45309432"
+apiKey = "45579722"
 
 
 module.exports = React.createClass
