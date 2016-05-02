@@ -13,9 +13,12 @@ module.exports = (usr, opts) ->
   opts = opts or {}
   _.defaults opts, defaults
 
-  url = opts.hostname
-  url = opts.hostname + ':' + opts.port if opts.port
-  url = 'ws://' + url
+  if opts.url
+    url = opts.url
+  else
+    url = opts.hostname
+    url = opts.hostname + ':' + opts.port if opts.port
+    url = 'ws://' + url
 
   # pre-define
   socketWrapper = null
